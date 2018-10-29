@@ -1,11 +1,12 @@
 # Grim Gamers - Game Off 2018
 
-Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018).
+![GameOff2018](https://user-images.githubusercontent.com/121322/46698489-1e7bd900-cbcc-11e8-8abb-aef7262c968c.png)
 
------------
+Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018).
 
 ## Team
 
-* [Tom Smallridge](https://github.com/sundowns) - Programmer
-* [Max Chapman](https://github.com/chappos) - Programmer
+* [Tom Smallridge](https://github.com/sundowns) - Developer
+* [Max Chapman](https://github.com/chappos) - Developer
 * [Savannah Hoskins](https://www.facebook.com/artofsavannah/) - Artist
+* [Joshua Marks]() - Audio Magician
