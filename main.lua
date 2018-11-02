@@ -38,4 +38,11 @@ function love.keypressed(key)
     elseif key == "space" then
         love.event.quit("restart")
     end
+
+    world:keypressed(key)
+end
+
+function love.mousepressed(x, y, button, istouch, presses)
+    local world_x, world_y = cameraController:getWorldCoordinates(x, y)
+    world:mousepressed(world_x, world_y, button)
 end

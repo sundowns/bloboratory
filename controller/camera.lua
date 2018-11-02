@@ -2,7 +2,6 @@ Camera = require("lib.camera")
 
 CameraController = Class {
     init = function(self, origin)
-        print(origin:unpack())
         self.camera = Camera(origin:unpack())
     end;
     attach = function(self)
@@ -25,5 +24,8 @@ CameraController = Class {
         if love.keyboard.isDown('down', 's') then
             self.camera:move(0, dt*constants.CAMERA_SPEED)
         end
+    end;
+    getWorldCoordinates = function(self, x, y)
+        return self.camera:worldCoords(x, y)
     end;
 }
