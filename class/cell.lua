@@ -7,6 +7,8 @@ Cell = Class {
         self.isObstacle = false
         self.isGoal = false
         self.isSpawn = false
+        self.cameFrom = nil
+        self.distanceToGoal = 0
     end;
     __tostring = function(self)
         return self.x..","..self.y
@@ -20,6 +22,11 @@ Cell = Class {
         elseif self.isGoal then
             love.graphics.setColor(constants.COLOURS.GOAL)
             love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)    
+        end
+
+        if debug then
+            love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
+            love.graphics.print(self.distanceToGoal, self.x*constants.GRID.CELL_SIZE, self.y*constants.GRID.CELL_SIZE)
         end
     end;
     toggleObstacle = function(self)

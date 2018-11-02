@@ -1,5 +1,5 @@
 love.filesystem.setRequirePath(love.filesystem.getRequirePath()..";lib/?.lua;lib/;")
-debug = false
+debug = true
 
 local world = {}
 local cameraController = {}

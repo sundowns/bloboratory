@@ -3,6 +3,7 @@ Camera = require("lib.camera")
 CameraController = Class {
     init = function(self, origin)
         self.camera = Camera(origin:unpack())
+        self.camera:zoom(1.2)
     end;
     attach = function(self)
         self.camera:attach()

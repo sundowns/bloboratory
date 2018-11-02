@@ -32,6 +32,56 @@ World = Class {
         self.goal = self.grid[x][y]
         self.goal:setGoal()
     end;
+    getNeighbours = function(self, target)
+        assert(target.x and target.y)
+        local neighbours = {}
+        if target.x < self.cols - 1 and not self.grid[target.x + 1][target.y].isObstacle then
+            table.insert(neighbours, self.grid[target.x + 1][target.y])
+        end
+        if target.x > 0 and not self.grid[target.x - 1][target.y].isObstacle then
+            table.insert(neighbours, self.grid[target.x - 1][target.y])
+        end
+        if target.y < self.rows - 1 and not self.grid[target.x][target.y + 1].isObstacle then
+            table.insert(neighbours, self.grid[target.x][target.y + 1])
+        end
+        if target.y > 0 and not self.grid[target.x][target.y - 1].isObstacle then
+            table.insert(neighbours, self.grid[target.x][target.y - 1])
+        end
+        return neighbours
+    end;
+    --[[
+        Calculate best 'next-move' for each cell using breadth-first search.
+        Moves outwards from the goal, marking every cell with a direction for entities to follow.
+        Handy reference: https://www.redblobgames.com/pathfinding/tower-defense/
+    ]]
+    calculatePaths = function(self)
+        if not self.goal then return end;
+        
+        -- clear existing cameFrom records
+        for i = 0, self.cols, 1 do
+            for j = 0, self.rows, 1 do
+                self.grid[i][j].cameFrom = nil
+                self.grid[i][j].distanceToGoal = 0
+            end
+        end
+        
+        local openSet = {}
+        table.insert(openSet, self.goal)
+        self.goal.cameFrom = nil
+        
+        while #openSet > 0 do
+            local current = table.remove(openSet)
+
+            for i, next in pairs(self:getNeighbours(current)) do
+                if not next.cameFrom or next.distanceToGoal > current.distanceToGoal + 1 then
+                    table.insert(openSet, next)
+                    next.cameFrom = current
+                    next.distanceToGoal = current.distanceToGoal + 1
+
+                end
+            end;
+        end
+    end;
     keypressed = function(self, key)
         --TODO: might not need this. A proper input handler/controller probably a better idea
     end;
@@ -41,8 +91,10 @@ World = Class {
         if self.grid[x] and self.grid[x][y] then
             if button == 1 then 
                 self.grid[x][y]:toggleObstacle(x, y)
+                self:calculatePaths()
             elseif button == 2 then
                 self:setGoal(x, y)
+                self:calculatePaths()
             end
         end
     end;
