@@ -2,44 +2,32 @@ love.filesystem.setRequirePath(love.filesystem.getRequirePath()..";lib/?.lua;lib
 debug = false
 
 local world = {}
-local cam = {}
+local cameraController = {}
 
 function love.load()
     Class = require("lib.class")
     Vector = require("lib.vector")
-    Camera = require("lib.camera")
+
     Util = require("lib.util")
     constants = require("constants")
+    require("controller.camera")
     require("class.cell")
     require("class.world")
 
-    cam = Camera(0,0)
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
-    -- Util.t.print(world)
+    cameraController = CameraController(Vector(world.origin.x + constants.GRID.ROWS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE))
 end
 
 function love.update(dt)
     world:update(dt)
 
-    -- cam movement logic
-    if love.keyboard.isDown('left', 'a') then
-        cam:move(-dt*constants.CAMERA_SPEED, 0)
-    end
-    if love.keyboard.isDown('right', 'd') then
-        cam:move(dt*constants.CAMERA_SPEED, 0)
-    end
-    if love.keyboard.isDown('up', 'w') then
-        cam:move(0, -dt*constants.CAMERA_SPEED)
-    end
-    if love.keyboard.isDown('down', 's') then
-        cam:move(0, dt*constants.CAMERA_SPEED)
-    end
+    cameraController:update(dt)
 end
 
 function love.draw()
-    cam:attach()
+    cameraController:attach()
         world:draw()
-    cam:detach()
+    cameraController:detach()
 end
 
 function love.keypressed(key)
