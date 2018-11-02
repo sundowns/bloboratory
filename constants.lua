@@ -1,5 +1,8 @@
 return {
-    COLUMNS = 10,
-    ROWS = 10,
-    CELL_SIZE = 20
+    GRID = {
+        COLUMNS = 16,
+        ROWS = 16,
+        CELL_SIZE = 30,
+    },
+    CAMERA_SPEED = 100
 }

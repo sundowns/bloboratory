@@ -7,7 +7,7 @@ Cell = Class {
         return self.x..","..self.y
     end;
     draw = function(self)
-        love.graphics.rectangle('line', self.x*constants.CELL_SIZE, self.y*constants.CELL_SIZE, constants.CELL_SIZE, constants.CELL_SIZE)
+        love.graphics.rectangle('line', self.x*constants.GRID.CELL_SIZE, self.y*constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         -- if debug then
             
         -- end
