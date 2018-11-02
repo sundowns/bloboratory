@@ -8,9 +8,9 @@ World = Class {
         self.grid = {}
         self.goal = nil
 
-        for i = 0, cols do
+        for i = 0, cols, 1 do
             self.grid[i] = {}
-            for j = 0, rows do
+            for j = 0, rows, 1 do
                 self.grid[i][j] = Cell(i, j)
             end
         end        
@@ -35,13 +35,13 @@ World = Class {
     getNeighbours = function(self, target)
         assert(target.x and target.y)
         local neighbours = {}
-        if target.x < self.cols - 1 and not self.grid[target.x + 1][target.y].isObstacle then
+        if target.x < self.cols and not self.grid[target.x + 1][target.y].isObstacle then
             table.insert(neighbours, self.grid[target.x + 1][target.y])
         end
         if target.x > 0 and not self.grid[target.x - 1][target.y].isObstacle then
             table.insert(neighbours, self.grid[target.x - 1][target.y])
         end
-        if target.y < self.rows - 1 and not self.grid[target.x][target.y + 1].isObstacle then
+        if target.y < self.rows and not self.grid[target.x][target.y + 1].isObstacle then
             table.insert(neighbours, self.grid[target.x][target.y + 1])
         end
         if target.y > 0 and not self.grid[target.x][target.y - 1].isObstacle then
@@ -56,7 +56,7 @@ World = Class {
     ]]
     calculatePaths = function(self)
         if not self.goal then return end;
-        
+
         -- clear existing cameFrom records
         for i = 0, self.cols, 1 do
             for j = 0, self.rows, 1 do
