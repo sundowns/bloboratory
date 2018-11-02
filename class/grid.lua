@@ -4,14 +4,32 @@ Grid = Class {
         self.rows = rows
         self.cols = cols
         self.goal = nil
-        
+        self.spawns = {}
         self.cells = {}
+
         for i = 0, self.cols, 1 do
             self.cells[i] = {}
             for j = 0, self.rows, 1 do
                 self.cells[i][j] = Cell(i, j)
             end
         end  
+    end;
+    update = function(self, dt, isPlacingTower)
+        for i = 0, self.cols do
+            for j = 0, self.rows do
+                self.cells[i][j]:update(dt)
+            end
+        end
+    end;
+    highlightCells = function(self, mouseX, mouseY)
+        --highlight 2x2 with selected block as top left
+        local gridX, gridY = self:calculateGridCoordinates(love.mouse.getPosition())
+        if not self:isOccupied(gridX, gridY, 2, 2) then --TODO: highlight based on width of tower being currently placed (hardcoded to 2 for now)
+            self.cells[gridX][gridY].isHovered = true
+            self.cells[gridX+1][gridY].isHovered = true
+            self.cells[gridX][gridY+1].isHovered = true
+            self.cells[gridX+1][gridY+1].isHovered = true
+        end
     end;
     draw = function(self)
         for i = 0, self.cols do
@@ -21,15 +39,56 @@ Grid = Class {
         end
     end;
     calculateGridCoordinates = function(self, screenX, screenY)
-        return math.floor(self.origin.x + screenX / constants.GRID.CELL_SIZE), math.floor(self.origin.y + screenY / constants.GRID.CELL_SIZE)
+        local worldX, worldY = cameraController:getWorldCoordinates(screenX, screenY)
+        return math.floor(self.origin.x + worldX / constants.GRID.CELL_SIZE), math.floor(self.origin.y + worldY / constants.GRID.CELL_SIZE)
+    end;
+    calculateWorldCoordinates = function(self, gridX, gridY)
+        local worldX = self.origin.x + (gridX * constants.GRID.CELL_SIZE) 
+        local worldY = self.origin.y + (gridY * constants.GRID.CELL_SIZE) 
+        return worldX, worldY
+    end;
+    isOccupied = function(self, x, y, width, height)
+        if not height then height = 1 end
+        if not width then width = 1 end
+        
+        if width == 1  and height == 1 then
+            --treat as 1 cell
+            return self.cells[x] and self.cells[x][y]
+        else
+            --loop over contained cells
+            for i = 0, width-1 do
+                if self.cells[x+i] == nil or self.cells[x+i].isObstacle then return true end
+                for j = 0, height-1 do
+                    if self.cells[x+i][y+j] == nil or self.cells[x+i][y+j].isObstacle then return true end
+                end
+            end
+
+            return false
+        end
     end;
     setGoal = function(self, x, y)
         if self.goal then self.goal.isGoal = false end
         self.goal = self.cells[x][y]
         self.goal:setGoal()
     end;
+    setGoal = function(self, x, y)
+        if self.goal then self.goal.isGoal = false end
+        self.goal = self.cells[x][y]
+        self.goal:setGoal()
+        self:calculatePaths()
+    end;
+    toggleSpawn = function(self, x, y)
+        if self.spawns[self.cells[x][y]:__tostring()] then
+            self.spawns[self.cells[x][y]:__tostring()] = nil
+        else
+            self.spawns[self.cells[x][y]:__tostring()] = self.cells[x][y]
+        end
+        self.cells[x][y]:toggleSpawn()
+        world.grid:calculatePaths()
+    end;
     toggleObstacle = function(self, x, y)
         self.cells[x][y]:toggleObstacle(x, y)
+        self:calculatePaths()
     end;
     getNeighbours = function(self, target)
         assert(target.x and target.y)
@@ -80,8 +139,5 @@ Grid = Class {
                 end
             end;
         end
-    end;
-    isOccupied = function(self, x, y)
-        return self.cells[x] and self.cells[x][y]
     end;
 }

@@ -4,27 +4,30 @@ World = Class {
         assert(origin.y)
         self.origin = origin
         self.grid = Grid(self.origin, rows, cols)
-        self.goal = nil      
+        self.goal = nil
+        self.towers = {}
     end;
-    update = function(self, dt)
+    placeTower = function(self, x, y)
+        if not self.grid:isOccupied(x, y, constants.TOWER.WIDTH, constants.TOWER.HEIGHT) then
+            local worldX, worldY = self.grid:calculateWorldCoordinates(x, y)
+            table.insert(self.towers, Tower(x, y, worldX, worldY, constants.TOWER.WIDTH, constants.TOWER.HEIGHT))
+            for i = x, x + constants.TOWER.WIDTH-1 do
+                for j = y, y + constants.TOWER.HEIGHT-1 do
+                    self.grid:toggleObstacle(i, j)
+                end
+            end
+        end
+    end;
+    update = function(self, dt, isPlacingTower)
+        self.grid:update(dt, isPlacingTower)
+        for i, tower in pairs(self.towers) do
+            tower:update(dt)
+        end
     end;
     draw = function(self)
         self.grid:draw()
-    end;
-    keypressed = function(self, key)
-        --TODO: might not need this. A proper input handler/controller probably a better idea
-    end;
-    mousepressed = function(self, screen_x, screen_y, button)
-        --TODO: same with above, input handler instead?
-        local x, y = self.grid:calculateGridCoordinates(screen_x, screen_y)
-        if self.grid:isOccupied(x, y) then
-            if button == 1 then 
-                self.grid:toggleObstacle(x, y)
-                self.grid:calculatePaths()
-            elseif button == 2 then
-                self.grid:setGoal(x, y)
-                self.grid:calculatePaths()
-            end
+        for i, tower in pairs(self.towers) do
+            tower:draw()
         end
     end;
 }

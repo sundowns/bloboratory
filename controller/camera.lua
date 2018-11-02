@@ -29,4 +29,10 @@ CameraController = Class {
     getWorldCoordinates = function(self, x, y)
         return self.camera:worldCoords(x, y)
     end;
+    getCameraCoordinates = function(self, x, y)
+        return self.camera:cameraCoords(x, y)
+    end;
+    mousePosition = function(self)
+        return self.camera:mousePosition()
+    end;
 }

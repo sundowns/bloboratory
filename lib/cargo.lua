@@ -10,7 +10,7 @@ local function merge(target, source, ...)
   return merge(target, ...)
 end
 
-local la, lf, lg = love.audio, love.filesystem, love.graphics
+local la, lf, lg, lm = love.audio, love.filesystem, love.graphics, love.mouse
 
 local function makeSound(path)
   local info = lf.getInfo(path, 'file')

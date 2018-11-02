@@ -9,9 +9,13 @@ Cell = Class {
         self.isSpawn = false
         self.cameFrom = nil
         self.distanceToGoal = 0
+        self.isHovered = false
     end;
     __tostring = function(self)
         return self.x..","..self.y
+    end;
+    update = function(self, dt)
+        self.isHovered = false
     end;
     draw = function(self)
         Util.l.resetColour()
@@ -21,7 +25,13 @@ Cell = Class {
             love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         elseif self.isGoal then
             love.graphics.setColor(constants.COLOURS.GOAL)
-            love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)    
+            love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+        elseif self.isSpawn then
+            love.graphics.setColor(constants.COLOURS.SPAWN)
+            love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
+        elseif self.isHovered then
+            love.graphics.setColor(constants.COLOURS.HOVERED)
+            love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         end
 
         if debug then
@@ -30,14 +40,14 @@ Cell = Class {
         end
     end;
     toggleObstacle = function(self)
-        if not self.isGoal and not self.spawn then
+        if not self.isGoal and not self.isSpawn then
             self.isObstacle = not self.isObstacle
         end
     end;
-    setSpawn = function(self)
-        self.isGoal = false
+    toggleSpawn = function(self)
+        self.isGoal = false 
         self.isObstacle = false
-        self.isSpawn = true
+        self.isSpawn = not self.isSpawn
     end;
     setGoal = function(self)
         self.isSpawn = false
