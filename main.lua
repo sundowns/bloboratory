@@ -12,6 +12,7 @@ function love.load()
     constants = require("constants")
     require("controller.camera")
     require("class.cell")
+    require("class.grid")
     require("class.world")
 
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
