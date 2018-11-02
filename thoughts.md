@@ -61,3 +61,7 @@
 * Saving game state
 * Damage type strengths/weaknesses
 * Animate building of towers
+
+## Title Ideas
+
+* Full Mental Alchemist (Might be too derivative but I couldn't NOT leave it here)
