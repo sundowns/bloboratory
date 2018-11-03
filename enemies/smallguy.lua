@@ -1,10 +1,14 @@
 SmallGuy = Class {
     __includes = Enemy,
     init = function(self, worldX, worldY)
-        Enemy.init(self, worldX, worldY, constants.ENEMIES.SMALLGUY.HEALTH)
+        Enemy.init(self, worldX, worldY, constants.ENEMY.SMALLGUY.HEALTH, constants.ENEMY.SMALLGUY.SPEED)
     end;
-    -- update = function(self, dt)
-    --     Enemy.update(self, dt)
-    --     --small guy specific logic
-    -- end;
+    update = function(self, dt, currentCell)
+        local destroy =  Enemy.update(self, dt, currentCell)
+        --small guy specific logic
+        return destroy
+    end;
+    draw = function(self)
+        Enemy.draw(self)
+    end
 }
