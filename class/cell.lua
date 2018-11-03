@@ -17,7 +17,7 @@ Cell = Class {
     update = function(self, dt)
         self.isHovered = false
     end;
-    draw = function(self)
+    draw = function(self, isSpawning)
         Util.l.resetColour()
         love.graphics.rectangle('line', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         if self.isObstacle then
@@ -27,7 +27,11 @@ Cell = Class {
             love.graphics.setColor(constants.COLOURS.GOAL)
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         elseif self.isSpawn then
-            love.graphics.setColor(constants.COLOURS.SPAWN)
+            if isSpawning then
+                love.graphics.setColor(constants.COLOURS.SPAWN_ACTIVE)
+            else
+                love.graphics.setColor(constants.COLOURS.SPAWN_INACTIVE)
+            end
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
         elseif self.isHovered then
             love.graphics.setColor(constants.COLOURS.HOVERED)
@@ -55,7 +59,10 @@ Cell = Class {
         self.isGoal = true
     end;
     isOccupied = function(self)
-        return self.isObstacle or self.isSpawn or self.isGoal 
+        return self.isObstacle or self.isSpawn or self.isGoal
+    end;
+    isSpawnable = function(self)
+        return self.isObstacle or self.isGoal
     end;
     getCentre = function(self)
         return self.worldX + constants.GRID.CELL_SIZE/2, self.worldY + constants.GRID.CELL_SIZE/2

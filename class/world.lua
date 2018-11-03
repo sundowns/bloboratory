@@ -7,6 +7,8 @@ World = Class {
         self.goal = nil
         self.towers = {}
         self.enemies = {}
+        self.isSpawning = false
+        self:setupTimers()
     end;
     placeTower = function(self, gridX, gridY)
         if not self.grid:isOccupied(gridX, gridY, constants.TOWER.WIDTH, constants.TOWER.HEIGHT) then
@@ -25,7 +27,7 @@ World = Class {
     end;
     spawnEnemyAt = function(self, gridX, gridY)
         local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
-        if self.grid:isValidGridCoords(gridX, gridY) and not self.grid:isOccupied(gridX, gridY) then
+        if self.grid:isValidGridCoords(gridX, gridY) and not self.grid:isSpawnable(gridX, gridY) then
             table.insert(self.enemies, SmallGuy(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
         end
     end;
@@ -41,9 +43,13 @@ World = Class {
                 table.remove(self.enemies, i)
             end
         end
+
+        if self.isSpawning then
+            self.spawnTimer:update(dt)
+        end
     end;
     draw = function(self)
-        self.grid:draw()
+        self.grid:draw(self.isSpawning)
         for i, tower in pairs(self.towers) do
             tower:draw()
         end
@@ -51,5 +57,17 @@ World = Class {
         for i, enemy in pairs(self.enemies) do
             enemy:draw()
         end
+    end;
+    setupTimers = function(self)
+        self.spawnTimer = Timer.new()
+
+        self.spawnTimer:every(constants.ENEMY.SPAWN_INTERVAL, function()
+            if self.grid.spawn then
+                self:spawnEnemyAt(self.grid.spawn.x, self.grid.spawn.y)
+            end
+        end)
+    end;
+    toggleSpawning = function(self)
+        self.isSpawning = not self.isSpawning
     end;
 }

@@ -6,7 +6,8 @@ return {
         HOVERED = {0,1,0},
         OBSTACLE = {1,1,1},
         GOAL = {1,1,0},
-        SPAWN = {1,0,1},
+        SPAWN_ACTIVE = {0,0,1},
+        SPAWN_INACTIVE = {1,0,0},
         TOWER = {0,0,1},
         ENEMY = {1,0,0}
     },
@@ -21,6 +22,7 @@ return {
     },
     ENEMY = {
         RADIUS = 4,
+        SPAWN_INTERVAL = 1,
         SMALLGUY = {
             HEALTH = 10,
             SPEED = 10

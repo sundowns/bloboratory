@@ -29,6 +29,8 @@ InputController = Class {
                 world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
             elseif key == "g" then
                 world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
+            elseif key == "space" then
+                world:toggleSpawning()
             end
         end
     end;  

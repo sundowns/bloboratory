@@ -17,7 +17,8 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 | ------------- |:-------------:|
 | mouse1      | toggle obstacle |
 | t      | toggle tower placement      |
-| s | toggle spawner      |
+| s | place spawner      |
+| space | toggle spawning |
 | g | toggle goal      |
 | f1 | toggle debug overlay      |
 | f5 | restart game      |

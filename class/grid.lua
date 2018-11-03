@@ -25,14 +25,15 @@ Grid = Class {
             end
         end
     end;
-    draw = function(self)
+    draw = function(self, isSpawning)
         for i = 0, self.cols do
             for j = 0, self.rows do
-                self.cells[i][j]:draw()
+                self.cells[i][j]:draw(isSpawning)
             end
         end
 
-        if #self.optimalPath > 0 then
+        -- Cant draw a line with less than 2 vertices (4 points)
+        if #self.optimalPath > 4 then
             love.graphics.setColor(0,1,1)
             love.graphics.line(self.optimalPath)
         end
@@ -61,6 +62,9 @@ Grid = Class {
     end;
     isValidGridCoords = function(self, x, y)
         return self.cells[x] and self.cells[x][y]
+    end;
+    isSpawnable = function(self, x, y)
+        return self.cells[x] and self.cells[x][y] and self.cells[x][y]:isSpawnable()
     end;
     isOccupied = function(self, x, y, width, height)
         if not height then height = 1 end
@@ -169,6 +173,8 @@ Grid = Class {
                 table.insert(self.optimalPath, cY)
                 current = current.cameFrom
             end
+        else
+            self.optimalPath = {}
         end
     end;
 }
