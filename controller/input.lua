@@ -37,7 +37,7 @@ InputController = Class {
     mousepressed = function(self, screen_x, screen_y, button)
         local x, y = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
         if self.isPlacingTower then
-            if world:placeTower(x, y) then
+            if world:placeTower(x, y, "SAW") then --TODO: allow selection of different towers
                 self:togglePlacingTower()
             end
         else

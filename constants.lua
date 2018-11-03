@@ -17,12 +17,11 @@ return {
         CELL_SIZE = 16,
     },
     TOWER = {
-        WIDTH = 2, -- cells
-        HEIGHT = 2,  -- cells
         SAW = {
-            ATTACK_DAMAGE = 1,
-            ATTACK_SPEED = 3, 
-            ATTACK_RANGE = 32
+            WIDTH = 2, --cells
+            HEIGHT = 2, --cells
+            ATTACK_DAMAGE = 5, --damage per second 
+            ATTACK_RADIUS = 1 --additional cell radii
         }
     },
     ENEMY = {
