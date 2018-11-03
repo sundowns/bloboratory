@@ -6,7 +6,9 @@ InputController = Class {
     end;
     update = function(self, dt)
         if self.isPlacingTower then
-            world.grid:highlightCells(love.mouse.getPosition())
+            local mouseX, mouseY = love.mouse.getPosition()
+            --TODO: update to allow placing different types of towers
+            world.grid:highlightCells(mouseX, mouseY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT)
         end
     end;
     togglePlacingTower = function(self)

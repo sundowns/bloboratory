@@ -38,12 +38,11 @@ Grid = Class {
             love.graphics.line(self.optimalPath)
         end
     end;
-    highlightCells = function(self, mouseX, mouseY)
-        --highlight 2x2 with selected block as top left
+    highlightCells = function(self, mouseX, mouseY, width, height)
         local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
-        if not self:isOccupied(gridX, gridY, 2, 2) then --TODO: highlight based on width of tower being currently placed (hardcoded to 2 for now)
-            for i = gridX, gridX + constants.TOWER.WIDTH-1 do
-                for j = gridY, gridY + constants.TOWER.HEIGHT-1 do
+        if not self:isOccupied(gridX, gridY, 2, 2) then
+            for i = gridX, gridX + width-1 do
+                for j = gridY, gridY + height-1 do
                     self.cells[i][j].isHovered = true
                 end
             end
