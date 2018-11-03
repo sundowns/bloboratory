@@ -5,6 +5,5 @@ Saw = Class {
         self.attackRange = constants.TOWER.SAW.ATTACK_RANGE
         self.attackDamage = constants.TOWER.SAW.ATTACK_DAMAGE
         self.attackSpeed = constants.TOWER.SAW.ATTACK_SPEED
-        world.collisionWorld:add(worldX, worldY, width + self.attackRange, height + self.attackRange)
     end;
 }

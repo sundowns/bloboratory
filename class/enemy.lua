@@ -5,6 +5,7 @@ Enemy = Class {
         self.health = health
         self.speed = speed
         self.movingTo = nil
+        --world.collsionWorld:add(self, worldX, worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
     end;
     update = function(self, dt, currentCell)
         if not currentCell or currentCell.isObstacle then
@@ -33,6 +34,14 @@ Enemy = Class {
         end 
 
         return false
+    end;
+    processAttack = function(self, damage)
+        local alive = true
+        self.health = self.health - damage
+        if self.health <= 0 then 
+            alive = false
+        end 
+        return alive
     end;
     draw = function(self)
         love.graphics.setColor(constants.COLOURS.ENEMY)
