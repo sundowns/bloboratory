@@ -8,7 +8,7 @@ return {
         GOAL = {1,1,0},
         SPAWN_ACTIVE = {0,0,1},
         SPAWN_INACTIVE = {1,0,0},
-        TOWER = {0,0,1},
+        TOWER = {0.5,0,1},
         ENEMY = {1,0,0}
     },
     GRID = {
@@ -17,8 +17,12 @@ return {
         CELL_SIZE = 16,
     },
     TOWER = {
-        WIDTH = 2, -- cells
-        HEIGHT = 2  -- cells
+        SAW = {
+            WIDTH = 2, --cells
+            HEIGHT = 2, --cells
+            ATTACK_DAMAGE = 5, --damage per second 
+            ATTACK_RADIUS = 1 --additional cell radii
+        }
     },
     ENEMY = {
         RADIUS = 4,

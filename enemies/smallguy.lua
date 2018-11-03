@@ -1,7 +1,7 @@
 SmallGuy = Class {
     __includes = Enemy,
-    init = function(self, worldX, worldY)
-        Enemy.init(self, worldX, worldY, constants.ENEMY.SMALLGUY.HEALTH, constants.ENEMY.SMALLGUY.SPEED)
+    init = function(self, worldOrigin)
+        Enemy.init(self, "SMALLGUY", worldOrigin, constants.ENEMY.SMALLGUY.HEALTH, constants.ENEMY.SMALLGUY.SPEED)
     end;
     update = function(self, dt, currentCell)
         local destroy =  Enemy.update(self, dt, currentCell)
@@ -10,5 +10,8 @@ SmallGuy = Class {
     end;
     draw = function(self)
         Enemy.draw(self)
-    end
+    end;
+    calculateHitbox = function(self)
+        return Enemy.calculateHitbox(self)
+    end;
 }

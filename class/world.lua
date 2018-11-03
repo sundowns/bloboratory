@@ -7,28 +7,36 @@ World = Class {
         self.goal = nil
         self.towers = {}
         self.enemies = {}
+        self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE)
         self.isSpawning = false
         self:setupTimers()
     end;
-    placeTower = function(self, gridX, gridY)
-        if not self.grid:isOccupied(gridX, gridY, constants.TOWER.WIDTH, constants.TOWER.HEIGHT) then
-            local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
-            table.insert(self.towers, Tower(gridX, gridY, worldX, worldY, constants.TOWER.WIDTH, constants.TOWER.HEIGHT))
-            for i = gridX, gridX + constants.TOWER.WIDTH-1 do
-                for j = gridY, gridY + constants.TOWER.HEIGHT-1 do
-                    self.grid:toggleObstacle(i, j)
-                end
-            end
+    placeTower = function(self, gridX, gridY, type)
+        if type == "SAW" then
+            if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT) then
+                local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
+                local newSaw = Saw(Vector(gridX, gridY), Vector(worldX, worldY))
+                table.insert(self.towers, newSaw)
+                self.collisionWorld:add(newSaw, newSaw:calculateHitbox())
 
-            self.grid:calculatePaths()
-            return true --a tower was placed
+                for i = gridX, gridX + newSaw.width-1 do
+                    for j = gridY, gridY + newSaw.width-1 do
+                        self.grid:toggleObstacle(i, j)
+                    end
+                end
+    
+                self.grid:calculatePaths()
+                return true --a tower was placed
+            end
         end
         return false --nothing placed
     end;
     spawnEnemyAt = function(self, gridX, gridY)
         local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
         if self.grid:isValidGridCoords(gridX, gridY) and not self.grid:isSpawnable(gridX, gridY) then
-            table.insert(self.enemies, SmallGuy(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
+            local newEnemy = SmallGuy(Vector(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
+            table.insert(self.enemies, newEnemy)
+            self.collisionWorld:add(newEnemy, newEnemy:calculateHitbox())
         end
     end;
     update = function(self, dt)
@@ -37,10 +45,29 @@ World = Class {
             tower:update(dt)
         end
 
-        for i, enemy in pairs(self.enemies) do
-            local destroy = enemy:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(enemy.worldX, enemy.worldY)))
+        for i = #self.enemies, 1, -1 do
+            local destroy = self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if destroy then
+                self.collisionWorld:remove(self.enemies[i]) 
                 table.remove(self.enemies, i)
+            else 
+                local actualX, actualY, cols, len = self.collisionWorld:move(self.enemies[i], self.enemies[i].worldOrigin.x - constants.GRID.CELL_SIZE/2, self.enemies[i].worldOrigin.y - constants.GRID.CELL_SIZE/2, function() return "cross" end)
+                for j = #cols, 1, -1 do 
+                    local collision = cols[j]
+                    
+                    if collision.other.type == "TOWER" then
+                        if collision.other.towerType == "SAW" then
+                            if collision.item:takeDamage(collision.other.attackDamage, dt) then
+                                -- enemy still alive
+                            else -- enemy died
+                                self.collisionWorld:remove(self.enemies[i])
+                                table.remove(self.enemies, i) 
+                                print("RIP!")
+                                break; --exit the loop, this enemy is already dead
+                            end
+                        end
+                    end
+                end
             end
         end
 
@@ -57,6 +84,14 @@ World = Class {
         for i, enemy in pairs(self.enemies) do
             enemy:draw()
         end
+
+        if debug == true then 
+            love.graphics.setColor(constants.COLOURS.ENEMY)
+            local items, len = self.collisionWorld:getItems()
+            for i =#items, 1, -1 do
+                love.graphics.rectangle('line', self.collisionWorld:getRect(items[i]))
+            end
+        end 
     end;
     setupTimers = function(self)
         self.spawnTimer = Timer.new()
