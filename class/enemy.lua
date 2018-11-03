@@ -2,6 +2,7 @@ Enemy = Class {
     init = function(self, enemyType, worldOrigin, health, speed)
         assert(worldOrigin.x and worldOrigin.y)
         self.worldOrigin = worldOrigin
+        self.maxHealth = health
         self.health = health
         self.speed = speed
         self.movingTo = nil
@@ -41,7 +42,7 @@ Enemy = Class {
         return self.health > 0
     end;
     draw = function(self)
-        love.graphics.setColor(constants.COLOURS.ENEMY)
+        love.graphics.setColor(self.health/self.maxHealth, 0, 0)
         love.graphics.circle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.ENEMY.RADIUS)
     end;
     moveBy = function(self, dx, dy)

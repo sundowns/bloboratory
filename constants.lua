@@ -8,7 +8,7 @@ return {
         GOAL = {1,1,0},
         SPAWN_ACTIVE = {0,0,1},
         SPAWN_INACTIVE = {1,0,0},
-        TOWER = {0,0,1},
+        TOWER = {0.5,0,1},
         ENEMY = {1,0,0}
     },
     GRID = {
