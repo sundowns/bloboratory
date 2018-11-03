@@ -1,5 +1,21 @@
 return {
-    CAMERA_SPEED = 300,
+    CAMERA = {
+        SPEED = 300,
+        PANZONES = {
+            TOP_BOTTOM = {
+                HEIGHT = 0.05,
+                WIDTH = 1
+            },
+            LEFT_RIGHT = {
+                HEIGHT = 1,
+                WIDTH = 0.1
+            }
+        },
+        MOUSE = {
+            WIDTH = 5,
+            HEIGHT = 5
+        }
+    },
     COLOURS = {
         DEBUG_PRINT = {0,1,0},
         EMPTY = {0,0,0},
@@ -9,11 +25,12 @@ return {
         SPAWN_ACTIVE = {0,0,1},
         SPAWN_INACTIVE = {1,0,0},
         TOWER = {0.5,0,1},
-        ENEMY = {1,0,0}
+        ENEMY = {1,0,0},
+        CAMERA_PANZONES = {1,0.5,0}
     },
     GRID = {
-        COLUMNS = 32,
-        ROWS = 32,
+        COLUMNS = 24,
+        ROWS = 24,
         CELL_SIZE = 16,
     },
     TOWER = {

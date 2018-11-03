@@ -13,7 +13,7 @@ function love.load()
     Timer = require("lib.timer")
     Util = require("lib.util")
     constants = require("constants")
-    bump = require("lib.bump.bump")
+    bump = require("lib.bump")
     require("controller.camera")
     require("controller.input")
     require("class.cell")
@@ -21,7 +21,7 @@ function love.load()
     require("class.tower")
     require("class.enemy")
     require("class.world")
-    require("towers.saw")
+    require("towers.saw") 
     require("enemies.smallguy")
 
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
@@ -40,6 +40,12 @@ function love.draw()
     cameraController:attach()
         world:draw()
     cameraController:detach()
+
+    if debug then
+        cameraController:draw()
+        Util.l.resetColour()
+        Util.l.renderStats()
+    end
 end
 
 function love.keypressed(key)
