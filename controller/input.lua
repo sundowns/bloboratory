@@ -1,7 +1,7 @@
 InputController = Class {
     init = function(self)
         --cargo doesnt cooperate with new cursor easy cause we cant :getData() in LOVE >11.0.
-        self.placingTowerCursor = love.mouse.newCursor("asset/cursors/Green.png",assets.cursors.green:getWidth()/3, assets.cursors.green:getHeight()/3)
+        self.placingTowerCursor = love.mouse.newCursor("asset/cursors/green.png",assets.cursors.green:getWidth()/3, assets.cursors.green:getHeight()/3)
         self.isPlacingTower = false
     end;
     update = function(self, dt)
