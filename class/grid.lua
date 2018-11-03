@@ -4,7 +4,7 @@ Grid = Class {
         self.rows = rows
         self.cols = cols
         self.goal = nil
-        self.spawns = {}
+        self.spawn = nil
         self.cells = {}
 
         for i = 0, self.cols, 1 do
@@ -32,10 +32,11 @@ Grid = Class {
         --highlight 2x2 with selected block as top left
         local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
         if not self:isOccupied(gridX, gridY, 2, 2) then --TODO: highlight based on width of tower being currently placed (hardcoded to 2 for now)
-            self.cells[gridX][gridY].isHovered = true
-            self.cells[gridX+1][gridY].isHovered = true
-            self.cells[gridX][gridY+1].isHovered = true
-            self.cells[gridX+1][gridY+1].isHovered = true
+            for i = gridX, gridX + constants.TOWER.WIDTH-1 do
+                for j = gridY, gridY + constants.TOWER.HEIGHT-1 do
+                    self.cells[i][j].isHovered = true
+                end
+            end
         end
     end;
     calculateGridCoordinatesFromWorld = function(self, worldX, worldY)
@@ -88,15 +89,12 @@ Grid = Class {
         self.goal:setGoal()
         self:calculatePaths()
     end;
-    toggleSpawn = function(self, x, y)
+    setSpawn = function(self, x, y)
         if not self:isValidGridCoords(x, y) then return end
-        if self.spawns[self.cells[x][y]:__tostring()] then
-            self.spawns[self.cells[x][y]:__tostring()] = nil
-        else
-            self.spawns[self.cells[x][y]:__tostring()] = self.cells[x][y]
-        end
-        self.cells[x][y]:toggleSpawn()
-        world.grid:calculatePaths()
+        if self.spawn then self.spawn.isSpawn = false end
+        self.spawn = self.cells[x][y]
+        self.spawn:setSpawn()
+        self:calculatePaths()
     end;
     toggleObstacle = function(self, x, y)
         if not self:isValidGridCoords(x, y) then return end

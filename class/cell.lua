@@ -44,10 +44,10 @@ Cell = Class {
             self.isObstacle = not self.isObstacle
         end
     end;
-    toggleSpawn = function(self)
+    setSpawn = function(self)
         self.isGoal = false 
         self.isObstacle = false
-        self.isSpawn = not self.isSpawn
+        self.isSpawn = true
     end;
     setGoal = function(self)
         self.isSpawn = false

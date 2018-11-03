@@ -20,12 +20,16 @@ InputController = Class {
     keypressed = function(self, key)
         if key == "t" then
             self:togglePlacingTower()
-        elseif key == "e" then
-            world:spawnEnemyAt(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
-        elseif key == "s" then
-            world.grid:toggleSpawn(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
-        elseif key == "g" then
-            world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
+        end
+
+        if not self.isPlacingTower then
+            if key == "e" then
+                world:spawnEnemyAt(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
+            elseif key == "s" then
+                world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
+            elseif key == "g" then
+                world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
+            end
         end
     end;  
     mousepressed = function(self, screen_x, screen_y, button)
