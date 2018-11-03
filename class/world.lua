@@ -7,6 +7,7 @@ World = Class {
         self.goal = nil
         self.towers = {}
         self.enemies = {}
+        self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE)
         self.isSpawning = false
         self:setupTimers()
     end;

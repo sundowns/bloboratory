@@ -18,7 +18,12 @@ return {
     },
     TOWER = {
         WIDTH = 2, -- cells
-        HEIGHT = 2  -- cells
+        HEIGHT = 2,  -- cells
+        SAW = {
+            ATTACK_DAMAGE = 1,
+            ATTACK_SPEED = 3, 
+            ATTACK_RANGE = 32
+        }
     },
     ENEMY = {
         RADIUS = 4,
