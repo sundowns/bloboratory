@@ -7,10 +7,14 @@ Grid = Class {
         self.spawn = nil
         self.cells = {}
 
+        --used to draw path from spawn to goal
+        self.optimalPath = {}
+
         for i = 0, self.cols, 1 do
             self.cells[i] = {}
             for j = 0, self.rows, 1 do
-                self.cells[i][j] = Cell(i, j)
+                local worldX, worldY = self:calculateWorldCoordinatesFromGrid(i, j)
+                self.cells[i][j] = Cell(i, j, worldX, worldY)
             end
         end  
     end;
@@ -26,6 +30,11 @@ Grid = Class {
             for j = 0, self.rows do
                 self.cells[i][j]:draw()
             end
+        end
+
+        if #self.optimalPath > 0 then
+            love.graphics.setColor(0,1,1)
+            love.graphics.line(self.optimalPath)
         end
     end;
     highlightCells = function(self, mouseX, mouseY)
@@ -148,6 +157,18 @@ Grid = Class {
 
                 end
             end;
+        end
+
+        if self.spawn then
+            self.optimalPath = {}
+            local current = self.spawn.cameFrom
+            
+            while current and not current.isGoal do 
+                local cX, cY = current:getCentre()
+                table.insert(self.optimalPath, cX)
+                table.insert(self.optimalPath, cY)
+                current = current.cameFrom
+            end
         end
     end;
 }
