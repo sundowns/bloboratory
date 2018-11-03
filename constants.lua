@@ -8,6 +8,7 @@ return {
         GOAL = {1,1,0},
         SPAWN = {1,0,1},
         TOWER = {0,0,1},
+        ENEMY = {1,0,0}
     },
     GRID = {
         COLUMNS = 32,
@@ -18,9 +19,11 @@ return {
         WIDTH = 2, -- cells
         HEIGHT = 2  -- cells
     },
-    ENEMIES = {
+    ENEMY = {
+        RADIUS = 4,
         SMALLGUY = {
-            HEALTH = 10
+            HEALTH = 10,
+            SPEED = 10
         }
     }
 }

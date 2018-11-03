@@ -14,21 +14,11 @@ Grid = Class {
             end
         end  
     end;
-    update = function(self, dt, isPlacingTower)
+    update = function(self, dt)
         for i = 0, self.cols do
             for j = 0, self.rows do
                 self.cells[i][j]:update(dt)
             end
-        end
-    end;
-    highlightCells = function(self, mouseX, mouseY)
-        --highlight 2x2 with selected block as top left
-        local gridX, gridY = self:calculateGridCoordinates(love.mouse.getPosition())
-        if not self:isOccupied(gridX, gridY, 2, 2) then --TODO: highlight based on width of tower being currently placed (hardcoded to 2 for now)
-            self.cells[gridX][gridY].isHovered = true
-            self.cells[gridX+1][gridY].isHovered = true
-            self.cells[gridX][gridY+1].isHovered = true
-            self.cells[gridX+1][gridY+1].isHovered = true
         end
     end;
     draw = function(self)
@@ -38,11 +28,23 @@ Grid = Class {
             end
         end
     end;
-    calculateGridCoordinates = function(self, screenX, screenY)
-        local worldX, worldY = cameraController:getWorldCoordinates(screenX, screenY)
+    highlightCells = function(self, mouseX, mouseY)
+        --highlight 2x2 with selected block as top left
+        local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
+        if not self:isOccupied(gridX, gridY, 2, 2) then --TODO: highlight based on width of tower being currently placed (hardcoded to 2 for now)
+            self.cells[gridX][gridY].isHovered = true
+            self.cells[gridX+1][gridY].isHovered = true
+            self.cells[gridX][gridY+1].isHovered = true
+            self.cells[gridX+1][gridY+1].isHovered = true
+        end
+    end;
+    calculateGridCoordinatesFromWorld = function(self, worldX, worldY)
         return math.floor(self.origin.x + worldX / constants.GRID.CELL_SIZE), math.floor(self.origin.y + worldY / constants.GRID.CELL_SIZE)
     end;
-    calculateWorldCoordinates = function(self, gridX, gridY)
+    calculateGridCoordinatesFromScreen = function(self, screenX, screenY)
+        return self:calculateGridCoordinatesFromWorld(cameraController:getWorldCoordinates(screenX, screenY))
+    end;
+    calculateWorldCoordinatesFromGrid = function(self, gridX, gridY)
         local worldX = self.origin.x + (gridX * constants.GRID.CELL_SIZE) 
         local worldY = self.origin.y + (gridY * constants.GRID.CELL_SIZE) 
         return worldX, worldY
@@ -74,6 +76,11 @@ Grid = Class {
             return false
         end
     end;
+    getCell = function(self, gridX, gridY)
+        if self:isValidGridCoords(gridX, gridY) then
+            return self.cells[gridX][gridY]
+        end
+    end;
     setGoal = function(self, x, y)
         if not self:isValidGridCoords(x, y) then return end
         if self.goal then self.goal.isGoal = false end
@@ -94,7 +101,6 @@ Grid = Class {
     toggleObstacle = function(self, x, y)
         if not self:isValidGridCoords(x, y) then return end
         self.cells[x][y]:toggleObstacle(x, y)
-        self:calculatePaths()
     end;
     getNeighbours = function(self, target)
         assert(target.x and target.y)
