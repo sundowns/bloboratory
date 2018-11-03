@@ -1,9 +1,9 @@
 Cell = Class {
-    init = function(self, grid_x, grid_y)
-        self.x = grid_x
-        self.y = grid_y
-        self.screen_x = self.x * constants.GRID.CELL_SIZE
-        self.screen_y = self.y * constants.GRID.CELL_SIZE
+    init = function(self, gridX, gridY, worldX, worldY)
+        self.x = gridX
+        self.y = gridY
+        self.worldX = worldX
+        self.worldY = worldY
         self.isObstacle = false
         self.isGoal = false
         self.isSpawn = false
@@ -19,19 +19,19 @@ Cell = Class {
     end;
     draw = function(self)
         Util.l.resetColour()
-        love.graphics.rectangle('line', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+        love.graphics.rectangle('line', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         if self.isObstacle then
             love.graphics.setColor(constants.COLOURS.OBSTACLE)
-            love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         elseif self.isGoal then
             love.graphics.setColor(constants.COLOURS.GOAL)
-            love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         elseif self.isSpawn then
             love.graphics.setColor(constants.COLOURS.SPAWN)
-            love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
+            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
         elseif self.isHovered then
             love.graphics.setColor(constants.COLOURS.HOVERED)
-            love.graphics.rectangle('fill', self.screen_x, self.screen_y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         end
 
         if debug then
@@ -56,5 +56,8 @@ Cell = Class {
     end;
     isOccupied = function(self)
         return self.isObstacle or self.isSpawn or self.isGoal 
+    end;
+    getCentre = function(self)
+        return self.worldX + constants.GRID.CELL_SIZE/2, self.worldY + constants.GRID.CELL_SIZE/2
     end;
 }
