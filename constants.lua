@@ -18,4 +18,9 @@ return {
         WIDTH = 2, -- cells
         HEIGHT = 2  -- cells
     },
+    ENEMIES = {
+        SMALLGUY = {
+            HEALTH = 10
+        }
+    }
 }

@@ -19,6 +19,8 @@ function love.load()
     require("class.tower")
     require("class.enemy")
     require("class.world")
+    require("towers.saw")
+    require("enemies.smallguy")
 
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
     inputController = InputController()

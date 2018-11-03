@@ -6,6 +6,7 @@ World = Class {
         self.grid = Grid(self.origin, rows, cols)
         self.goal = nil
         self.towers = {}
+        self.enemies = {}
     end;
     placeTower = function(self, gridX, gridY)
         if not self.grid:isOccupied(gridX, gridY, constants.TOWER.WIDTH, constants.TOWER.HEIGHT) then
@@ -23,7 +24,11 @@ World = Class {
     end;
     spawnEnemyAt = function(self, gridX, gridY)
         local worldX, worldY = self.grid:calculateWorldCoordinates(gridX, gridY)
-        print('spawning at '..worldX..','..worldY)
+        if self.grid:isValidGridCoords(gridX, gridY) then
+            local newGuy = SmallGuy(worldX, worldY)
+            Util.t.print(newGuy)
+            table.insert(self.enemies, SmallGuy(worldX, worldY))
+        end
     end;
     update = function(self, dt, isPlacingTower)
         self.grid:update(dt, isPlacingTower)
