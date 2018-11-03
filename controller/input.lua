@@ -25,8 +25,9 @@ InputController = Class {
     mousepressed = function(self, screen_x, screen_y, button)
         local x, y = world.grid:calculateGridCoordinates(screen_x, screen_y)
         if self.isPlacingTower then
-            world:placeTower(x, y)
-            self:togglePlacingTower()
+            if world:placeTower(x, y) then
+                self:togglePlacingTower()
+            end
         else
             if world.grid:isOccupied(x, y) then
                 if button == 1 then 

@@ -16,7 +16,10 @@ World = Class {
                     self.grid:toggleObstacle(i, j)
                 end
             end
+
+            return true --a tower was placed
         end
+        return false --nothing placed
     end;
     update = function(self, dt, isPlacingTower)
         self.grid:update(dt, isPlacingTower)

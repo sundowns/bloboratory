@@ -57,9 +57,14 @@ Grid = Class {
         else
             --loop over contained cells
             for i = 0, width-1 do
-                if self.cells[x+i] == nil or self.cells[x+i].isObstacle then return true end
+                if self.cells[x+i] == nil then
+                    return true 
+                end
                 for j = 0, height-1 do
-                    if self.cells[x+i][y+j] == nil or self.cells[x+i][y+j].isObstacle then return true end
+                    if self.cells[x+i][y+j] == nil 
+                    or self.cells[x+i][y+j]:isOccupied() then
+                        return true
+                    end
                 end
             end
 

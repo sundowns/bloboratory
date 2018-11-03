@@ -54,4 +54,7 @@ Cell = Class {
         self.isObstacle = false
         self.isGoal = true
     end;
+    isOccupied = function(self)
+        return self.isObstacle or self.isSpawn or self.isGoal 
+    end;
 }
