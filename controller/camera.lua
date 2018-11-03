@@ -13,16 +13,16 @@ CameraController = Class {
     end;
     update = function(self, dt)
         --TODO: Add some clever mouse camera movement
-        if love.keyboard.isDown('left', 'a') then
+        if love.keyboard.isDown('left') then
             self.camera:move(-dt*constants.CAMERA_SPEED, 0)
         end
-        if love.keyboard.isDown('right', 'd') then
+        if love.keyboard.isDown('right') then
             self.camera:move(dt*constants.CAMERA_SPEED, 0)
         end
-        if love.keyboard.isDown('up', 'w') then
+        if love.keyboard.isDown('up') then
             self.camera:move(0, -dt*constants.CAMERA_SPEED)
         end
-        if love.keyboard.isDown('down', 's') then
+        if love.keyboard.isDown('down') then
             self.camera:move(0, dt*constants.CAMERA_SPEED)
         end
     end;

@@ -20,6 +20,12 @@ InputController = Class {
     keypressed = function(self, key)
         if key == "t" then
             self:togglePlacingTower()
+        elseif key == "e" then
+            world:spawnEnemyAt(world.grid:calculateGridCoordinates(love.mouse.getPosition()))
+        elseif key == "s" then
+            world.grid:toggleSpawn(world.grid:calculateGridCoordinates(love.mouse.getPosition()))
+        elseif key == "g" then
+            world.grid:setGoal(world.grid:calculateGridCoordinates(love.mouse.getPosition()))
         end
     end;  
     mousepressed = function(self, screen_x, screen_y, button)
@@ -29,16 +35,8 @@ InputController = Class {
                 self:togglePlacingTower()
             end
         else
-            if world.grid:isOccupied(x, y) then
-                if button == 1 then 
-                    if love.keyboard.isDown("lshift") then
-                        world.grid:toggleSpawn(x, y)
-                    else
-                        world.grid:toggleObstacle(x, y)
-                    end
-                elseif button == 2 then
-                    world.grid:setGoal(x, y)
-                end
+            if button == 1 then 
+                world.grid:toggleObstacle(x, y)
             end
         end
     end;

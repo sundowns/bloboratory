@@ -47,13 +47,16 @@ Grid = Class {
         local worldY = self.origin.y + (gridY * constants.GRID.CELL_SIZE) 
         return worldX, worldY
     end;
+    isValidGridCoords = function(self, x, y)
+        return self.cells[x] and self.cells[x][y]
+    end;
     isOccupied = function(self, x, y, width, height)
         if not height then height = 1 end
         if not width then width = 1 end
         
         if width == 1  and height == 1 then
             --treat as 1 cell
-            return self.cells[x] and self.cells[x][y]
+            return self.cells[x] and self.cells[x][y] and self.cells[x][y]:isOccupied()
         else
             --loop over contained cells
             for i = 0, width-1 do
@@ -72,17 +75,14 @@ Grid = Class {
         end
     end;
     setGoal = function(self, x, y)
-        if self.goal then self.goal.isGoal = false end
-        self.goal = self.cells[x][y]
-        self.goal:setGoal()
-    end;
-    setGoal = function(self, x, y)
+        if not self:isValidGridCoords(x, y) then return end
         if self.goal then self.goal.isGoal = false end
         self.goal = self.cells[x][y]
         self.goal:setGoal()
         self:calculatePaths()
     end;
     toggleSpawn = function(self, x, y)
+        if not self:isValidGridCoords(x, y) then return end
         if self.spawns[self.cells[x][y]:__tostring()] then
             self.spawns[self.cells[x][y]:__tostring()] = nil
         else
@@ -92,6 +92,7 @@ Grid = Class {
         world.grid:calculatePaths()
     end;
     toggleObstacle = function(self, x, y)
+        if not self:isValidGridCoords(x, y) then return end
         self.cells[x][y]:toggleObstacle(x, y)
         self:calculatePaths()
     end;

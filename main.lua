@@ -1,7 +1,7 @@
 love.filesystem.setRequirePath(love.filesystem.getRequirePath()..";lib/?.lua;lib/;")
 
 -- Globals (yikes)
-debug = true
+debug = false
 cameraController = {}
 inputController = {}
 world = {}
@@ -17,6 +17,7 @@ function love.load()
     require("class.cell")
     require("class.grid")
     require("class.tower")
+    require("class.enemy")
     require("class.world")
 
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)

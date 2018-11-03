@@ -7,12 +7,12 @@ World = Class {
         self.goal = nil
         self.towers = {}
     end;
-    placeTower = function(self, x, y)
-        if not self.grid:isOccupied(x, y, constants.TOWER.WIDTH, constants.TOWER.HEIGHT) then
-            local worldX, worldY = self.grid:calculateWorldCoordinates(x, y)
-            table.insert(self.towers, Tower(x, y, worldX, worldY, constants.TOWER.WIDTH, constants.TOWER.HEIGHT))
-            for i = x, x + constants.TOWER.WIDTH-1 do
-                for j = y, y + constants.TOWER.HEIGHT-1 do
+    placeTower = function(self, gridX, gridY)
+        if not self.grid:isOccupied(gridX, gridY, constants.TOWER.WIDTH, constants.TOWER.HEIGHT) then
+            local worldX, worldY = self.grid:calculateWorldCoordinates(gridX, gridY)
+            table.insert(self.towers, Tower(gridX, gridY, worldX, worldY, constants.TOWER.WIDTH, constants.TOWER.HEIGHT))
+            for i = gridX, gridX + constants.TOWER.WIDTH-1 do
+                for j = gridY, gridY + constants.TOWER.HEIGHT-1 do
                     self.grid:toggleObstacle(i, j)
                 end
             end
@@ -20,6 +20,10 @@ World = Class {
             return true --a tower was placed
         end
         return false --nothing placed
+    end;
+    spawnEnemyAt = function(self, gridX, gridY)
+        local worldX, worldY = self.grid:calculateWorldCoordinates(gridX, gridY)
+        print('spawning at '..worldX..','..worldY)
     end;
     update = function(self, dt, isPlacingTower)
         self.grid:update(dt, isPlacingTower)
