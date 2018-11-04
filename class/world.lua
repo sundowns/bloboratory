@@ -1,5 +1,5 @@
 World = Class {
-    init = function(self, origin, rows, cols)
+    init = function(self, origin, rows, cols, rounds)
         assert(origin.x)
         assert(origin.y)
         self.origin = origin
@@ -10,8 +10,9 @@ World = Class {
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE)
         self.isSpawning = false
         self:setupTimers()
+        self.rounds = rounds
         self.roundIndex = 1
-        self.currentRound = rounds[(self.roundIndex)]
+        self.currentRound = self.rounds[(self.roundIndex)]
     end;
     placeTower = function(self, gridX, gridY, type)
         if type == "SAW" then
@@ -47,9 +48,9 @@ World = Class {
                 self.currentRound.enemiesSpawned = self.currentRound.enemiesSpawned + 1
             else 
                 self.isSpawning = false
-                if rounds[(self.roundIndex + 1)] ~= nil then 
+                if self.rounds[(self.roundIndex + 1)] ~= nil then 
                     self.roundIndex = self.roundIndex + 1
-                    self.currentRound = rounds[self.roundIndex]
+                    self.currentRound = self.rounds[self.roundIndex]
                 end 
             end
         end
