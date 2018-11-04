@@ -40,7 +40,7 @@ return {
             ATTACK_DAMAGE = 5, --damage per second 
             TARGETTING_RADIUS = 1 --additional cell radii
         },
-        CATAPULT = {
+        SPUDGUN = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 5, --damage per second 

@@ -15,24 +15,23 @@ World = Class {
         self.currentRound = self.rounds[(self.roundIndex)]
     end;
     placeTower = function(self, gridX, gridY, type)
+        local placed = false
         if type == "SAW" then
             if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT) then
-                local newSaw = Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))
-                table.insert(self.towers, newSaw)
-                self.collisionWorld:add(newSaw, newSaw:calculateHitbox())
-                self.currentRound.towersPlaced = self.currentRound.towersPlaced + 1
-
-                for i = gridX, gridX + newSaw.width-1 do
-                    for j = gridY, gridY + newSaw.width-1 do
-                        self.grid:toggleObstacle(i, j)
-                    end
-                end
-    
-                self.grid:calculatePaths()
-                return true --a tower was placed  
+                placed = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
             end
         end
-        return false --nothing placed
+        if placed then
+            self.currentRound.towersPlaced = self.currentRound.towersPlaced + 1
+        end
+        return placed --nothing placed
+    end;
+    addNewTower = function(self, newTower)
+        table.insert(self.towers, newTower)
+        self.collisionWorld:add(newTower, newTower:calculateHitbox())
+        self.grid:occupySpaces(newTower.gridOrigin.x, newTower.gridOrigin.y, newTower.width, newTower.height)
+        self.grid:calculatePaths()
+        return true --a tower was placed  
     end;
     spawnEnemyAt = function(self, gridX, gridY)
         local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
@@ -69,16 +68,15 @@ World = Class {
                     local collision = cols[j]
                     
                     if collision.other.type == "TOWER" then
-                        if collision.other.towerType == "SAW" then
+                        if collision.other.archetype == "MELEE" then
                             if collision.item:takeDamage(collision.other.attackDamage, dt) then
                                 -- enemy still alive
                             else -- enemy died
                                 self.collisionWorld:remove(self.enemies[i])
                                 table.remove(self.enemies, i) 
-                                print("RIP!")
                                 break; --exit the loop, this enemy is already dead
                             end
-                        elseif collision.other.towerType == "CATAPULT" then
+                        elseif collision.other.archetype == "TARGETTED" then
                             --add this enemy to targetting queue
                         end
                     end

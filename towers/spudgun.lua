@@ -1,9 +1,9 @@
-Catapult = Class {
+SpudGun = Class {
     __includes=TargettedTower,
     init = function(self, gridOrigin, worldOrigin)
-        Catapult.init(self, "CATAPULT", gridOrigin, worldOrigin, constants.TOWER.CATAPULT.WIDTH, constants.TOWER.CATAPULT.HEIGHT)
-        self.targettingRadius = constants.TOWER.CATAPULT.TARGETTING_RADIUS
-        self.attackDamage = constants.TOWER.CATAPULT.ATTACK_DAMAGE
+        TargettedTower.init(self, "SPUDGUN", gridOrigin, worldOrigin, constants.TOWER.SPUDGUN.WIDTH, constants.TOWER.SPUDGUN.HEIGHT)
+        self.targettingRadius = constants.TOWER.SPUDGUN.TARGETTING_RADIUS
+        self.attackDamage = constants.TOWER.SPUDGUN.ATTACK_DAMAGE
     end;
     calculateHitbox = function(self)
         -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).

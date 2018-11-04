@@ -7,7 +7,7 @@ Tower = Class {
         self.width = width
         self.height = height
         self.type = "TOWER" -- used to check for valid collisions
-        self.archetype = archetype
+        self.archetype = towerArchetype
         self.towerType = towerType
         self.image = image
     end;

@@ -182,4 +182,11 @@ Grid = Class {
     heuristic = function(self, cell)
         return Util.m.distanceBetween(self.goal.x, self.goal.y, cell.x, cell.y)
     end;
+    occupySpaces = function(self, gridX, gridY, width, height)
+        for i = gridX, gridX + width-1 do
+            for j = gridY, gridY + height-1 do
+                self:toggleObstacle(i, j)
+            end
+        end
+    end;
 }
