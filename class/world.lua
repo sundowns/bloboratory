@@ -81,6 +81,8 @@ World = Class {
                                 print("RIP!")
                                 break; --exit the loop, this enemy is already dead
                             end
+                        elseif collision.other.towerType == "CATAPULT" then
+                            --add this enemy to targetting queue
                         end
                     end
                 end

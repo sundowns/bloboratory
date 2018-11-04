@@ -4,7 +4,7 @@ SmallGuy = Class {
         Enemy.init(self, "SMALLGUY", worldOrigin, constants.ENEMY.SMALLGUY.HEALTH, constants.ENEMY.SMALLGUY.SPEED)
     end;
     update = function(self, dt, currentCell)
-        local destroy =  Enemy.update(self, dt, currentCell)
+        local destroy = Enemy.update(self, dt, currentCell)
         --small guy specific logic
         return destroy
     end;
