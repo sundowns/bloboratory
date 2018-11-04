@@ -62,8 +62,8 @@ World = Class {
         end
 
         for i = #self.enemies, 1, -1 do
-            local destroy = self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
-            if destroy then
+            self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
+            if self.enemies[i].markedForDeath then
                 self.collisionWorld:remove(self.enemies[i]) 
                 table.remove(self.enemies, i)
             else 
@@ -113,10 +113,9 @@ World = Class {
             
             if collision.other.type == "TOWER" then
                 if collision.other.archetype == "MELEE" then
-                    if collision.item:takeDamage(collision.other.attackDamage, dt) then
-                        -- enemy still alive
-                    else 
-                        -- enemy died
+                    collision.item:takeDamage(collision.other.attackDamage, dt)
+
+                    if collision.item.markedForDeath then
                         self.collisionWorld:remove(enemy)
                         table.remove(self.enemies, index) 
                         break; --exit the loop, this enemy is already dead

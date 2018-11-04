@@ -8,14 +8,15 @@ Enemy = Class {
         self.movingTo = nil
         self.type = "ENEMY" -- used to check for valid collisions
         self.enemyType = enemyType
+        self.markedForDeath = false
     end;
     update = function(self, dt, currentCell)
         if not currentCell or currentCell.isObstacle then
-            return true --destroy this
+            self.markedForDeath = true
         end
         if currentCell.isGoal then
-            --TODO: do something meaningful
-            return true --destroy this
+            --TODO: reduce remaining leakcount somehow
+            self.markedForDeath = true
         end
         --decide direction to move based on current grid's came_from value (breadth first search)
         if self.movingTo == nil then
@@ -34,12 +35,11 @@ Enemy = Class {
                 self:moveBy(deltaX*self.speed, deltaY*self.speed)
             end
         end 
-
-        return false
     end;
     takeDamage = function(self, damage, dt)
+        if not dt then dt = 1 end -- allows the function to work with constant attacks (melee) and projectiles
         self.health = self.health - (damage*dt)
-        return self.health > 0
+        self.markedForDeath = self.health < 0
     end;
     draw = function(self)
         love.graphics.setColor(self.health/self.maxHealth, 0, 0)

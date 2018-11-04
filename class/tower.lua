@@ -47,6 +47,7 @@ TargetedTower = Class {
     init = function(self, towerType, image, gridOrigin, worldOrigin, width, height)
         Tower.init(self, "TARGETTED", towerType, image, gridOrigin, worldOrigin, width, height)
         self.currentTarget = nil
+        self.projectiles = {}
     end;
     spottedEnemy = function(self, enemy)
         if not self.currentTarget then
@@ -56,8 +57,22 @@ TargetedTower = Class {
     update = function(self, dt)
         Tower.update(self, dt)
 
-        if self.currentTarget and not self:inRange(self.currentTarget) then 
+        if self.currentTarget and (not self:inRange(self.currentTarget) or self.currentTarget.markedForDeath)  then 
             self.currentTarget = nil
+        end
+
+        for i = #self.projectiles, 1, -1 do
+            self.projectiles[i]:update(dt)
+            if self.projectiles[i].markedForDeath then
+                table.remove(self.projectiles, i)
+            end
+        end
+    end;
+    draw = function(self)
+        Tower.draw(self)
+
+        for i, projectile in pairs(self.projectiles) do
+            projectile:draw()
         end
     end;
     inRange = function(self, enemy)
