@@ -43,7 +43,6 @@ Enemy = Class {
     end;
     draw = function(self)
         love.graphics.setColor(self.health/self.maxHealth, 0, 0)
-        love.graphics.circle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.ENEMY.RADIUS)
     end;
     moveBy = function(self, dx, dy)
         self.worldOrigin = Vector(self.worldOrigin.x + dx, self.worldOrigin.y + dy)

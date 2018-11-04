@@ -38,19 +38,26 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 5, --damage per second 
-            ATTACK_RADIUS = 1 --additional cell radii
+            TARGETTING_RADIUS = 1 --additional cell radii
+        },
+        SPUDGUN = {
+            WIDTH = 2, --cells
+            HEIGHT = 2, --cells
+            ATTACK_DAMAGE = 5, --damage per second 
+            TARGETTING_RADIUS = 3 --additional cell radii
         }
     },
     ENEMY = {
-        RADIUS = 4,
         SPAWN_INTERVAL = 1,
         SMALLGUY = {
             HEALTH = 10,
-            SPEED = 10
+            SPEED = 10,
+            RADIUS = 4,
         },
         LARGEGUY = {
             HEALTH = 15,
-            SPEED = 10
+            SPEED = 10,
+            RADIUS = 8,
         }
     }
 }
