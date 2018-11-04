@@ -1,5 +1,5 @@
 World = Class {
-    init = function(self, origin, rows, cols)
+    init = function(self, origin, rows, cols, rounds)
         assert(origin.x)
         assert(origin.y)
         self.origin = origin
@@ -10,23 +10,29 @@ World = Class {
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE)
         self.isSpawning = false
         self:setupTimers()
+        self.rounds = rounds
+        self.roundIndex = 1
+        self.currentRound = self.rounds[(self.roundIndex)]
     end;
     placeTower = function(self, gridX, gridY, type)
         if type == "SAW" then
             if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT) then
-                local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
-                local newSaw = Saw(Vector(gridX, gridY), Vector(worldX, worldY))
-                table.insert(self.towers, newSaw)
-                self.collisionWorld:add(newSaw, newSaw:calculateHitbox())
+                if self.currentRound.towersPlaced < self.currentRound.maxTowers then
+                    local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
+                    local newSaw = Saw(Vector(gridX, gridY), Vector(worldX, worldY))
+                    table.insert(self.towers, newSaw)
+                    self.collisionWorld:add(newSaw, newSaw:calculateHitbox())
+                    self.currentRound.towersPlaced = self.currentRound.towersPlaced + 1
 
-                for i = gridX, gridX + newSaw.width-1 do
-                    for j = gridY, gridY + newSaw.width-1 do
-                        self.grid:toggleObstacle(i, j)
+                    for i = gridX, gridX + newSaw.width-1 do
+                        for j = gridY, gridY + newSaw.width-1 do
+                            self.grid:toggleObstacle(i, j)
+                        end
                     end
+        
+                    self.grid:calculatePaths()
+                    return true --a tower was placed
                 end
-    
-                self.grid:calculatePaths()
-                return true --a tower was placed
             end
         end
         return false --nothing placed
@@ -34,9 +40,19 @@ World = Class {
     spawnEnemyAt = function(self, gridX, gridY)
         local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
         if self.grid:isValidGridCoords(gridX, gridY) and not self.grid:isSpawnable(gridX, gridY) then
-            local newEnemy = SmallGuy(Vector(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
-            table.insert(self.enemies, newEnemy)
-            self.collisionWorld:add(newEnemy, newEnemy:calculateHitbox())
+            if self.currentRound.enemiesSpawned < #self.currentRound.enemies then 
+                local newEnemy = self.currentRound.enemies[self.currentRound.enemiesSpawned + 1]
+                newEnemy.worldOrigin = (Vector(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
+                table.insert(self.enemies, newEnemy)
+                self.collisionWorld:add(newEnemy, newEnemy:calculateHitbox())
+                self.currentRound.enemiesSpawned = self.currentRound.enemiesSpawned + 1
+            else 
+                self.isSpawning = false
+                if self.rounds[(self.roundIndex + 1)] ~= nil then 
+                    self.roundIndex = self.roundIndex + 1
+                    self.currentRound = self.rounds[self.roundIndex]
+                end 
+            end
         end
     end;
     update = function(self, dt)
