@@ -3,12 +3,12 @@ return {
         SPEED = 300,
         PANZONES = {
             TOP_BOTTOM = {
-                HEIGHT = 0.05,
+                HEIGHT = 0.06,
                 WIDTH = 1
             },
             LEFT_RIGHT = {
                 HEIGHT = 1,
-                WIDTH = 0.1
+                WIDTH = 0.06
             }
         },
         MOUSE = {
@@ -31,7 +31,7 @@ return {
     GRID = {
         COLUMNS = 24,
         ROWS = 24,
-        CELL_SIZE = 16,
+        CELL_SIZE = 32,
     },
     TOWER = {
         SAW = {

@@ -11,7 +11,6 @@ CameraController = Class {
             CameraPanZone("LEFT", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT),
         }
         self.collisionWorld = bump.newWorld(love.graphics.getWidth()/100) -- TODO: does this value need tweaking?
-
         for i, zone in pairs(self.cameraPanZones) do
             self.collisionWorld:add(zone, zone.origin.x, zone.origin.y, zone.width, zone.height)
         end
@@ -41,20 +40,24 @@ CameraController = Class {
 
         self.mouse:update(dt)
 
-        local actualX, actualY, cols, len = self.collisionWorld:move(self.mouse, self.mouse.origin.x, self.mouse.origin.y, function() return "cross" end)
+        if love.window.hasMouseFocus() then
+            local actualX, actualY, cols, len = self.collisionWorld:move(self.mouse, self.mouse.origin.x, self.mouse.origin.y, function() return "cross" end)
 
-        for j = #cols, 1, -1 do 
-            local collision = cols[j]
-            if collision.other.label == "LEFT" then
-                self.camera:move(-dt*constants.CAMERA.SPEED, 0)
-            elseif collision.other.label == "RIGHT" then
-                self.camera:move(dt*constants.CAMERA.SPEED, 0)
-            elseif collision.other.label == "TOP" then
-                self.camera:move(0, -dt*constants.CAMERA.SPEED)
-            elseif collision.other.label == "BOTTOM" then
-                self.camera:move(0, dt*constants.CAMERA.SPEED)
+            --TODO: Consider replacing this with a system that draws a line from screen centre -> mouse and pans camera both dimensions
+
+            for j = #cols, 1, -1 do 
+                local collision = cols[j]
+                if collision.other.label == "LEFT" then
+                    self.camera:move(-dt*constants.CAMERA.SPEED, 0)
+                elseif collision.other.label == "RIGHT" then
+                    self.camera:move(dt*constants.CAMERA.SPEED, 0)
+                elseif collision.other.label == "TOP" then
+                    self.camera:move(0, -dt*constants.CAMERA.SPEED)
+                elseif collision.other.label == "BOTTOM" then
+                    self.camera:move(0, dt*constants.CAMERA.SPEED)
+                end
+            
             end
-        
         end
     end;
     getWorldCoordinates = function(self, x, y)
