@@ -20,6 +20,10 @@ World = Class {
             if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT) then
                 placed = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
             end
+        elseif type == "SPUDGUN" then
+            if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SPUDGUN.WIDTH, constants.TOWER.SPUDGUN.HEIGHT) then
+                placed = self:addNewTower(SpudGun(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
+            end
         end
         if placed then
             self.currentRound.towersPlaced = self.currentRound.towersPlaced + 1
@@ -63,24 +67,7 @@ World = Class {
                 self.collisionWorld:remove(self.enemies[i]) 
                 table.remove(self.enemies, i)
             else 
-                local actualX, actualY, cols, len = self.collisionWorld:move(self.enemies[i], self.enemies[i].worldOrigin.x - constants.GRID.CELL_SIZE/2, self.enemies[i].worldOrigin.y - constants.GRID.CELL_SIZE/2, function() return "cross" end)
-                for j = #cols, 1, -1 do 
-                    local collision = cols[j]
-                    
-                    if collision.other.type == "TOWER" then
-                        if collision.other.archetype == "MELEE" then
-                            if collision.item:takeDamage(collision.other.attackDamage, dt) then
-                                -- enemy still alive
-                            else -- enemy died
-                                self.collisionWorld:remove(self.enemies[i])
-                                table.remove(self.enemies, i) 
-                                break; --exit the loop, this enemy is already dead
-                            end
-                        elseif collision.other.archetype == "TARGETTED" then
-                            --add this enemy to targetting queue
-                        end
-                    end
-                end
+                self:processCollisionForEnemy(i, dt)
             end
         end
 
@@ -90,7 +77,6 @@ World = Class {
     end;
     draw = function(self)
         self.grid:draw(self.isSpawning)
-        Util.l.resetColour()
         for i, tower in pairs(self.towers) do
             tower:draw()
         end
@@ -118,5 +104,27 @@ World = Class {
     end;
     toggleSpawning = function(self)
         self.isSpawning = not self.isSpawning
+    end;
+    processCollisionForEnemy = function(self, index, dt)
+        local enemy = self.enemies[index]
+        local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/2, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/2, function() return "cross" end)
+        for j = #cols, 1, -1 do 
+            local collision = cols[j]
+            
+            if collision.other.type == "TOWER" then
+                if collision.other.archetype == "MELEE" then
+                    if collision.item:takeDamage(collision.other.attackDamage, dt) then
+                        -- enemy still alive
+                    else 
+                        -- enemy died
+                        self.collisionWorld:remove(enemy)
+                        table.remove(self.enemies, index) 
+                        break; --exit the loop, this enemy is already dead
+                    end
+                elseif collision.other.archetype == "TARGETTED" then
+                    collision.other:spottedEnemy(enemy)
+                end
+            end
+        end
     end;
 }

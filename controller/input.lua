@@ -3,12 +3,12 @@ InputController = Class {
         --cargo doesnt cooperate with new cursor easy cause we cant :getData() in LOVE >11.0.
         self.placingTowerCursor = love.mouse.newCursor("asset/cursors/green.png",assets.cursors.green:getWidth()/3, assets.cursors.green:getHeight()/3)
         self.isPlacingTower = false
+        self.currentSelectedTower = "SAW" -- TODO: replace this with a proper collection of current base towers
     end;
     update = function(self, dt)
         if self.isPlacingTower then
             local mouseX, mouseY = love.mouse.getPosition()
-            --TODO: update to allow placing different types of towers
-            world.grid:highlightCells(mouseX, mouseY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT)
+            world.grid:highlightCells(mouseX, mouseY, constants.TOWER[self.currentSelectedTower].WIDTH, constants.TOWER[self.currentSelectedTower].HEIGHT)
         end
     end;
     togglePlacingTower = function(self)
@@ -22,6 +22,10 @@ InputController = Class {
     keypressed = function(self, key)
         if key == "t" and world.currentRound.towersPlaced < world.currentRound.maxTowers then
             self:togglePlacingTower()
+        elseif key == "1" then
+            self.currentSelectedTower = "SAW" -- TODO: Remove this hack when adding collection of towers
+        elseif key == "2" then
+            self.currentSelectedTower = "SPUDGUN" -- TODO: Remove this hack when adding collection of towers
         end
 
         if not self.isPlacingTower then
@@ -39,7 +43,7 @@ InputController = Class {
     mousepressed = function(self, screen_x, screen_y, button)
         local x, y = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
         if self.isPlacingTower then
-            if world:placeTower(x, y, "SAW") then --TODO: allow selection of different towers
+            if world:placeTower(x, y, self.currentSelectedTower) then
                 self:togglePlacingTower()
             end
         else

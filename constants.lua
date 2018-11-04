@@ -44,7 +44,7 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 5, --damage per second 
-            TARGETTING_RADIUS = 2 --additional cell radii ()
+            TARGETTING_RADIUS = 3 --additional cell radii
         }
     },
     ENEMY = {
