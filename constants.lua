@@ -17,16 +17,17 @@ return {
         }
     },
     COLOURS = {
-        DEBUG_PRINT = {0,1,0},
+        DEBUG_PRINT = {0,1,0}, --debug
         EMPTY = {0,0,0},
         HOVERED = {0,1,0},
-        OBSTACLE = {1,1,1},
+        OBSTACLE = {1,1,1}, 
         GOAL = {1,1,0},
         SPAWN_ACTIVE = {0,0,1},
         SPAWN_INACTIVE = {1,0,0},
-        TOWER = {0.5,0,1},
-        ENEMY = {1,0,0},
-        CAMERA_PANZONES = {1,0.5,0}
+        TOWER = {0.5,0,1}, -- debug
+        ENEMY = {1,0,0}, -- debug
+        CAMERA_PANZONES = {1,0.5,0}, -- debug,
+        PROJECTILE = {0,0.5,1}
     },
     GRID = {
         COLUMNS = 24,
@@ -43,9 +44,16 @@ return {
         SPUDGUN = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
-            ATTACK_DAMAGE = 5, --damage per second 
-            TARGETTING_RADIUS = 3 --additional cell radii
+            ATTACK_DAMAGE = 1.5, --damage per HIT 
+            TARGETTING_RADIUS = 3, --additional cell radii
+            ATTACK_INTERVAL = 0.2
         }
+    },
+    PROJECTILE = {
+        RADIUS = 5,
+        SPUD = {
+            SPEED = 8
+        },
     },
     ENEMY = {
         SPAWN_INTERVAL = 1,
