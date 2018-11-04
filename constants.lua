@@ -47,6 +47,10 @@ return {
         SMALLGUY = {
             HEALTH = 10,
             SPEED = 10
+        },
+        LARGEGUY = {
+            HEALTH = 15,
+            SPEED = 10
         }
     }
 }
