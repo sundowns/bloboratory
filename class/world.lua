@@ -40,7 +40,6 @@ World = Class {
         local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
         if self.grid:isValidGridCoords(gridX, gridY) and not self.grid:isSpawnable(gridX, gridY) then
             if self.currentRound.enemiesSpawned < #self.currentRound.enemies then 
-                --local newEnemy = SmallGuy(Vector(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
                 local newEnemy = self.currentRound.enemies[self.currentRound.enemiesSpawned + 1]
                 newEnemy.worldOrigin = (Vector(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
                 table.insert(self.enemies, newEnemy)
@@ -48,8 +47,10 @@ World = Class {
                 self.currentRound.enemiesSpawned = self.currentRound.enemiesSpawned + 1
             else 
                 self.isSpawning = false
-                self.roundIndex = self.roundIndex + 1
-                self.currentRound = rounds[self.roundIndex]
+                if rounds[(self.roundIndex + 1)] ~= nil then 
+                    self.roundIndex = self.roundIndex + 1
+                    self.currentRound = rounds[self.roundIndex]
+                end 
             end
         end
     end;
