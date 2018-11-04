@@ -7,9 +7,11 @@ Cell = Class {
         self.isObstacle = false
         self.isGoal = false
         self.isSpawn = false
-        self.cameFrom = nil
-        self.distanceToGoal = 0
         self.isHovered = false
+
+        self.cameFrom = nil
+        self.heuristic = nil 
+        self.distanceToGoal = 0
     end;
     __tostring = function(self)
         return self.x..","..self.y

@@ -3,7 +3,7 @@ Camera = require("lib.camera")
 CameraController = Class {
     init = function(self, origin)
         self.camera = Camera(origin:unpack())
-        self.camera:zoom(1.2)
+        self.camera:zoom(1)
         self.cameraPanZones = {
             CameraPanZone("TOP", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT),
             CameraPanZone("RIGHT", Vector(love.graphics.getWidth()*(1-constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH),0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT),

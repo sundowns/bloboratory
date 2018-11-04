@@ -142,6 +142,7 @@ Grid = Class {
             for j = 0, self.rows, 1 do
                 self.cells[i][j].cameFrom = nil
                 self.cells[i][j].distanceToGoal = 0
+                self.cells[i][j].heuristic = self:heuristic(self.cells[i][j])
             end
         end
         
@@ -153,11 +154,10 @@ Grid = Class {
             local current = table.remove(openSet)
 
             for i, next in pairs(self:getNeighbours(current)) do
-                if not next.cameFrom or next.distanceToGoal > current.distanceToGoal + 1 then
+                if not next.cameFrom or next.distanceToGoal > current.distanceToGoal + next.heuristic + 1 then
                     table.insert(openSet, next)
                     next.cameFrom = current
-                    next.distanceToGoal = current.distanceToGoal + 1
-
+                    next.distanceToGoal = math.floor(current.distanceToGoal + current.heuristic + 1)
                 end
             end;
         end
@@ -175,5 +175,11 @@ Grid = Class {
         else
             self.optimalPath = {}
         end
+    end;
+    --[[
+        Heuristic function to guide our search. Euclidian distance (straight line)
+    ]]
+    heuristic = function(self, cell)
+        return Util.m.distanceBetween(self.goal.x, self.goal.y, cell.x, cell.y)
     end;
 }

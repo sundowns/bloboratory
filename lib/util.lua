@@ -179,6 +179,10 @@ function util.maths.HSVtoRGB(hue, sat, val)
   end return (r+m),(g+m),(b+m)
 end
 
+function util.maths.distanceBetween(x1, y1, x2, y2)
+  return math.sqrt(((x2 - x1)^2) + ((y2 - y1)^2))
+end
+
 ---------------------- DEBUG
 
 function util.debug.log(text)
