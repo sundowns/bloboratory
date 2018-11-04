@@ -9,9 +9,8 @@ LargeGuy = Class {
         return destroy
     end;
     draw = function(self)
-        --Enemy.draw(self)
-        love.graphics.setColor(self.health/self.maxHealth, 0, 0)
-        love.graphics.circle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.ENEMY.RADIUS *2)
+        Enemy.draw(self)
+        love.graphics.circle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.ENEMY.LARGEGUY.RADIUS)
     end;
     calculateHitbox = function(self)
         return Enemy.calculateHitbox(self)

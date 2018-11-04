@@ -10,6 +10,7 @@ SmallGuy = Class {
     end;
     draw = function(self)
         Enemy.draw(self)
+        love.graphics.circle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.ENEMY.SMALLGUY.RADIUS)
     end;
     calculateHitbox = function(self)
         return Enemy.calculateHitbox(self)

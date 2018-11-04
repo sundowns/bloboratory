@@ -1,7 +1,7 @@
 Saw = Class {
     __includes=MeleeTower,
     init = function(self, gridOrigin, worldOrigin)
-        MeleeTower.init(self, "SAW", gridOrigin, worldOrigin, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT)
+        MeleeTower.init(self, "SAW", assets.towers.saw, gridOrigin, worldOrigin, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT)
         self.targettingRadius = constants.TOWER.SAW.TARGETTING_RADIUS
         self.attackDamage = constants.TOWER.SAW.ATTACK_DAMAGE
     end;

@@ -48,15 +48,16 @@ return {
         }
     },
     ENEMY = {
-        RADIUS = 4,
         SPAWN_INTERVAL = 1,
         SMALLGUY = {
             HEALTH = 10,
-            SPEED = 10
+            SPEED = 10,
+            RADIUS = 4,
         },
         LARGEGUY = {
             HEALTH = 15,
-            SPEED = 10
+            SPEED = 10,
+            RADIUS = 8,
         }
     }
 }

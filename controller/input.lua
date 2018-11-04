@@ -20,7 +20,7 @@ InputController = Class {
         end
     end;
     keypressed = function(self, key)
-        if key == "t" then
+        if key == "t" and world.currentRound.towersPlaced < world.currentRound.maxTowers then
             self:togglePlacingTower()
         end
 

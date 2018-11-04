@@ -26,9 +26,9 @@ function love.load()
     require("towers.saw") 
     require("enemies.smallguy")
     require("enemies.largeguy")
-    local rounds = require("rounds")
-
-    world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS, rounds)
+    
+    love.graphics.setDefaultFilter('nearest')
+    world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS, require("rounds"))
     inputController = InputController()
     cameraController = CameraController(Vector(world.origin.x + constants.GRID.ROWS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE))
 end

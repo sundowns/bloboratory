@@ -17,22 +17,19 @@ World = Class {
     placeTower = function(self, gridX, gridY, type)
         if type == "SAW" then
             if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT) then
-                if self.currentRound.towersPlaced < self.currentRound.maxTowers then
-                    local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
-                    local newSaw = Saw(Vector(gridX, gridY), Vector(worldX, worldY))
-                    table.insert(self.towers, newSaw)
-                    self.collisionWorld:add(newSaw, newSaw:calculateHitbox())
-                    self.currentRound.towersPlaced = self.currentRound.towersPlaced + 1
+                local newSaw = Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))
+                table.insert(self.towers, newSaw)
+                self.collisionWorld:add(newSaw, newSaw:calculateHitbox())
+                self.currentRound.towersPlaced = self.currentRound.towersPlaced + 1
 
-                    for i = gridX, gridX + newSaw.width-1 do
-                        for j = gridY, gridY + newSaw.width-1 do
-                            self.grid:toggleObstacle(i, j)
-                        end
+                for i = gridX, gridX + newSaw.width-1 do
+                    for j = gridY, gridY + newSaw.width-1 do
+                        self.grid:toggleObstacle(i, j)
                     end
-        
-                    self.grid:calculatePaths()
-                    return true --a tower was placed
                 end
+    
+                self.grid:calculatePaths()
+                return true --a tower was placed  
             end
         end
         return false --nothing placed
@@ -95,6 +92,7 @@ World = Class {
     end;
     draw = function(self)
         self.grid:draw(self.isSpawning)
+        Util.l.resetColour()
         for i, tower in pairs(self.towers) do
             tower:draw()
         end
