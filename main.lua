@@ -24,6 +24,7 @@ function love.load()
     require("class.world")
     require("towers.saw") 
     require("enemies.smallguy")
+    require("enemies.largeguy")
     rounds = require("rounds")
 
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)

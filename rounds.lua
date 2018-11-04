@@ -11,11 +11,11 @@ return {
         SmallGuy(Vector(0,0)),
         SmallGuy(Vector(0,0)),
         SmallGuy(Vector(0,0)),
+        LargeGuy(Vector(0,0)),
         SmallGuy(Vector(0,0)),
         SmallGuy(Vector(0,0)),
         SmallGuy(Vector(0,0)),
         SmallGuy(Vector(0,0)),
-        SmallGuy(Vector(0,0)),
-        SmallGuy(Vector(0,0))
+        LargeGuy(Vector(0,0))
     })
 }
