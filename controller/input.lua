@@ -8,7 +8,7 @@ InputController = Class {
     update = function(self, dt)
         if self.isPlacingTower then
             local mouseX, mouseY = love.mouse.getPosition()
-            world.grid:highlightCells(mouseX, mouseY, constants.TOWER[self.currentSelectedStructure].WIDTH, constants.TOWER[self.currentSelectedStructure].HEIGHT)
+            world.grid:highlightCells(mouseX, mouseY, constants.STRUCTURE[self.currentSelectedStructure].WIDTH, constants.STRUCTURE[self.currentSelectedStructure].HEIGHT)
         end
     end;
     togglePlacingTower = function(self)

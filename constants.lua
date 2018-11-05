@@ -35,7 +35,7 @@ return {
         ROWS = 24,
         CELL_SIZE = 32,
     },
-    TOWER = {
+    STRUCTURE = {
         OBSTACLE = {
             WIDTH = 1, --cells
             HEIGHT = 1, --cells

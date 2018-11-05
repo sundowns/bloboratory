@@ -17,15 +17,15 @@ World = Class {
     placeStructure = function(self, gridX, gridY, type)
         local placedTower = false
         if type == "SAW" then
-            if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT) then
+            if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
                 placedTower = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
             end
         elseif type == "SPUDGUN" then
-            if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SPUDGUN.WIDTH, constants.TOWER.SPUDGUN.HEIGHT) then
+            if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SPUDGUN.WIDTH, constants.STRUCTURE.SPUDGUN.HEIGHT) then
                 placedTower = self:addNewTower(SpudGun(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
             end
         elseif type == "OBSTACLE" then
-            if not self.grid:isOccupied(gridX, gridY, constants.TOWER.OBSTACLE.WIDTH, constants.TOWER.OBSTACLE.HEIGHT) then
+            if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
                 --place a new block
                 if self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) then
                     self.currentRound.obstaclesPlaced = self.currentRound.obstaclesPlaced + 1

@@ -3,11 +3,11 @@ local image = nil
 SpudGun = Class {
     __includes=TargetedTower,
     init = function(self, gridOrigin, worldOrigin)
-        TargetedTower.init(self, image, gridOrigin, worldOrigin, constants.TOWER.SPUDGUN.WIDTH, constants.TOWER.SPUDGUN.HEIGHT)
+        TargetedTower.init(self, image, gridOrigin, worldOrigin, constants.STRUCTURE.SPUDGUN.WIDTH, constants.STRUCTURE.SPUDGUN.HEIGHT)
         self.towerType = "SPUDGUN"
-        self.targettingRadius = constants.TOWER.SPUDGUN.TARGETTING_RADIUS
-        self.attackDamage = constants.TOWER.SPUDGUN.ATTACK_DAMAGE
-        self.attackInterval = constants.TOWER.SPUDGUN.ATTACK_INTERVAL
+        self.targettingRadius = constants.STRUCTURE.SPUDGUN.TARGETTING_RADIUS
+        self.attackDamage = constants.STRUCTURE.SPUDGUN.ATTACK_DAMAGE
+        self.attackInterval = constants.STRUCTURE.SPUDGUN.ATTACK_INTERVAL
 
         self.attackTimer = Timer.new()
 
