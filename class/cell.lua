@@ -22,8 +22,10 @@ Cell = Class {
         self.isHoveredInvalid = false
     end;
     draw = function(self, isSpawning)
-        love.graphics.setColor(1,1,1,0.2)
-        love.graphics.rectangle('line', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+        if debug then
+            love.graphics.setColor(1,1,1,0.2)
+            love.graphics.rectangle('line', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+        end
         if self.isGoal then
             love.graphics.setColor(constants.COLOURS.GOAL)
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
