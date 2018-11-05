@@ -16,9 +16,9 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 | Key        | Action           |
 | ------------- |:-------------:|
 | mouse1      | toggle obstacle |
-| t      | toggle tower placement      |
-| 1 | set current tower to saw |
-| 2 | set current tower to spud gun |
+| 1 | place obstacle |
+| 2 | place saw |
+| 3 | place spud gun |
 | g | toggle goal      |
 | s | place spawner      |
 | space | toggle spawning |

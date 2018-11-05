@@ -4,10 +4,11 @@ Cell = Class {
         self.y = gridY
         self.worldX = worldX
         self.worldY = worldY
-        self.isObstacle = false --TODO: create a new mazing block entity and replace this
+        self.isOccupied = false
         self.isGoal = false
         self.isSpawn = false
         self.isHovered = false
+        self.isHoveredInvalid = false
 
         self.cameFrom = nil
         self.heuristic = nil 
@@ -18,14 +19,12 @@ Cell = Class {
     end;
     update = function(self, dt)
         self.isHovered = false
+        self.isHoveredInvalid = false
     end;
     draw = function(self, isSpawning)
         love.graphics.setColor(1,1,1,0.2)
         love.graphics.rectangle('line', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
-        if self.isObstacle then
-            love.graphics.setColor(constants.COLOURS.OBSTACLE)
-            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
-        elseif self.isGoal then
+        if self.isGoal then
             love.graphics.setColor(constants.COLOURS.GOAL)
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         elseif self.isSpawn then
@@ -38,6 +37,9 @@ Cell = Class {
         elseif self.isHovered then
             love.graphics.setColor(constants.COLOURS.HOVERED)
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+        elseif self.isHoveredInvalid then
+            love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
+            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         end
 
         if debug then
@@ -47,24 +49,29 @@ Cell = Class {
     end;
     toggleObstacle = function(self)
         if not self.isGoal and not self.isSpawn then
-            self.isObstacle = not self.isObstacle
+            self.isOccupied = not self.isOccupied
         end
     end;
     setSpawn = function(self)
         self.isGoal = false 
-        self.isObstacle = false
+        self.isOccupied = true
         self.isSpawn = true
     end;
     setGoal = function(self)
         self.isSpawn = false
-        self.isObstacle = false
+        self.isOccupied = true
         self.isGoal = true
     end;
-    isOccupied = function(self)
-        return self.isObstacle or self.isSpawn or self.isGoal
+    reset = function(self)
+        self.isOccupied = false
+        self.isGoal = false
+        self.isSpawn = false
+    end;
+    isValidPath = function(self)
+        return not self.isOccupied or (self.isSpawn or self.isGoal)
     end;
     isSpawnable = function(self)
-        return self.isObstacle or self.isGoal
+        return not self.isOccupied or self.isSpawn
     end;
     getCentre = function(self)
         return self.worldX + constants.GRID.CELL_SIZE/2, self.worldY + constants.GRID.CELL_SIZE/2

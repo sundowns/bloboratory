@@ -11,7 +11,7 @@ Enemy = Class {
         self.markedForDeath = false
     end;
     update = function(self, dt, currentCell)
-        if not currentCell or currentCell.isObstacle then
+        if not currentCell then
             self.markedForDeath = true
         end
         if currentCell.isGoal then

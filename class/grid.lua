@@ -40,10 +40,18 @@ Grid = Class {
     end;
     highlightCells = function(self, mouseX, mouseY, width, height)
         local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
-        if not self:isOccupied(gridX, gridY, 2, 2) then
+        if not self:isOccupied(gridX, gridY, width, height) then
             for i = gridX, gridX + width-1 do
                 for j = gridY, gridY + height-1 do
                     self.cells[i][j].isHovered = true
+                end
+            end
+        else
+            for i = gridX, gridX + width-1 do
+                for j = gridY, gridY + height-1 do
+                    if self.cells[i] and self.cells[i][j] then
+                        self.cells[i][j].isHoveredInvalid = true
+                    end
                 end
             end
         end
@@ -71,7 +79,7 @@ Grid = Class {
         
         if width == 1  and height == 1 then
             --treat as 1 cell
-            return self.cells[x] and self.cells[x][y] and self.cells[x][y]:isOccupied()
+            return self.cells[x] and self.cells[x][y] and self.cells[x][y].isOccupied
         else
             --loop over contained cells
             for i = 0, width-1 do
@@ -80,7 +88,7 @@ Grid = Class {
                 end
                 for j = 0, height-1 do
                     if self.cells[x+i][y+j] == nil 
-                    or self.cells[x+i][y+j]:isOccupied() then
+                    or self.cells[x+i][y+j].isOccupied then
                         return true
                     end
                 end
@@ -96,14 +104,14 @@ Grid = Class {
     end;
     setGoal = function(self, x, y)
         if not self:isValidGridCoords(x, y) then return end
-        if self.goal then self.goal.isGoal = false end
+        if self.goal then self.goal:reset() end
         self.goal = self.cells[x][y]
         self.goal:setGoal()
         self:calculatePaths()
     end;
     setSpawn = function(self, x, y)
         if not self:isValidGridCoords(x, y) then return end
-        if self.spawn then self.spawn.isSpawn = false end
+        if self.spawn then self.spawn:reset() end
         self.spawn = self.cells[x][y]
         self.spawn:setSpawn()
         self:calculatePaths()
@@ -115,16 +123,16 @@ Grid = Class {
     getNeighbours = function(self, target)
         assert(target.x and target.y)
         local neighbours = {}
-        if target.x < self.cols and not self.cells[target.x + 1][target.y].isObstacle then
+        if target.x < self.cols and self.cells[target.x + 1][target.y]:isValidPath() then
             table.insert(neighbours, self.cells[target.x + 1][target.y])
         end
-        if target.x > 0 and not self.cells[target.x - 1][target.y].isObstacle then
+        if target.x > 0 and self.cells[target.x - 1][target.y]:isValidPath() then
             table.insert(neighbours, self.cells[target.x - 1][target.y])
         end
-        if target.y < self.rows and not self.cells[target.x][target.y + 1].isObstacle then
+        if target.y < self.rows and self.cells[target.x][target.y + 1]:isValidPath() then
             table.insert(neighbours, self.cells[target.x][target.y + 1])
         end
-        if target.y > 0 and not self.cells[target.x][target.y - 1].isObstacle then
+        if target.y > 0 and self.cells[target.x][target.y - 1]:isValidPath() then
             table.insert(neighbours, self.cells[target.x][target.y - 1])
         end
         return neighbours
@@ -165,7 +173,7 @@ Grid = Class {
         if self.spawn then
             self.optimalPath = {}
             local current = self.spawn.cameFrom
-            
+
             while current and not current.isGoal do 
                 local cX, cY = current:getCentre()
                 table.insert(self.optimalPath, cX)
