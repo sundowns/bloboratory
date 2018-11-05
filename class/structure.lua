@@ -1,5 +1,5 @@
 Structure = Class {
-    init = function(self, image, gridOrigin, worldOrigin, width, height)
+    init = function(self, image, animationGrid, gridOrigin, worldOrigin, width, height)
         assert(worldOrigin and worldOrigin.x and worldOrigin.y)
         assert(gridOrigin and gridOrigin.x and gridOrigin.y)
         assert(width)
@@ -9,11 +9,22 @@ Structure = Class {
         self.width = width
         self.height = height
         self.image = image
+        self.animation = animationGrid
+    end;
+    update = function(self, dt)
+        if self.animation then
+            self.animation:update(dt)
+        end
     end;
     draw = function(self)
         if self.image then
             Util.l.resetColour()
-            love.graphics.draw(self.image, self.worldOrigin.x, self.worldOrigin.y, 0, self.image:getWidth()*self.width/constants.GRID.CELL_SIZE, self.image:getWidth()*self.height/constants.GRID.CELL_SIZE)
+            if self.animation then
+                local w, h = self.animation:getDimensions()
+                self.animation:draw(self.image, self.worldOrigin.x, self.worldOrigin.y, 0, w*self.width/constants.GRID.CELL_SIZE, h*self.height/constants.GRID.CELL_SIZE)
+            else --backwards compatability code. everything will probably have this eventually
+                love.graphics.draw(self.image, self.worldOrigin.x, self.worldOrigin.y, 0, self.image:getWidth()*self.width/constants.GRID.CELL_SIZE, self.image:getWidth()*self.height/constants.GRID.CELL_SIZE)
+            end
         elseif self.type == "TOWER" then --defaults to make adding new towers not suck
             love.graphics.setColor(constants.COLOURS.TOWER)
             love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE*self.width, constants.GRID.CELL_SIZE*self.height)

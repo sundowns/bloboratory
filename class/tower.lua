@@ -1,10 +1,11 @@
 Tower = Class {
     __includes=Structure,
-    init = function(self, image, gridOrigin, worldOrigin, width, height)
-        Structure.init(self, image, gridOrigin, worldOrigin, width, height)
+    init = function(self, image, animationGrid, gridOrigin, worldOrigin, width, height)
+        Structure.init(self, image, animationGrid, gridOrigin, worldOrigin, width, height)
         self.type = "TOWER" -- used to check for valid collisions
     end;
     update = function(self, dt)
+        Structure.update(self, dt)
     end;
     draw = function(self)
         Structure.draw(self)
@@ -21,8 +22,8 @@ Tower = Class {
 
 MeleeTower = Class {
     __includes = Tower,
-    init = function(self, image, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, image, gridOrigin, worldOrigin, width, height)
+    init = function(self, image, animationGrid, gridOrigin, worldOrigin, width, height)
+        Tower.init(self, image, animationGrid, gridOrigin, worldOrigin, width, height)
         self.archetype = "MELEE"
     end;
     update = function(self, dt)
@@ -32,8 +33,8 @@ MeleeTower = Class {
 
 TargetedTower = Class {
     __includes = Tower,
-    init = function(self, image, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, image, gridOrigin, worldOrigin, width, height)
+    init = function(self, image, animationGrid, gridOrigin, worldOrigin, width, height)
+        Tower.init(self, image, animationGrid, gridOrigin, worldOrigin, width, height)
         self.archetype = "TARGETTED"
         self.currentTarget = nil
         self.projectiles = {}
