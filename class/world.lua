@@ -5,7 +5,7 @@ World = Class {
         self.origin = origin
         self.grid = Grid(self.origin, rows, cols)
         self.goal = nil
-        self.towers = {}
+        self.structures = {}
         self.enemies = {}
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE)
         self.isSpawning = false
@@ -14,32 +14,45 @@ World = Class {
         self.roundIndex = 1
         self.currentRound = self.rounds[(self.roundIndex)]
     end;
-    placeTower = function(self, gridX, gridY, type)
-        local placed = false
+    placeStructure = function(self, gridX, gridY, type)
+        local placedTower = false
         if type == "SAW" then
             if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SAW.WIDTH, constants.TOWER.SAW.HEIGHT) then
-                placed = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
+                placedTower = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
             end
         elseif type == "SPUDGUN" then
             if not self.grid:isOccupied(gridX, gridY, constants.TOWER.SPUDGUN.WIDTH, constants.TOWER.SPUDGUN.HEIGHT) then
-                placed = self:addNewTower(SpudGun(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
+                placedTower = self:addNewTower(SpudGun(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
+            end
+        elseif type == "OBSTACLE" then
+            if not self.grid:isOccupied(gridX, gridY, constants.TOWER.OBSTACLE.WIDTH, constants.TOWER.OBSTACLE.HEIGHT) then
+                --place a new block
+                if self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) then
+                    self.currentRound.obstaclesPlaced = self.currentRound.obstaclesPlaced + 1
+                end
             end
         end
-        if placed then
+        if placedTower then
             self.currentRound.towersPlaced = self.currentRound.towersPlaced + 1
         end
-        return placed --nothing placed
+        return placedTower
     end;
     addNewTower = function(self, newTower)
-        table.insert(self.towers, newTower)
+        table.insert(self.structures, newTower)
         self.collisionWorld:add(newTower, newTower:calculateHitbox())
         self.grid:occupySpaces(newTower.gridOrigin.x, newTower.gridOrigin.y, newTower.width, newTower.height)
         self.grid:calculatePaths()
         return true --a tower was placed  
     end;
+    addNewStructure = function(self, newStructure)
+        table.insert(self.structures, newStructure)
+        self.grid:occupySpaces(newStructure.gridOrigin.x, newStructure.gridOrigin.y, newStructure.width, newStructure.height)
+        self.grid:calculatePaths()
+        return true --an obstacle was placed
+    end;
     spawnEnemyAt = function(self, gridX, gridY)
         local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
-        if self.grid:isValidGridCoords(gridX, gridY) and not self.grid:isSpawnable(gridX, gridY) then
+        if self.grid:isValidGridCoords(gridX, gridY) and self.grid:isSpawnable(gridX, gridY) then
             if self.currentRound.enemiesSpawned < #self.currentRound.enemies then 
                 local newEnemy = self.currentRound.enemies[self.currentRound.enemiesSpawned + 1]
                 newEnemy.worldOrigin = (Vector(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
@@ -57,8 +70,8 @@ World = Class {
     end;
     update = function(self, dt)
         self.grid:update(dt)
-        for i, tower in pairs(self.towers) do
-            tower:update(dt)
+        for i, structure in pairs(self.structures) do
+            structure:update(dt)
         end
 
         for i = #self.enemies, 1, -1 do
@@ -77,8 +90,8 @@ World = Class {
     end;
     draw = function(self)
         self.grid:draw(self.isSpawning)
-        for i, tower in pairs(self.towers) do
-            tower:draw()
+        for i, structure in pairs(self.structures) do
+            structure:draw()
         end
 
         for i, enemy in pairs(self.enemies) do

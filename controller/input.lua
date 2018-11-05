@@ -3,12 +3,12 @@ InputController = Class {
         --cargo doesnt cooperate with new cursor easy cause we cant :getData() in LOVE >11.0.
         self.placingTowerCursor = love.mouse.newCursor("asset/cursors/green.png",assets.cursors.green:getWidth()/3, assets.cursors.green:getHeight()/3)
         self.isPlacingTower = false
-        self.currentSelectedTower = "SAW" -- TODO: replace this with a proper collection of current base towers
+        self.currentSelectedStructure = nil -- TODO: replace this with a proper collection of current base towers
     end;
     update = function(self, dt)
         if self.isPlacingTower then
             local mouseX, mouseY = love.mouse.getPosition()
-            world.grid:highlightCells(mouseX, mouseY, constants.TOWER[self.currentSelectedTower].WIDTH, constants.TOWER[self.currentSelectedTower].HEIGHT)
+            world.grid:highlightCells(mouseX, mouseY, constants.TOWER[self.currentSelectedStructure].WIDTH, constants.TOWER[self.currentSelectedStructure].HEIGHT)
         end
     end;
     togglePlacingTower = function(self)
@@ -20,12 +20,16 @@ InputController = Class {
         end
     end;
     keypressed = function(self, key)
-        if key == "t" and world.currentRound.towersPlaced < world.currentRound.maxTowers then
-            self:togglePlacingTower()
-        elseif key == "1" then
-            self.currentSelectedTower = "SAW" -- TODO: Remove this hack when adding collection of towers
-        elseif key == "2" then
-            self.currentSelectedTower = "SPUDGUN" -- TODO: Remove this hack when adding collection of towers
+        --TODO: clean up the below logic with proper tower collection/inventory (yikes)
+        if key == "1" and world.currentRound.obstaclesPlaced < world.currentRound.maxObstacles then
+            if not self.isPlacingTower or self.currentSelectedStructure == "OBSTACLE" then self:togglePlacingTower() end
+            self.currentSelectedStructure = "OBSTACLE" -- TODO: Remove this hack when adding collection of towers
+        elseif key == "2" and world.currentRound.towersPlaced < world.currentRound.maxTowers then
+            if not self.isPlacingTower or self.currentSelectedStructure == "SAW"  then self:togglePlacingTower() end
+            self.currentSelectedStructure = "SAW" -- TODO: Remove this hack when adding collection of towers
+        elseif key == "3" and world.currentRound.towersPlaced < world.currentRound.maxTowers then
+            if not self.isPlacingTower or self.currentSelectedStructure == "SPUDGUN" then self:togglePlacingTower() end
+            self.currentSelectedStructure = "SPUDGUN" -- TODO: Remove this hack when adding collection of towers
         end
 
         if not self.isPlacingTower then
@@ -43,13 +47,8 @@ InputController = Class {
     mousepressed = function(self, screen_x, screen_y, button)
         local x, y = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
         if self.isPlacingTower then
-            if world:placeTower(x, y, self.currentSelectedTower) then
+            if world:placeStructure(x, y, self.currentSelectedStructure) or world.currentRound.obstaclesPlaced >= world.currentRound.maxObstacles then
                 self:togglePlacingTower()
-            end
-        else
-            if button == 1 then 
-                world.grid:toggleObstacle(x, y)
-                world.grid:calculatePaths()
             end
         end
     end;

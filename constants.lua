@@ -20,7 +20,8 @@ return {
         DEBUG_PRINT = {0,1,0}, --debug
         EMPTY = {0,0,0},
         HOVERED = {0,1,0},
-        OBSTACLE = {1,1,1}, 
+        HOVERED_INVALID = {1,0,0},
+        OBSTACLE = {1,1,1}, --debug 
         GOAL = {1,1,0},
         SPAWN_ACTIVE = {0,0,1},
         SPAWN_INACTIVE = {1,0,0},
@@ -35,6 +36,10 @@ return {
         CELL_SIZE = 32,
     },
     TOWER = {
+        OBSTACLE = {
+            WIDTH = 1, --cells
+            HEIGHT = 1, --cells
+        },
         SAW = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells

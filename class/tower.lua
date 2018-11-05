@@ -1,26 +1,13 @@
 Tower = Class {
-    init = function(self, towerArchetype, towerType, image, gridOrigin, worldOrigin, width, height)
-        assert(gridOrigin.x and gridOrigin.y)
-        assert(worldOrigin.x and worldOrigin.y)
-        self.gridOrigin = gridOrigin -- grid index
-        self.worldOrigin = worldOrigin -- world coords
-        self.width = width
-        self.height = height
+    __includes=Structure,
+    init = function(self, image, gridOrigin, worldOrigin, width, height)
+        Structure.init(self, image, gridOrigin, worldOrigin, width, height)
         self.type = "TOWER" -- used to check for valid collisions
-        self.archetype = towerArchetype
-        self.towerType = towerType
-        self.image = image
     end;
     update = function(self, dt)
     end;
     draw = function(self)
-        if self.image then
-            Util.l.resetColour()
-            love.graphics.draw(self.image, self.worldOrigin.x, self.worldOrigin.y, 0, self.image:getWidth()*self.width/constants.GRID.CELL_SIZE, self.image:getWidth()*self.height/constants.GRID.CELL_SIZE)
-        else --default to make adding new towers not suck
-            love.graphics.setColor(constants.COLOURS.TOWER)
-            love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE*self.width, constants.GRID.CELL_SIZE*self.height)
-        end
+        Structure.draw(self)
     end;
     calculateHitbox = function(self)
         -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
@@ -34,8 +21,9 @@ Tower = Class {
 
 MeleeTower = Class {
     __includes = Tower,
-    init = function(self, towerType, image, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, "MELEE", towerType, image, gridOrigin, worldOrigin, width, height)
+    init = function(self, image, gridOrigin, worldOrigin, width, height)
+        Tower.init(self, image, gridOrigin, worldOrigin, width, height)
+        self.archetype = "MELEE"
     end;
     update = function(self, dt)
         Tower.update(self, dt)
@@ -44,8 +32,9 @@ MeleeTower = Class {
 
 TargetedTower = Class {
     __includes = Tower,
-    init = function(self, towerType, image, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, "TARGETTED", towerType, image, gridOrigin, worldOrigin, width, height)
+    init = function(self, image, gridOrigin, worldOrigin, width, height)
+        Tower.init(self, image, gridOrigin, worldOrigin, width, height)
+        self.archetype = "TARGETTED"
         self.currentTarget = nil
         self.projectiles = {}
     end;
