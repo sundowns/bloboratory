@@ -49,7 +49,7 @@ function love.draw()
         world:draw()
     cameraController:detach()
     love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
-    love.graphics.print("CURRENT MARKET VALUE: " .. world.money, love.graphics.getWidth() - love.graphics.getWidth()/4.4, love.graphics.getHeight() - 0.98 * love.graphics.getHeight())
+    love.graphics.print("CURRENT MARKET VALUE: " .. world.money, 0.766 * love.graphics.getWidth(), 0.02 * love.graphics.getHeight())
 
     if debug then
         cameraController:draw()

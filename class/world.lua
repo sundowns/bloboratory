@@ -136,8 +136,6 @@ World = Class {
                     collision.item:takeDamage(collision.other.attackDamage, dt)
 
                     if collision.item.markedForDeath then
-                        self.collisionWorld:remove(enemy)
-                        table.remove(self.enemies, index) 
                         break; --exit the loop, this enemy is already dead
                     end
                 elseif collision.other.archetype == "TARGETTED" then
