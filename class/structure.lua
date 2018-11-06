@@ -10,6 +10,7 @@ Structure = Class {
         self.height = height
         self.image = image
         self.animation = animationGrid
+        self.isSelected = false
     end;
     update = function(self, dt)
         if self.animation then
@@ -32,5 +33,13 @@ Structure = Class {
             love.graphics.setColor(constants.COLOURS.OBSTACLE)
             love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE*self.width, constants.GRID.CELL_SIZE*self.height)
         end
+
+        if self.isSelected then
+            love.graphics.setColor(constants.COLOURS.SELECTION)
+            love.graphics.rectangle('line', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE*self.width, constants.GRID.CELL_SIZE*self.height)
+        end
+    end;
+    toggleSelected = function(self)
+        self.isSelected = not self.isSelected
     end;
 }

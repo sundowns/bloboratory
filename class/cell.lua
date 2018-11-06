@@ -4,6 +4,7 @@ Cell = Class {
         self.y = gridY
         self.worldX = worldX
         self.worldY = worldY
+        self.occupant = nil
         self.isOccupied = false
         self.isGoal = false
         self.isSpawn = false
@@ -61,10 +62,15 @@ Cell = Class {
             love.graphics.print(self.distanceToGoal, self.x*constants.GRID.CELL_SIZE, self.y*constants.GRID.CELL_SIZE)
         end
     end;
-    toggleObstacle = function(self)
+    occupy = function(self, occupant)
         if not self.isGoal and not self.isSpawn then
-            self.isOccupied = not self.isOccupied
+            self.isOccupied = true
+            self.occupant = occupant
         end
+    end;
+    vacate = function(self)
+        self.isOccupied = false
+        self.occupant = nil
     end;
     setSpawn = function(self)
         self.isGoal = false 

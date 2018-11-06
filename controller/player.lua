@@ -25,6 +25,35 @@ PlayerController = Class {
     updateMoney = function(self, delta)
         self.money = self.money + delta
     end;
-    selectStructure = function(self, structure)
+    toggleStructureSelection = function(self, structure)
+        if structure == nil then
+            if self.currentSelectedStructure then
+                self.currentSelectedStructure:toggleSelected()
+                self.currentSelectedStructure = nil
+            end
+            return
+        end
+        if not self.currentSelectedStructure then
+            self.currentSelectedStructure = structure
+            self.currentSelectedStructure:toggleSelected()
+        else
+            if structure.gridOrigin.x == self.currentSelectedStructure.gridOrigin.x
+            and structure.gridOrigin.y == self.currentSelectedStructure.gridOrigin.y then
+                self.currentSelectedStructure:toggleSelected()
+                self.currentSelectedStructure = nil
+            else
+                self.currentSelectedStructure:toggleSelected()
+                self.currentSelectedStructure = structure
+                self.currentSelectedStructure:toggleSelected()
+            end
+        end
+
+    end;
+    refundCurrentStructure = function(self)
+        if not self.currentSelectedStructure then
+            return 
+        end
+
+        --TODO: refund logic
     end;
 }

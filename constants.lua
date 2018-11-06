@@ -22,14 +22,15 @@ return {
         EMPTY = {0,0,0},
         HOVERED = {0,1,0},
         HOVERED_INVALID = {1,0,0},
-        OBSTACLE = {1,1,1}, --debug 
+        OBSTACLE = {1,1,1, 0.5}, --debug 
         GOAL = {1,1,0},
         SPAWN_ACTIVE = {0,0,1},
         SPAWN_INACTIVE = {1,0,0},
-        TOWER = {0.5,0,1}, -- debug
+        TOWER = {0.5,0,0.5}, -- debug
         ENEMY = {1,0,0}, -- debug
         CAMERA_PANZONES = {1,0.5,0}, -- debug,
-        PROJECTILE = {0,0.5,1}
+        PROJECTILE = {0,0.5,1},
+        SELECTION = {1,1,0}
     },
     GRID = {
         COLUMNS = 24,

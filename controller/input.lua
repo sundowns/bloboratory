@@ -42,11 +42,13 @@ InputController = Class {
         end
     end;  
     mousepressed = function(self, screen_x, screen_y, button)
-        local x, y = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
+        local gridX, gridY = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
         if self.isPlacingTower then
-            if world:placeStructure(x, y, playerController.currentBlueprint.name) or world.currentRound.obstaclesPlaced >= world.currentRound.maxObstacles then
+            if world:placeStructure(gridX, gridY, playerController.currentBlueprint.name) or world.currentRound.obstaclesPlaced >= world.currentRound.maxObstacles then
                 self:togglePlacingTower()
             end
+        else
+            playerController:toggleStructureSelection(world:getStructureAt(gridX, gridY)) 
         end
     end;
 }
