@@ -79,13 +79,11 @@ World = Class {
             self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if self.enemies[i].markedForDeath then
                 self.money = self.money + self.enemies[i].yield
-                print("hey boss")
             end
 
             if self.enemies[i].markedForDeath or self.enemies[i].hitGoal then 
                 self.collisionWorld:remove(self.enemies[i]) 
                 table.remove(self.enemies, i)
-                print("hi")
             else 
                 self:processCollisionForEnemy(i, dt)
             end
