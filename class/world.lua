@@ -1,5 +1,5 @@
 World = Class {
-    init = function(self, origin, rows, cols, rounds, money)
+    init = function(self, origin, rows, cols, rounds)
         assert(origin.x)
         assert(origin.y)
         self.origin = origin
@@ -13,7 +13,6 @@ World = Class {
         self.rounds = rounds
         self.roundIndex = 1
         self.currentRound = self.rounds[(self.roundIndex)]
-        self.money = money
         self.floatingGains = {}
         self.gainTimer = Timer.new()
     end;
@@ -80,7 +79,7 @@ World = Class {
         for i = #self.enemies, 1, -1 do
             self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if self.enemies[i].markedForDeath then
-                self.money = self.money + self.enemies[i].yield
+                playerController:updateMoney(self.enemies[i].yield)
                 table.insert(self.floatingGains, FloatingText('+'..self.enemies[i].yield, self.enemies[i].worldOrigin, Vector(0,-0.5))) 
                 self.gainTimer:after(constants.CURRENCY.GAINS.TIME_TO_LIVE, function()
                     table.remove(self.floatingGains, 1)
