@@ -66,11 +66,13 @@ return {
             HEALTH = 10,
             SPEED = 10,
             RADIUS = 4,
+            YIELD = 1,
         },
         LARGEGUY = {
             HEALTH = 15,
             SPEED = 10,
             RADIUS = 8,
+            YIELD = 2,
         }
     }
 }

@@ -32,7 +32,7 @@ function love.load()
     require("enemy.largeguy")
     
     love.graphics.setDefaultFilter('nearest')
-    world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS, require("rounds"))
+    world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS, require("rounds"), 0)
     inputController = InputController()
     cameraController = CameraController(Vector(world.origin.x + constants.GRID.ROWS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE))
 end
@@ -48,6 +48,8 @@ function love.draw()
     cameraController:attach()
         world:draw()
     cameraController:detach()
+    love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
+    love.graphics.print("CURRENT MARKET VALUE: " .. world.money, 0.766 * love.graphics.getWidth(), 0.02 * love.graphics.getHeight())
 
     if debug then
         cameraController:draw()

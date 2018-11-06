@@ -1,14 +1,16 @@
 Enemy = Class {
-    init = function(self, enemyType, worldOrigin, health, speed)
+    init = function(self, enemyType, worldOrigin, health, speed, yield)
         assert(worldOrigin.x and worldOrigin.y)
         self.worldOrigin = worldOrigin
         self.maxHealth = health
         self.health = health
         self.speed = speed
+        self.yield = yield
         self.movingTo = nil
         self.type = "ENEMY" -- used to check for valid collisions
         self.enemyType = enemyType
         self.markedForDeath = false
+        self.hitGoal = false
     end;
     update = function(self, dt, currentCell)
         if not currentCell then
@@ -16,7 +18,7 @@ Enemy = Class {
         end
         if currentCell.isGoal then
             --TODO: reduce remaining leakcount somehow
-            self.markedForDeath = true
+            self.hitGoal = true
         end
         --decide direction to move based on current grid's came_from value (breadth first search)
         if self.movingTo == nil then
