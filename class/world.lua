@@ -81,7 +81,7 @@ World = Class {
             self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if self.enemies[i].markedForDeath then
                 self.money = self.money + self.enemies[i].yield
-                table.insert(self.floatingGains, self.enemies[i])
+                table.insert(self.floatingGains, self.enemies[i]) 
                 self.gainTimer:after(1, function()
                     table.remove(self.floatingGains, 1)
                 end)
@@ -114,6 +114,7 @@ World = Class {
         love.graphics.setColor(1, 1, 0) -- floating moneys 
         for i, gain in pairs(self.floatingGains) do 
             love.graphics.print("+" .. gain.yield, gain.worldOrigin.x, gain.worldOrigin.y)
+            gain.worldOrigin.y = gain.worldOrigin.y - 0.5
         end
 
         if debug == true then 
