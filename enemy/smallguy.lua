@@ -1,7 +1,7 @@
 SmallGuy = Class {
     __includes = Enemy,
     init = function(self, worldOrigin)
-        Enemy.init(self, "SMALLGUY", worldOrigin, constants.ENEMY.SMALLGUY.HEALTH, constants.ENEMY.SMALLGUY.SPEED)
+        Enemy.init(self, "SMALLGUY", worldOrigin, constants.ENEMY.SMALLGUY.HEALTH, constants.ENEMY.SMALLGUY.SPEED, constants.ENEMY.SMALLGUY.YIELD)
     end;
     update = function(self, dt, currentCell)
         local destroy = Enemy.update(self, dt, currentCell)

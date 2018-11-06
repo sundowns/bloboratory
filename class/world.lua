@@ -1,5 +1,5 @@
 World = Class {
-    init = function(self, origin, rows, cols, rounds)
+    init = function(self, origin, rows, cols, rounds, money)
         assert(origin.x)
         assert(origin.y)
         self.origin = origin
@@ -13,6 +13,7 @@ World = Class {
         self.rounds = rounds
         self.roundIndex = 1
         self.currentRound = self.rounds[(self.roundIndex)]
+        self.money = money
     end;
     placeStructure = function(self, gridX, gridY, type)
         local placedTower = false
@@ -77,8 +78,14 @@ World = Class {
         for i = #self.enemies, 1, -1 do
             self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if self.enemies[i].markedForDeath then
+                self.money = self.money + self.enemies[i].yield
+                print("hey boss")
+            end
+
+            if self.enemies[i].markedForDeath or self.enemies[i].hitGoal then 
                 self.collisionWorld:remove(self.enemies[i]) 
                 table.remove(self.enemies, i)
+                print("hi")
             else 
                 self:processCollisionForEnemy(i, dt)
             end
