@@ -14,6 +14,8 @@ World = Class {
         self.roundIndex = 1
         self.currentRound = self.rounds[(self.roundIndex)]
         self.money = money
+        self.floatingGains = {}
+        self.gainTimer = Timer.new()
     end;
     placeStructure = function(self, gridX, gridY, type)
         local placedTower = false
@@ -79,6 +81,10 @@ World = Class {
             self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if self.enemies[i].markedForDeath then
                 self.money = self.money + self.enemies[i].yield
+                table.insert(self.floatingGains, self.enemies[i])
+                self.gainTimer:after(1, function()
+                    table.remove(self.floatingGains, 1)
+                end)
             end
 
             if self.enemies[i].markedForDeath or self.enemies[i].hitGoal then 
@@ -88,6 +94,8 @@ World = Class {
                 self:processCollisionForEnemy(i, dt)
             end
         end
+                    
+        self.gainTimer:update(dt)
 
         if self.isSpawning then
             self.spawnTimer:update(dt)
@@ -101,6 +109,11 @@ World = Class {
 
         for i, enemy in pairs(self.enemies) do
             enemy:draw()
+        end
+
+        love.graphics.setColor(1, 1, 0) -- floating moneys 
+        for i, gain in pairs(self.floatingGains) do 
+            love.graphics.print("+" .. gain.yield, gain.worldOrigin.x, gain.worldOrigin.y)
         end
 
         if debug == true then 
