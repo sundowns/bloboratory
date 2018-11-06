@@ -18,6 +18,7 @@ return {
     },
     COLOURS = {
         DEBUG_PRINT = {0,1,0}, --debug
+        GAINS_TEXT = {1,1,0},
         EMPTY = {0,0,0},
         HOVERED = {0,1,0},
         HOVERED_INVALID = {1,0,0},
@@ -73,6 +74,18 @@ return {
             SPEED = 10,
             RADIUS = 8,
             YIELD = 2,
+        }
+    },
+    CURRENCY = {
+        GAINS = {
+            DRIFT_SPEED = 50,
+            TIME_TO_LIVE = 1,
+        }
+    },
+    UI = {
+        CURRENCY_COUNTER = {
+            X_OFFSET = 0.766 * love.graphics.getWidth(),
+            Y_OFFSET = 0.02 * love.graphics.getHeight()
         }
     }
 }

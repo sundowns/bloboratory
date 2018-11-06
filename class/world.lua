@@ -81,8 +81,8 @@ World = Class {
             self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if self.enemies[i].markedForDeath then
                 self.money = self.money + self.enemies[i].yield
-                table.insert(self.floatingGains, self.enemies[i]) 
-                self.gainTimer:after(1, function()
+                table.insert(self.floatingGains, FloatingText('+'..self.enemies[i].yield, self.enemies[i].worldOrigin, Vector(0,-0.5))) 
+                self.gainTimer:after(constants.CURRENCY.GAINS.TIME_TO_LIVE, function()
                     table.remove(self.floatingGains, 1)
                 end)
             end
@@ -93,6 +93,10 @@ World = Class {
             else 
                 self:processCollisionForEnemy(i, dt)
             end
+        end
+
+        for i, gain in pairs(self.floatingGains) do
+            gain:update(dt) 
         end
                     
         self.gainTimer:update(dt)
@@ -111,10 +115,9 @@ World = Class {
             enemy:draw()
         end
 
-        love.graphics.setColor(1, 1, 0) -- floating moneys 
+        Util.l.resetColour()
         for i, gain in pairs(self.floatingGains) do 
-            love.graphics.print("+" .. gain.yield, gain.worldOrigin.x, gain.worldOrigin.y)
-            gain.worldOrigin.y = gain.worldOrigin.y - 0.5
+            gain:draw()
         end
 
         if debug == true then 
