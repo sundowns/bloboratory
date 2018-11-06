@@ -10,7 +10,7 @@ CameraController = Class {
             CameraPanZone("BOTTOM", Vector(0,love.graphics.getHeight()*(1-constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT)), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT),
             CameraPanZone("LEFT", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT),
         }
-        self.collisionWorld = bump.newWorld(love.graphics.getWidth()/100) -- TODO: does this value need tweaking?
+        self.collisionWorld = bump.newWorld(love.graphics.getWidth()/100)
         for i, zone in pairs(self.cameraPanZones) do
             self.collisionWorld:add(zone, zone.origin.x, zone.origin.y, zone.width, zone.height)
         end
