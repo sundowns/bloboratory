@@ -125,9 +125,9 @@ Grid = Class {
         self.spawn:setSpawn()
         self:calculatePaths()
     end;
-    toggleObstacle = function(self, x, y)
+    occupyCell = function(self, x, y, occupant)
         if not self:isValidGridCoords(x, y) then return end
-        self.cells[x][y]:toggleObstacle(x, y)
+        self.cells[x][y]:occupy(occupant)
     end;
     getNeighbours = function(self, target)
         assert(target.x and target.y)
@@ -199,10 +199,10 @@ Grid = Class {
     heuristic = function(self, cell)
         return Util.m.distanceBetween(self.goal.x, self.goal.y, cell.x, cell.y)
     end;
-    occupySpaces = function(self, gridX, gridY, width, height)
-        for i = gridX, gridX + width-1 do
-            for j = gridY, gridY + height-1 do
-                self:toggleObstacle(i, j)
+    occupySpaces = function(self, structure)
+        for i = structure.gridOrigin.x, structure.gridOrigin.x + structure.width-1 do
+            for j = structure.gridOrigin.y, structure.gridOrigin.y + structure.height-1 do
+                self:occupyCell(i, j, structure)
             end
         end
     end;

@@ -42,13 +42,13 @@ World = Class {
     addNewTower = function(self, newTower)
         table.insert(self.structures, newTower)
         self.collisionWorld:add(newTower, newTower:calculateHitbox())
-        self.grid:occupySpaces(newTower.gridOrigin.x, newTower.gridOrigin.y, newTower.width, newTower.height)
+        self.grid:occupySpaces(newTower)
         self.grid:calculatePaths()
         return true --a tower was placed  
     end;
     addNewStructure = function(self, newStructure)
         table.insert(self.structures, newStructure)
-        self.grid:occupySpaces(newStructure.gridOrigin.x, newStructure.gridOrigin.y, newStructure.width, newStructure.height)
+        self.grid:occupySpaces(newStructure)
         self.grid:calculatePaths()
         return true --an obstacle was placed
     end;
@@ -156,6 +156,12 @@ World = Class {
                     collision.other:spottedEnemy(enemy)
                 end
             end
+        end
+    end;
+    getStructureAt = function(self, gridX, gridY)
+        local cell = self.grid:getCell(gridX, gridY)
+        if cell then
+            return cell.occupant
         end
     end;
 }
