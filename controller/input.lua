@@ -7,7 +7,11 @@ InputController = Class {
     update = function(self, dt)
         if self.isPlacingTower then
             local mouseX, mouseY = love.mouse.getPosition()
-            world.grid:highlightCells(mouseX, mouseY, constants.STRUCTURE[playerController.currentBlueprint].WIDTH, constants.STRUCTURE[playerController.currentBlueprint].HEIGHT)
+            if playerController.currentBlueprint.image then
+                world.grid:displayBlueprint(mouseX, mouseY, playerController.currentBlueprint)
+            else
+                world.grid:highlightCells(mouseX, mouseY, constants.STRUCTURE[playerController.currentBlueprint.name].WIDTH, constants.STRUCTURE[playerController.currentBlueprint.name].HEIGHT)
+            end
         end
     end;
     togglePlacingTower = function(self)
@@ -40,7 +44,7 @@ InputController = Class {
     mousepressed = function(self, screen_x, screen_y, button)
         local x, y = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
         if self.isPlacingTower then
-            if world:placeStructure(x, y, playerController.currentBlueprint) or world.currentRound.obstaclesPlaced >= world.currentRound.maxObstacles then
+            if world:placeStructure(x, y, playerController.currentBlueprint.name) or world.currentRound.obstaclesPlaced >= world.currentRound.maxObstacles then
                 self:togglePlacingTower()
             end
         end

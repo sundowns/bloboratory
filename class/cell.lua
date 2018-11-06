@@ -7,9 +7,13 @@ Cell = Class {
         self.isOccupied = false
         self.isGoal = false
         self.isSpawn = false
-        self.isHovered = false
-        self.isHoveredInvalid = false
 
+        --Used to display blueprint/projected builds
+        self.isHovered = false 
+        self.isHoveredInvalid = false 
+        self.blueprint = false
+
+        --Used for pathfinding
         self.cameFrom = nil
         self.heuristic = nil 
         self.distanceToGoal = 0
@@ -20,6 +24,7 @@ Cell = Class {
     update = function(self, dt)
         self.isHovered = false
         self.isHoveredInvalid = false
+        self.blueprint = false
     end;
     draw = function(self, isSpawning)
         if debug then
@@ -36,6 +41,13 @@ Cell = Class {
                 love.graphics.setColor(constants.COLOURS.SPAWN_INACTIVE)
             end
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
+        elseif self.blueprint then
+            if self.isHovered then
+                love.graphics.setColor(constants.COLOURS.HOVERED)
+            elseif self.isHoveredInvalid then
+                love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
+            end
+            self.blueprint:draw(self.worldX, self.worldY)
         elseif self.isHovered then
             love.graphics.setColor(constants.COLOURS.HOVERED)
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
@@ -77,5 +89,14 @@ Cell = Class {
     end;
     getCentre = function(self)
         return self.worldX + constants.GRID.CELL_SIZE/2, self.worldY + constants.GRID.CELL_SIZE/2
+    end;
+    renderBlueprint = function(self, blueprint, valid)
+        assert(blueprint and blueprint.image)
+        self.blueprint = blueprint
+        if valid then
+            self.isHovered = true
+        else
+            self.isHoveredInvalid = true
+        end
     end;
 }

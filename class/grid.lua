@@ -38,6 +38,15 @@ Grid = Class {
             love.graphics.line(self.optimalPath)
         end
     end;
+    displayBlueprint = function(self, mouseX, mouseY, blueprint)
+        local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
+        if not self:isOccupied(gridX, gridY, blueprint.width, blueprint.height) then
+            self.cells[gridX][gridY]:renderBlueprint(blueprint, true)
+        elseif self.cells[gridX] and self.cells[gridX][gridY] then
+            self.cells[gridX][gridY]:renderBlueprint(blueprint, false)
+        end
+    end;
+    --TODO: Remove the below function once everything has images weeeee
     highlightCells = function(self, mouseX, mouseY, width, height)
         local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
         if not self:isOccupied(gridX, gridY, width, height) then
