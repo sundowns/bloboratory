@@ -10,7 +10,7 @@ return {
     },
     animations = {
         DEFAULT = {
-            frame_duration = 0.05,
+            frame_duration = 0.15,
             x = '1-3',
             y = 1
         }
