@@ -1,10 +1,9 @@
-local image = nil
-local animationGrid = nil
+local animationInstance = nil
 
 SpudGun = Class {
     __includes=TargetedTower,
     init = function(self, gridOrigin, worldOrigin)
-        TargetedTower.init(self, image, animationGrid, gridOrigin, worldOrigin, constants.STRUCTURE.SPUDGUN.WIDTH, constants.STRUCTURE.SPUDGUN.HEIGHT)
+        TargetedTower.init(self, animationInstance, gridOrigin, worldOrigin, constants.STRUCTURE.SPUDGUN.WIDTH, constants.STRUCTURE.SPUDGUN.HEIGHT)
         self.towerType = "SPUDGUN"
         self.targettingRadius = constants.STRUCTURE.SPUDGUN.TARGETTING_RADIUS
         self.attackDamage = constants.STRUCTURE.SPUDGUN.ATTACK_DAMAGE
