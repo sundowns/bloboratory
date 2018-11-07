@@ -1,9 +1,9 @@
-local animationInstance = nil
+local animations = nil
 
 Obstacle = Class {
     __includes=Structure,
     init = function(self, gridOrigin, worldOrigin, width, height)
-        Structure.init(self, animationInstance, gridOrigin, worldOrigin, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT)
+        Structure.init(self, animations, gridOrigin, worldOrigin, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT)
         self.type = "OBSTACLE" 
     end;
     update = function(self, dt)

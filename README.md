@@ -18,7 +18,7 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 | mouse1      | toggle obstacle |
 | 1 | place obstacle |
 | 2 | place saw |
-| 3 | place spud gun |
+| 3 | place cannon |
 | g | toggle goal      |
 | s | place spawner      |
 | space | toggle spawning |
