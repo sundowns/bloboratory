@@ -1,7 +1,7 @@
 local ALL_BLUEPRINTS = {
-    ["OBSTACLE"] = Blueprint("OBSTACLE", nil, nil, 1, 1),
+    ["OBSTACLE"] = Blueprint("OBSTACLE", nil, 1, 1),
     ["SAW"] = Blueprint("SAW", assets.blueprints.saw, 2, 2),
-    ["SPUDGUN"] = Blueprint("SPUDGUN", nil, nil, 2, 2)
+    ["SPUDGUN"] = Blueprint("SPUDGUN", assets.blueprints.cannon, 2, 2)
 }
 
 PlayerController = Class {
