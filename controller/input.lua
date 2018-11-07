@@ -38,6 +38,10 @@ InputController = Class {
                 world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
             elseif key == "space" then
                 world:toggleSpawning()
+            elseif key == "u" and playerController.currentSelectedStructure then
+                if playerController.currentSelectedStructure.addMutation then
+                    playerController.currentSelectedStructure:addMutation(FireMutation()) 
+                end
             end
         end
     end;  

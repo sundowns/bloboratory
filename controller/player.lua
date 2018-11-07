@@ -1,7 +1,7 @@
 local ALL_BLUEPRINTS = {
     ["OBSTACLE"] = Blueprint("OBSTACLE", nil, 1, 1),
     ["SAW"] = Blueprint("SAW", assets.blueprints.saw, 2, 2),
-    ["SPUDGUN"] = Blueprint("SPUDGUN", assets.blueprints.cannon, 2, 2)
+    ["CANNON"] = Blueprint("CANNON", assets.blueprints.cannon, 2, 2)
 }
 
 PlayerController = Class {
@@ -11,7 +11,7 @@ PlayerController = Class {
             ALL_BLUEPRINTS["OBSTACLE"]
         }
         table.insert(self.blueprints, ALL_BLUEPRINTS["SAW"]) -- TODO: will be unlocked, not a default value
-        table.insert(self.blueprints, ALL_BLUEPRINTS["SPUDGUN"]) -- TODO: will be unlocked, not a default value
+        table.insert(self.blueprints, ALL_BLUEPRINTS["CANNON"]) -- TODO: will be unlocked, not a default value
         self.currentBlueprint = nil
         self.currentSelectedStructure = nil
     end;

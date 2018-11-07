@@ -1,13 +1,16 @@
-local animationInstance = nil
-
-SpudGun = Class {
+Cannon = Class {
     __includes=TargetedTower,
     init = function(self, gridOrigin, worldOrigin)
-        TargetedTower.init(self, animationInstance, gridOrigin, worldOrigin, constants.STRUCTURE.SPUDGUN.WIDTH, constants.STRUCTURE.SPUDGUN.HEIGHT)
-        self.towerType = "SPUDGUN"
-        self.targettingRadius = constants.STRUCTURE.SPUDGUN.TARGETTING_RADIUS
-        self.attackDamage = constants.STRUCTURE.SPUDGUN.ATTACK_DAMAGE
-        self.attackInterval = constants.STRUCTURE.SPUDGUN.ATTACK_INTERVAL
+        self.towerType = "CANNON"
+        local animations = {
+            animationController:createInstance(self.towerType)
+        }
+
+        TargetedTower.init(self, animations, gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT)
+
+        self.targettingRadius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS
+        self.attackDamage = constants.STRUCTURE.CANNON.ATTACK_DAMAGE
+        self.attackInterval = constants.STRUCTURE.CANNON.ATTACK_INTERVAL
 
         self.attackTimer = Timer.new()
 
@@ -26,14 +29,21 @@ SpudGun = Class {
     end;
     shoot = function(self)
         local projOrigin = Vector(self.worldOrigin.x + constants.GRID.CELL_SIZE*self.width/2, self.worldOrigin.y + constants.GRID.CELL_SIZE*self.height/2)
-        table.insert(self.projectiles, Spud(projOrigin, self.currentTarget, self.attackDamage))
+        table.insert(self.projectiles, Cannonball(projOrigin, self.currentTarget, self.attackDamage))
+    end;
+    addMutation = function(self, mutation)
+        assert(mutation and mutation.id)
+        local animations = {
+            animationController:createInstance(self.towerType..'-'..mutation.id)
+        }
+        MeleeTower.addMutation(self, mutation, animations)
     end;
 }
 
-Spud = Class {
+Cannonball = Class {
     __includes=HomingProjectile,
     init = function(self, worldOrigin, target, damage)
-        HomingProjectile.init(self, worldOrigin, target, constants.PROJECTILE.SPUD.SPEED)
+        HomingProjectile.init(self, worldOrigin, target, constants.PROJECTILE.CANNONBALL.SPEED)
         self.damage = damage
     end;
     update = function(self, dt)

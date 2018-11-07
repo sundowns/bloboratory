@@ -1,8 +1,16 @@
 Tower = Class {
     __includes=Structure,
-    init = function(self, animationInstance, gridOrigin, worldOrigin, width, height)
-        Structure.init(self, animationInstance, gridOrigin, worldOrigin, width, height)
+    init = function(self, animations, gridOrigin, worldOrigin, width, height)
+        Structure.init(self, animations, gridOrigin, worldOrigin, width, height)
         self.type = "TOWER" -- used to check for valid collisions
+        self.mutation = nil
+    end;
+    addMutation = function(self, mutation, animations)
+        if not self.mutation then
+            self.mutation = mutation
+            self.animations = animations
+            self:changeAnimationState("DEFAULT")
+        end
     end;
     update = function(self, dt)
         Structure.update(self, dt)
@@ -22,19 +30,22 @@ Tower = Class {
 
 MeleeTower = Class {
     __includes = Tower,
-    init = function(self, animationInstance, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, animationInstance, gridOrigin, worldOrigin, width, height)
+    init = function(self, animations, gridOrigin, worldOrigin, width, height)
+        Tower.init(self, animations, gridOrigin, worldOrigin, width, height)
         self.archetype = "MELEE"
     end;
     update = function(self, dt)
         Tower.update(self, dt)
     end;
+    addMutation = function(self, mutation, animations)
+        Tower.addMutation(self, mutation, animations)
+    end;
 }
 
 TargetedTower = Class {
     __includes = Tower,
-    init = function(self, animationInstance, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, animationInstance, gridOrigin, worldOrigin, width, height)
+    init = function(self, animations, gridOrigin, worldOrigin, width, height)
+        Tower.init(self, animations, gridOrigin, worldOrigin, width, height)
         self.archetype = "TARGETTED"
         self.currentTarget = nil
         self.projectiles = {}
@@ -65,6 +76,9 @@ TargetedTower = Class {
             projectile:draw()
         end
     end;
+    addMutation = function(self, mutation, animations)
+        Tower.addMutation(self, mutation, animations)
+    end;
     inRange = function(self, enemy)
         assert(enemy and enemy.worldOrigin)
         local x, y, width, height = Tower.calculateHitbox(self)
@@ -72,5 +86,5 @@ TargetedTower = Class {
             enemy.worldOrigin.x < x + width and
             enemy.worldOrigin.y > y and
             enemy.worldOrigin.y < y + height
-    end
+    end;
 }

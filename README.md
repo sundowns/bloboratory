@@ -15,10 +15,11 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 
 | Key        | Action           |
 | ------------- |:-------------:|
-| mouse1      | toggle obstacle |
+| mouse1      | select/deselect structures |
 | 1 | place obstacle |
 | 2 | place saw |
-| 3 | place spud gun |
+| 3 | place cannon |
+| u | upgrade selected tower (fire only atm) | 
 | g | toggle goal      |
 | s | place spawner      |
 | space | toggle spawning |

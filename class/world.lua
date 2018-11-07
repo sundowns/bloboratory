@@ -22,9 +22,9 @@ World = Class {
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
                 placedTower = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
             end
-        elseif type == "SPUDGUN" then
-            if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SPUDGUN.WIDTH, constants.STRUCTURE.SPUDGUN.HEIGHT) then
-                placedTower = self:addNewTower(SpudGun(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
+        elseif type == "CANNON" then
+            if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT) then
+                placedTower = self:addNewTower(Cannon(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
             end
         elseif type == "OBSTACLE" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then

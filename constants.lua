@@ -48,7 +48,7 @@ return {
             ATTACK_DAMAGE = 5, --damage per second 
             TARGETTING_RADIUS = 1 --additional cell radii
         },
-        SPUDGUN = {
+        CANNON = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 1.5, --damage per HIT 
@@ -58,7 +58,7 @@ return {
     },
     PROJECTILE = {
         RADIUS = 5,
-        SPUD = {
+        CANNONBALL = {
             SPEED = 8
         },
     },
