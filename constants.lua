@@ -46,14 +46,16 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 5, --damage per second 
-            TARGETTING_RADIUS = 1 --additional cell radii
+            TARGETTING_RADIUS = 1, --additional cell radii
+            COST = -5
         },
         CANNON = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 1.5, --damage per HIT 
             TARGETTING_RADIUS = 3, --additional cell radii
-            ATTACK_INTERVAL = 0.2
+            ATTACK_INTERVAL = 0.2,
+            COST = -10
         }
     },
     PROJECTILE = {

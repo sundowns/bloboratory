@@ -2,6 +2,7 @@ Saw = Class {
     __includes=MeleeTower,
     init = function(self, gridOrigin, worldOrigin)
         self.towerType = "SAW"
+        self.cost = constants.STRUCTURE.SAW.COST
         local animations = {
             animationController:createInstance(self.towerType)
         }

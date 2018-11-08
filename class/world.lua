@@ -20,11 +20,15 @@ World = Class {
         local placedTower = false
         if type == "SAW" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
-                placedTower = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
+                if (playerController.money + constants.STRUCTURE.SAW.COST) >= 0 then
+                    placedTower = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
+                end
             end
         elseif type == "CANNON" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT) then
-                placedTower = self:addNewTower(Cannon(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) 
+                if (playerController.money + constants.STRUCTURE.CANNON.COST) >= 0 then
+                    placedTower = self:addNewTower(Cannon(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
+                end
             end
         elseif type == "OBSTACLE" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
@@ -44,6 +48,7 @@ World = Class {
         self.collisionWorld:add(newTower, newTower:calculateHitbox())
         self.grid:occupySpaces(newTower)
         self.grid:calculatePaths()
+        playerController:updateMoney(newTower.cost) 
         return true --a tower was placed  
     end;
     addNewStructure = function(self, newStructure)
