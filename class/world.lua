@@ -20,13 +20,13 @@ World = Class {
         local placedTower = false
         if type == "SAW" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
-                if (playerController.money - constants.STRUCTURE.SAW.COST) >= 0 then
+                if playerController.money > constants.STRUCTURE.SAW.COST then
                     placedTower = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
                 end
             end
         elseif type == "CANNON" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT) then
-                if (playerController.money - constants.STRUCTURE.CANNON.COST) >= 0 then
+                if playerController.money > constants.STRUCTURE.CANNON.COST then
                     placedTower = self:addNewTower(Cannon(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
                 end
             end
@@ -45,7 +45,9 @@ World = Class {
         self.collisionWorld:add(newTower, newTower:calculateHitbox())
         self.grid:occupySpaces(newTower)
         self.grid:calculatePaths()
-        playerController:updateMoney(- (newTower.cost))
+
+        playerController:updateMoney(- (newTower.cost)) -- Handle money stuff
+        self:addFloatingGain('-'..newTower.cost, newTower.worldOrigin.x + constants.CURRENCY.GAINS.X_OFFSET, newTower.worldOrigin.y, false)
         return true --a tower was placed  
     end;
     addNewStructure = function(self, newStructure)
@@ -55,16 +57,15 @@ World = Class {
         return true --an obstacle was placed
     end;
     removeStructure = function(self, structure)
-        if structure ~= nil then 
-            self.collisionWorld:remove(structure)
-            self.grid:vacateSpaces(structure)
-            for i, markedStructure in pairs(world.structures) do
-                if markedStructure.worldOrigin == structure.worldOrigin then 
-                    table.remove(self.structures, i)
-                end
+        assert(structure)
+        self.collisionWorld:remove(structure)
+        self.grid:vacateSpacesForStructure(structure)
+        for i, markedStructure in pairs(world.structures) do
+            if markedStructure.worldOrigin == structure.worldOrigin then 
+                table.remove(self.structures, i)
             end
-            self.grid:calculatePaths()
         end
+        self.grid:calculatePaths()
     end;
     spawnEnemyAt = function(self, gridX, gridY)
         local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
@@ -84,6 +85,13 @@ World = Class {
             end
         end
     end;
+    addFloatingGain = function(self, amount, origin_x, origin_y, isPositive)
+        local newVector = Vector(origin_x, origin_y)
+        table.insert(self.floatingGains, FloatingText(amount, newVector, Vector(0,-0.5), isPositive)) 
+        self.gainTimer:after(constants.CURRENCY.GAINS.TIME_TO_LIVE, function()
+            table.remove(self.floatingGains, 1)
+        end)
+    end;
     update = function(self, dt)
         self.grid:update(dt)
         for i, structure in pairs(self.structures) do
@@ -94,10 +102,7 @@ World = Class {
             self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if self.enemies[i].markedForDeath then
                 playerController:updateMoney(self.enemies[i].yield)
-                table.insert(self.floatingGains, FloatingText('+'..self.enemies[i].yield, self.enemies[i].worldOrigin, Vector(0,-0.5))) 
-                self.gainTimer:after(constants.CURRENCY.GAINS.TIME_TO_LIVE, function()
-                    table.remove(self.floatingGains, 1)
-                end)
+                self:addFloatingGain("+"..self.enemies[i].yield, self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y, true)
             end
 
             if self.enemies[i].markedForDeath or self.enemies[i].hitGoal then 

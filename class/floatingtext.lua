@@ -1,9 +1,14 @@
 FloatingText = Class {
-    init = function(self, text, origin, tickDelta)
+    init = function(self, text, origin, tickDelta, isPositive)
         assert(text)
         assert(origin and origin.x and origin.y)
         assert(tickDelta)
-        self.text = love.graphics.newText(love.graphics.getFont(), {constants.COLOURS.GAINS_TEXT, text})
+        if isPositive == true then
+            self.drawColour = constants.COLOURS.GAINS_TEXT_POSITIVE
+        else 
+            self.drawColour = constants.COLOURS.GAINS_TEXT_NEGATIVE
+        end
+        self.text = love.graphics.newText(love.graphics.getFont(), {self.drawColour, text})
         self.origin = origin
         self.tickDelta = tickDelta --a vector stating positional change per second
     end;

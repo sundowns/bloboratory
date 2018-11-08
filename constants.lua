@@ -18,7 +18,8 @@ return {
     },
     COLOURS = {
         DEBUG_PRINT = {0,1,0}, --debug
-        GAINS_TEXT = {1,1,0},
+        GAINS_TEXT_POSITIVE = {1,1,0},
+        GAINS_TEXT_NEGATIVE = {1,0,0},
         EMPTY = {0,0,0},
         HOVERED = {0,1,0},
         HOVERED_INVALID = {1,0,0},
@@ -83,6 +84,7 @@ return {
         GAINS = {
             DRIFT_SPEED = 50,
             TIME_TO_LIVE = 1,
+            X_OFFSET = 22.8
         }
     },
     UI = {

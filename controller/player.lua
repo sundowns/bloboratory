@@ -54,6 +54,7 @@ PlayerController = Class {
             return 
         end
         self:updateMoney(self.currentSelectedStructure.cost)
+        world:addFloatingGain("+"..self.currentSelectedStructure.cost, self.currentSelectedStructure.worldOrigin.x + constants.CURRENCY.GAINS.X_OFFSET, self.currentSelectedStructure.worldOrigin.y, true)
         world:removeStructure(self.currentSelectedStructure)
         self:toggleStructureSelection()
     end;

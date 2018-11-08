@@ -210,7 +210,7 @@ Grid = Class {
             end
         end
     end;
-    vacateSpaces = function(self, structure)
+    vacateSpacesForStructure = function(self, structure)
         for i = structure.gridOrigin.x, structure.gridOrigin.x + structure.width-1 do
             for j = structure.gridOrigin.y, structure.gridOrigin.y + structure.height-1 do
                 self:vacateCell(i, j)
