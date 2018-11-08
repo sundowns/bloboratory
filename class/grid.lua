@@ -129,6 +129,10 @@ Grid = Class {
         if not self:isValidGridCoords(x, y) then return end
         self.cells[x][y]:occupy(occupant)
     end;
+    vacateCell = function(self, x, y)
+        if not self:isValidGridCoords(x, y) then return end
+        self.cells[x][y]:vacate()
+    end;
     getNeighbours = function(self, target)
         assert(target.x and target.y)
         local neighbours = {}
@@ -203,6 +207,13 @@ Grid = Class {
         for i = structure.gridOrigin.x, structure.gridOrigin.x + structure.width-1 do
             for j = structure.gridOrigin.y, structure.gridOrigin.y + structure.height-1 do
                 self:occupyCell(i, j, structure)
+            end
+        end
+    end;
+    vacateSpaces = function(self, structure)
+        for i = structure.gridOrigin.x, structure.gridOrigin.x + structure.width-1 do
+            for j = structure.gridOrigin.y, structure.gridOrigin.y + structure.height-1 do
+                self:vacateCell(i, j)
             end
         end
     end;

@@ -53,6 +53,14 @@ PlayerController = Class {
         if not self.currentSelectedStructure then
             return 
         end
+        for i, structure in pairs(world.structures) do 
+            if structure.worldOrigin == self.currentSelectedStructure.worldOrigin then 
+                world.collisionWorld:remove(structure)
+                world.grid:vacateSpaces(structure)
+                self:updateMoney(-(structure.cost))
+                table.remove(world.structures, i)
+            end
+        end
         --TODO: refund logic
     end;
 }
