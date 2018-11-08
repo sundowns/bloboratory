@@ -34,12 +34,9 @@ World = Class {
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
                 --place a new block
                 if self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) then
-                    self.currentRound.obstaclesPlaced = self.currentRound.obstaclesPlaced + 1
+                    --any additional logic
                 end
             end
-        end
-        if placedTower then
-            self.currentRound.towersPlaced = self.currentRound.towersPlaced + 1
         end
         return placedTower
     end;

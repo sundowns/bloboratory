@@ -23,9 +23,9 @@ InputController = Class {
         end
     end;
     keypressed = function(self, key)
-        if key == "1" and world.currentRound.obstaclesPlaced < world.currentRound.maxObstacles then
+        if key == "1" then
             playerController:setCurrentBlueprint(1)
-        elseif tonumber(key) and world.currentRound.towersPlaced < world.currentRound.maxTowers then
+        elseif tonumber(key) then
             playerController:setCurrentBlueprint(tonumber(key))
         end
 
@@ -50,7 +50,7 @@ InputController = Class {
     mousepressed = function(self, screen_x, screen_y, button)
         local gridX, gridY = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
         if self.isPlacingTower then
-            if world:placeStructure(gridX, gridY, playerController.currentBlueprint.name) or world.currentRound.obstaclesPlaced >= world.currentRound.maxObstacles then
+            if world:placeStructure(gridX, gridY, playerController.currentBlueprint.name) then
                 self:togglePlacingTower()
             end
         else
