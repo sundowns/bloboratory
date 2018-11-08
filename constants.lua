@@ -18,7 +18,8 @@ return {
     },
     COLOURS = {
         DEBUG_PRINT = {0,1,0}, --debug
-        GAINS_TEXT = {1,1,0},
+        GAINS_TEXT_POSITIVE = {1,1,0},
+        GAINS_TEXT_NEGATIVE = {1,0,0},
         EMPTY = {0,0,0},
         HOVERED = {0,1,0},
         HOVERED_INVALID = {1,0,0},
@@ -41,19 +42,22 @@ return {
         OBSTACLE = {
             WIDTH = 1, --cells
             HEIGHT = 1, --cells
+            COST = 1
         },
         SAW = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 5, --damage per second 
-            TARGETTING_RADIUS = 1 --additional cell radii
+            TARGETTING_RADIUS = 1, --additional cell radii
+            COST = 5
         },
         CANNON = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 1.5, --damage per HIT 
             TARGETTING_RADIUS = 3, --additional cell radii
-            ATTACK_INTERVAL = 0.2
+            ATTACK_INTERVAL = 0.2,
+            COST = 10
         }
     },
     PROJECTILE = {
@@ -81,6 +85,7 @@ return {
         GAINS = {
             DRIFT_SPEED = 50,
             TIME_TO_LIVE = 1,
+            X_OFFSET = 22.8
         }
     },
     UI = {

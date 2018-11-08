@@ -6,7 +6,7 @@ local ALL_BLUEPRINTS = {
 
 PlayerController = Class {
     init = function(self)
-        self.money = 0
+        self.money = 20
         self.blueprints = {
             ALL_BLUEPRINTS["OBSTACLE"]
         }
@@ -53,7 +53,9 @@ PlayerController = Class {
         if not self.currentSelectedStructure then
             return 
         end
-
-        --TODO: refund logic
+        self:updateMoney(self.currentSelectedStructure.cost)
+        world:addFloatingGain("+"..self.currentSelectedStructure.cost, self.currentSelectedStructure.worldOrigin.x + constants.CURRENCY.GAINS.X_OFFSET, self.currentSelectedStructure.worldOrigin.y, true)
+        world:removeStructure(self.currentSelectedStructure)
+        self:toggleStructureSelection()
     end;
 }

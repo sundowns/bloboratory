@@ -2,6 +2,7 @@ Cannon = Class {
     __includes=TargetedTower,
     init = function(self, gridOrigin, worldOrigin)
         self.towerType = "CANNON"
+        self.cost = constants.STRUCTURE.CANNON.COST
         local animations = {
             animationController:createInstance(self.towerType)
         }
