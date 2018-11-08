@@ -53,7 +53,7 @@ PlayerController = Class {
         if not self.currentSelectedStructure then
             return 
         end
-        self:updateMoney(-(self.currentSelectedStructure.cost))
+        self:updateMoney(self.currentSelectedStructure.cost)
         world:removeStructure(self.currentSelectedStructure)
         self:toggleStructureSelection()
     end;
