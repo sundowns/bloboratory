@@ -54,6 +54,16 @@ World = Class {
         self.grid:calculatePaths()
         return true --an obstacle was placed
     end;
+    removeStructure = function(self, structure)
+        self.collisionWorld:remove(structure)
+        self.grid:vacateSpaces(structure)
+        for i, markedStructure in pairs(world.structures) do
+            if markedStructure.worldOrigin == structure.worldOrigin then 
+                table.remove(self.structures, i)
+            end
+        end
+
+    end;
     spawnEnemyAt = function(self, gridX, gridY)
         local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
         if self.grid:isValidGridCoords(gridX, gridY) and self.grid:isSpawnable(gridX, gridY) then
