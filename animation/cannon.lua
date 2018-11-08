@@ -8,11 +8,28 @@ return {
     animation_names = {
         "DEFAULT"
     },
-    animations = {
-        DEFAULT = {
-            frame_duration = 1,
-            x = 1,
-            y = 1
-        }
+    layers = {
+        {
+            DEFAULT = {
+                frame_duration = 0.15,
+                x = 1,
+                y = 3,
+                offset_x = 0,
+                offset_y = 0,
+                rotate_to_target = false,
+                rotation = 0
+            }
+        },
+        {
+            DEFAULT = {
+                frame_duration = 0.15,
+                x = 1,
+                y = 4,
+                offset_x = 0,
+                offset_y = 0,
+                rotate_to_target = true,
+                rotation = 0
+            }
+        },
     }
 }

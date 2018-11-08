@@ -61,9 +61,9 @@ return {
         }
     },
     PROJECTILE = {
-        RADIUS = 5,
+        RADIUS = 6,
         CANNONBALL = {
-            SPEED = 8
+            SPEED = 10
         },
     },
     ENEMY = {

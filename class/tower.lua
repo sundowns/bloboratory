@@ -1,14 +1,14 @@
 Tower = Class {
     __includes=Structure,
-    init = function(self, animations, gridOrigin, worldOrigin, width, height)
-        Structure.init(self, animations, gridOrigin, worldOrigin, width, height)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height)
+        Structure.init(self, animation, gridOrigin, worldOrigin, width, height)
         self.type = "TOWER" -- used to check for valid collisions
         self.mutation = nil
     end;
-    addMutation = function(self, mutation, animations)
+    addMutation = function(self, mutation, animation)
         if not self.mutation then
             self.mutation = mutation
-            self.animations = animations
+            self.animation = animation
             self:changeAnimationState("DEFAULT")
         end
     end;
@@ -30,24 +30,25 @@ Tower = Class {
 
 MeleeTower = Class {
     __includes = Tower,
-    init = function(self, animations, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, animations, gridOrigin, worldOrigin, width, height)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height)
+        Tower.init(self, animation, gridOrigin, worldOrigin, width, height)
         self.archetype = "MELEE"
     end;
     update = function(self, dt)
         Tower.update(self, dt)
     end;
-    addMutation = function(self, mutation, animations)
-        Tower.addMutation(self, mutation, animations)
+    addMutation = function(self, mutation, animation)
+        Tower.addMutation(self, mutation, animation)
     end;
 }
 
 TargetedTower = Class {
     __includes = Tower,
-    init = function(self, animations, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, animations, gridOrigin, worldOrigin, width, height)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height)
+        Tower.init(self, animation, gridOrigin, worldOrigin, width, height)
         self.archetype = "TARGETTED"
         self.currentTarget = nil
+        self.angleToTarget = 0
         self.projectiles = {}
     end;
     spottedEnemy = function(self, enemy)
@@ -60,6 +61,13 @@ TargetedTower = Class {
 
         if self.currentTarget and (not self:inRange(self.currentTarget) or self.currentTarget.markedForDeath)  then 
             self.currentTarget = nil
+        end
+
+        if self.currentTarget then
+            local cX, cY = self:centre()
+            local dy = cY - self.currentTarget.worldOrigin.y  
+            local dx = self.currentTarget.worldOrigin.x - cX
+            self.angleToTarget = math.atan2(dx, dy)
         end
 
         for i = #self.projectiles, 1, -1 do
@@ -76,8 +84,8 @@ TargetedTower = Class {
             projectile:draw()
         end
     end;
-    addMutation = function(self, mutation, animations)
-        Tower.addMutation(self, mutation, animations)
+    addMutation = function(self, mutation, animation)
+        Tower.addMutation(self, mutation, animation)
     end;
     inRange = function(self, enemy)
         assert(enemy and enemy.worldOrigin)

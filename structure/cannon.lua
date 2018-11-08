@@ -3,11 +3,8 @@ Cannon = Class {
     init = function(self, gridOrigin, worldOrigin)
         self.towerType = "CANNON"
         self.cost = constants.STRUCTURE.CANNON.COST
-        local animations = {
-            animationController:createInstance(self.towerType)
-        }
 
-        TargetedTower.init(self, animations, gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT)
+        TargetedTower.init(self, animationController:createInstance(self.towerType), gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT)
 
         self.targettingRadius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS
         self.attackDamage = constants.STRUCTURE.CANNON.ATTACK_DAMAGE
@@ -34,10 +31,7 @@ Cannon = Class {
     end;
     addMutation = function(self, mutation)
         assert(mutation and mutation.id)
-        local animations = {
-            animationController:createInstance(self.towerType..'-'..mutation.id)
-        }
-        MeleeTower.addMutation(self, mutation, animations)
+        MeleeTower.addMutation(self, mutation, animationController:createInstance(self.towerType..'-'..mutation.id))
     end;
 }
 

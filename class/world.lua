@@ -33,9 +33,7 @@ World = Class {
         elseif type == "OBSTACLE" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
                 if playerController.money >= constants.STRUCTURE.OBSTACLE.COST then
-                    if self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) then
-                        -- Any additional logic
-                    end
+                    self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
                 end
             end
         end
@@ -47,8 +45,8 @@ World = Class {
         self.grid:occupySpaces(newTower)
         self.grid:calculatePaths()
 
-        playerController:updateMoney(- (newTower.cost)) -- Handle money stuff
-        self:addFloatingGain('-'..newTower.cost, newTower.worldOrigin.x + constants.CURRENCY.GAINS.X_OFFSET, newTower.worldOrigin.y, false)
+        playerController:updateMoney(-newTower.cost)
+        self:addFloatingGain('-'..newTower.cost, newTower.worldOrigin.x + newTower.width/2*constants.GRID.CELL_SIZE, newTower.worldOrigin.y, false)
         return true --a tower was placed  
     end;
     addNewStructure = function(self, newStructure)
@@ -56,13 +54,13 @@ World = Class {
         self.grid:occupySpaces(newStructure)
         self.grid:calculatePaths()
 
-        playerController:updateMoney(- (newStructure.cost)) -- Handle money stuff
-        self:addFloatingGain('-'..newStructure.cost, newStructure.worldOrigin.x + constants.CURRENCY.GAINS.X_OFFSET, newStructure.worldOrigin.y, false)
+        playerController:updateMoney(-newStructure.cost)
+        self:addFloatingGain('-'..newStructure.cost, newStructure.worldOrigin.x + newStructure.width/2*constants.GRID.CELL_SIZE, newStructure.worldOrigin.y, false)
         return true --an obstacle was placed
     end;
     removeStructure = function(self, structure)
         assert(structure)
-        if structure.type ~= "OBSTACLE" then 
+        if structure.type == "TOWER" then 
             self.collisionWorld:remove(structure)
         end
         self.grid:vacateSpacesForStructure(structure)
