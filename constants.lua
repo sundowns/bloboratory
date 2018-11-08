@@ -42,6 +42,7 @@ return {
         OBSTACLE = {
             WIDTH = 1, --cells
             HEIGHT = 1, --cells
+            COST = 1
         },
         SAW = {
             WIDTH = 2, --cells

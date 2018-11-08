@@ -32,9 +32,10 @@ World = Class {
             end
         elseif type == "OBSTACLE" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
-                --place a new block
-                if self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) then
-                    --any additional logic
+                if playerController.money >= constants.STRUCTURE.OBSTACLE.COST then
+                    if self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)))) then
+                        -- Any additional logic
+                    end
                 end
             end
         end
@@ -54,11 +55,16 @@ World = Class {
         table.insert(self.structures, newStructure)
         self.grid:occupySpaces(newStructure)
         self.grid:calculatePaths()
+
+        playerController:updateMoney(- (newStructure.cost)) -- Handle money stuff
+        self:addFloatingGain('-'..newStructure.cost, newStructure.worldOrigin.x + constants.CURRENCY.GAINS.X_OFFSET, newStructure.worldOrigin.y, false)
         return true --an obstacle was placed
     end;
     removeStructure = function(self, structure)
         assert(structure)
-        self.collisionWorld:remove(structure)
+        if structure.type ~= "OBSTACLE" then 
+            self.collisionWorld:remove(structure)
+        end
         self.grid:vacateSpacesForStructure(structure)
         for i, markedStructure in pairs(world.structures) do
             if markedStructure.worldOrigin == structure.worldOrigin then 
