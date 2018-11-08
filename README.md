@@ -19,7 +19,8 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 | 1 | place obstacle |
 | 2 | place saw |
 | 3 | place cannon |
-| u | upgrade selected tower (fire only atm) | 
+| u | upgrade selected tower (fire only atm) |
+| r | refund selected tower |
 | g | toggle goal      |
 | s | place spawner      |
 | space | toggle spawning |

@@ -22,33 +22,51 @@ AnimationController = Class {
         end
 
         -- If the specified state does not exist, use the first one
-        if self.spriteBank[spriteName].animations[currentState] == nil then
+        if self.spriteBank[spriteName].layers[1][currentState] == nil then
             currentState = self.spriteBank[spriteName].animation_names[1] 
         end
 
-        local anim_data = self.spriteBank[spriteName].animations[currentState]
-
         return {
-            animation = anim8.newAnimation(self.spriteBank[spriteName].grid(anim_data.x, anim_data.y), anim_data.frame_duration),
+            animations = self:retrieveLayerInstances(spriteName, currentState),
             sprite = self.spriteBank[spriteName],
             currentState = currentState,
-            time_scale = 1, --slow-mo?,
-            rotation = rotation or 0
+            time_scale = 1, --slow-mo?
         }
+    end;
+    retrieveLayerInstances = function(self, spriteName, currentState)
+        local layers = {}
+
+        for i, layer in pairs(self.spriteBank[spriteName].layers) do
+            local anim_data = layer[currentState]
+            table.insert(layers, {
+                animation = anim8.newAnimation(self.spriteBank[spriteName].grid(anim_data.x, anim_data.y), anim_data.frame_duration),
+                origin = Vector(anim_data.offset_x, anim_data.offset_y),
+                rotation = anim_data.rotation,
+                rotateToTarget = anim_data.rotate_to_target
+            })
+        end;
+
+        return layers
     end;
     changeSpriteState = function(self, instance, newState)
         -- If the specified state does not exist, we cooked
-        assert(instance.sprite.animations[newState], "Tried to change sprite to non-existing state "..newState)
+        assert(instance.sprite.layers[1][newState], "Tried to change sprite to non-existing state "..newState)
 
-        instance.animation = anim8.newAnimation(instance.sprite.grid(instance.sprite.animations[newState].x, instance.sprite.animations[newState].y), instance.sprite.animations[newState].frame_duration)
+        instance.animations = self:retrieveLayerInstances(instance.sprite.id, newState)
     end;
-    updateSpriteInstance = function(self, instance, dt, rotation)
-        if rotation then instance.rotation = rotation end
-
-        instance.animation:update(dt)
+    updateSpriteInstance = function(self, instance, dt)
+        for i, layer in pairs(instance.animations) do
+            layer.animation:update(dt)
+        end
     end;
-    drawSpriteInstance = function(self, instance, x, y, cells_width, cells_height)
-        local w, h = instance.animation:getDimensions()
-        instance.animation:draw(instance.sprite.image, x, y, instance.rotation, w*cells_width/constants.GRID.CELL_SIZE, h*cells_height/constants.GRID.CELL_SIZE)
+    drawSpriteInstance = function(self, instance, x, y, cellsWidth, cellsHeight, targettingAngle)
+        for i, layer in pairs(instance.animations) do
+            local w, h = layer.animation:getDimensions()
+            if layer.rotateToTarget then
+                layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, targettingAngle, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, w/2)
+            else
+                layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, layer.rotation, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, w/2)
+            end
+        end
     end;
 }
