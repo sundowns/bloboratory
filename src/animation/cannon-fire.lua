@@ -23,7 +23,7 @@ return {
         {
             DEFAULT = {
                 frame_duration = 1,
-                x = '1-3',
+                x = 1,
                 y = 2,
                 offset_x = 0,
                 offset_y = 0,
