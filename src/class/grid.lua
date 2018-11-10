@@ -49,7 +49,7 @@ Grid = Class {
     --TODO: Remove the below function once everything has images weeeee
     highlightCells = function(self, mouseX, mouseY, width, height)
         local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
-        if not self:isOccupied(gridX, gridY, width, height) then
+        if self:isValidGridCoords(gridX, gridY) and not self:isOccupied(gridX, gridY, width, height) then
             for i = gridX, gridX + width-1 do
                 for j = gridY, gridY + height-1 do
                     self.cells[i][j].isHovered = true

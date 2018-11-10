@@ -18,7 +18,7 @@ return {
                 offset_y = 0,
                 rotate_to_target = false,
                 rotation = 0
-            }
+            },
         },
         {
             DEFAULT = {

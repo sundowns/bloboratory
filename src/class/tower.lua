@@ -59,7 +59,7 @@ TargetedTower = Class {
     update = function(self, dt)
         Tower.update(self, dt)
 
-        if self.currentTarget and (not self:inRange(self.currentTarget) or self.currentTarget.markedForDeath)  then 
+        if self.currentTarget and (not self:inRange(self.currentTarget) or self.currentTarget.markedForDeath or self.currentTarget.hitGoal)  then 
             self.currentTarget = nil
         end
 

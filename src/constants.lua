@@ -54,16 +54,17 @@ return {
         CANNON = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
-            ATTACK_DAMAGE = 1.5, --damage per HIT 
-            TARGETTING_RADIUS = 3, --additional cell radii
-            ATTACK_INTERVAL = 0.2,
+            BARREL_LENGTH = 32, --used to offset projectiles
+            ATTACK_DAMAGE = 3, --damage per HIT 
+            TARGETTING_RADIUS = 4, --additional cell radii
+            ATTACK_INTERVAL = 0.5,
             COST = 10
         }
     },
     PROJECTILE = {
         RADIUS = 6,
         CANNONBALL = {
-            SPEED = 10
+            SPEED = 8
         },
     },
     ENEMY = {

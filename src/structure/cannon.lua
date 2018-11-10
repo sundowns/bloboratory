@@ -26,8 +26,11 @@ Cannon = Class {
         end
     end;
     shoot = function(self)
-        local projOrigin = Vector(self.worldOrigin.x + constants.GRID.CELL_SIZE*self.width/2, self.worldOrigin.y + constants.GRID.CELL_SIZE*self.height/2)
-        table.insert(self.projectiles, Cannonball(projOrigin, self.currentTarget, self.attackDamage))
+        local cX, cY = self.worldOrigin.x + constants.GRID.CELL_SIZE*self.width/2, self.worldOrigin.y + constants.GRID.CELL_SIZE*self.height/2
+        local newX = cX + constants.STRUCTURE.CANNON.BARREL_LENGTH*math.sin(self.angleToTarget)
+        local newY = cY - constants.STRUCTURE.CANNON.BARREL_LENGTH*math.cos(self.angleToTarget)
+        
+        table.insert(self.projectiles, Cannonball(Vector(newX, newY), self.currentTarget, self.attackDamage))
     end;
     addMutation = function(self, mutation)
         assert(mutation and mutation.id)
