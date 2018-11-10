@@ -63,12 +63,17 @@ return {
     ENEMY = {
         SPAWN_INTERVAL = 1,
         ORIENTATION_CHANGE_TIME = 0.15,
-        SMALLGUY = {
+        HEALTHBAR = {
+            TIMEOUT = 1,
+            WIDTH = 32,
+            HEIGHT = 3
+        },
+        BLOB = {
             HEALTH = 10,
             SPEED = 150,
             YIELD = 1,
         },
-        LARGEGUY = {
+        LARGEBLOB = {
             HEALTH = 20,
             SPEED = 120,
             YIELD = 2,
@@ -89,9 +94,9 @@ return {
     },
     DEBUFF = {
         INFLAME = {
-            DURATION = 1,
+            DURATION = 2,
             TICK_DURATION = 0.1,
-            DAMAGE_PER_TICK = 0.25,
+            DAMAGE_PER_TICK = 0.2,
         },
         FREEZE = {
             DURATION = 3,

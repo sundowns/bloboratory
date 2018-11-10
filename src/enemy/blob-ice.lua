@@ -1,11 +1,10 @@
-SmallGuy = Class {
+BlobIce = Class {
     __includes = Enemy,
     init = function(self, worldOrigin)
-        Enemy.init(self, "SMALLGUY", worldOrigin, constants.ENEMY.SMALLGUY.HEALTH, constants.ENEMY.SMALLGUY.SPEED, constants.ENEMY.SMALLGUY.YIELD, animationController:createInstance("BLOB"))
+        Enemy.init(self, "BLOB-ICE", worldOrigin, constants.ENEMY.BLOB.HEALTH, constants.ENEMY.BLOB.SPEED, constants.ENEMY.BLOB.YIELD, animationController:createInstance("BLOB-ICE"))
     end;
     update = function(self, dt, currentCell)
         local destroy = Enemy.update(self, dt, currentCell)
-        --small guy specific logic
         return destroy
     end;
     draw = function(self)

@@ -51,6 +51,7 @@ CameraController = Class {
     end;
     draw = function(self)
         if debug then
+            love.graphics.setColor(0,1,0,0.3)
             love.graphics.circle('line', love.graphics.getWidth()/2, love.graphics.getHeight()/2, self.panRadius)
             self.mouse:draw()
         end
