@@ -63,6 +63,7 @@ return {
     ENEMY = {
         SPAWN_INTERVAL = 1,
         ORIENTATION_CHANGE_TIME = 0.15,
+        HEALTH_TIMER_HIDETIME = 1,
         SMALLGUY = {
             HEALTH = 10,
             SPEED = 150,

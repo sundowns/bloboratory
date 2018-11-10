@@ -13,6 +13,8 @@ Enemy = Class {
         self.worldOrigin = worldOrigin
         self.maxHealth = health
         self.health = health
+        self.showHealth = false
+        self.healthTimer = 0
         self.speed = speed
         self.yield = yield
         self.animation = animation
@@ -53,12 +55,35 @@ Enemy = Class {
         end
 
         self:updateDebuffs(dt)
+
+        if self.showHealth then
+            self.healthTimer = self.healthTimer - dt
+            if self.healthTimer <= 0 then
+                self.showHealth = false
+            end
+        end
+
     end;
     draw = function(self)
         if self.animation then
             Util.l.resetColour()
             animationController:drawEnemySpriteInstance(self.animation, self.worldOrigin.x, self.worldOrigin.y, self.orientation)
         end
+
+        if self.showHealth then
+            local healthWidth = 32
+            local healthHeight = 3
+            local x, y = self.worldOrigin.x - healthWidth/2, self.worldOrigin.y - constants.GRID.CELL_SIZE/2
+            love.graphics.setColor(0.8,0,0)
+            love.graphics.rectangle('fill', x, y, healthWidth, healthHeight)
+            love.graphics.setColor(0,0.8,0)
+            love.graphics.rectangle('fill', x, y, healthWidth*self.health/self.maxHealth, healthHeight)
+        end
+
+    end;
+    triggerHealthBar = function(self)
+        self.showHealth = true
+        self.healthTimer = constants.ENEMY.HEALTH_TIMER_HIDETIME
     end;
     updateDebuffs = function(self, dt)
         for key, debuff in pairs(self.debuffs) do
@@ -79,6 +104,7 @@ Enemy = Class {
         if not dt then dt = 1 end -- allows the function to work with constant attacks (melee) and projectiles
         self.health = self.health - (damage*dt)
         self.markedForDeath = self.health < 0
+        self:triggerHealthBar()
     end;
     moveBy = function(self, dx, dy)
         self.worldOrigin = Vector(self.worldOrigin.x + dx, self.worldOrigin.y + dy)
