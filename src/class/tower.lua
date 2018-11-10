@@ -83,7 +83,7 @@ TargetedTower = Class {
         end
 
         if self.currentTarget and self.targetIsNew then
-            Timer.tween(self.rotationTime, self, {angleToTarget = self:calculateAngleToTarget()})
+            Timer.tween(self.rotationTime, self, {angleToTarget = self:calculateAngleToTarget()}, 'sine')
             Timer.after(self.rotationTime, function() self.rotating = false end)
             self.targetIsNew = false
         end

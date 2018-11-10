@@ -51,7 +51,7 @@ return {
             TARGETTING_RADIUS = 4, --additional cell radii
             ATTACK_INTERVAL = 0.5,
             COST = 10,
-            ROTATION_TIME = 0.15
+            ROTATION_TIME = 0.2
         }
     },
     PROJECTILE = {
