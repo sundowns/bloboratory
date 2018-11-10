@@ -47,7 +47,7 @@ return {
         SAW = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
-            ATTACK_DAMAGE = 5, --damage per second 
+            ATTACK_DAMAGE = 3, --damage per second 
             TARGETTING_RADIUS = 1, --additional cell radii
             COST = 5
         },

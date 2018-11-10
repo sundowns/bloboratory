@@ -117,9 +117,12 @@ World = Class {
             if self.enemies[i].markedForDeath or self.enemies[i].hitGoal then 
                 self.collisionWorld:remove(self.enemies[i]) 
                 table.remove(self.enemies, i)
-            else 
-                self:processCollisionForEnemy(i, dt)
             end
+        end
+
+        -- Loop over the alive enemies FORWARDS detecting collisions. Doing it forwards ensures targetted towers pick the next enemy, rather than the last
+        for i, enemy in pairs(self.enemies) do
+            self:processCollisionForEnemy(enemy, dt)
         end
 
         for i, gain in pairs(self.floatingGains) do
@@ -167,8 +170,7 @@ World = Class {
     toggleSpawning = function(self)
         self.isSpawning = not self.isSpawning
     end;
-    processCollisionForEnemy = function(self, index, dt)
-        local enemy = self.enemies[index]
+    processCollisionForEnemy = function(self, enemy, dt)
         local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/2, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/2, function() return "cross" end)
         for j = #cols, 1, -1 do 
             local collision = cols[j]
