@@ -6,7 +6,7 @@ local ALL_BLUEPRINTS = {
 
 PlayerController = Class {
     init = function(self)
-        self.money = 100
+        self.money = 1000
         self.blueprints = {
             ALL_BLUEPRINTS["OBSTACLE"]
         }

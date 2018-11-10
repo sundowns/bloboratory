@@ -43,20 +43,11 @@ CameraController = Class {
         if love.window.hasMouseFocus() then
             local actualX, actualY, cols, len = self.collisionWorld:move(self.mouse, self.mouse.origin.x, self.mouse.origin.y, function() return "cross" end)
 
-            --TODO: Consider replacing this with a system that draws a line from screen centre -> mouse and pans camera both dimensions
+            --TODO: I think this would be a little more intuitive if the trigger area/hitbox was circular, not square
 
-            for j = #cols, 1, -1 do 
-                local collision = cols[j]
-                if collision.other.label == "LEFT" then
-                    self.camera:move(-dt*constants.CAMERA.SPEED, 0)
-                elseif collision.other.label == "RIGHT" then
-                    self.camera:move(dt*constants.CAMERA.SPEED, 0)
-                elseif collision.other.label == "TOP" then
-                    self.camera:move(0, -dt*constants.CAMERA.SPEED)
-                elseif collision.other.label == "BOTTOM" then
-                    self.camera:move(0, dt*constants.CAMERA.SPEED)
-                end
-            
+            if #cols > 0 then
+                local direction = Vector(self.mouse.origin.x - love.graphics.getWidth()/2, self.mouse.origin.y - love.graphics.getHeight()/2):normalizeInplace()
+                self.camera:move(dt*constants.CAMERA.SPEED*direction.x, dt*constants.CAMERA.SPEED*direction.y)
             end
         end
     end;

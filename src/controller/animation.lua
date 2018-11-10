@@ -64,16 +64,16 @@ AnimationController = Class {
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
             if layer.rotateToTarget then
-                layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, targettingAngle, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, w/2)
+                layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, targettingAngle, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, h/2)
             else
-                layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, layer.rotation, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, w/2)
+                layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, layer.rotation, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, h/2)
             end
         end
     end;
-    drawEnemySpriteInstance = function(self, instance, x, y)
+    drawEnemySpriteInstance = function(self, instance, x, y, orientation)
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
-            layer.animation:draw(instance.sprite.image, x - w/2*layer.scale.x, y - h/2*layer.scale.y, layer.rotation, layer.scale.x, layer.scale.y)
+            layer.animation:draw(instance.sprite.image, x, y, orientation, layer.scale.x, layer.scale.y, w/2, h/2)
         end
     end;
 }

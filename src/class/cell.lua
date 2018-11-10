@@ -57,10 +57,10 @@ Cell = Class {
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         end
 
-        if debug then
-            love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
-            love.graphics.print(self.distanceToGoal, self.x*constants.GRID.CELL_SIZE, self.y*constants.GRID.CELL_SIZE)
-        end
+        -- if debug then
+        --     love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
+        --     love.graphics.print(self.distanceToGoal, self.x*constants.GRID.CELL_SIZE, self.y*constants.GRID.CELL_SIZE)
+        -- end
     end;
     occupy = function(self, occupant)
         if not self.isGoal and not self.isSpawn then

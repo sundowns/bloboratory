@@ -49,6 +49,7 @@ end
 
 function love.update(dt)
     world:update(dt)
+    Timer.update(dt) --the global version is used mostly for tweening/small use-cases
 
     inputController:update(dt)
     cameraController:update(dt)

@@ -11,13 +11,13 @@ return {
     layers = {
         {
             DEFAULT = {
-                frame_duration = 0.2,
+                frame_duration = 0.1,
                 x = '1-4',
                 y = 1,
                 offset_x = 0,
                 offset_y = 0,
-                scale_x = 1,
-                scale_y = 1,
+                scale_x = 1.3,
+                scale_y = 1.3,
                 rotation = 0
             }
         }
