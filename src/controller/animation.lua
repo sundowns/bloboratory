@@ -42,7 +42,8 @@ AnimationController = Class {
                 animation = anim8.newAnimation(self.spriteBank[spriteName].grid(anim_data.x, anim_data.y), anim_data.frame_duration),
                 origin = Vector(anim_data.offset_x, anim_data.offset_y),
                 rotation = anim_data.rotation,
-                rotateToTarget = anim_data.rotate_to_target
+                rotateToTarget = anim_data.rotate_to_target,
+                scale = Vector(anim_data.scale_x or 1, anim_data.scale_y or 1)
             })
         end;
 
@@ -59,7 +60,7 @@ AnimationController = Class {
             layer.animation:update(dt)
         end
     end;
-    drawSpriteInstance = function(self, instance, x, y, cellsWidth, cellsHeight, targettingAngle)
+    drawStructureSpriteInstance = function(self, instance, x, y, cellsWidth, cellsHeight, targettingAngle)
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
             if layer.rotateToTarget then
@@ -67,6 +68,12 @@ AnimationController = Class {
             else
                 layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, layer.rotation, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, w/2)
             end
+        end
+    end;
+    drawEnemySpriteInstance = function(self, instance, x, y)
+        for i, layer in pairs(instance.animations) do
+            local w, h = layer.animation:getDimensions()
+            layer.animation:draw(instance.sprite.image, x - w/2*layer.scale.x, y - h/2*layer.scale.y, layer.rotation, layer.scale.x, layer.scale.y)
         end
     end;
 }

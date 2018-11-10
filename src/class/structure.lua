@@ -19,7 +19,7 @@ Structure = Class {
     draw = function(self)
         if self.animation then
             Util.l.resetColour()
-            animationController:drawSpriteInstance(self.animation, self.worldOrigin.x, self.worldOrigin.y, self.width, self.height, self.angleToTarget)
+            animationController:drawStructureSpriteInstance(self.animation, self.worldOrigin.x, self.worldOrigin.y, self.width, self.height, self.angleToTarget)
         elseif self.type == "TOWER" then --defaults to make adding new towers not suck
             love.graphics.setColor(constants.COLOURS.TOWER)
             love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE*self.width, constants.GRID.CELL_SIZE*self.height)

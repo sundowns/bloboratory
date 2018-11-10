@@ -26,7 +26,7 @@ Cannon = Class {
         end
     end;
     shoot = function(self)
-        local cX, cY = self.worldOrigin.x + constants.GRID.CELL_SIZE*self.width/2, self.worldOrigin.y + constants.GRID.CELL_SIZE*self.height/2
+        local cX, cY = self:centre()
         local newX = cX + constants.STRUCTURE.CANNON.BARREL_LENGTH*math.sin(self.angleToTarget)
         local newY = cY - constants.STRUCTURE.CANNON.BARREL_LENGTH*math.cos(self.angleToTarget)
         

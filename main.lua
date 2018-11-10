@@ -38,11 +38,11 @@ function love.load()
     require("src.enemy.largeguy")
     
     love.graphics.setDefaultFilter('nearest')
-    world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS, require("src.rounds"))
     uiController = UiController()
     inputController = InputController()
     playerController = PlayerController()
     animationController = AnimationController()
+    world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS, require("src.rounds"))
     cameraController = CameraController(Vector(world.origin.x + constants.GRID.ROWS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE))
 end
 

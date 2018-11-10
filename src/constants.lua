@@ -71,14 +71,12 @@ return {
         SPAWN_INTERVAL = 1,
         SMALLGUY = {
             HEALTH = 10,
-            SPEED = 10,
-            RADIUS = 4,
+            SPEED = 8,
             YIELD = 1,
         },
         LARGEGUY = {
             HEALTH = 15,
-            SPEED = 10,
-            RADIUS = 8,
+            SPEED = 8,
             YIELD = 2,
         }
     },

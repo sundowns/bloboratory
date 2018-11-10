@@ -34,6 +34,10 @@ World = Class {
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
                 if playerController.money >= constants.STRUCTURE.OBSTACLE.COST then
                     self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
+
+                    if playerController.money < constants.STRUCTURE.OBSTACLE.COST then
+                        inputController:togglePlacingTower()
+                    end
                 end
             end
         end

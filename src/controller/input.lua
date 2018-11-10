@@ -23,9 +23,7 @@ InputController = Class {
         end
     end;
     keypressed = function(self, key)
-        if key == "1" then
-            playerController:setCurrentBlueprint(1)
-        elseif tonumber(key) then
+        if tonumber(key) then
             playerController:setCurrentBlueprint(tonumber(key))
         end
 

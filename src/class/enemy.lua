@@ -1,14 +1,15 @@
 Enemy = Class {
-    init = function(self, enemyType, worldOrigin, health, speed, yield)
+    init = function(self, enemyType, worldOrigin, health, speed, yield, animation)
         assert(worldOrigin.x and worldOrigin.y)
         self.worldOrigin = worldOrigin
         self.maxHealth = health
         self.health = health
         self.speed = speed
+        self.enemyType = enemyType
         self.yield = yield
+        self.animation = animation
         self.movingTo = nil
         self.type = "ENEMY" -- used to check for valid collisions
-        self.enemyType = enemyType
         self.markedForDeath = false
         self.hitGoal = false
     end;
@@ -37,6 +38,10 @@ Enemy = Class {
                 self:moveBy(deltaX*self.speed, deltaY*self.speed)
             end
         end 
+
+        if self.animation then
+            animationController:updateSpriteInstance(self.animation, dt)
+        end
     end;
     takeDamage = function(self, damage, dt)
         if not dt then dt = 1 end -- allows the function to work with constant attacks (melee) and projectiles
@@ -44,7 +49,10 @@ Enemy = Class {
         self.markedForDeath = self.health < 0
     end;
     draw = function(self)
-        love.graphics.setColor(self.health/self.maxHealth, 0, 0)
+        if self.animation then
+            Util.l.resetColour()
+            animationController:drawEnemySpriteInstance(self.animation, self.worldOrigin.x, self.worldOrigin.y)
+        end
     end;
     moveBy = function(self, dx, dy)
         self.worldOrigin = Vector(self.worldOrigin.x + dx, self.worldOrigin.y + dy)

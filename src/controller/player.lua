@@ -6,7 +6,7 @@ local ALL_BLUEPRINTS = {
 
 PlayerController = Class {
     init = function(self)
-        self.money = 1000
+        self.money = 10
         self.blueprints = {
             ALL_BLUEPRINTS["OBSTACLE"]
         }
@@ -17,10 +17,20 @@ PlayerController = Class {
     end;
     setCurrentBlueprint = function(self, index)
         if not self.blueprints[index] then return end
-        if not inputController.isPlacingTower or self.currentBlueprint.name == self.blueprints[index].name then
+        self:toggleStructureSelection()
+        
+        if inputController.isPlacingTower and self.currentBlueprint then
+            if self.currentBlueprint.name == self.blueprints[index].name then
+                inputController:togglePlacingTower() --toggle off the current one
+                self.currentBlueprint = nil
+            elseif self.money >= self.blueprints[index].cost then
+                --theyre switching to a different one, check they can afford it
+                self.currentBlueprint = self.blueprints[index]
+            end
+        elseif self.money >= self.blueprints[index].cost then
+            self.currentBlueprint = self.blueprints[index]
             inputController:togglePlacingTower()
         end
-        self.currentBlueprint = self.blueprints[index]
     end;
     updateMoney = function(self, delta)
         self.money = self.money + delta

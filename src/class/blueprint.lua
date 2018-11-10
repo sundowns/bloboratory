@@ -4,6 +4,7 @@ Blueprint = Class {
         self.image = image
         self.width = width -- width (in cells) of the blueprinted structure
         self.height = height -- height (in cells) of the blueprinted structure
+        self.cost = constants.STRUCTURE[self.name].COST
     end;
     update = function(self)
     end;
