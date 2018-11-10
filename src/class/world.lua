@@ -174,7 +174,7 @@ World = Class {
             
             if collision.other.type == "TOWER" then
                 if collision.other.archetype == "MELEE" then
-                    collision.item:takeDamage(collision.other.attackDamage, dt)
+                    collision.other:attack(collision.item, dt)
 
                     if collision.item.markedForDeath then
                         break; --exit the loop, this enemy is already dead

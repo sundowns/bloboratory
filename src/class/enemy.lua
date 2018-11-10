@@ -1,17 +1,19 @@
 Enemy = Class {
     init = function(self, enemyType, worldOrigin, health, speed, yield, animation)
         assert(worldOrigin.x and worldOrigin.y)
+        self.type = "ENEMY" -- used to check for valid collisions
+        self.enemyType = enemyType
         self.worldOrigin = worldOrigin
         self.maxHealth = health
         self.health = health
         self.speed = speed
-        self.enemyType = enemyType
         self.yield = yield
         self.animation = animation
         self.movingTo = nil
-        self.type = "ENEMY" -- used to check for valid collisions
         self.markedForDeath = false
         self.hitGoal = false
+
+        self.debuffs = {}
     end;
     update = function(self, dt, currentCell)
         if not currentCell then
@@ -41,6 +43,23 @@ Enemy = Class {
 
         if self.animation then
             animationController:updateSpriteInstance(self.animation, dt)
+        end
+
+        self:updateDebuffs(dt)
+    end;
+    updateDebuffs = function(self, dt)
+        for key, debuff in pairs(self.debuffs) do
+            self.debuffs[key]:update(dt)
+
+            if not self.debuffs[key].alive then
+                self.debuffs[key] = nil
+            end
+        end
+    end;
+    applyDebuff = function(self, debuff)
+        assert(debuff and debuff.type)
+        if not self.debuffs[debuff.type] then
+            self.debuffs[debuff.type] = debuff
         end
     end;
     takeDamage = function(self, damage, dt)

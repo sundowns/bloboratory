@@ -64,7 +64,7 @@ return {
     PROJECTILE = {
         RADIUS = 6,
         CANNONBALL = {
-            SPEED = 8
+            SPEED = 250
         },
     },
     ENEMY = {
@@ -92,5 +92,16 @@ return {
             X_OFFSET = 0.766 * love.graphics.getWidth(),
             Y_OFFSET = 0.02 * love.graphics.getHeight()
         }
+    },
+    DEBUFF = {
+        INFLAME = {
+            DURATION = 1,
+            TICK_DURATION = 0.1,
+            DAMAGE_PER_TICK = 0.25,
+        },
+        FREEZE = {
+            DURATION = 3,
+            TICK_DURATION = 0.5,
+        },
     }
 }

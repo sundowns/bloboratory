@@ -30,7 +30,7 @@ Cannon = Class {
         local newX = cX + constants.STRUCTURE.CANNON.BARREL_LENGTH*math.sin(self.angleToTarget)
         local newY = cY - constants.STRUCTURE.CANNON.BARREL_LENGTH*math.cos(self.angleToTarget)
         
-        table.insert(self.projectiles, Cannonball(Vector(newX, newY), self.currentTarget, self.attackDamage))
+        table.insert(self.projectiles, Cannonball(Vector(newX, newY), self.currentTarget, self.attackDamage, self.mutation))
     end;
     addMutation = function(self, mutation)
         assert(mutation and mutation.id)
@@ -40,8 +40,8 @@ Cannon = Class {
 
 Cannonball = Class {
     __includes=HomingProjectile,
-    init = function(self, worldOrigin, target, damage)
-        HomingProjectile.init(self, worldOrigin, target, constants.PROJECTILE.CANNONBALL.SPEED)
+    init = function(self, worldOrigin, target, damage, mutation)
+        HomingProjectile.init(self, worldOrigin, target, constants.PROJECTILE.CANNONBALL.SPEED, mutation)
         self.damage = damage
     end;
     update = function(self, dt)
@@ -53,6 +53,10 @@ Cannonball = Class {
     hitTarget = function(self)
         if self.target then
             self.target:takeDamage(self.damage)
+
+            if self.mutation then
+                self.mutation:attack(self.target, 1)
+            end
         end
     end;
 }
