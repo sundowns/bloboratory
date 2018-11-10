@@ -62,7 +62,6 @@ Enemy = Class {
                 self.showHealth = false
             end
         end
-
     end;
     draw = function(self)
         if self.animation then
@@ -73,9 +72,9 @@ Enemy = Class {
         if self.showHealth then
             local healthWidth = 32
             local healthHeight = 3
-            local x, y = self.worldOrigin.x - healthWidth/2, self.worldOrigin.y - constants.GRID.CELL_SIZE/2
+            local x, y = self.worldOrigin.x - constants.ENEMY.HEALTHBAR.WIDTH/2, self.worldOrigin.y - constants.GRID.CELL_SIZE/2
             love.graphics.setColor(0.8,0,0)
-            love.graphics.rectangle('fill', x, y, healthWidth, healthHeight)
+            love.graphics.rectangle('fill', x, y, constants.ENEMY.HEALTHBAR.WIDTH, healthHeight)
             love.graphics.setColor(0,0.8,0)
             love.graphics.rectangle('fill', x, y, healthWidth*self.health/self.maxHealth, healthHeight)
         end
@@ -83,7 +82,7 @@ Enemy = Class {
     end;
     triggerHealthBar = function(self)
         self.showHealth = true
-        self.healthTimer = constants.ENEMY.HEALTH_TIMER_HIDETIME
+        self.healthTimer = constants.ENEMY.HEALTHBAR.TIMEOUT
     end;
     updateDebuffs = function(self, dt)
         for key, debuff in pairs(self.debuffs) do
