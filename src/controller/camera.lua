@@ -4,19 +4,8 @@ CameraController = Class {
     init = function(self, origin)
         self.camera = Camera(origin:unpack())
         self.camera:zoom(1)
-        self.cameraPanZones = {
-            CameraPanZone("TOP", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT),
-            CameraPanZone("RIGHT", Vector(love.graphics.getWidth()*(1-constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH),0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT),
-            CameraPanZone("BOTTOM", Vector(0,love.graphics.getHeight()*(1-constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT)), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT),
-            CameraPanZone("LEFT", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT),
-        }
-        self.collisionWorld = bump.newWorld(love.graphics.getWidth()/100)
-        for i, zone in pairs(self.cameraPanZones) do
-            self.collisionWorld:add(zone, zone.origin.x, zone.origin.y, zone.width, zone.height)
-        end
 
         self.mouse = Mouse(Vector(love.mouse.getPosition()))
-        self.collisionWorld:add(self.mouse, self.mouse.origin.x, self.mouse.origin.y, self.mouse.width, self.mouse.height)
     end;
     attach = function(self)
         self.camera:attach()
@@ -41,12 +30,9 @@ CameraController = Class {
         self.mouse:update(dt)
 
         if love.window.hasMouseFocus() then
-            local actualX, actualY, cols, len = self.collisionWorld:move(self.mouse, self.mouse.origin.x, self.mouse.origin.y, function() return "cross" end)
-
-            --TODO: I think this would be a little more intuitive if the trigger area/hitbox was circular, not square
-
-            if #cols > 0 then
-                local direction = Vector(self.mouse.origin.x - love.graphics.getWidth()/2, self.mouse.origin.y - love.graphics.getHeight()/2):normalizeInplace()
+            local delta = Vector(self.mouse.origin.x - love.graphics.getWidth()/2, self.mouse.origin.y - love.graphics.getHeight()/2)
+            if delta:len() > constants.CAMERA.PAN_RADIUS then
+                local direction = delta:normalized()
                 self.camera:move(dt*constants.CAMERA.SPEED*direction.x, dt*constants.CAMERA.SPEED*direction.y)
             end
         end
@@ -62,9 +48,7 @@ CameraController = Class {
     end;
     draw = function(self)
         if debug then
-            for i, zone in pairs(self.cameraPanZones) do
-                zone:draw()
-            end
+            love.graphics.circle('line', love.graphics.getWidth()/2, love.graphics.getHeight()/2, constants.CAMERA.PAN_RADIUS)
             self.mouse:draw()
         end
     end;
@@ -80,19 +64,6 @@ Mouse = Class {
         self.origin = Vector(love.mouse.getPosition())
     end;
     draw = function(self)
-        love.graphics.rectangle('line', self.origin.x, self.origin.y, self.width, self.height)
-    end;
-}
-
-CameraPanZone = Class {
-    init = function(self, label, origin, width, height)
-        self.label = label
-        self.origin = origin
-        self.width = width
-        self.height = height
-    end;
-    draw = function(self)
-        love.graphics.setColor(constants.COLOURS.CAMERA_PANZONES)
         love.graphics.rectangle('line', self.origin.x, self.origin.y, self.width, self.height)
     end;
 }

@@ -11,6 +11,7 @@ return {
                 WIDTH = 0.06
             }
         },
+        PAN_RADIUS = love.graphics.getWidth()*0.425,
         MOUSE = {
             WIDTH = 5,
             HEIGHT = 5
