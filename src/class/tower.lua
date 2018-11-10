@@ -51,17 +51,29 @@ MeleeTower = Class {
 
 TargetedTower = Class {
     __includes = Tower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, rotationTime)
         Tower.init(self, animation, gridOrigin, worldOrigin, width, height)
         self.archetype = "TARGETTED"
         self.currentTarget = nil
+        self.targetIsNew = false
+        self.rotating = false
         self.angleToTarget = 0
+        self.rotationTime = rotationTime
         self.projectiles = {}
     end;
     spottedEnemy = function(self, enemy)
         if not self.currentTarget then
             self.currentTarget = enemy
+            self.targetIsNew = true
+            self.rotating = true
         end
+    end;
+    calculateAngleToTarget = function(self)
+        if not self.currentTarget then return 0 end
+        local cX, cY = self:centre()
+        local dy = cY - self.currentTarget.worldOrigin.y  
+        local dx = self.currentTarget.worldOrigin.x - cX
+        return math.atan2(dx, dy)
     end;
     update = function(self, dt)
         Tower.update(self, dt)
@@ -70,11 +82,14 @@ TargetedTower = Class {
             self.currentTarget = nil
         end
 
-        if self.currentTarget then
-            local cX, cY = self:centre()
-            local dy = cY - self.currentTarget.worldOrigin.y  
-            local dx = self.currentTarget.worldOrigin.x - cX
-            self.angleToTarget = math.atan2(dx, dy)
+        if self.currentTarget and self.targetIsNew then
+            Timer.tween(self.rotationTime, self, {angleToTarget = self:calculateAngleToTarget()})
+            Timer.after(self.rotationTime, function() self.rotating = false end)
+            self.targetIsNew = false
+        end
+
+        if self.currentTarget and not self.rotating then
+            self.angleToTarget = self:calculateAngleToTarget()
         end
 
         for i = #self.projectiles, 1, -1 do

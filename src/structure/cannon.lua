@@ -4,7 +4,7 @@ Cannon = Class {
         self.towerType = "CANNON"
         self.cost = constants.STRUCTURE.CANNON.COST
 
-        TargetedTower.init(self, animationController:createInstance(self.towerType), gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT)
+        TargetedTower.init(self, animationController:createInstance(self.towerType), gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT, constants.STRUCTURE.CANNON.ROTATION_TIME)
 
         self.targettingRadius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS
         self.attackDamage = constants.STRUCTURE.CANNON.ATTACK_DAMAGE
