@@ -1,17 +1,8 @@
 return {
     CAMERA = {
-        SPEED = 300,
-        PANZONES = {
-            TOP_BOTTOM = {
-                HEIGHT = 0.06,
-                WIDTH = 1
-            },
-            LEFT_RIGHT = {
-                HEIGHT = 1,
-                WIDTH = 0.06
-            }
-        },
-        PAN_RADIUS = love.graphics.getWidth()*0.425,
+        SPEED = 200,
+        PAN_RADIUS_RATIO = 0.425,
+        MAX_ADDITIONAL_PAN_SPEED = 200,
         MOUSE = {
             WIDTH = 5,
             HEIGHT = 5
