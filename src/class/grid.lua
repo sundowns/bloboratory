@@ -26,6 +26,9 @@ Grid = Class {
         end
     end;
     draw = function(self, isSpawning)
+        love.graphics.setColor(1,1,1,0.5)
+        love.graphics.rectangle('line', self.origin.x, self.origin.y, (self.cols+1)*constants.GRID.CELL_SIZE, (self.rows+1)*constants.GRID.CELL_SIZE)
+
         for i = 0, self.cols do
             for j = 0, self.rows do
                 self.cells[i][j]:draw(isSpawning)

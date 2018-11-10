@@ -69,14 +69,15 @@ return {
     },
     ENEMY = {
         SPAWN_INTERVAL = 1,
+        ORIENTATION_CHANGE_TIME = 0.15,
         SMALLGUY = {
             HEALTH = 10,
-            SPEED = 8,
+            SPEED = 150,
             YIELD = 1,
         },
         LARGEGUY = {
-            HEALTH = 15,
-            SPEED = 8,
+            HEALTH = 20,
+            SPEED = 120,
             YIELD = 2,
         }
     },

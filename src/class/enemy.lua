@@ -1,3 +1,10 @@
+local ORIENTATIONS = {
+    RIGHT = math.rad(0),
+    DOWN = math.rad(90),
+    LEFT = math.rad(180),
+    UP = math.rad(270)
+}
+
 Enemy = Class {
     init = function(self, enemyType, worldOrigin, health, speed, yield, animation)
         assert(worldOrigin.x and worldOrigin.y)
@@ -12,6 +19,7 @@ Enemy = Class {
         self.movingTo = nil
         self.markedForDeath = false
         self.hitGoal = false
+        self.orientation = ORIENTATIONS.LEFT --angle in radians
 
         self.debuffs = {}
     end;
@@ -26,6 +34,7 @@ Enemy = Class {
         --decide direction to move based on current grid's came_from value (breadth first search)
         if self.movingTo == nil then
             self.movingTo = currentCell.cameFrom
+            self:calculateDirection(currentCell)
         else
             local moveToX = self.movingTo.x * constants.GRID.CELL_SIZE + constants.GRID.CELL_SIZE/2
             local moveToY = self.movingTo.y * constants.GRID.CELL_SIZE + constants.GRID.CELL_SIZE/2
@@ -34,10 +43,8 @@ Enemy = Class {
                 --If we are at the centre of the tile
                 self.movingTo = nil
             else
-                --move towards that centre
-                local deltaX = (moveToX - self.worldOrigin.x)*dt
-                local deltaY = (moveToY - self.worldOrigin.y)*dt
-                self:moveBy(deltaX*self.speed, deltaY*self.speed)
+                local delta = Vector(moveToX - self.worldOrigin.x, moveToY - self.worldOrigin.y):normalizeInplace()
+                self:moveBy(delta.x*dt*self.speed, delta.y*dt*self.speed)
             end
         end 
 
@@ -46,6 +53,12 @@ Enemy = Class {
         end
 
         self:updateDebuffs(dt)
+    end;
+    draw = function(self)
+        if self.animation then
+            Util.l.resetColour()
+            animationController:drawEnemySpriteInstance(self.animation, self.worldOrigin.x, self.worldOrigin.y, self.orientation)
+        end
     end;
     updateDebuffs = function(self, dt)
         for key, debuff in pairs(self.debuffs) do
@@ -67,14 +80,24 @@ Enemy = Class {
         self.health = self.health - (damage*dt)
         self.markedForDeath = self.health < 0
     end;
-    draw = function(self)
-        if self.animation then
-            Util.l.resetColour()
-            animationController:drawEnemySpriteInstance(self.animation, self.worldOrigin.x, self.worldOrigin.y)
-        end
-    end;
     moveBy = function(self, dx, dy)
         self.worldOrigin = Vector(self.worldOrigin.x + dx, self.worldOrigin.y + dy)
+    end;
+    calculateDirection = function(self, from)
+        if from and self.movingTo then
+            if from.x > self.movingTo.x then
+                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.LEFT})
+            end
+            if from.x < self.movingTo.x then
+                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.RIGHT})
+            end
+            if from.y > self.movingTo.y then
+                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.UP})
+            end
+            if from.y < self.movingTo.y then
+                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.DOWN})
+            end
+        end
     end;
     calculateHitbox = function(self)
         return self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE

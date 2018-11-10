@@ -17,6 +17,7 @@ World = Class {
         self.gainTimer = Timer.new()
     end;
     placeStructure = function(self, gridX, gridY, type)
+        if not self.grid:isValidGridCoords(gridX, gridY) then return end
         local placedTower = false
         if type == "SAW" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
