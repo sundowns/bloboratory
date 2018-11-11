@@ -7,13 +7,6 @@ local ALL_BLUEPRINTS = {
     ["CANNON"] = Blueprint("CANNON", assets.blueprints.cannon, 2, 2)
 }
 
-local CURRENCIES = {
-    "SCRAP",
-    "FIRE",
-    "ICE",
-    "ELECTRIC",
-}
-
 PlayerController = Class {
     init = function(self)
         self.blueprints = {

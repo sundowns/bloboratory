@@ -178,10 +178,11 @@ return {
                 Y = 0.66 * love.graphics.getHeight(),
             },
         },
-        CURRENCY_COUNTER = {
-            X_OFFSET = 0.766 * love.graphics.getWidth(),
-            Y_OFFSET = 0.02 * love.graphics.getHeight(),
-            LINE_HEIGHT = 15
+        WALLET = {
+            X = 0.775 * love.graphics.getWidth(),
+            Y = 0.02 * love.graphics.getHeight(),
+            WIDTH = 0.2 * love.graphics.getWidth(),
+            HEIGHT = 0.03 * love.graphics.getHeight()
         }
     },
     DEBUFF = {

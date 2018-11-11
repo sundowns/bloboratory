@@ -11,4 +11,8 @@ Currency = Class{
     updateValue = function(self, delta)
         self.value = self.value + delta
     end;
+    colourRGB = function(self)
+        --Helper function to make colours easier to use with nuklear's functions.
+        return self.colour[1]*255, self.colour[2]*255, self.colour[3]*255
+    end;
 }

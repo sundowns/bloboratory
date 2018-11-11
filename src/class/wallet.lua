@@ -1,11 +1,19 @@
+local CURRENCIES = {
+    "SCRAP",
+    "FIRE",
+    "ICE",
+    "ELECTRIC",
+}
+
 Wallet = Class {
     init = function(self)
         self.currencies = {
             ["SCRAP"] = Currency("SCRAP", {0.7,0.7,0.7}, constants.CURRENCY.STARTING_SCRAP),
             ["FIRE"] = Currency("FIRE", {1,0.6,0}, 10),
-            ["ICE"] = Currency("ICE", {0,0.8,0.8}, 10),
-            ["ELECTRIC"] = Currency("ELECTRIC", {0.8,0.8,0}, 10),
+            ["ICE"] = Currency("ICE", {0,0.8,0.8}, 0),
+            ["ELECTRIC"] = Currency("ELECTRIC", {0.8,0.8,0}, 0),
         }
+        self.totalCurrencies = #CURRENCIES
         self.floatingGains = {}
         self.gainTimer = Timer.new()
     end;
@@ -57,12 +65,6 @@ Wallet = Class {
         end
     end;
     draw = function(self)
-        local x, y = constants.UI.CURRENCY_COUNTER.X_OFFSET, constants.UI.CURRENCY_COUNTER.Y_OFFSET
-        for k, currency in pairs(self.currencies) do
-            currency:draw(x, y)
-            y = y + constants.UI.CURRENCY_COUNTER.LINE_HEIGHT
-        end
-
         Util.l.resetColour()
         for i, gain in pairs(self.floatingGains) do 
             gain:draw()
