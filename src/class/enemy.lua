@@ -22,9 +22,7 @@ Enemy = Class {
         self.markedForDeath = false
         self.hitGoal = false
         self.orientation = ORIENTATIONS.LEFT --angle in radians
-        self.onHit = ripple.newSound{
-            source = love.audio.newSource('asset/enemies/sound/blobHit.wav', 'stream')
-        }
+
         self.debuffs = {}
     end;
     update = function(self, dt, currentCell)
