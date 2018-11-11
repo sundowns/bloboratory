@@ -5,6 +5,7 @@ Grid = Class {
         self.cols = cols
         self.goal = nil
         self.spawn = nil
+        self.validPath = false
         self.cells = {}
 
         --used to draw path from spawn to goal
@@ -35,8 +36,7 @@ Grid = Class {
             end
         end
 
-        -- Cant draw a line with less than 2 vertices (4 points)
-        if #self.optimalPath > 4 then
+        if self.validPath then
             love.graphics.setColor(0,1,1)
             love.graphics.line(self.optimalPath)
         end
@@ -160,6 +160,7 @@ Grid = Class {
     ]]
     calculatePaths = function(self)
         if not self.goal then return end;
+        self.validPath = false
 
         -- clear existing cameFrom records
         for i = 0, self.cols, 1 do
@@ -196,8 +197,13 @@ Grid = Class {
                 table.insert(self.optimalPath, cY)
                 current = current.cameFrom
             end
+            -- Cant draw a line with less than 2 vertices (4 points)
+            if #self.optimalPath > 2 then
+                self.validPath = true
+            end
         else
             self.optimalPath = {}
+            self.validPath = false
         end
     end;
     --[[

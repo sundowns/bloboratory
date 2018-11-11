@@ -71,6 +71,7 @@ function love.update(dt)
 end
 
 function love.draw()
+    Util.l.resetColour()
     cameraController:attach()
         world:draw()
     cameraController:detach()
@@ -79,8 +80,13 @@ function love.draw()
 
     if debug then
         cameraController:draw()
+        inputController:draw()
         Util.l.resetColour()
         Util.l.renderStats()
+    end
+    if paused then
+        love.graphics.setColor(1,0,0)
+        love.graphics.print("PAUSED", 0, 0)
     end
 end
 

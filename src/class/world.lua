@@ -7,14 +7,15 @@ World = Class {
         self.goal = nil
         self.structures = {}
         self.enemies = {}
-        self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE)
+        self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE/4)
         self.isSpawning = false
-        self:setupTimers()
         self.rounds = rounds
         self.roundIndex = 1
         self.currentRound = self.rounds[(self.roundIndex)]
         self.floatingGains = {}
-        self.gainTimer = Timer.new()
+        self:setupTimers()
+
+        self.collisionWorld:add(inputController.mouse, inputController.mouse:calculateHitbox())
     end;
     placeStructure = function(self, gridX, gridY, type)
         if not self.grid:isValidGridCoords(gridX, gridY) then return end
@@ -120,6 +121,16 @@ World = Class {
             end
         end
 
+        local camX, camY = cameraController:mousePosition()
+        local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, camX, camY, function() return "cross" end)
+
+        for i = 1, len do
+            local entity = cols[i].other
+            if entity.type == "ENEMY" then
+                entity:triggerHealthBar()
+            end
+        end
+
         -- Loop over the alive enemies FORWARDS detecting collisions. Doing it forwards ensures targetted towers pick the next enemy, rather than the last
         for i, enemy in pairs(self.enemies) do
             self:processCollisionForEnemy(enemy, dt)
@@ -160,6 +171,7 @@ World = Class {
     end;
     setupTimers = function(self)
         self.spawnTimer = Timer.new()
+        self.gainTimer = Timer.new()
 
         self.spawnTimer:every(constants.ENEMY.SPAWN_INTERVAL, function()
             if self.grid.spawn then
