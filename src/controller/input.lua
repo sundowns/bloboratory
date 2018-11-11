@@ -24,7 +24,7 @@ InputController = Class {
         end
     end;
     keypressed = function(self, key)
-        if tonumber(key) and not world.currentRound.hasStarted then
+        if tonumber(key) and roundController:isBuildPhase() then
             playerController:setCurrentBlueprint(tonumber(key))
         end
         if key == "escape" then

@@ -5,6 +5,9 @@ love.filesystem.setCRequirePath(love.filesystem.getRequirePath()..";lib/?.dll;li
 debug = false
 cameraController = {}
 inputController = {}
+uiController = {}
+animationController = {}
+roundController = {}
 world = {}
 
 local paused = false
@@ -22,6 +25,7 @@ function love.load()
     require("src.controller.animation")
     require("src.controller.camera")
     require("src.controller.input")
+    require('src.controller.round')
     require("src.class.blueprint")
     require("src.controller.player")
     require("src.controller.ui")
@@ -56,7 +60,8 @@ function love.load()
     inputController = InputController()
     playerController = PlayerController()
     animationController = AnimationController()
-    world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS, require("src.rounds"))
+    roundController = RoundController(require("src.rounds"))
+    world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
     cameraController = CameraController(Vector(world.origin.x + constants.GRID.ROWS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE))
 end
 
