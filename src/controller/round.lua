@@ -21,6 +21,7 @@ RoundController = Class {
             self.roundIndex = self.roundIndex + 1
             self.currentRound = self.rounds[self.roundIndex]
         end 
+        world.crucible:clear()
     end;
     startRound = function(self)
         if self:isBuildPhase() then
