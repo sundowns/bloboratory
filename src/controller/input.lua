@@ -31,13 +31,11 @@ InputController = Class {
             self:togglePlacingTower()
         end
         if not self.isPlacingTower then
-            if key == "e" then
-                world:spawnEnemyAt(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
-            elseif key == "s" then
+            if key == "s" and roundController:isBuildPhase() then
                 world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
-            elseif key == "g" then
+            elseif key == "g" and roundController:isBuildPhase() then
                 world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
-            elseif key == "r" then 
+            elseif key == "r" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
             elseif key == "u" and playerController.currentSelectedStructure then
                 if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
