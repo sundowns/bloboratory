@@ -183,7 +183,7 @@ World = Class {
         end 
     end;
     processCollisionForEnemy = function(self, enemy, dt)
-        local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/2, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/2, function() return "cross" end)
+        local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/4, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/4, function() return "cross" end)
         for j = #cols, 1, -1 do 
             local collision = cols[j]
             

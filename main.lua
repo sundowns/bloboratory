@@ -7,6 +7,8 @@ cameraController = {}
 inputController = {}
 world = {}
 
+local paused = false
+
 function love.load()
     assets = require('lib.cargo').init('asset')
     Class = require("lib.class")
@@ -59,11 +61,13 @@ function love.load()
 end
 
 function love.update(dt)
-    world:update(dt)
-    Timer.update(dt) --the global version is used mostly for tweening/small use-cases
-    uiController.update(dt)
-    inputController:update(dt)
-    cameraController:update(dt)
+    if not paused then
+        world:update(dt)
+        Timer.update(dt) --the global version is used mostly for tweening/small use-cases
+        uiController.update(dt)
+        inputController:update(dt)
+        cameraController:update(dt)
+    end
 end
 
 function love.draw()
@@ -85,6 +89,8 @@ function love.keypressed(key, scancode, isrepeat)
         debug = not debug
     elseif key == "f5" then
         love.event.quit("restart")
+    elseif key == "space" then
+        paused = not paused
     end
 
     inputController:keypressed(key)

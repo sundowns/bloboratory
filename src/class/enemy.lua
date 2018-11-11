@@ -125,6 +125,6 @@ Enemy = Class {
         end
     end;
     calculateHitbox = function(self)
-        return self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE
+        return self.worldOrigin.x - constants.GRID.CELL_SIZE/4, self.worldOrigin.y - constants.GRID.CELL_SIZE/4, constants.GRID.CELL_SIZE/2, constants.GRID.CELL_SIZE/2
     end;
 }
