@@ -1,10 +1,10 @@
-assert(assets.towers.cannon)
+assert(assets.structures.cannon)
 assert(anim8)
 
 return {
     id = "CANNON",
-    image = assets.towers.cannon,
-    grid = anim8.newGrid(32, 32, assets.towers.cannon:getWidth(), assets.towers.cannon:getHeight()),
+    image = assets.structures.cannon,
+    grid = anim8.newGrid(32, 32, assets.structures.cannon:getWidth(), assets.structures.cannon:getHeight()),
     animation_names = {
         "DEFAULT"
     },
@@ -13,7 +13,7 @@ return {
             DEFAULT = {
                 frame_duration = 0.15,
                 x = 1,
-                y = 3,
+                y = 9,
                 offset_x = 0,
                 offset_y = 0,
                 rotate_to_target = false,
@@ -24,7 +24,7 @@ return {
             DEFAULT = {
                 frame_duration = 0.15,
                 x = 1,
-                y = 4,
+                y = 10,
                 offset_x = 0,
                 offset_y = 0,
                 rotate_to_target = true,

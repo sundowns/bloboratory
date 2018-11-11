@@ -64,9 +64,9 @@ AnimationController = Class {
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
             if layer.rotateToTarget then
-                layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, targettingAngle, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, h/2)
+                layer.animation:draw(instance.sprite.image, x+cellsWidth*w*layer.scale.x/2, y+cellsHeight*h*layer.scale.y/2, targettingAngle, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
             else
-                layer.animation:draw(instance.sprite.image, x+cellsWidth*w/2, y+cellsHeight*h/2, layer.rotation, w*cellsWidth/constants.GRID.CELL_SIZE, h*cellsHeight/constants.GRID.CELL_SIZE, w/2, h/2)
+                layer.animation:draw(instance.sprite.image, x+cellsWidth*w*layer.scale.x/2, y+cellsHeight*h*layer.scale.y/2, layer.rotation, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
             end
         end
     end;

@@ -1,10 +1,10 @@
-assert(assets.towers.saw)
+assert(assets.structures.saw)
 assert(anim8)
 
 return {
     id = "SAW",
-    image = assets.towers.saw,
-    grid = anim8.newGrid(32, 32, assets.towers.saw:getWidth(), assets.towers.saw:getHeight()),
+    image = assets.structures.saw,
+    grid = anim8.newGrid(32, 32, assets.structures.saw:getWidth(), assets.structures.saw:getHeight()),
     animation_names = {
         "DEFAULT"
     },

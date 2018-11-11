@@ -11,6 +11,7 @@ Tower = Class {
             self.mutation = mutation
             self.animation = animation
             self:changeAnimationState("DEFAULT")
+            self.mutable = false
             playerController.wallet:charge(mutation.cost, Vector(self.worldOrigin.x + self.width/2*constants.GRID.CELL_SIZE, self.worldOrigin.y))
         end
     end;
