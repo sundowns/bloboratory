@@ -73,6 +73,7 @@ function love.update(dt)
         uiController.update(dt)
         inputController:update(dt)
         cameraController:update(dt)
+        playerController:update(dt)
     end
 end
 
@@ -80,6 +81,7 @@ function love.draw()
     Util.l.resetColour()
     cameraController:attach()
         world:draw()
+        playerController:draw()
     cameraController:detach()
 
     uiController:draw()

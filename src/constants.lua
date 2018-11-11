@@ -34,14 +34,18 @@ return {
         OBSTACLE = {
             WIDTH = 1, --cells
             HEIGHT = 1, --cells
-            COST = 1
+            COST = {
+                SCRAP = 1,
+            }
         },
         SAW = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 3, --damage per second 
             TARGETTING_RADIUS = 1, --additional cell radii
-            COST = 5
+            COST = {
+                SCRAP = 5,
+            }
         },
         CANNON = {
             WIDTH = 2, --cells
@@ -50,9 +54,28 @@ return {
             ATTACK_DAMAGE = 3, --damage per HIT 
             TARGETTING_RADIUS = 4, --additional cell radii
             ATTACK_INTERVAL = 0.5,
-            COST = 10,
+            COST = {
+                SCRAP = 10,
+            },
             ROTATION_TIME = 0.2
         }
+    },
+    MUTATIONS = {
+        FIRE = {
+            COST = {
+                FIRE = 10
+            }
+        },
+        ELECTRIC = {
+            COST = {
+                ELECTRIC = 10
+            }
+        },
+        ICE = {
+            COST = {
+                ICE = 10
+            }
+        },
     },
     PROJECTILE = {
         RADIUS = 6,
@@ -71,19 +94,67 @@ return {
         BLOB = {
             HEALTH = 10,
             SPEED = 150,
-            YIELD = 1,
+            YIELD = {
+                SCRAP = 1
+            },
+        },
+        BLOBFIRE = {
+            HEALTH = 12,
+            SPEED = 150,
+            YIELD = {
+                FIRE = 1
+            },
+        },
+        BLOBICE = {
+            HEALTH = 12,
+            SPEED = 150,
+            YIELD = {
+                ICE = 1
+            },
+        },
+        BLOBELECTRIC = {
+            HEALTH = 12,
+            SPEED = 150,
+            YIELD = {
+                ELECTRIC = 1
+            },
         },
         LARGEBLOB = {
             HEALTH = 20,
             SPEED = 120,
-            YIELD = 2,
-        }
+            YIELD = {
+                SCRAP = 3
+            },
+        },
+        LARGEBLOBFIRE = {
+            HEALTH = 20,
+            SPEED = 120,
+            YIELD = {
+                FIRE = 3
+            },
+        },
+        LARGEBLOBICE = {
+            HEALTH = 20,
+            SPEED = 120,
+            YIELD = {
+                ICE = 3
+            },
+        },
+        LARGEBLOBELECTRIC = {
+            HEALTH = 20,
+            SPEED = 120,
+            YIELD = {
+                ELECTRIC = 3
+            },
+        },
     },
     CURRENCY = {
+        STARTING_SCRAP = 100,
         GAINS = {
             DRIFT_SPEED = 50,
             TIME_TO_LIVE = 1,
-            X_OFFSET = 22.8
+            X_OFFSET = 22.8,
+            Y_OFFSET = 12,
         }
     },
     UI = {
@@ -107,16 +178,18 @@ return {
                 Y = 0.66 * love.graphics.getHeight(),
             },
         },
-        CURRENCY_COUNTER = {
-            X_OFFSET = 0.766 * love.graphics.getWidth(),
-            Y_OFFSET = 0.02 * love.graphics.getHeight()
+        WALLET = {
+            X = 0.775 * love.graphics.getWidth(),
+            Y = 0.02 * love.graphics.getHeight(),
+            WIDTH = 0.2 * love.graphics.getWidth(),
+            HEIGHT = 0.03 * love.graphics.getHeight()
         }
     },
     DEBUFF = {
         INFLAME = {
             DURATION = 2,
-            TICK_DURATION = 0.1,
-            DAMAGE_PER_TICK = 0.2,
+            TICK_DURATION = 0.5,
+            DAMAGE_PER_TICK = 2,
         },
         FREEZE = {
             DURATION = 3,

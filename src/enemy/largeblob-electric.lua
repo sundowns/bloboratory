@@ -1,7 +1,7 @@
 LargeBlobElectric = Class {
     __includes = Enemy,
     init = function(self, worldOrigin)
-        Enemy.init(self, "LARGEBLOB-ELECTRIC", worldOrigin, constants.ENEMY.LARGEBLOB.HEALTH, constants.ENEMY.LARGEBLOB.SPEED, constants.ENEMY.LARGEBLOB.YIELD, animationController:createInstance("LARGEBLOB-ELECTRIC"))
+        Enemy.init(self, "LARGEBLOB-ELECTRIC", worldOrigin, constants.ENEMY.LARGEBLOBELECTRIC.HEALTH, constants.ENEMY.LARGEBLOBELECTRIC.SPEED, constants.ENEMY.LARGEBLOBELECTRIC.YIELD, animationController:createInstance("LARGEBLOB-ELECTRIC"))
         self.onHit = ripple.newSound{
             source = love.audio.newSource('asset/enemies/sound/largeBlobHit.wav', 'static')
         }

@@ -1,3 +1,6 @@
+require("src.class.currency")
+require("src.class.wallet")
+
 local ALL_BLUEPRINTS = {
     ["OBSTACLE"] = Blueprint("OBSTACLE", nil, 1, 1),
     ["SAW"] = Blueprint("SAW", assets.blueprints.saw, 2, 2),
@@ -6,7 +9,6 @@ local ALL_BLUEPRINTS = {
 
 PlayerController = Class {
     init = function(self)
-        self.money = 1000
         self.blueprints = {
             ALL_BLUEPRINTS["OBSTACLE"]
         }
@@ -14,6 +16,10 @@ PlayerController = Class {
         table.insert(self.blueprints, ALL_BLUEPRINTS["CANNON"]) -- TODO: will be unlocked, not a default value
         self.currentBlueprint = nil
         self.currentSelectedStructure = nil
+        self.wallet = Wallet()
+    end;
+    update = function(self, dt)
+        self.wallet:update(dt)
     end;
     setCurrentBlueprint = function(self, index)
         if not self.blueprints[index] then return end
@@ -23,17 +29,14 @@ PlayerController = Class {
             if self.currentBlueprint.name == self.blueprints[index].name then
                 inputController:togglePlacingTower() --toggle off the current one
                 self.currentBlueprint = nil
-            elseif self.money >= self.blueprints[index].cost then
+            elseif self.wallet:canAfford(self.blueprints[index].cost)  then
                 --theyre switching to a different one, check they can afford it
                 self.currentBlueprint = self.blueprints[index]
             end
-        elseif self.money >= self.blueprints[index].cost then
+        elseif self.wallet:canAfford(self.blueprints[index].cost) then
             self.currentBlueprint = self.blueprints[index]
             inputController:togglePlacingTower()
         end
-    end;
-    updateMoney = function(self, delta)
-        self.money = self.money + delta
     end;
     toggleStructureSelection = function(self, structure)
         if structure == nil then
@@ -63,9 +66,11 @@ PlayerController = Class {
         if not self.currentSelectedStructure then
             return 
         end
-        self:updateMoney(self.currentSelectedStructure.cost)
-        world:addFloatingGain("+"..self.currentSelectedStructure.cost, self.currentSelectedStructure.worldOrigin.x + constants.CURRENCY.GAINS.X_OFFSET, self.currentSelectedStructure.worldOrigin.y, true)
+        self.wallet:refund(self.currentSelectedStructure:getTotalCost(), self.currentSelectedStructure:centre())
         world:removeStructure(self.currentSelectedStructure)
         self:toggleStructureSelection()
+    end;
+    draw = function(self)
+        self.wallet:draw()
     end;
 }

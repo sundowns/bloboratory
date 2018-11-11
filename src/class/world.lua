@@ -9,7 +9,6 @@ World = Class {
         self.enemies = {}
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE/4)
         self.isSpawning = false
-        self.floatingGains = {}
         self:setupTimers()
 
         self.collisionWorld:add(inputController.mouse, inputController.mouse:calculateHitbox())
@@ -19,22 +18,22 @@ World = Class {
         local placedTower = false
         if type == "SAW" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
-                if playerController.money >= constants.STRUCTURE.SAW.COST then
+                if playerController.wallet:canAfford(constants.STRUCTURE.SAW.COST) then
                     placedTower = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
                 end
             end
         elseif type == "CANNON" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT) then
-                if playerController.money >= constants.STRUCTURE.CANNON.COST then
+                if playerController.wallet:canAfford(constants.STRUCTURE.CANNON.COST) then
                     placedTower = self:addNewTower(Cannon(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
                 end
             end
         elseif type == "OBSTACLE" then
             if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
-                if playerController.money >= constants.STRUCTURE.OBSTACLE.COST then
+                if playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
                     self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
 
-                    if playerController.money < constants.STRUCTURE.OBSTACLE.COST then
+                    if not playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
                         inputController:togglePlacingTower()
                     end
                 end
@@ -48,8 +47,7 @@ World = Class {
         self.grid:occupySpaces(newTower)
         self.grid:calculatePaths()
 
-        playerController:updateMoney(-newTower.cost)
-        self:addFloatingGain('-'..newTower.cost, newTower.worldOrigin.x + newTower.width/2*constants.GRID.CELL_SIZE, newTower.worldOrigin.y, false)
+        playerController.wallet:charge(newTower:getTotalCost(), Vector(newTower.worldOrigin.x + newTower.width/2*constants.GRID.CELL_SIZE, newTower.worldOrigin.y))
         return true --a tower was placed  
     end;
     addNewStructure = function(self, newStructure)
@@ -57,8 +55,7 @@ World = Class {
         self.grid:occupySpaces(newStructure)
         self.grid:calculatePaths()
 
-        playerController:updateMoney(-newStructure.cost)
-        self:addFloatingGain('-'..newStructure.cost, newStructure.worldOrigin.x + newStructure.width/2*constants.GRID.CELL_SIZE, newStructure.worldOrigin.y, false)
+        playerController.wallet:charge(newStructure:getTotalCost(), Vector(newStructure.worldOrigin.x + newStructure.width/2*constants.GRID.CELL_SIZE, newStructure.worldOrigin.y))
         return true --an obstacle was placed
     end;
     removeStructure = function(self, structure)
@@ -87,13 +84,6 @@ World = Class {
             end
         end
     end;
-    addFloatingGain = function(self, amount, origin_x, origin_y, isPositive)
-        local newVector = Vector(origin_x, origin_y)
-        table.insert(self.floatingGains, FloatingText(amount, newVector, Vector(0,-0.5), isPositive)) 
-        self.gainTimer:after(constants.CURRENCY.GAINS.TIME_TO_LIVE, function()
-            table.remove(self.floatingGains, 1)
-        end)
-    end;
     update = function(self, dt)
         self.grid:update(dt)
         for i, structure in pairs(self.structures) do
@@ -103,8 +93,7 @@ World = Class {
         for i = #self.enemies, 1, -1 do
             self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
             if self.enemies[i].markedForDeath then
-                playerController:updateMoney(self.enemies[i].yield)
-                self:addFloatingGain("+"..self.enemies[i].yield, self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y, true)
+                playerController.wallet:refund(self.enemies[i].yield, self.enemies[i].worldOrigin)
             end
 
             if self.enemies[i].markedForDeath or self.enemies[i].hitGoal then 
@@ -129,12 +118,6 @@ World = Class {
             self:processCollisionForEnemy(enemy, dt)
         end
 
-        for i, gain in pairs(self.floatingGains) do
-            gain:update(dt) 
-        end
-                    
-        self.gainTimer:update(dt)
-
         if self.isSpawning then
             self.spawnTimer:update(dt)
         end
@@ -149,11 +132,6 @@ World = Class {
             enemy:draw()
         end
 
-        Util.l.resetColour()
-        for i, gain in pairs(self.floatingGains) do 
-            gain:draw()
-        end
-
         if debug == true then 
             love.graphics.setColor(constants.COLOURS.ENEMY)
             local items, len = self.collisionWorld:getItems()
@@ -164,7 +142,6 @@ World = Class {
     end;
     setupTimers = function(self)
         self.spawnTimer = Timer.new()
-        self.gainTimer = Timer.new()
 
         self.spawnTimer:every(constants.ENEMY.SPAWN_INTERVAL, function()
             if self.grid.spawn then

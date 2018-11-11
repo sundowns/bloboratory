@@ -2,9 +2,8 @@ Cannon = Class {
     __includes=TargetedTower,
     init = function(self, gridOrigin, worldOrigin)
         self.towerType = "CANNON"
-        self.cost = constants.STRUCTURE.CANNON.COST
 
-        TargetedTower.init(self, animationController:createInstance(self.towerType), gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT, constants.STRUCTURE.CANNON.ROTATION_TIME)
+        TargetedTower.init(self, animationController:createInstance(self.towerType), gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT, constants.STRUCTURE.CANNON.COST, constants.STRUCTURE.CANNON.ROTATION_TIME)
 
         self.targettingRadius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS
         self.attackDamage = constants.STRUCTURE.CANNON.ATTACK_DAMAGE
@@ -26,9 +25,9 @@ Cannon = Class {
         end
     end;
     shoot = function(self)
-        local cX, cY = self:centre()
-        local newX = cX + constants.STRUCTURE.CANNON.BARREL_LENGTH*math.sin(self.angleToTarget)
-        local newY = cY - constants.STRUCTURE.CANNON.BARREL_LENGTH*math.cos(self.angleToTarget)
+        local centre = self:centre()
+        local newX = centre.x + constants.STRUCTURE.CANNON.BARREL_LENGTH*math.sin(self.angleToTarget)
+        local newY = centre.y - constants.STRUCTURE.CANNON.BARREL_LENGTH*math.cos(self.angleToTarget)
         
         table.insert(self.projectiles, Cannonball(Vector(newX, newY), self.currentTarget, self.attackDamage, self.mutation))
     end;

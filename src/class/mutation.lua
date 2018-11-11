@@ -1,6 +1,7 @@
 Mutation = Class {
-    init = function(self, id)
+    init = function(self, id, cost)
         self.id = id
+        self.cost = cost
     end;
     attack = function(self, other, dt)
         assert(other.type == "ENEMY")
@@ -10,7 +11,7 @@ Mutation = Class {
 FireMutation = Class {
     __includes = Mutation,
     init = function(self)
-        Mutation.init(self, "FIRE")
+        Mutation.init(self, "FIRE", constants.MUTATIONS.FIRE.COST)
     end;
     attack = function(self, other, dt)
         Mutation.attack(self, other, dt)
@@ -21,7 +22,7 @@ FireMutation = Class {
 IceMutation = Class {
     __includes = Mutation,
     init = function(self)
-        Mutation.init(self, "ICE")
+        Mutation.init(self, "ICE", constants.MUTATIONS.ICE.COST)
     end;
     attack = function(self, other, dt)
         Mutation.attack(self, other, dt)
@@ -32,7 +33,7 @@ IceMutation = Class {
 ElectricMutation = Class {
     __includes = Mutation,
     init = function(self)
-        Mutation.init(self, "ELECTRIC")
+        Mutation.init(self, "ELECTRIC", constants.MUTATIONS.ELECTRIC.COST)
     end;
     attack = function(self, other, dt)
         Mutation.attack(self, other, dt)

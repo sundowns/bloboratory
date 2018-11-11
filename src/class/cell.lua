@@ -93,8 +93,8 @@ Cell = Class {
     isSpawnable = function(self)
         return not self.isOccupied or self.isSpawn
     end;
-    getCentre = function(self)
-        return self.worldX + constants.GRID.CELL_SIZE/2, self.worldY + constants.GRID.CELL_SIZE/2
+    centre = function(self)
+        return Vector(self.worldX + constants.GRID.CELL_SIZE/2, self.worldY + constants.GRID.CELL_SIZE/2)
     end;
     renderBlueprint = function(self, blueprint, valid)
         assert(blueprint and blueprint.image)

@@ -38,12 +38,21 @@ UiController = Class {
                 end
                 nk.windowEnd()
             end
+
+            if nk.windowBegin('Wallet', constants.UI.WALLET.X, constants.UI.WALLET.Y, constants.UI.WALLET.WIDTH, constants.UI.WALLET.HEIGHT) then
+                local width, height = nk.windowGetSize()
+                nk.layoutRow('dynamic', height*0.6, playerController.wallet.totalCurrencies)
+                for key, currency in pairs(playerController.wallet.currencies) do
+                    nk.layoutRowPush(1/playerController.wallet.totalCurrencies)
+                    nk.label(currency.value, 'centered', nk.colorRGBA(currency:colourRGB()))
+                end
+                nk.layoutRowEnd()
+            end
+            nk.windowEnd()
         nk.frameEnd()
     end;
-
     draw = function(self)
+        Util.l.resetColour()
         nk.draw()
-        love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
-        love.graphics.print("CURRENT MARKET VALUE: " .. playerController.money, constants.UI.CURRENCY_COUNTER.X_OFFSET, constants.UI.CURRENCY_COUNTER.Y_OFFSET)
     end;
 }
