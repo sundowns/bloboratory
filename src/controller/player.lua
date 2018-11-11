@@ -4,9 +4,15 @@ local ALL_BLUEPRINTS = {
     ["CANNON"] = Blueprint("CANNON", assets.blueprints.cannon, 2, 2)
 }
 
+local CURRENCIES = {
+    "SCRAP",
+    "FIRE",
+    "ICE",
+    "ELECTRIC",
+}
+
 PlayerController = Class {
     init = function(self)
-        self.money = 1000
         self.blueprints = {
             ALL_BLUEPRINTS["OBSTACLE"]
         }
@@ -14,6 +20,12 @@ PlayerController = Class {
         table.insert(self.blueprints, ALL_BLUEPRINTS["CANNON"]) -- TODO: will be unlocked, not a default value
         self.currentBlueprint = nil
         self.currentSelectedStructure = nil
+        self.wallet = {
+            ["SCRAP"] = 100,
+            ["FIRE"] = 0,
+            ["ICE"] = 0,
+            ["ELECTRIC"] = 0
+        }
     end;
     setCurrentBlueprint = function(self, index)
         if not self.blueprints[index] then return end
@@ -32,8 +44,10 @@ PlayerController = Class {
             inputController:togglePlacingTower()
         end
     end;
-    updateMoney = function(self, delta)
-        self.money = self.money + delta
+    updateCurrency = function(self, type, delta)
+        if CURRENCIES[type] then
+            self.wallet[type] = self.wallet[type] + delta
+        end
     end;
     toggleStructureSelection = function(self, structure)
         if structure == nil then
