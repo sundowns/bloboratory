@@ -22,7 +22,9 @@ Enemy = Class {
         self.markedForDeath = false
         self.hitGoal = false
         self.orientation = ORIENTATIONS.LEFT --angle in radians
-
+        self.onHit = ripple.newSound{
+            source = love.audio.newSource('asset/enemies/sound/blobHit.wav', 'stream')
+        }
         self.debuffs = {}
     end;
     update = function(self, dt, currentCell)
@@ -102,6 +104,7 @@ Enemy = Class {
     takeDamage = function(self, damage, dt)
         if not dt then dt = 1 end -- allows the function to work with constant attacks (melee) and projectiles
         self.health = self.health - (damage*dt)
+        self.onHit:play()
         self.markedForDeath = self.health < 0
         self:triggerHealthBar()
     end;
