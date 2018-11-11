@@ -3,10 +3,10 @@ LargeBlobFire = Class {
     init = function(self, worldOrigin)
         Enemy.init(self, "LARGEBLOB-FIRE", worldOrigin, constants.ENEMY.LARGEBLOB.HEALTH, constants.ENEMY.LARGEBLOB.SPEED, constants.ENEMY.LARGEBLOB.YIELD, animationController:createInstance("LARGEBLOB-FIRE"))
         self.onHit = ripple.newSound{
-            source = love.audio.newSource('asset/enemies/sound/blobFireHit.wav', 'stream')
+            source = love.audio.newSource('asset/enemies/sound/blobFireHit.wav', 'static')
         }
         self.deathSound = ripple.newSound{
-            source = love.audio.newSource('asset/enemies/sound/blobDeath.wav', 'stream')
+            source = love.audio.newSource('asset/enemies/sound/blobDeath.wav', 'static')
         }
     end;
     update = function(self, dt, currentCell)

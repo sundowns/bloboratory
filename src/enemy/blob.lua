@@ -3,10 +3,10 @@ Blob = Class {
     init = function(self, worldOrigin)
         Enemy.init(self, "BLOB", worldOrigin, constants.ENEMY.BLOB.HEALTH, constants.ENEMY.BLOB.SPEED, constants.ENEMY.BLOB.YIELD, animationController:createInstance("BLOB"))
         self.onHit = ripple.newSound{
-            source = love.audio.newSource('asset/enemies/sound/blobHit.wav', 'stream')
+            source = love.audio.newSource('asset/enemies/sound/blobHit.wav', 'static')
         }
         self.deathSound = ripple.newSound{
-            source = love.audio.newSource('asset/enemies/sound/blobDeath.wav', 'stream')
+            source = love.audio.newSource('asset/enemies/sound/blobDeath.wav', 'static')
         }
     end;
     update = function(self, dt, currentCell)
