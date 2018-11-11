@@ -4,5 +4,5 @@ Round = Class{
         self.enemies = enemies -- Table consisting of instantiated enemy objects
         self.enemiesSpawned = 0
     end;
-
+    
 }

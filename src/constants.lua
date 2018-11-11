@@ -87,6 +87,24 @@ return {
         }
     },
     UI = {
+        START_WAVE = {
+            X_OFFSET = 0.26 * love.graphics.getWidth(),
+            Y_OFFSET = 0.76 * love.graphics.getHeight(),
+            WIDTH = 0.15 * love.graphics.getWidth(),
+            HEIGHT = 0.05* love.graphics.getHeight(),
+        },
+        SAW_BOX = {
+            X_OFFSET = 0.46 * love.graphics.getWidth(),
+            Y_OFFSET = 0.76 * love.graphics.getHeight(),
+            WIDTH = 0.15 * love.graphics.getWidth(),
+            HEIGHT = 0.05* love.graphics.getHeight(),
+        },
+        CANNON_BOX = {
+            X_OFFSET = 0.66 * love.graphics.getWidth(),
+            Y_OFFSET = 0.76 * love.graphics.getHeight(),
+            WIDTH = 0.15 * love.graphics.getWidth(),
+            HEIGHT = 0.05* love.graphics.getHeight(),
+        },
         CURRENCY_COUNTER = {
             X_OFFSET = 0.766 * love.graphics.getWidth(),
             Y_OFFSET = 0.02 * love.graphics.getHeight()

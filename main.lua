@@ -15,6 +15,7 @@ function love.load()
     constants = require("src.constants")
     bump = require("lib.bump")
     anim8 = require("lib.anim8")
+    nk = require("nuklear")
     require("src.controller.animation")
     require("src.controller.camera")
     require("src.controller.input")
@@ -46,6 +47,8 @@ function love.load()
     require("src.enemy.largeblob-electric")
     
     love.graphics.setDefaultFilter('nearest')
+    love.keyboard.setKeyRepeat(true) -- For nuklear
+    nk.init()
     uiController = UiController()
     inputController = InputController()
     playerController = PlayerController()
@@ -57,7 +60,7 @@ end
 function love.update(dt)
     world:update(dt)
     Timer.update(dt) --the global version is used mostly for tweening/small use-cases
-
+    uiController.update(dt)
     inputController:update(dt)
     cameraController:update(dt)
 end
@@ -76,7 +79,7 @@ function love.draw()
     end
 end
 
-function love.keypressed(key)
+function love.keypressed(key, scancode, isrepeat)
     if key == "f1" then
         debug = not debug
     elseif key == "escape" then
@@ -86,8 +89,31 @@ function love.keypressed(key)
     end
 
     inputController:keypressed(key)
+    nk.keypressed(key, scancode, isrepeat)
+end
+
+function love.keyreleased(key, scancode)
+    nk.keyreleased(key, scancode)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
     inputController:mousepressed(x, y, button)
+    nk.mousepressed(x, y, button, istouch)
 end
+
+function love.mousereleased(x, y, button, istouch)
+    nk.mousereleased(x, y, button, istouch)
+end
+
+function love.mousemoved(x, y, dx, dy, istouch)
+    nk.mousemoved(x, y, dx, dy, istouch)
+end
+
+function love.textinput(text)
+    nk.textinput(text)
+end
+
+function love.wheelmoved(x, y)
+    nk.wheelmoved(x, y)
+end
+
