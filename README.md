@@ -19,7 +19,9 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 | 1 | place obstacle |
 | 2 | place saw |
 | 3 | place cannon |
-| u | upgrade selected tower (fire only atm) |
+| f | add fire mutation to selected tower |
+| i | add ice mutation to selected tower |
+| e | add electric mutation to selected tower |
 | r | refund selected tower |
 | g | toggle goal      |
 | s | place spawner      |

@@ -37,9 +37,17 @@ InputController = Class {
                 world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
             elseif key == "r" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
-            elseif key == "u" and playerController.currentSelectedStructure then
+            elseif key == "f" and playerController.currentSelectedStructure then
                 if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
                     playerController.currentSelectedStructure:addMutation(FireMutation()) 
+                end
+            elseif key == "i" and playerController.currentSelectedStructure then
+                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ICE.COST) then
+                    playerController.currentSelectedStructure:addMutation(IceMutation()) 
+                end
+            elseif key == "e" and playerController.currentSelectedStructure then
+                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
+                    playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
                 end
             end
             elseif key == "escape" then

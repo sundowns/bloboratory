@@ -10,8 +10,8 @@ Wallet = Class {
         self.currencies = {
             ["SCRAP"] = Currency("SCRAP", {0.7,0.7,0.7}, constants.CURRENCY.STARTING_SCRAP),
             ["FIRE"] = Currency("FIRE", {1,0.6,0}, 10),
-            ["ICE"] = Currency("ICE", {0,0.8,0.8}, 0),
-            ["ELECTRIC"] = Currency("ELECTRIC", {0.8,0.8,0}, 0),
+            ["ICE"] = Currency("ICE", {0,0.8,0.8}, 10),
+            ["ELECTRIC"] = Currency("ELECTRIC", {0.8,0.8,0}, 10),
         }
         self.totalCurrencies = #CURRENCIES
         self.floatingGains = {}

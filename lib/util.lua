@@ -110,6 +110,18 @@ function util.table.copy(orig)
   return copy
 end
 
+--sums two tables of numbers together
+function util.table.sum (t1, t2)
+  local result = {}
+  for key, val in pairs(t1) do
+      result[key] = (result[key] or 0) + val
+  end
+  for key, val in pairs(t2) do
+      result[key] = (result[key] or 0) + val
+  end
+  return result
+end;
+
 ---------------------- MATHS
 
 function util.maths.roundToNthDecimal(num, n)

@@ -26,9 +26,6 @@ Structure = Class {
         elseif self.type == "TOWER" then --defaults to make adding new towers not suck
             love.graphics.setColor(constants.COLOURS.TOWER)
             love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE*self.width, constants.GRID.CELL_SIZE*self.height)
-        elseif self.type == "OBSTACLE" then --defaults to make adding new towers not suck
-            love.graphics.setColor(constants.COLOURS.OBSTACLE)
-            love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE*self.width, constants.GRID.CELL_SIZE*self.height)
         end
 
         if self.isSelected then
@@ -49,20 +46,9 @@ Structure = Class {
     end;
     getTotalCost = function(self)
         if self.mutation then
-            return addTables(self.cost, self.mutation.cost)
+            return Util.t.sum(self.cost, self.mutation.cost)
         else 
             return self.cost
         end
     end;
 }
-
-addTables = function(t1, t2)
-    local result = {}
-    for key, val in pairs(t1) do
-        result[key] = (result[key] or 0) + val
-    end
-    for key, val in pairs(t2) do
-        result[key] = (result[key] or 0) + val
-    end
-    return result
-end;
