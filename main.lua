@@ -82,8 +82,6 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if key == "f1" then
         debug = not debug
-    elseif key == "escape" then
-        love.event.quit()
     elseif key == "f5" then
         love.event.quit("restart")
     end

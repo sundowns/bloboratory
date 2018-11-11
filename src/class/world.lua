@@ -87,10 +87,6 @@ World = Class {
                 self.currentRound.enemiesSpawned = self.currentRound.enemiesSpawned + 1
             else 
                 self.isSpawning = false
-                if self.rounds[(self.roundIndex + 1)] ~= nil then 
-                    self.roundIndex = self.roundIndex + 1
-                    self.currentRound = self.rounds[self.roundIndex]
-                end 
             end
         end
     end;
@@ -117,6 +113,10 @@ World = Class {
             if self.enemies[i].markedForDeath or self.enemies[i].hitGoal then 
                 self.collisionWorld:remove(self.enemies[i]) 
                 table.remove(self.enemies, i)
+                self.currentRound.enemiesDefeated = self.currentRound.enemiesDefeated + 1
+                if self.currentRound.enemiesDefeated == self.currentRound.totalEnemies then 
+                    self:nextRound()
+                end
             end
         end
 
@@ -169,6 +169,18 @@ World = Class {
     end;
     toggleSpawning = function(self)
         self.isSpawning = not self.isSpawning
+    end;
+    startRound = function(self)
+        if not self.currentRound.hasStarted then
+            self:toggleSpawning()
+            self.currentRound.hasStarted = true
+        end
+    end;
+    nextRound = function(self)
+        if self.rounds[(self.roundIndex + 1)] ~= nil then 
+            self.roundIndex = self.roundIndex + 1
+            self.currentRound = self.rounds[self.roundIndex]
+        end 
     end;
     processCollisionForEnemy = function(self, enemy, dt)
         local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/2, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/2, function() return "cross" end)
