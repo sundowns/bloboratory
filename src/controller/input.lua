@@ -26,7 +26,9 @@ InputController = Class {
         if tonumber(key) then
             playerController:setCurrentBlueprint(tonumber(key))
         end
-
+        if key == "escape" then
+            self:togglePlacingTower()
+        end
         if not self.isPlacingTower then
             if key == "e" then
                 world:spawnEnemyAt(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
@@ -34,8 +36,6 @@ InputController = Class {
                 world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
             elseif key == "g" then
                 world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
-            elseif key == "space" then
-                world:toggleSpawning()
             elseif key == "r" then 
                 playerController:refundCurrentStructure()
             elseif key == "u" and playerController.currentSelectedStructure then
@@ -43,7 +43,9 @@ InputController = Class {
                     playerController.currentSelectedStructure:addMutation(FireMutation()) 
                 end
             end
-        end
+            elseif key == "escape" then
+                love.event.quit()
+            end
     end;  
     mousepressed = function(self, screen_x, screen_y, button)
         local gridX, gridY = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)

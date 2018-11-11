@@ -87,6 +87,26 @@ return {
         }
     },
     UI = {
+        BUTTON = {
+            WIDTH = 0.15 * love.graphics.getWidth(),
+            HEIGHT = 0.05* love.graphics.getHeight(),
+            START_WAVE = {
+                X = 0.34 * love.graphics.getWidth(),
+                Y = 0.66 * love.graphics.getHeight(),
+            },
+            OBSTACLE = {
+                X = 0.34 * love.graphics.getWidth(),
+                Y = 0.76 * love.graphics.getHeight(),
+            },
+            SAW = {
+                X = 0.54 * love.graphics.getWidth(),
+                Y = 0.76 * love.graphics.getHeight(),
+            },
+            CANNON = {
+                X = 0.54 * love.graphics.getWidth(),
+                Y = 0.66 * love.graphics.getHeight(),
+            },
+        },
         CURRENCY_COUNTER = {
             X_OFFSET = 0.766 * love.graphics.getWidth(),
             Y_OFFSET = 0.02 * love.graphics.getHeight()
