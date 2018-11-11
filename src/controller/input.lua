@@ -36,8 +36,6 @@ InputController = Class {
                 world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
             elseif key == "g" then
                 world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
-            elseif key == "space" then
-                world:toggleSpawning()
             elseif key == "r" then 
                 playerController:refundCurrentStructure()
             elseif key == "u" and playerController.currentSelectedStructure then

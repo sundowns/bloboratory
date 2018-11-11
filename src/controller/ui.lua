@@ -4,21 +4,28 @@ UiController = Class {
     update = function(self, dt)
         nk.frameBegin()
             if not world.currentRound.hasStarted then 
-                if nk.windowBegin('Start', constants.UI.START_WAVE.X_OFFSET, constants.UI.START_WAVE.Y_OFFSET, constants.UI.START_WAVE.WIDTH, constants.UI.START_WAVE.HEIGHT) then
+                if nk.windowBegin('Start', constants.UI.BUTTON.START_WAVE.X, constants.UI.BUTTON.START_WAVE.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
                     nk.layoutRow('dynamic', 32, 1)
                     if nk.button('Start Wave') then 
                         world:startRound()
                     end
                 end
                 nk.windowEnd()
-                if nk.windowBegin('Saw', constants.UI.SAW_BOX.X_OFFSET, constants.UI.SAW_BOX.Y_OFFSET, constants.UI.SAW_BOX.WIDTH, constants.UI.SAW_BOX.HEIGHT) then
+                if nk.windowBegin('Obstacle', constants.UI.BUTTON.OBSTACLE.X, constants.UI.BUTTON.OBSTACLE.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
+                    nk.layoutRow('dynamic', 32, 1)
+                    if nk.button('Place Obstacle') then 
+                        playerController:setCurrentBlueprint(1)
+                    end
+                end
+                nk.windowEnd()
+                if nk.windowBegin('Saw', constants.UI.BUTTON.SAW.X, constants.UI.BUTTON.SAW.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
                     nk.layoutRow('dynamic', 32, 1)
                     if nk.button('Place Saw') then 
                         playerController:setCurrentBlueprint(2)
                     end
                 end
                 nk.windowEnd()
-                if nk.windowBegin('Cannon', constants.UI.CANNON_BOX.X_OFFSET, constants.UI.CANNON_BOX.Y_OFFSET, constants.UI.CANNON_BOX.WIDTH, constants.UI.CANNON_BOX.HEIGHT) then
+                if nk.windowBegin('Cannon', constants.UI.BUTTON.CANNON.X, constants.UI.BUTTON.CANNON.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
                     nk.layoutRow('dynamic', 32, 1)
                     if nk.button('Place Cannon') then 
                         playerController:setCurrentBlueprint(3)
