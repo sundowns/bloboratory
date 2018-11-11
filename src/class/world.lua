@@ -118,6 +118,7 @@ World = Class {
             self:processCollisionForEnemy(enemy, dt)
         end
 
+        self.isSpawning = roundController:isEnemyPhase()
         if self.isSpawning then
             self.spawnTimer:update(dt)
         end
