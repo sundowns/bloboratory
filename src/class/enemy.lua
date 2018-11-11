@@ -104,6 +104,9 @@ Enemy = Class {
         self.health = self.health - (damage*dt)
         self.onHit:play()
         self.markedForDeath = self.health < 0
+        if self.markedForDeath then 
+            self.deathSound:play()
+        end
         self:triggerHealthBar()
     end;
     moveBy = function(self, dx, dy)

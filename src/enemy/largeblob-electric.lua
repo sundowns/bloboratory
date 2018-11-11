@@ -5,6 +5,10 @@ LargeBlobElectric = Class {
         self.onHit = ripple.newSound{
             source = love.audio.newSource('asset/enemies/sound/largeBlobHit.wav', 'stream')
         }
+        self.deathSound = ripple.newSound{
+            source = love.audio.newSource('asset/enemies/sound/blobDeathElec.wav', 'stream'),
+            volume = 0.6
+        }
     end;
     update = function(self, dt, currentCell)
         local destroy =  Enemy.update(self, dt, currentCell)

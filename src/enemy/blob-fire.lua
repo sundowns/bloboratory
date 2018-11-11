@@ -5,6 +5,9 @@ BlobFire = Class {
         self.onHit = ripple.newSound{
             source = love.audio.newSource('asset/enemies/sound/blobFireHit.wav', 'stream')
         }
+        self.deathSound = ripple.newSound{
+            source = love.audio.newSource('asset/enemies/sound/blobDeath.wav', 'stream')
+        }
     end;
     update = function(self, dt, currentCell)
         local destroy = Enemy.update(self, dt, currentCell)
