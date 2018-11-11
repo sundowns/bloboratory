@@ -40,7 +40,7 @@ InputController = Class {
             elseif key == "r" then 
                 playerController:refundCurrentStructure()
             elseif key == "u" and playerController.currentSelectedStructure then
-                if playerController.currentSelectedStructure.addMutation then
+                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
                     playerController.currentSelectedStructure:addMutation(FireMutation()) 
                 end
             end

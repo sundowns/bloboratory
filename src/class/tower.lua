@@ -1,15 +1,17 @@
 Tower = Class {
     __includes=Structure,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height)
-        Structure.init(self, animation, gridOrigin, worldOrigin, width, height)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost)
+        Structure.init(self, animation, gridOrigin, worldOrigin, width, height, cost)
         self.type = "TOWER" -- used to check for valid collisions
         self.mutation = nil
+        self.mutable = true
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
             self.mutation = mutation
             self.animation = animation
             self:changeAnimationState("DEFAULT")
+            playerController.wallet:charge(mutation.cost, Vector(self.worldOrigin.x + self.width/2*constants.GRID.CELL_SIZE, self.worldOrigin.y))
         end
     end;
     update = function(self, dt)
@@ -30,8 +32,8 @@ Tower = Class {
 
 MeleeTower = Class {
     __includes = Tower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height)
-        Tower.init(self, animation, gridOrigin, worldOrigin, width, height)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost)
+        Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost)
         self.archetype = "MELEE"
     end;
     update = function(self, dt)
@@ -51,8 +53,8 @@ MeleeTower = Class {
 
 TargetedTower = Class {
     __includes = Tower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height, rotationTime)
-        Tower.init(self, animation, gridOrigin, worldOrigin, width, height)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, rotationTime)
+        Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost)
         self.archetype = "TARGETTED"
         self.currentTarget = nil
         self.targetIsNew = false
@@ -70,9 +72,9 @@ TargetedTower = Class {
     end;
     calculateAngleToTarget = function(self)
         if not self.currentTarget then return 0 end
-        local cX, cY = self:centre()
-        local dy = cY - self.currentTarget.worldOrigin.y  
-        local dx = self.currentTarget.worldOrigin.x - cX
+        local centre = self:centre()
+        local dy = centre.y - self.currentTarget.worldOrigin.y  
+        local dx = self.currentTarget.worldOrigin.x - centre.x
         return math.atan2(dx, dy)
     end;
     update = function(self, dt)

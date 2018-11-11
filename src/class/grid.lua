@@ -192,9 +192,9 @@ Grid = Class {
             local current = self.spawn.cameFrom
 
             while current and not current.isGoal do 
-                local cX, cY = current:getCentre()
-                table.insert(self.optimalPath, cX)
-                table.insert(self.optimalPath, cY)
+                local centre = current:centre()
+                table.insert(self.optimalPath, centre.x)
+                table.insert(self.optimalPath, centre.y)
                 current = current.cameFrom
             end
             -- Cant draw a line with less than 2 vertices (4 points)

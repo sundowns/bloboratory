@@ -1,15 +1,18 @@
 Structure = Class {
-    init = function(self, animation, gridOrigin, worldOrigin, width, height)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost)
         assert(worldOrigin and worldOrigin.x and worldOrigin.y)
         assert(gridOrigin and gridOrigin.x and gridOrigin.y)
         assert(width)
         assert(height)
+        assert(cost)
         self.gridOrigin = gridOrigin
         self.worldOrigin = worldOrigin
         self.width = width
         self.height = height
         self.animation = animation
         self.isSelected = false
+        self.cost = cost
+        self.mutable = false
     end;
     update = function(self, dt)
         if self.animation then
@@ -42,6 +45,24 @@ Structure = Class {
         self.isSelected = not self.isSelected
     end;
     centre = function(self)
-        return self.worldOrigin.x + constants.GRID.CELL_SIZE*self.width/2, self.worldOrigin.y + constants.GRID.CELL_SIZE*self.height/2
+        return Vector(self.worldOrigin.x + constants.GRID.CELL_SIZE*self.width/2, self.worldOrigin.y + constants.GRID.CELL_SIZE*self.height/2)
+    end;
+    getTotalCost = function(self)
+        if self.mutation then
+            return addTables(self.cost, self.mutation.cost)
+        else 
+            return self.cost
+        end
     end;
 }
+
+addTables = function(t1, t2)
+    local result = {}
+    for key, val in pairs(t1) do
+        result[key] = (result[key] or 0) + val
+    end
+    for key, val in pairs(t2) do
+        result[key] = (result[key] or 0) + val
+    end
+    return result
+end;
