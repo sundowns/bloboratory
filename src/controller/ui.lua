@@ -4,6 +4,7 @@ UiController = Class {
     update = function(self, dt)
         nk.frameBegin()
             if roundController:isBuildPhase() then 
+                
                 if world.grid.validPath then
                     --TODO: show some sort of disabled/greyed out state instead of hiding it (when this is false)
                     if nk.windowBegin('Start', constants.UI.BUTTON.START_WAVE.X, constants.UI.BUTTON.START_WAVE.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
@@ -96,41 +97,59 @@ UiController = Class {
                 if nk.windowBegin('Chooser', 300, 400, 2 * constants.UI.BUTTON.WIDTH, 4.5 * constants.UI.BUTTON.HEIGHT, 'border', 'scrollbar') then
                     nk.layoutRow('dynamic', 50, 3)
                     if nk.button('Blob') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = Blob(Vector(0,0))
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = Blob(Vector(0,0))
+                        end
                         world.crucible.isChoosing = 0
                     end
                     if nk.button('FireBlob') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = BlobFire(Vector(0,0))
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = BlobFire(Vector(0,0))
+                        end
                         world.crucible.isChoosing = 0
                     end
                     if nk.button('IceBlob') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = BlobIce(Vector(0,0))
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = BlobIce(Vector(0,0))
+                        end
                         world.crucible.isChoosing = 0
                     end
                     nk.layoutRow('dynamic', 50, 3)
                     if nk.button('LargeBlob') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = LargeBlob(Vector(0,0))
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = LargeBlob(Vector(0,0))
+                        end
                         world.crucible.isChoosing = 0
                     end
                     if nk.button('LargeFireBlob') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = LargeBlobFire(Vector(0,0))
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = LargeBlobFire(Vector(0,0))
+                        end
                         world.crucible.isChoosing = 0
                     end
                     if nk.button('LargeIceBlob') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = LargeBlobIce(Vector(0,0))
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = LargeBlobIce(Vector(0,0))
+                        end
                         world.crucible.isChoosing = 0
                     end
                     nk.layoutRow('dynamic', 50, 3)
                     if nk.button('ElecBlob') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = BlobElectric(Vector(0,0))
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = BlobElectric(Vector(0,0))
+                        end
                         world.crucible.isChoosing = 0
                     end
                     if nk.button('LargeElecBlob') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = LargeBlobElectric(Vector(0,0))
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = LargeBlobElectric(Vector(0,0))
+                        end
                         world.crucible.isChoosing = 0
                     end
                     if nk.button('Nothing') then 
-                        world.crucible.enemies[world.crucible.isChoosing] = 0
+                        for i, entry in pairs(world.crucible.enemies) do
+                            world.crucible.enemies[i][world.crucible.isChoosing] = 0
+                        end
                         world.crucible.isChoosing = 0
                     end
                 end
