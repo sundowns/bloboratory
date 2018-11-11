@@ -7,7 +7,6 @@ CameraController = Class {
         self.panRadius = constants.CAMERA.PAN_RADIUS_RATIO*love.graphics.getWidth()
         self.maxPanDifference = (0.5 - constants.CAMERA.PAN_RADIUS_RATIO)*love.graphics.getWidth()
 
-        self.mouse = Mouse(Vector(love.mouse.getPosition()))
     end;
     attach = function(self)
         self.camera:attach()
@@ -29,10 +28,8 @@ CameraController = Class {
             self.camera:move(0, dt*constants.CAMERA.SPEED)
         end
 
-        self.mouse:update(dt)
-
         if love.window.hasMouseFocus() then
-            local delta = Vector(self.mouse.origin.x - love.graphics.getWidth()/2, self.mouse.origin.y - love.graphics.getHeight()/2)
+            local delta = Vector(inputController.mouse.origin.x - love.graphics.getWidth()/2, inputController.mouse.origin.y - love.graphics.getHeight()/2)
             if delta:len() > self.panRadius then
                 local additionalVelocity = (delta:len() - self.panRadius)/self.maxPanDifference * constants.CAMERA.MAX_ADDITIONAL_PAN_SPEED
                 local direction = delta:normalized()
@@ -53,21 +50,6 @@ CameraController = Class {
         if debug then
             love.graphics.setColor(0,1,0,0.3)
             love.graphics.circle('line', love.graphics.getWidth()/2, love.graphics.getHeight()/2, self.panRadius)
-            self.mouse:draw()
         end
-    end;
-}
-
-Mouse = Class {
-    init = function(self, origin)
-        self.origin = origin
-        self.width = constants.CAMERA.MOUSE.WIDTH
-        self.height = constants.CAMERA.MOUSE.HEIGHT
-    end;
-    update = function(self, dt)
-        self.origin = Vector(love.mouse.getPosition())
-    end;
-    draw = function(self)
-        love.graphics.rectangle('line', self.origin.x, self.origin.y, self.width, self.height)
     end;
 }

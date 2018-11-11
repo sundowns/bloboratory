@@ -3,16 +3,17 @@ InputController = Class {
         --cargo doesnt cooperate with new cursor easy cause we cant :getData() in LOVE >11.0.
         self.placingTowerCursor = love.mouse.newCursor("asset/cursors/green.png",assets.cursors.green:getWidth()/3, assets.cursors.green:getHeight()/3)
         self.isPlacingTower = false
+        self.mouse = Mouse(Vector(love.mouse.getPosition()))
     end;
     update = function(self, dt)
         if self.isPlacingTower then
-            local mouseX, mouseY = love.mouse.getPosition()
             if playerController.currentBlueprint.image then
-                world.grid:displayBlueprint(mouseX, mouseY, playerController.currentBlueprint)
+                world.grid:displayBlueprint(self.mouse.origin.x, self.mouse.origin.y, playerController.currentBlueprint)
             else
-                world.grid:highlightCells(mouseX, mouseY, constants.STRUCTURE[playerController.currentBlueprint.name].WIDTH, constants.STRUCTURE[playerController.currentBlueprint.name].HEIGHT)
+                world.grid:highlightCells(self.mouse.origin.x, self.mouse.origin.y, constants.STRUCTURE[playerController.currentBlueprint.name].WIDTH, constants.STRUCTURE[playerController.currentBlueprint.name].HEIGHT)
             end
         end
+        self.mouse:update(dt)
     end;
     togglePlacingTower = function(self)
         self.isPlacingTower = not self.isPlacingTower
@@ -56,5 +57,29 @@ InputController = Class {
         else
             playerController:toggleStructureSelection(world:getStructureAt(gridX, gridY)) 
         end
+    end;
+    draw = function(self)
+        if debug then
+            love.graphics.setColor(0,0.8,0,1)
+            self.mouse:draw()
+        end
+    end;
+}
+
+Mouse = Class {
+    init = function(self, origin)
+        self.origin = origin
+        self.width = constants.CAMERA.MOUSE.WIDTH
+        self.height = constants.CAMERA.MOUSE.HEIGHT
+        self.type = "MOUSE"
+    end;
+    update = function(self, dt)
+        self.origin = Vector(love.mouse.getPosition())
+    end;
+    draw = function(self)
+        love.graphics.rectangle('line', self.origin.x, self.origin.y, self.width, self.height)
+    end;
+    calculateHitbox = function(self)
+        return self.origin.x, self.origin.y, self.width, self.height
     end;
 }
