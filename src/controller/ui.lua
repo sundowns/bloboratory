@@ -37,29 +37,26 @@ UiController = Class {
                 nk.windowEnd()
 
                 if nk.windowBegin('Selected', constants.UI.SELECTED.X, constants.UI.SELECTED.Y, constants.UI.SELECTED.WIDTH, constants.UI.SELECTED.HEIGHT) then
-                    if playerController.lastSelectedStructure ~= nil then 
+                    if playerController.currentSelectedStructure ~= nil then 
                         nk.layoutRow('dynamic', 50, 2)
                         if nk.button('Fire') then 
-                            if playerController.lastSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
-                                playerController.lastSelectedStructure:addMutation(FireMutation()) 
-                                playerController:clearLastSelected()
+                            if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
+                                playerController.currentSelectedStructure:addMutation(FireMutation()) 
                             end
                         end
                         if nk.button('Ice') then 
-                            if playerController.lastSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ICE.COST) then
-                                playerController.lastSelectedStructure:addMutation(IceMutation()) 
-                                playerController:clearLastSelected()
+                            if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ICE.COST) then
+                                playerController.currentSelectedStructure:addMutation(IceMutation()) 
                             end
                         end
                         nk.layoutRow('dynamic', 50, 2)
                         if nk.button('Elec') then 
-                            if playerController.lastSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
-                                playerController.lastSelectedStructure:addMutation(ElectricMutation()) 
-                                playerController:clearLastSelected()
+                            if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
+                                playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
                             end
                         end
                         if nk.button('Refund') then 
-                            playerController:refundLastStructure()
+                            playerController:refundCurrentStructure()
                         end
                     end
                 end
