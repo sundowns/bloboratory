@@ -158,25 +158,17 @@ return {
         }
     },
     UI = {
-        BUTTON = {
-            WIDTH = 0.15 * love.graphics.getWidth(),
-            HEIGHT = 0.05* love.graphics.getHeight(),
-            START_WAVE = {
-                X = 0.34 * love.graphics.getWidth(),
-                Y = 0.66 * love.graphics.getHeight(),
-            },
-            OBSTACLE = {
-                X = 0.34 * love.graphics.getWidth(),
-                Y = 0.76 * love.graphics.getHeight(),
-            },
-            SAW = {
-                X = 0.54 * love.graphics.getWidth(),
-                Y = 0.76 * love.graphics.getHeight(),
-            },
-            CANNON = {
-                X = 0.54 * love.graphics.getWidth(),
-                Y = 0.66 * love.graphics.getHeight(),
-            },
+        MENU = {
+            X = 0,
+            Y = 0.86 * love.graphics.getHeight(),
+            WIDTH = (2/3) * love.graphics.getWidth(),
+            HEIGHT = 0.14 * love.graphics.getHeight(),
+        },
+        SELECTED = {
+            X = (2/3) * love.graphics.getWidth(),
+            Y = 0.86 * love.graphics.getHeight(),
+            WIDTH = 0.34 * love.graphics.getWidth(),
+            HEIGHT = 0.14 * love.graphics.getHeight(),
         },
         WALLET = {
             X = 0.775 * love.graphics.getWidth(),
