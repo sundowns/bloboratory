@@ -60,7 +60,6 @@ PlayerController = Class {
                 self.currentSelectedStructure:toggleSelected()
             end
         end
-
     end;
     refundCurrentStructure = function(self)
         if not self.currentSelectedStructure then

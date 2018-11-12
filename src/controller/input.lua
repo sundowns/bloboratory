@@ -60,7 +60,7 @@ InputController = Class {
             if world:placeStructure(gridX, gridY, playerController.currentBlueprint.name) then
                 self:togglePlacingTower()
             end
-        else
+        elseif not nk.windowIsAnyHovered() then
             playerController:toggleStructureSelection(world:getStructureAt(gridX, gridY)) 
         end
     end;

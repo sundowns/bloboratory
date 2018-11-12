@@ -15,40 +15,44 @@ UiController = Class {
             nk.windowEnd()
 
             if roundController:isBuildPhase() then 
-                if world.grid.validPath then
-                    --TODO: show some sort of disabled/greyed out state instead of hiding it (when this is false)
-                    if nk.windowBegin('Start', constants.UI.BUTTON.START_WAVE.X, constants.UI.BUTTON.START_WAVE.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
-                        nk.layoutRowBegin('dynamic', 32, 1)
-                        nk.layoutRowPush(1)
-                        if nk.button('Start Wave') then
-                            roundController:startRound()
-                        end
-                        nk.layoutRowEnd()
-                    end
-                    
-                    nk.windowEnd()
-                end
-
-                if nk.windowBegin('Obstacle', constants.UI.BUTTON.OBSTACLE.X, constants.UI.BUTTON.OBSTACLE.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
-                    nk.layoutRow('dynamic', 32, 1)
+                if nk.windowBegin('Menu', constants.UI.MENU.X, constants.UI.MENU.Y, constants.UI.MENU.WIDTH, constants.UI.MENU.HEIGHT) then
+                    nk.layoutRow('dynamic', 50, {(1/3),(1/3),(1/6),(1/6)})
                     if nk.button('Place Obstacle') then 
                         playerController:setCurrentBlueprint(1)
                     end
-                end
-                nk.windowEnd()
-
-                if nk.windowBegin('Saw', constants.UI.BUTTON.SAW.X, constants.UI.BUTTON.SAW.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
-                    nk.layoutRow('dynamic', 32, 1)
                     if nk.button('Place Saw') then 
                         playerController:setCurrentBlueprint(2)
                     end
-                end
-                nk.windowEnd()
-
-                if nk.windowBegin('Cannon', constants.UI.BUTTON.CANNON.X, constants.UI.BUTTON.CANNON.Y, constants.UI.BUTTON.WIDTH, constants.UI.BUTTON.HEIGHT) then
-                    nk.layoutRow('dynamic', 32, 1)
+                    if playerController.currentSelectedStructure ~= nil then 
+                        if nk.button('Fire') then 
+                            if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
+                                playerController.currentSelectedStructure:addMutation(FireMutation()) 
+                            end
+                        end
+                        if nk.button('Ice') then 
+                            if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ICE.COST) then
+                                playerController.currentSelectedStructure:addMutation(IceMutation()) 
+                            end
+                        end
+                    end
+                    nk.layoutRow('dynamic', 50, {(1/3),(1/3),(1/6),(1/6)})
                     if nk.button('Place Cannon') then 
                         playerController:setCurrentBlueprint(3)
+                    end
+                    if nk.button('Start Wave') then
+                        if world.grid.validPath then
+                            roundController:startRound()
+                        end
+                    end
+                    if playerController.currentSelectedStructure ~= nil then 
+                        if nk.button('Elec') then 
+                            if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
+                                playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
+                            end
+                        end
+                        if nk.button('Refund') then 
+                            playerController:refundCurrentStructure()
+                        end
                     end
                 end
                 nk.windowEnd()
