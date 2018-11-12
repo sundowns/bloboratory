@@ -15,7 +15,7 @@ UiController = Class {
             nk.windowEnd()
 
             if roundController:isBuildPhase() then 
-                if nk.windowBegin('Menu', constants.UI.MENU.X, constants.UI.MENU.Y, love.graphics.getWidth(), constants.UI.MENU.HEIGHT) then
+                if nk.windowBegin('Menu', constants.UI.MENU.X, constants.UI.MENU.Y, constants.UI.MENU.WIDTH, constants.UI.MENU.HEIGHT) then
                     nk.layoutRow('dynamic', 50, {(1/3),(1/3),(1/6),(1/6)})
                     if nk.button('Place Obstacle') then 
                         playerController:setCurrentBlueprint(1)

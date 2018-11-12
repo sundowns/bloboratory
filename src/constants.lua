@@ -161,13 +161,7 @@ return {
         MENU = {
             X = 0,
             Y = 0.86 * love.graphics.getHeight(),
-            WIDTH = (2/3) * love.graphics.getWidth(),
-            HEIGHT = 0.14 * love.graphics.getHeight(),
-        },
-        SELECTED = {
-            X = (2/3) * love.graphics.getWidth(),
-            Y = 0.86 * love.graphics.getHeight(),
-            WIDTH = 0.34 * love.graphics.getWidth(),
+            WIDTH = love.graphics.getWidth(),
             HEIGHT = 0.14 * love.graphics.getHeight(),
         },
         WALLET = {
