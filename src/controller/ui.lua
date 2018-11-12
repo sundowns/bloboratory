@@ -15,30 +15,15 @@ UiController = Class {
             nk.windowEnd()
 
             if roundController:isBuildPhase() then 
-                if nk.windowBegin('Menu', constants.UI.MENU.X, constants.UI.MENU.Y, constants.UI.MENU.WIDTH, constants.UI.MENU.HEIGHT) then
-                    nk.layoutRow('dynamic', 50, 2)
+                if nk.windowBegin('Menu', constants.UI.MENU.X, constants.UI.MENU.Y, love.graphics.getWidth(), constants.UI.MENU.HEIGHT) then
+                    nk.layoutRow('dynamic', 50, {(1/3),(1/3),(1/6),(1/6)})
                     if nk.button('Place Obstacle') then 
                         playerController:setCurrentBlueprint(1)
                     end
                     if nk.button('Place Saw') then 
                         playerController:setCurrentBlueprint(2)
                     end
-
-                    nk.layoutRow('dynamic', 50, 2)
-                    if nk.button('Place Cannon') then 
-                        playerController:setCurrentBlueprint(3)
-                    end
-                    if world.grid.validPath then
-                        if nk.button('Start Wave') then
-                            roundController:startRound()
-                        end
-                    end
-                end
-                nk.windowEnd()
-
-                if nk.windowBegin('Selected', constants.UI.SELECTED.X, constants.UI.SELECTED.Y, constants.UI.SELECTED.WIDTH, constants.UI.SELECTED.HEIGHT) then
                     if playerController.currentSelectedStructure ~= nil then 
-                        nk.layoutRow('dynamic', 50, 2)
                         if nk.button('Fire') then 
                             if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
                                 playerController.currentSelectedStructure:addMutation(FireMutation()) 
@@ -49,7 +34,17 @@ UiController = Class {
                                 playerController.currentSelectedStructure:addMutation(IceMutation()) 
                             end
                         end
-                        nk.layoutRow('dynamic', 50, 2)
+                    end
+                    nk.layoutRow('dynamic', 50, {(1/3),(1/3),(1/6),(1/6)})
+                    if nk.button('Place Cannon') then 
+                        playerController:setCurrentBlueprint(3)
+                    end
+                    if nk.button('Start Wave') then
+                        if world.grid.validPath then
+                            roundController:startRound()
+                        end
+                    end
+                    if playerController.currentSelectedStructure ~= nil then 
                         if nk.button('Elec') then 
                             if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
                                 playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
