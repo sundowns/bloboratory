@@ -44,6 +44,9 @@ PlayerController = Class {
             if self.currentSelectedStructure then
                 self.currentSelectedStructure:toggleSelected()
                 self.currentSelectedStructure = nil
+                self.wallet.gainTimer:after(0.05, function()
+                    self:clearLastSelected()
+                end)
             end
             return
         end
