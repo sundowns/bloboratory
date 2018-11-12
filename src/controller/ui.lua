@@ -42,20 +42,20 @@ UiController = Class {
                         if nk.button('Fire') then 
                             if playerController.lastSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
                                 playerController.lastSelectedStructure:addMutation(FireMutation()) 
-                                playerController.lastSelectedStructure = nil
+                                playerController:clearLastSelected()
                             end
                         end
                         if nk.button('Ice') then 
                             if playerController.lastSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ICE.COST) then
                                 playerController.lastSelectedStructure:addMutation(IceMutation()) 
-                                playerController.lastSelectedStructure = nil
+                                playerController:clearLastSelected()
                             end
                         end
                         nk.layoutRow('dynamic', 50, 2)
                         if nk.button('Elec') then 
                             if playerController.lastSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
                                 playerController.lastSelectedStructure:addMutation(ElectricMutation()) 
-                                playerController.lastSelectedStructure = nil
+                                playerController:clearLastSelected()
                             end
                         end
                         if nk.button('Refund') then 

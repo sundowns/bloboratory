@@ -63,7 +63,9 @@ PlayerController = Class {
                 self.currentSelectedStructure:toggleSelected()
             end
         end
-
+    end;
+    clearLastSelected = function(self)
+        self.lastSelectedStructure = nil
     end;
     refundCurrentStructure = function(self)
         if not self.currentSelectedStructure then
@@ -72,6 +74,7 @@ PlayerController = Class {
         self.wallet:refund(self.currentSelectedStructure:getTotalCost(), self.currentSelectedStructure:centre())
         world:removeStructure(self.currentSelectedStructure)
         self:toggleStructureSelection()
+        self:clearLastSelected()
     end;
     refundLastStructure = function(self) -- For use in UI when current is unselected by buttons
         if not self.lastSelectedStructure then
@@ -79,7 +82,7 @@ PlayerController = Class {
         end
         self.wallet:refund(self.lastSelectedStructure:getTotalCost(), self.lastSelectedStructure:centre())
         world:removeStructure(self.lastSelectedStructure)
-        self.lastSelectedStructure = nil
+        self:clearLastSelected()
     end;
     draw = function(self)
         self.wallet:draw()
