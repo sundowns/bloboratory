@@ -1,7 +1,7 @@
 return {
     CAMERA = {
-        SPEED = 200,
-        ADDITIONAL_SPEED_MODIFIER = 2,
+        SPEED = 250,
+        ADDITIONAL_SPEED_MODIFIER = 1.6,
         PANZONES = {
             TOP_BOTTOM = {
                 HEIGHT = 0.04,
