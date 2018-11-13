@@ -2,9 +2,12 @@ Saw = Class {
     __includes=MeleeTower,
     init = function(self, gridOrigin, worldOrigin)
         self.towerType = "SAW"
-        MeleeTower.init(self, animationController:createInstance(self.towerType), gridOrigin, worldOrigin, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT, constants.STRUCTURE.SAW.COST)
+        MeleeTower.init(self, animationController:createInstance(self.towerType),
+            gridOrigin, worldOrigin, constants.STRUCTURE.SAW.WIDTH,
+            constants.STRUCTURE.SAW.HEIGHT, constants.STRUCTURE.SAW.COST,
+            constants.STRUCTURE.SAW.ATTACK_DAMAGE, constants.STRUCTURE.SAW.ATTACK_INTERVAL
+        )
         self.targettingRadius = constants.STRUCTURE.SAW.TARGETTING_RADIUS
-        self.attackDamage = constants.STRUCTURE.SAW.ATTACK_DAMAGE
     end;
     update = function(self, dt)
         MeleeTower.update(self, dt)

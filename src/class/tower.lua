@@ -1,10 +1,12 @@
 Tower = Class {
     __includes=Structure,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
         Structure.init(self, animation, gridOrigin, worldOrigin, width, height, cost)
         self.type = "TOWER" -- used to check for valid collisions
         self.mutation = nil
         self.mutable = true
+        self.attackDamage = attackDamage
+        self.attackInterval = attackInterval
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
@@ -33,29 +35,42 @@ Tower = Class {
 
 MeleeTower = Class {
     __includes = Tower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost)
-        Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
+        Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
         self.archetype = "MELEE"
+        self.armed = false
+
+        self.attackTimer = Timer.new()
+        self.attackTimer:every(self.attackInterval, function()
+            self:arm()
+        end)
     end;
     update = function(self, dt)
         Tower.update(self, dt)
+        self.attackTimer:update(dt)
     end;
-    attack = function(self, other, dt)
-        other:takeDamage(self.attackDamage, false, dt)
+    attack = function(self, other)
+        other:takeDamage(self.attackDamage, true, 1)
 
         if self.mutation then
-            self.mutation:attack(other, dt)
+            self.mutation:attack(other, 1)
         end
     end;
     addMutation = function(self, mutation, animation)
         Tower.addMutation(self, mutation, animation)
     end;
+    arm = function(self)
+        self.armed = true
+    end;
+    disarm = function(self)
+        self.armed = false
+    end;
 }
 
 TargetedTower = Class {
     __includes = Tower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, rotationTime)
-        Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, rotationTime, attackDamage, attackInterval)
+        Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
         self.archetype = "TARGETTED"
         self.currentTarget = nil
         self.targetIsNew = false
@@ -63,6 +78,13 @@ TargetedTower = Class {
         self.angleToTarget = 0
         self.rotationTime = rotationTime
         self.projectiles = {}
+
+        self.attackTimer = Timer.new()
+        self.attackTimer:every(self.attackInterval, function()
+            if self.currentTarget then
+                self:shoot()
+            end
+        end)
     end;
     spottedEnemy = function(self, enemy)
         if not self.currentTarget then

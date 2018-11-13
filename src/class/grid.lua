@@ -112,13 +112,13 @@ Grid = Class {
     getNeighbours = function(self, target)
         assert(target.x and target.y)
         local neighbours = {}
-        if target.x < self.cols and self.cells[target.x + 1][target.y]:isValidPath() then
+        if target.x < self.cols-1 and self.cells[target.x + 1][target.y]:isValidPath() then
             table.insert(neighbours, self.cells[target.x + 1][target.y])
         end
         if target.x > 0 and self.cells[target.x - 1][target.y]:isValidPath() then
             table.insert(neighbours, self.cells[target.x - 1][target.y])
         end
-        if target.y < self.rows and self.cells[target.x][target.y + 1]:isValidPath() then
+        if target.y < self.rows-1 and self.cells[target.x][target.y + 1]:isValidPath() then
             table.insert(neighbours, self.cells[target.x][target.y + 1])
         end
         if target.y > 0 and self.cells[target.x][target.y - 1]:isValidPath() then
@@ -136,8 +136,8 @@ Grid = Class {
         self.validPath = false
 
         -- clear existing cameFrom records
-        for i = 0, self.cols, 1 do
-            for j = 0, self.rows, 1 do
+        for i = 0, self.cols-1, 1 do
+            for j = 0, self.rows-1, 1 do
                 self.cells[i][j].cameFrom = nil
                 self.cells[i][j].distanceToGoal = 0
                 self.cells[i][j].heuristic = self:heuristic(self.cells[i][j])

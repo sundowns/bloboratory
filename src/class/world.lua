@@ -88,6 +88,7 @@ World = Class {
         self.grid:update(dt)
         for i, structure in pairs(self.structures) do
             structure:update(dt)
+            self:processCollisionForTower(structure)
         end
 
         for i = #self.enemies, 1, -1 do
@@ -155,20 +156,27 @@ World = Class {
     end;
     processCollisionForEnemy = function(self, enemy, dt)
         local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/4, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/4, function() return "cross" end)
-        for j = #cols, 1, -1 do 
+        for j = len, 1, -1 do 
             local collision = cols[j]
             
             if collision.other.type == "TOWER" then
-                if collision.other.archetype == "MELEE" then
-                    collision.other:attack(collision.item, dt)
-
-                    if collision.item.markedForDeath then
-                        break; --exit the loop, this enemy is already dead
-                    end
-                elseif collision.other.archetype == "TARGETTED" then
+                if collision.other.archetype == "TARGETTED" then
                     collision.other:spottedEnemy(enemy)
                 end
             end
+        end
+    end;
+    processCollisionForTower = function(self, tower)
+        if tower.armed then
+            local x, y, width, height = tower:calculateHitbox()
+            local actualX, actualY, cols, len = self.collisionWorld:check(tower, x, y, function() return "cross" end)
+            for i = 1, len do 
+                local collision = cols[i]
+                if collision.other.type == "ENEMY" then
+                    tower:attack(collision.other)
+                end
+            end
+            tower:disarm()
         end
     end;
     getStructureAt = function(self, gridX, gridY)

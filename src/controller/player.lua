@@ -72,7 +72,7 @@ PlayerController = Class {
     draw = function(self)
         self.wallet:draw()
 
-        if self.currentBlueprint then
+        if inputController.isPlacingTower and self.currentBlueprint then
             world:displayBlueprint(self.currentBlueprint, inputController.mouse.origin)
         end
     end;

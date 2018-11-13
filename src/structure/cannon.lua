@@ -3,19 +3,15 @@ Cannon = Class {
     init = function(self, gridOrigin, worldOrigin)
         self.towerType = "CANNON"
 
-        TargetedTower.init(self, animationController:createInstance(self.towerType), gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT, constants.STRUCTURE.CANNON.COST, constants.STRUCTURE.CANNON.ROTATION_TIME)
+        TargetedTower.init(self,
+            animationController:createInstance(self.towerType),
+            gridOrigin, worldOrigin, constants.STRUCTURE.CANNON.WIDTH,
+            constants.STRUCTURE.CANNON.HEIGHT, constants.STRUCTURE.CANNON.COST,
+            constants.STRUCTURE.CANNON.ROTATION_TIME, constants.STRUCTURE.CANNON.ATTACK_DAMAGE,
+            constants.STRUCTURE.CANNON.ATTACK_INTERVAL
+        )
 
         self.targettingRadius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS
-        self.attackDamage = constants.STRUCTURE.CANNON.ATTACK_DAMAGE
-        self.attackInterval = constants.STRUCTURE.CANNON.ATTACK_INTERVAL
-
-        self.attackTimer = Timer.new()
-
-        self.attackTimer:every(self.attackInterval, function()
-            if self.currentTarget then
-                self:shoot()
-            end
-        end)
     end;
     update = function(self, dt)
         TargetedTower.update(self, dt)
