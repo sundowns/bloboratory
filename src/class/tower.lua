@@ -41,7 +41,7 @@ MeleeTower = Class {
         Tower.update(self, dt)
     end;
     attack = function(self, other, dt)
-        other:takeDamage(self.attackDamage, dt)
+        other:takeDamage(self.attackDamage, false, dt)
 
         if self.mutation then
             self.mutation:attack(other, dt)

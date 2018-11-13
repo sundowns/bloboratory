@@ -3,7 +3,7 @@ Camera = require("lib.camera")
 CameraController = Class {
     init = function(self, origin)
         self.camera = Camera(origin:unpack())
-        self.camera:zoom(1)
+        self.camera:zoom(0.8)
         self:calculateCameraBounds()
     end;
     calculateCameraBounds = function(self)

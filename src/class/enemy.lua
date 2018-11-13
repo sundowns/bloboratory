@@ -99,10 +99,12 @@ Enemy = Class {
             self.debuffs[debuff.type] = debuff
         end
     end;
-    takeDamage = function(self, damage, dt)
+    takeDamage = function(self, damage, playHitSound, dt)
         if not dt then dt = 1 end -- allows the function to work with constant attacks (melee) and projectiles
         self.health = self.health - (damage*dt)
-        self.onHit:play()
+        if playHitSound then
+            self.onHit:play()
+        end
         self.markedForDeath = self.health < 0
         if self.markedForDeath then 
             self.deathSound:play()

@@ -10,9 +10,9 @@ Cell = Class {
         self.isSpawn = false
 
         --Used to display blueprint/projected builds
-        self.isHovered = false 
-        self.isHoveredInvalid = false 
-        self.blueprint = false
+        -- self.isHovered = false 
+        -- self.isHoveredInvalid = false 
+        -- self.blueprint = false
 
         --Used for pathfinding
         self.cameFrom = nil
@@ -28,10 +28,11 @@ Cell = Class {
         self.blueprint = false
     end;
     draw = function(self, isSpawning)
-        if debug then
-            love.graphics.setColor(1,1,1,0.2)
-            love.graphics.rectangle('line', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+        Util.l.resetColour()
+        if self.x % 2 == 0 and self.y % 2 == 0 then
+            love.graphics.draw(assets.terrain.floor, self.worldX, self.worldY, 0, constants.GRID.CELL_SIZE/assets.terrain.floor:getWidth()*2, constants.GRID.CELL_SIZE/assets.terrain.floor:getHeight()*2)
         end
+
         if self.isGoal then
             love.graphics.setColor(constants.COLOURS.GOAL)
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
@@ -42,25 +43,14 @@ Cell = Class {
                 love.graphics.setColor(constants.COLOURS.SPAWN_INACTIVE)
             end
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
-        elseif self.blueprint then
-            if self.isHovered then
-                love.graphics.setColor(constants.COLOURS.HOVERED)
-            elseif self.isHoveredInvalid then
-                love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
-            end
-            self.blueprint:draw(self.worldX, self.worldY)
-        elseif self.isHovered then
-            love.graphics.setColor(constants.COLOURS.HOVERED)
-            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
-        elseif self.isHoveredInvalid then
-            love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
-            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+        -- elseif self.blueprint then
+        --     if self.isHovered then
+        --         love.graphics.setColor(constants.COLOURS.HOVERED)
+        --     elseif self.isHoveredInvalid then
+        --         love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
+        --     end
+        --     self.blueprint:draw(self.worldX, self.worldY)
         end
-
-        -- if debug then
-        --     love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
-        --     love.graphics.print(self.distanceToGoal, self.x*constants.GRID.CELL_SIZE, self.y*constants.GRID.CELL_SIZE)
-        -- end
     end;
     occupy = function(self, occupant)
         if not self.isGoal and not self.isSpawn then

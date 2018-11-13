@@ -43,7 +43,7 @@ Grid = Class {
     end;
     displayBlueprint = function(self, mouseX, mouseY, blueprint)
         local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
-        if not self:isOccupied(gridX, gridY, blueprint.width, blueprint.height) then
+        if self:isValidGridCoords(gridX, gridY) and not self:isOccupied(gridX, gridY, blueprint.width, blueprint.height) then
             self.cells[gridX][gridY]:renderBlueprint(blueprint, true)
         elseif self.cells[gridX] and self.cells[gridX][gridY] then
             self.cells[gridX][gridY]:renderBlueprint(blueprint, false)

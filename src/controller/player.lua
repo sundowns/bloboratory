@@ -2,7 +2,7 @@ require("src.class.currency")
 require("src.class.wallet")
 
 local ALL_BLUEPRINTS = {
-    ["OBSTACLE"] = Blueprint("OBSTACLE", nil, 1, 1),
+    ["OBSTACLE"] = Blueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2),
     ["SAW"] = Blueprint("SAW", assets.blueprints.saw, 2, 2),
     ["CANNON"] = Blueprint("CANNON", assets.blueprints.cannon, 2, 2)
 }
@@ -71,5 +71,9 @@ PlayerController = Class {
     end;
     draw = function(self)
         self.wallet:draw()
+
+        if self.currentBlueprint then
+            
+        end
     end;
 }

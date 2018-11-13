@@ -51,7 +51,7 @@ Cannonball = Class {
     end;
     hitTarget = function(self)
         if self.target then
-            self.target:takeDamage(self.damage)
+            self.target:takeDamage(self.damage, true)
 
             if self.mutation then
                 self.mutation:attack(self.target, 1)

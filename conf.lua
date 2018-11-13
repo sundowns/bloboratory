@@ -1,8 +1,8 @@
 function love.conf(t)
     t.console = true
     t.window.title = "Grim Gamers"
-    t.window.minwidth = 1024
-    t.window.minheight = 768
+    t.window.minwidth = 1280
+    t.window.minheight = 960
     t.window.resizable = true
     t.window.fullscreentype = "desktop" 
 

@@ -35,7 +35,7 @@ return {
         SELECTION = {1,1,0}
     },
     GRID = {
-        COLUMNS = 24,
+        COLUMNS = 36,
         ROWS = 24,
         CELL_SIZE = 32,
     },
@@ -171,7 +171,7 @@ return {
             X = 0,
             Y = 0.86,
             WIDTH = 1,
-            HEIGHT = 0.14,
+            HEIGHT = 0.145,
         },
         WALLET = {
             X = 0.775,

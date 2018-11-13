@@ -39,7 +39,7 @@ Inflame = Class {
         Debuff.update(self, dt)
     end;
     tick = function(self)
-        self.owner:takeDamage(self.damagePerTick)
+        self.owner:takeDamage(self.damagePerTick, false) --TODO: sizzlin' sound of some kind instead
         --TODO: emit some particles?
     end;
     apply = function(self)
