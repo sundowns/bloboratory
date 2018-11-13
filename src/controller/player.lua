@@ -73,7 +73,7 @@ PlayerController = Class {
         self.wallet:draw()
 
         if self.currentBlueprint then
-            
+            world:displayBlueprint(self.currentBlueprint, inputController.mouse.origin)
         end
     end;
 }

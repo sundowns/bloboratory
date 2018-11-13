@@ -11,27 +11,27 @@ Grid = Class {
         --used to draw path from spawn to goal
         self.optimalPath = {}
 
-        for i = 0, self.cols, 1 do
+        for i = 0, self.cols-1, 1 do
             self.cells[i] = {}
-            for j = 0, self.rows, 1 do
+            for j = 0, self.rows-1, 1 do
                 local worldX, worldY = self:calculateWorldCoordinatesFromGrid(i, j)
                 self.cells[i][j] = Cell(i, j, worldX, worldY)
             end
         end  
     end;
     update = function(self, dt)
-        for i = 0, self.cols do
-            for j = 0, self.rows do
+        for i = 0, self.cols-1 do
+            for j = 0, self.rows-1 do
                 self.cells[i][j]:update(dt)
             end
         end
     end;
     draw = function(self, isSpawning)
         love.graphics.setColor(1,1,1,0.5)
-        love.graphics.rectangle('line', self.origin.x, self.origin.y, (self.cols+1)*constants.GRID.CELL_SIZE, (self.rows+1)*constants.GRID.CELL_SIZE)
+        love.graphics.rectangle('line', self.origin.x, self.origin.y, (self.cols)*constants.GRID.CELL_SIZE, (self.rows)*constants.GRID.CELL_SIZE)
 
-        for i = 0, self.cols do
-            for j = 0, self.rows do
+        for i = 0, self.cols-1 do
+            for j = 0, self.rows-1 do
                 self.cells[i][j]:draw(isSpawning)
             end
         end
@@ -39,33 +39,6 @@ Grid = Class {
         if self.validPath then
             love.graphics.setColor(0,1,1)
             love.graphics.line(self.optimalPath)
-        end
-    end;
-    displayBlueprint = function(self, mouseX, mouseY, blueprint)
-        local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
-        if self:isValidGridCoords(gridX, gridY) and not self:isOccupied(gridX, gridY, blueprint.width, blueprint.height) then
-            self.cells[gridX][gridY]:renderBlueprint(blueprint, true)
-        elseif self.cells[gridX] and self.cells[gridX][gridY] then
-            self.cells[gridX][gridY]:renderBlueprint(blueprint, false)
-        end
-    end;
-    --TODO: Remove the below function once everything has images weeeee
-    highlightCells = function(self, mouseX, mouseY, width, height)
-        local gridX, gridY = self:calculateGridCoordinatesFromScreen(love.mouse.getPosition())
-        if self:isValidGridCoords(gridX, gridY) and not self:isOccupied(gridX, gridY, width, height) then
-            for i = gridX, gridX + width-1 do
-                for j = gridY, gridY + height-1 do
-                    self.cells[i][j].isHovered = true
-                end
-            end
-        else
-            for i = gridX, gridX + width-1 do
-                for j = gridY, gridY + height-1 do
-                    if self.cells[i] and self.cells[i][j] then
-                        self.cells[i][j].isHoveredInvalid = true
-                    end
-                end
-            end
         end
     end;
     calculateGridCoordinatesFromWorld = function(self, worldX, worldY)
@@ -224,6 +197,18 @@ Grid = Class {
             for j = structure.gridOrigin.y, structure.gridOrigin.y + structure.height-1 do
                 self:vacateCell(i, j)
             end
+        end
+    end;
+    displayBlueprint = function(self, blueprint, gridOrigin)
+        local cell = self:getCell(gridOrigin.x, gridOrigin.y)
+        if cell then
+            if self:isOccupied(gridOrigin.x, gridOrigin.y, blueprint.width, blueprint.height) then
+                love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
+            else
+                love.graphics.setColor(constants.COLOURS.HOVERED)
+            end
+
+            blueprint:draw(cell.worldX, cell.worldY)
         end
     end;
 }

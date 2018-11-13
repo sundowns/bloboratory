@@ -177,4 +177,8 @@ World = Class {
             return cell.occupant
         end
     end;
+    displayBlueprint = function(self, blueprint, screenOrigin)
+        assert(blueprint)
+        self.grid:displayBlueprint(blueprint, Vector(self.grid:calculateGridCoordinatesFromScreen(screenOrigin.x, screenOrigin.y)))
+    end;
 }

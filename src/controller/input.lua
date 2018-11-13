@@ -6,13 +6,6 @@ InputController = Class {
         self.mouse = Mouse(Vector(love.mouse.getPosition()))
     end;
     update = function(self, dt)
-        if self.isPlacingTower then
-            if playerController.currentBlueprint.image then
-                world.grid:displayBlueprint(self.mouse.origin.x, self.mouse.origin.y, playerController.currentBlueprint)
-            else
-                world.grid:highlightCells(self.mouse.origin.x, self.mouse.origin.y, constants.STRUCTURE[playerController.currentBlueprint.name].WIDTH, constants.STRUCTURE[playerController.currentBlueprint.name].HEIGHT)
-            end
-        end
         self.mouse:update(dt)
     end;
     togglePlacingTower = function(self)

@@ -9,11 +9,6 @@ Cell = Class {
         self.isGoal = false
         self.isSpawn = false
 
-        --Used to display blueprint/projected builds
-        -- self.isHovered = false 
-        -- self.isHoveredInvalid = false 
-        -- self.blueprint = false
-
         --Used for pathfinding
         self.cameFrom = nil
         self.heuristic = nil 
@@ -29,6 +24,7 @@ Cell = Class {
     end;
     draw = function(self, isSpawning)
         Util.l.resetColour()
+
         if self.x % 2 == 0 and self.y % 2 == 0 then
             love.graphics.draw(assets.terrain.floor, self.worldX, self.worldY, 0, constants.GRID.CELL_SIZE/assets.terrain.floor:getWidth()*2, constants.GRID.CELL_SIZE/assets.terrain.floor:getHeight()*2)
         end
@@ -43,13 +39,6 @@ Cell = Class {
                 love.graphics.setColor(constants.COLOURS.SPAWN_INACTIVE)
             end
             love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
-        -- elseif self.blueprint then
-        --     if self.isHovered then
-        --         love.graphics.setColor(constants.COLOURS.HOVERED)
-        --     elseif self.isHoveredInvalid then
-        --         love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
-        --     end
-        --     self.blueprint:draw(self.worldX, self.worldY)
         end
     end;
     occupy = function(self, occupant)
