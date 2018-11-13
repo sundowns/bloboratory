@@ -55,12 +55,13 @@ InputController = Class {
             end
     end;  
     mousepressed = function(self, screen_x, screen_y, button)
+        if nk.windowIsAnyHovered() then return end
         local gridX, gridY = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
         if self.isPlacingTower then
             if world:placeStructure(gridX, gridY, playerController.currentBlueprint.name) then
                 self:togglePlacingTower()
             end
-        elseif not nk.windowIsAnyHovered() then
+        else
             playerController:toggleStructureSelection(world:getStructureAt(gridX, gridY)) 
         end
     end;

@@ -1,9 +1,23 @@
 UiController = Class {
     init = function(self)
+        self.resizeTriggered = true
+    end;
+    triggerResize = function(self)
+        self.resizeTriggered = true
+    end;
+    handleResize = function(self, x, y, width, height)
+        if self.resizeTriggered then
+            nk.windowSetBounds(x, y, width, height)
+        end
     end;
     update = function(self, dt)
+        local windowWidth = love.graphics.getWidth()
+        local windowHeight = love.graphics.getHeight()
         nk.frameBegin()
-            if nk.windowBegin('Wallet', constants.UI.WALLET.X, constants.UI.WALLET.Y, constants.UI.WALLET.WIDTH, constants.UI.WALLET.HEIGHT) then
+            if nk.windowBegin('Wallet', constants.UI.WALLET.X*windowWidth, constants.UI.WALLET.Y*windowHeight, constants.UI.WALLET.WIDTH*windowWidth, constants.UI.WALLET.HEIGHT*windowHeight) then
+
+                self:handleResize(constants.UI.WALLET.X*windowWidth, constants.UI.WALLET.Y*windowHeight, constants.UI.WALLET.WIDTH*windowWidth, constants.UI.WALLET.HEIGHT*windowHeight)
+            
                 local width, height = nk.windowGetSize()
                 nk.layoutRowBegin('dynamic', height*0.6, playerController.wallet.totalCurrencies)
                 for key, currency in pairs(playerController.wallet.currencies) do
@@ -15,7 +29,8 @@ UiController = Class {
             nk.windowEnd()
 
             if roundController:isBuildPhase() then 
-                if nk.windowBegin('Menu', constants.UI.MENU.X, constants.UI.MENU.Y, constants.UI.MENU.WIDTH, constants.UI.MENU.HEIGHT) then
+                if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
+                    self:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', 50, {(1/3),(1/3),(1/6),(1/6)})
                     if nk.button('Place Obstacle') then 
                         playerController:setCurrentBlueprint(1)
@@ -58,6 +73,7 @@ UiController = Class {
                 nk.windowEnd()
             end
         nk.frameEnd()
+        self.resizeTriggered = false
     end;
     draw = function(self)
         Util.l.resetColour()

@@ -1,8 +1,17 @@
 return {
     CAMERA = {
         SPEED = 200,
-        PAN_RADIUS_RATIO = 0.425,
-        MAX_ADDITIONAL_PAN_SPEED = 200,
+        ADDITIONAL_SPEED_MODIFIER = 2,
+        PANZONES = {
+            TOP_BOTTOM = {
+                HEIGHT = 0.04,
+                WIDTH = 1
+            },
+            LEFT_RIGHT = {
+                HEIGHT = 1,
+                WIDTH = 0.04
+            }
+        },
         MOUSE = {
             WIDTH = 5,
             HEIGHT = 5
@@ -160,15 +169,15 @@ return {
     UI = {
         MENU = {
             X = 0,
-            Y = 0.86 * love.graphics.getHeight(),
-            WIDTH = love.graphics.getWidth(),
-            HEIGHT = 0.14 * love.graphics.getHeight(),
+            Y = 0.86,
+            WIDTH = 1,
+            HEIGHT = 0.14,
         },
         WALLET = {
-            X = 0.775 * love.graphics.getWidth(),
-            Y = 0.02 * love.graphics.getHeight(),
-            WIDTH = 0.2 * love.graphics.getWidth(),
-            HEIGHT = 0.03 * love.graphics.getHeight()
+            X = 0.775,
+            Y = 0.02,
+            WIDTH = 0.2,
+            HEIGHT = 0.03,
         }
     },
     DEBUFF = {

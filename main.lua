@@ -70,7 +70,7 @@ function love.update(dt)
     if not paused then
         world:update(dt)
         Timer.update(dt) --the global version is used mostly for tweening/small use-cases
-        uiController.update(dt)
+        uiController:update(dt)
         inputController:update(dt)
         cameraController:update(dt)
         playerController:update(dt)
@@ -90,7 +90,7 @@ function love.draw()
         cameraController:draw()
         inputController:draw()
         Util.l.resetColour()
-        Util.l.renderStats()
+        -- Util.l.renderStats()
     end
     if paused then
         love.graphics.setColor(1,0,0)
@@ -105,10 +105,17 @@ function love.keypressed(key, scancode, isrepeat)
         love.event.quit("restart")
     elseif key == "space" then
         paused = not paused
+    elseif key == "return" and love.keyboard.isDown("lalt", "ralt") then
+        love.window.setFullscreen(not love.window.getFullscreen())
     end
 
     inputController:keypressed(key)
     nk.keypressed(key, scancode, isrepeat)
+end
+
+function love.resize(w, h)
+    cameraController:calculateCameraBounds()
+    uiController:triggerResize()
 end
 
 function love.keyreleased(key, scancode)
