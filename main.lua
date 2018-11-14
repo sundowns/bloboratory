@@ -1,5 +1,5 @@
 love.filesystem.setRequirePath(love.filesystem.getRequirePath()..";lib/?.lua;lib/")
-love.filesystem.setCRequirePath(love.filesystem.getRequirePath()..";lib/?.dll;lib/?/?.dll")
+love.filesystem.setCRequirePath(love.filesystem.getCRequirePath()..";lib/?.dll;lib/?/?.dll")
 
 -- Globals (yikes)
 debug = false
