@@ -46,7 +46,7 @@ CameraController = Class {
             if collided then
                 local direction = Vector(inputController.mouse.origin.x - love.graphics.getWidth()/2, inputController.mouse.origin.y - love.graphics.getHeight()/2):normalizeInplace()
                 if accelerated then
-                    self.camera:move(dt*constants.CAMERA.SPEED*constants.CAMERA.ADDITIONAL_SPEED_MODIFIER*direction.x, dt*constants.CAMERA.SPEED*constants.CAMERA.ADDITIONAL_SPEED_MODIFIER*direction.y) --TODO: yeah but faster idiot
+                    self.camera:move(dt*constants.CAMERA.SPEED*constants.CAMERA.ADDITIONAL_SPEED_MODIFIER*direction.x, dt*constants.CAMERA.SPEED*constants.CAMERA.ADDITIONAL_SPEED_MODIFIER*direction.y)
                 else
                     self.camera:move(dt*constants.CAMERA.SPEED*direction.x, dt*constants.CAMERA.SPEED*direction.y)
                 end

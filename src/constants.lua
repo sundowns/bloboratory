@@ -50,7 +50,7 @@ return {
         SAW = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
-            ATTACK_DAMAGE = 1.5, --damage per tick
+            ATTACK_DAMAGE = 1, --damage per tick
             ATTACK_INTERVAL = 0.3, 
             TARGETTING_RADIUS = 1, --additional cell radii
             COST = {
@@ -62,7 +62,7 @@ return {
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
             ATTACK_DAMAGE = 3, --damage per HIT 
-            TARGETTING_RADIUS = 4, --additional cell radii
+            TARGETTING_RADIUS = 5, --additional cell radii
             ATTACK_INTERVAL = 0.5,
             COST = {
                 SCRAP = 10,
@@ -79,7 +79,9 @@ return {
         ELECTRIC = {
             COST = {
                 ELECTRIC = 10
-            }
+            },
+            MINIMUM_DAMAGE = 0.25, -- always applied! see below
+            MAXIMUM_EXTRA_DAMAGE = 2, --total maximum is this + minimum
         },
         ICE = {
             COST = {
@@ -87,14 +89,26 @@ return {
             }
         },
     },
+    IMPACTS = {
+        ELECTRIC = {
+            WIDTH = 150,
+            HEIGHT = 150,
+        },
+        ICE = {
+            WIDTH = 300,
+            HEIGHT = 300,
+        },
+    },
     PROJECTILE = {
         RADIUS = 6,
         CANNONBALL = {
-            SPEED = 250
+            SPEED = 250,
+            WIDTH = 12,
+            HEIGHT = 12,
         },
     },
     ENEMY = {
-        SPAWN_INTERVAL = 1,
+        SPAWN_INTERVAL = 0.5,
         ORIENTATION_CHANGE_TIME = 0.15,
         HEALTHBAR = {
             TIMEOUT = 1,
@@ -190,7 +204,7 @@ return {
         FREEZE = {
             DURATION = 2,
             TICK_DURATION = 0.5,
-            SPEED_MODIFIER = 0.66, -- 70% total speed
+            SPEED_MODIFIER = 0.5, -- 50% total speed
         },
         ELECTRIFY = {
             DURATION = 3,
