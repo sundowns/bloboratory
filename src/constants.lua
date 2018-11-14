@@ -188,6 +188,11 @@ return {
             DAMAGE_PER_TICK = 2,
         },
         FREEZE = {
+            DURATION = 2,
+            TICK_DURATION = 0.5,
+            SPEED_MODIFIER = 0.66, -- 70% total speed
+        },
+        ELECTRIFY = {
             DURATION = 3,
             TICK_DURATION = 0.5,
         },

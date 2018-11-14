@@ -89,6 +89,7 @@ Enemy = Class {
             self.debuffs[key]:update(dt)
 
             if not self.debuffs[key].alive then
+                self.debuffs[key]:deactivate(self)
                 self.debuffs[key] = nil
             end
         end
@@ -97,6 +98,7 @@ Enemy = Class {
         assert(debuff and debuff.type)
         if not self.debuffs[debuff.type] then
             self.debuffs[debuff.type] = debuff
+            self.debuffs[debuff.type]:activate(self)
         end
     end;
     takeDamage = function(self, damage, playHitSound, dt)

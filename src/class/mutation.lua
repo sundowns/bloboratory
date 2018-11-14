@@ -38,5 +38,6 @@ ElectricMutation = Class {
     attack = function(self, other, dt)
         Mutation.attack(self, other, dt)
         --apply some additional high variance damage
+        other:applyDebuff(Electrify(other))
     end;
 }

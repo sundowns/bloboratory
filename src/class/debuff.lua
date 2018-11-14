@@ -21,11 +21,11 @@ Debuff = Class {
         self.timer:after(self.duration, function()
             self.timer:cancel(handle)
             self.alive = false
-            self:remove()
         end)
     end;
-    remove = function(self)
-        --TODO: some logic to undo a debuff (i.e. speed back up when freeze ends)
+    activate = function(self)
+    end;
+    deactivate = function(self)
     end;
 }
 
@@ -45,8 +45,11 @@ Inflame = Class {
     apply = function(self)
         Debuff.apply(self)
     end;
-    remove = function(self)
-        Debuff.remove(self)
+    activate = function(self)
+        Debuff.activate(self)
+    end;
+    deactivate = function(self)
+        Debuff.deactivate(self)
     end;
 }
 
@@ -54,6 +57,7 @@ Freeze = Class {
     __includes = Debuff,
     init = function(self, owner)
         Debuff.init(self, "FREEZE", owner, constants.DEBUFF.FREEZE.DURATION, constants.DEBUFF.FREEZE.TICK_DURATION)
+        self.speedModifier = constants.DEBUFF.FREEZE.SPEED_MODIFIER
     end;
     update = function(self, dt)
         Debuff.update(self, dt)
@@ -64,7 +68,40 @@ Freeze = Class {
     apply = function(self)
         Debuff.apply(self)
     end;
-    remove = function(self)
-        Debuff.remove(self)
+    activate = function(self)
+        Debuff.activate(self)
+
+        if self.owner and not self.owner.markedForDeath then
+            self.owner.speed = self.owner.speed * self.speedModifier
+        end
+    end;
+    deactivate = function(self)
+        Debuff.deactivate(self)
+        
+        if self.owner and not self.owner.markedForDeath then
+            self.owner.speed = self.owner.speed / self.speedModifier
+        end
+    end;
+}
+
+Electrify = Class {
+    __includes = Debuff,
+    init = function(self, owner)
+        Debuff.init(self, "ELECTRIFY", owner, constants.DEBUFF.ELECTRIFY.DURATION, constants.DEBUFF.ELECTRIFY.TICK_DURATION)
+    end;
+    update = function(self, dt)
+        Debuff.update(self, dt)
+    end;
+    tick = function(self)
+        --TODO: emit some particles?
+    end;
+    apply = function(self)
+        Debuff.apply(self)
+    end;
+    activate = function(self)
+        Debuff.activate(self)
+    end;
+    deactivate = function(self)
+        Debuff.deactivate(self)
     end;
 }
