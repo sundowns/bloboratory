@@ -13,25 +13,25 @@ World = Class {
 
         self.collisionWorld:add(inputController.mouse, inputController.mouse:calculateHitbox())
     end;
-    placeStructure = function(self, gridX, gridY, type)
-        if not self.grid:isValidGridCoords(gridX, gridY) then return end
+    placeStructure = function(self, gridOrigin, type)
+        if not self.grid:isValidGridCoords(gridOrigin) then return end
         local placedTower = false
         if type == "SAW" then
-            if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
+            if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.SAW.COST) then
-                    placedTower = self:addNewTower(Saw(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
+                    placedTower = self:addNewTower(Saw(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
                 end
             end
         elseif type == "CANNON" then
-            if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT) then
+            if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.CANNON.COST) then
-                    placedTower = self:addNewTower(Cannon(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
+                    placedTower = self:addNewTower(Cannon(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
                 end
             end
         elseif type == "OBSTACLE" then
-            if not self.grid:isOccupied(gridX, gridY, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
+            if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
-                    self:addNewStructure(Obstacle(Vector(gridX, gridY), Vector(self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY))))
+                    self:addNewStructure(Obstacle(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
 
                     if not playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
                         inputController:togglePlacingTower()
@@ -71,12 +71,12 @@ World = Class {
         end
         self.grid:calculatePaths()
     end;
-    spawnEnemyAt = function(self, gridX, gridY)
-        local worldX, worldY = self.grid:calculateWorldCoordinatesFromGrid(gridX, gridY)
-        if self.grid:isValidGridCoords(gridX, gridY) and self.grid:isSpawnable(gridX, gridY) then
+    spawnEnemyAt = function(self, gridOrigin)
+        local worldOrigin = self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)
+        if self.grid:isValidGridCoords(gridOrigin) and self.grid:isSpawnable(gridOrigin) then
             if roundController:canSpawn() then 
                 local newEnemy = roundController:nextEnemy()
-                newEnemy.worldOrigin = (Vector(worldX + constants.GRID.CELL_SIZE/2, worldY + constants.GRID.CELL_SIZE/2))
+                newEnemy.worldOrigin = (Vector(worldOrigin.x + constants.GRID.CELL_SIZE/2, worldOrigin.y + constants.GRID.CELL_SIZE/2))
                 table.insert(self.enemies, newEnemy)
                 self.collisionWorld:add(newEnemy, newEnemy:calculateHitbox())
             else 
@@ -92,7 +92,7 @@ World = Class {
         end
 
         for i = #self.enemies, 1, -1 do
-            self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin.x, self.enemies[i].worldOrigin.y)))
+            self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin)))
             if self.enemies[i].markedForDeath then
                 playerController.wallet:refund(self.enemies[i].yield, self.enemies[i].worldOrigin)
             end
@@ -147,7 +147,7 @@ World = Class {
 
         self.spawnTimer:every(constants.ENEMY.SPAWN_INTERVAL, function()
             if self.grid.spawn then
-                self:spawnEnemyAt(self.grid.spawn.x, self.grid.spawn.y)
+                self:spawnEnemyAt(self.grid.spawn.gridOrigin)
             end
         end)
     end;
@@ -179,14 +179,14 @@ World = Class {
             tower:disarm()
         end
     end;
-    getStructureAt = function(self, gridX, gridY)
-        local cell = self.grid:getCell(gridX, gridY)
+    getStructureAt = function(self, gridOrigin)
+        local cell = self.grid:getCell(gridOrigin)
         if cell then
             return cell.occupant
         end
     end;
     displayBlueprint = function(self, blueprint, screenOrigin)
         assert(blueprint)
-        self.grid:displayBlueprint(blueprint, Vector(self.grid:calculateGridCoordinatesFromScreen(screenOrigin.x, screenOrigin.y)))
+        self.grid:displayBlueprint(blueprint, self.grid:calculateGridCoordinatesFromScreen(screenOrigin))
     end;
 }

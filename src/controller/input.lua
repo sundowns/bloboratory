@@ -25,9 +25,9 @@ InputController = Class {
         end
         if not self.isPlacingTower then
             if key == "s" and roundController:isBuildPhase() then
-                world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
+                world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin))
             elseif key == "g" and roundController:isBuildPhase() then
-                world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(love.mouse.getPosition()))
+                world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin))
             elseif key == "r" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
             elseif key == "f" and playerController.currentSelectedStructure then
@@ -47,15 +47,15 @@ InputController = Class {
                 love.event.quit()
             end
     end;  
-    mousepressed = function(self, screen_x, screen_y, button)
+    mousepressed = function(self, screenOrigin, button)
         if nk.windowIsAnyHovered() then return end
-        local gridX, gridY = world.grid:calculateGridCoordinatesFromScreen(screen_x, screen_y)
+        local gridOrigin = world.grid:calculateGridCoordinatesFromScreen(screenOrigin)
         if self.isPlacingTower then
-            if world:placeStructure(gridX, gridY, playerController.currentBlueprint.name) then
+            if world:placeStructure(gridOrigin, playerController.currentBlueprint.name) then
                 self:togglePlacingTower()
             end
         else
-            playerController:toggleStructureSelection(world:getStructureAt(gridX, gridY)) 
+            playerController:toggleStructureSelection(world:getStructureAt(gridOrigin)) 
         end
     end;
     draw = function(self)

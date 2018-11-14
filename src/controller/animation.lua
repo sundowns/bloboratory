@@ -60,20 +60,20 @@ AnimationController = Class {
             layer.animation:update(dt)
         end
     end;
-    drawStructureSpriteInstance = function(self, instance, x, y, cellsWidth, cellsHeight, targettingAngle)
+    drawStructureSpriteInstance = function(self, instance, position, cellsWidth, cellsHeight, targettingAngle)
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
             if layer.rotateToTarget then
-                layer.animation:draw(instance.sprite.image, x+cellsWidth*w*layer.scale.x/2, y+cellsHeight*h*layer.scale.y/2, targettingAngle, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
+                layer.animation:draw(instance.sprite.image, position.x+cellsWidth*w*layer.scale.x/2, position.y+cellsHeight*h*layer.scale.y/2, targettingAngle, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
             else
-                layer.animation:draw(instance.sprite.image, x+cellsWidth*w*layer.scale.x/2, y+cellsHeight*h*layer.scale.y/2, layer.rotation, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
+                layer.animation:draw(instance.sprite.image, position.x+cellsWidth*w*layer.scale.x/2, position.y+cellsHeight*h*layer.scale.y/2, layer.rotation, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
             end
         end
     end;
-    drawEnemySpriteInstance = function(self, instance, x, y, orientation)
+    drawEnemySpriteInstance = function(self, instance, position, orientation)
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
-            layer.animation:draw(instance.sprite.image, x, y, orientation, layer.scale.x, layer.scale.y, w/2, h/2)
+            layer.animation:draw(instance.sprite.image, position.x, position.y, orientation, layer.scale.x, layer.scale.y, w/2, h/2)
         end
     end;
 }

@@ -1,9 +1,7 @@
 Cell = Class {
-    init = function(self, gridX, gridY, worldX, worldY)
-        self.x = gridX
-        self.y = gridY
-        self.worldX = worldX
-        self.worldY = worldY
+    init = function(self, gridOrigin, worldOrigin)
+        self.gridOrigin = gridOrigin
+        self.worldOrigin = worldOrigin
         self.occupant = nil
         self.isOccupied = false
         self.isGoal = false
@@ -15,7 +13,7 @@ Cell = Class {
         self.distanceToGoal = 0
     end;
     __tostring = function(self)
-        return self.x..","..self.y
+        return self.gridOrigin.x..","..self.gridOrigin.y
     end;
     update = function(self, dt)
         self.isHovered = false
@@ -25,20 +23,20 @@ Cell = Class {
     draw = function(self, isSpawning)
         Util.l.resetColour()
 
-        if self.x % 2 == 0 and self.y % 2 == 0 then
-            love.graphics.draw(assets.terrain.floor, self.worldX, self.worldY, 0, constants.GRID.CELL_SIZE/assets.terrain.floor:getWidth()*2, constants.GRID.CELL_SIZE/assets.terrain.floor:getHeight()*2)
+        if self.gridOrigin.x % 2 == 0 and self.gridOrigin.y % 2 == 0 then
+            love.graphics.draw(assets.terrain.floor, self.worldOrigin.x, self.worldOrigin.y, 0, constants.GRID.CELL_SIZE/assets.terrain.floor:getWidth()*2, constants.GRID.CELL_SIZE/assets.terrain.floor:getHeight()*2)
         end
 
         if self.isGoal then
             love.graphics.setColor(constants.COLOURS.GOAL)
-            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+            love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
         elseif self.isSpawn then
             if isSpawning then
                 love.graphics.setColor(constants.COLOURS.SPAWN_ACTIVE)
             else
                 love.graphics.setColor(constants.COLOURS.SPAWN_INACTIVE)
             end
-            love.graphics.rectangle('fill', self.worldX, self.worldY, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
+            love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
         end
     end;
     occupy = function(self, occupant)
@@ -73,15 +71,6 @@ Cell = Class {
         return not self.isOccupied or self.isSpawn
     end;
     centre = function(self)
-        return Vector(self.worldX + constants.GRID.CELL_SIZE/2, self.worldY + constants.GRID.CELL_SIZE/2)
-    end;
-    renderBlueprint = function(self, blueprint, valid)
-        assert(blueprint and blueprint.image)
-        self.blueprint = blueprint
-        if valid then
-            self.isHovered = true
-        else
-            self.isHoveredInvalid = true
-        end
+        return Vector(self.worldOrigin.x + constants.GRID.CELL_SIZE/2, self.worldOrigin.y + constants.GRID.CELL_SIZE/2)
     end;
 }

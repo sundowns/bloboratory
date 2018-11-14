@@ -66,11 +66,11 @@ CameraController = Class {
             self.camera:move(0, dt*constants.CAMERA.SPEED)
         end
     end;
-    getWorldCoordinates = function(self, x, y)
-        return self.camera:worldCoords(x, y)
+    getWorldCoordinates = function(self, screenOrigin)
+        return Vector(self.camera:worldCoords(screenOrigin.x, screenOrigin.y))
     end;
-    getCameraCoordinates = function(self, x, y)
-        return self.camera:cameraCoords(x, y)
+    getCameraCoordinates = function(self, worldOrigin)
+        return Vector(self.camera:cameraCoords(worldOrigin.x, worldOrigin.y))
     end;
     mousePosition = function(self)
         return self.camera:mousePosition()

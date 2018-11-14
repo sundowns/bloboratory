@@ -14,8 +14,7 @@ Grid = Class {
         for i = 0, self.cols-1, 1 do
             self.cells[i] = {}
             for j = 0, self.rows-1, 1 do
-                local worldX, worldY = self:calculateWorldCoordinatesFromGrid(i, j)
-                self.cells[i][j] = Cell(i, j, worldX, worldY)
+                self.cells[i][j] = Cell(Vector(i, j), self:calculateWorldCoordinatesFromGrid(Vector(i, j)))
             end
         end  
     end;
@@ -41,26 +40,25 @@ Grid = Class {
             love.graphics.line(self.optimalPath)
         end
     end;
-    calculateGridCoordinatesFromWorld = function(self, worldX, worldY)
-        return math.floor(self.origin.x + worldX / constants.GRID.CELL_SIZE), math.floor(self.origin.y + worldY / constants.GRID.CELL_SIZE)
+    calculateGridCoordinatesFromWorld = function(self, worldOrigin)
+        return Vector(math.floor(self.origin.x + worldOrigin.x / constants.GRID.CELL_SIZE), math.floor(self.origin.y + worldOrigin.y / constants.GRID.CELL_SIZE))
     end;
-    calculateGridCoordinatesFromScreen = function(self, screenX, screenY)
-        return self:calculateGridCoordinatesFromWorld(cameraController:getWorldCoordinates(screenX, screenY))
+    calculateGridCoordinatesFromScreen = function(self, screenOrigin)
+        return self:calculateGridCoordinatesFromWorld(cameraController:getWorldCoordinates(screenOrigin))
     end;
-    calculateWorldCoordinatesFromGrid = function(self, gridX, gridY)
-        local worldX = self.origin.x + (gridX * constants.GRID.CELL_SIZE) 
-        local worldY = self.origin.y + (gridY * constants.GRID.CELL_SIZE) 
-        return worldX, worldY
+    calculateWorldCoordinatesFromGrid = function(self, gridOrigin)
+        return Vector(self.origin.x + (gridOrigin.x * constants.GRID.CELL_SIZE) , self.origin.y + (gridOrigin.y * constants.GRID.CELL_SIZE) )
     end;
-    isValidGridCoords = function(self, x, y)
-        return self.cells[x] and self.cells[x][y]
+    isValidGridCoords = function(self, gridOrigin)
+        return self.cells[gridOrigin.x] and self.cells[gridOrigin.x][gridOrigin.y]
     end;
-    isSpawnable = function(self, x, y)
-        return self.cells[x] and self.cells[x][y] and self.cells[x][y]:isSpawnable()
+    isSpawnable = function(self, gridOrigin)
+        return self:isValidGridCoords(gridOrigin) and self.cells[gridOrigin.x][gridOrigin.y]:isSpawnable()
     end;
-    isOccupied = function(self, x, y, width, height)
+    isOccupied = function(self, origin, width, height)
         if not height then height = 1 end
         if not width then width = 1 end
+        local x, y = origin.x, origin.y
         
         if width == 1  and height == 1 then
             --treat as 1 cell
@@ -82,47 +80,47 @@ Grid = Class {
             return false
         end
     end;
-    getCell = function(self, gridX, gridY)
-        if self:isValidGridCoords(gridX, gridY) then
-            return self.cells[gridX][gridY]
+    getCell = function(self, gridOrigin)
+        if self:isValidGridCoords(gridOrigin) then
+            return self.cells[gridOrigin.x][gridOrigin.y]
         end
     end;
-    setGoal = function(self, x, y)
-        if not self:isValidGridCoords(x, y) then return end
+    setGoal = function(self, position)
+        if not self:isValidGridCoords(position) then return end
         if self.goal then self.goal:reset() end
-        self.goal = self.cells[x][y]
+        self.goal = self.cells[position.x][position.y]
         self.goal:setGoal()
         self:calculatePaths()
     end;
-    setSpawn = function(self, x, y)
-        if not self:isValidGridCoords(x, y) then return end
+    setSpawn = function(self, position)
+        if not self:isValidGridCoords(position) then return end
         if self.spawn then self.spawn:reset() end
-        self.spawn = self.cells[x][y]
+        self.spawn = self.cells[position.x][position.y]
         self.spawn:setSpawn()
         self:calculatePaths()
     end;
-    occupyCell = function(self, x, y, occupant)
-        if not self:isValidGridCoords(x, y) then return end
-        self.cells[x][y]:occupy(occupant)
+    occupyCell = function(self, position, occupant)
+        if not self:isValidGridCoords(position) then return end
+        self.cells[position.x][position.y]:occupy(occupant)
     end;
-    vacateCell = function(self, x, y)
-        if not self:isValidGridCoords(x, y) then return end
-        self.cells[x][y]:vacate()
+    vacateCell = function(self, position)
+        if not self:isValidGridCoords(position) then return end
+        self.cells[position.x][position.y]:vacate()
     end;
     getNeighbours = function(self, target)
-        assert(target.x and target.y)
+        assert(target.gridOrigin and target.gridOrigin.x and target.gridOrigin.y)
         local neighbours = {}
-        if target.x < self.cols-1 and self.cells[target.x + 1][target.y]:isValidPath() then
-            table.insert(neighbours, self.cells[target.x + 1][target.y])
+        if target.gridOrigin.x < self.cols-1 and self.cells[target.gridOrigin.x + 1][target.gridOrigin.y]:isValidPath() then
+            table.insert(neighbours, self.cells[target.gridOrigin.x + 1][target.gridOrigin.y])
         end
-        if target.x > 0 and self.cells[target.x - 1][target.y]:isValidPath() then
-            table.insert(neighbours, self.cells[target.x - 1][target.y])
+        if target.gridOrigin.x > 0 and self.cells[target.gridOrigin.x - 1][target.gridOrigin.y]:isValidPath() then
+            table.insert(neighbours, self.cells[target.gridOrigin.x - 1][target.gridOrigin.y])
         end
-        if target.y < self.rows-1 and self.cells[target.x][target.y + 1]:isValidPath() then
-            table.insert(neighbours, self.cells[target.x][target.y + 1])
+        if target.gridOrigin.y < self.rows-1 and self.cells[target.gridOrigin.x][target.gridOrigin.y + 1]:isValidPath() then
+            table.insert(neighbours, self.cells[target.gridOrigin.x][target.gridOrigin.y + 1])
         end
-        if target.y > 0 and self.cells[target.x][target.y - 1]:isValidPath() then
-            table.insert(neighbours, self.cells[target.x][target.y - 1])
+        if target.gridOrigin.y > 0 and self.cells[target.gridOrigin.x][target.gridOrigin.y - 1]:isValidPath() then
+            table.insert(neighbours, self.cells[target.gridOrigin.x][target.gridOrigin.y - 1])
         end
         return neighbours
     end;
@@ -183,32 +181,32 @@ Grid = Class {
         Heuristic function to guide our search. Euclidian distance (straight line)
     ]]
     heuristic = function(self, cell)
-        return Util.m.distanceBetween(self.goal.x, self.goal.y, cell.x, cell.y)
+        return Util.m.distanceBetween(self.goal.gridOrigin.x, self.goal.gridOrigin.y, cell.gridOrigin.x, cell.gridOrigin.y)
     end;
     occupySpaces = function(self, structure)
         for i = structure.gridOrigin.x, structure.gridOrigin.x + structure.width-1 do
             for j = structure.gridOrigin.y, structure.gridOrigin.y + structure.height-1 do
-                self:occupyCell(i, j, structure)
+                self:occupyCell(Vector(i, j), structure)
             end
         end
     end;
     vacateSpacesForStructure = function(self, structure)
         for i = structure.gridOrigin.x, structure.gridOrigin.x + structure.width-1 do
             for j = structure.gridOrigin.y, structure.gridOrigin.y + structure.height-1 do
-                self:vacateCell(i, j)
+                self:vacateCell(Vector(i, j))
             end
         end
     end;
     displayBlueprint = function(self, blueprint, gridOrigin)
-        local cell = self:getCell(gridOrigin.x, gridOrigin.y)
+        local cell = self:getCell(gridOrigin)
         if cell then
-            if self:isOccupied(gridOrigin.x, gridOrigin.y, blueprint.width, blueprint.height) then
+            if self:isOccupied(gridOrigin, blueprint.width, blueprint.height) then
                 love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
             else
                 love.graphics.setColor(constants.COLOURS.HOVERED)
             end
 
-            blueprint:draw(cell.worldX, cell.worldY)
+            blueprint:draw(cell.worldOrigin)
         end
     end;
 }

@@ -10,7 +10,7 @@ Blueprint = Class {
     end;
     update = function(self)
     end;
-    draw = function(self, x, y)
-        love.graphics.draw(self.image, x, y, 0, self.width*self.scaleX, self.height*self.scaleY)
+    draw = function(self, origin)
+        love.graphics.draw(self.image, origin.x, origin.y, 0, self.width*self.scaleX, self.height*self.scaleY)
     end;
 }

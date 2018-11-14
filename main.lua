@@ -123,7 +123,7 @@ function love.keyreleased(key, scancode)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
-    inputController:mousepressed(x, y, button)
+    inputController:mousepressed(Vector(x, y), button)
     nk.mousepressed(x, y, button, istouch)
 end
 
@@ -134,8 +134,6 @@ end
 function love.mousemoved(x, y, dx, dy, istouch)
     nk.mousemoved(x, y, dx, dy, istouch)
 end
-
--- function love.wheelmoved()
 
 function love.textinput(text)
     nk.textinput(text)

@@ -38,8 +38,8 @@ Enemy = Class {
             self.movingTo = currentCell.cameFrom
             self:calculateDirection(currentCell)
         else
-            local moveToX = self.movingTo.x * constants.GRID.CELL_SIZE + constants.GRID.CELL_SIZE/2
-            local moveToY = self.movingTo.y * constants.GRID.CELL_SIZE + constants.GRID.CELL_SIZE/2
+            local moveToX = self.movingTo.gridOrigin.x * constants.GRID.CELL_SIZE + constants.GRID.CELL_SIZE/2
+            local moveToY = self.movingTo.gridOrigin.y * constants.GRID.CELL_SIZE + constants.GRID.CELL_SIZE/2
 
             if Util.m.withinVariance(self.worldOrigin.x, moveToX, 5) and Util.m.withinVariance(self.worldOrigin.y, moveToY, 5) then
                 --If we are at the centre of the tile
@@ -66,7 +66,7 @@ Enemy = Class {
     draw = function(self)
         if self.animation then
             Util.l.resetColour()
-            animationController:drawEnemySpriteInstance(self.animation, self.worldOrigin.x, self.worldOrigin.y, self.orientation)
+            animationController:drawEnemySpriteInstance(self.animation, self.worldOrigin, self.orientation)
         end
 
         if self.showHealth then
@@ -116,16 +116,16 @@ Enemy = Class {
     end;
     calculateDirection = function(self, from)
         if from and self.movingTo then
-            if from.x > self.movingTo.x then
+            if from.gridOrigin.x > self.movingTo.gridOrigin.x then
                 Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.LEFT})
             end
-            if from.x < self.movingTo.x then
+            if from.gridOrigin.x < self.movingTo.gridOrigin.x then
                 Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.RIGHT})
             end
-            if from.y > self.movingTo.y then
+            if from.gridOrigin.y > self.movingTo.gridOrigin.y then
                 Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.UP})
             end
-            if from.y < self.movingTo.y then
+            if from.gridOrigin.y < self.movingTo.gridOrigin.y then
                 Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.DOWN})
             end
         end
