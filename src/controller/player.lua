@@ -1,19 +1,19 @@
 require("src.class.currency")
 require("src.class.wallet")
 
-local ALL_BLUEPRINTS = {
-    ["OBSTACLE"] = Blueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2),
-    ["SAW"] = Blueprint("SAW", assets.blueprints.saw, 2, 2),
-    ["CANNON"] = Blueprint("CANNON", assets.blueprints.cannon, 2, 2)
-}
-
 PlayerController = Class {
     init = function(self)
-        self.blueprints = {
-            ALL_BLUEPRINTS["OBSTACLE"]
+        self.ALL_BLUEPRINTS = {
+            ["OBSTACLE"] = Blueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2),
+            ["SAW"] = Blueprint("SAW", assets.blueprints.saw, 2, 2),
+            ["CANNON"] = Blueprint("CANNON", assets.blueprints.cannon, 2, 2)
         }
-        table.insert(self.blueprints, ALL_BLUEPRINTS["SAW"]) -- TODO: will be unlocked, not a default value
-        table.insert(self.blueprints, ALL_BLUEPRINTS["CANNON"]) -- TODO: will be unlocked, not a default value
+
+        self.blueprints = {
+            self.ALL_BLUEPRINTS["OBSTACLE"]
+        }
+        table.insert(self.blueprints, self.ALL_BLUEPRINTS["SAW"]) -- TODO: will be unlocked, not a default value
+        table.insert(self.blueprints, self.ALL_BLUEPRINTS["CANNON"]) -- TODO: will be unlocked, not a default value
         self.currentBlueprint = nil
         self.currentSelectedStructure = nil
         self.wallet = Wallet()

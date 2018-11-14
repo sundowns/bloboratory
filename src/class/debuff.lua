@@ -39,7 +39,7 @@ Inflame = Class {
         Debuff.update(self, dt)
     end;
     tick = function(self)
-        self.owner:takeDamage(self.damagePerTick, false) --TODO: sizzlin' sound of some kind instead
+        self.owner:takeDamage(self.damagePerTick, false) --TODO: pass in a mutator specific sound (zap, sizzle, freeze?)
         --TODO: emit some particles?
     end;
     apply = function(self)

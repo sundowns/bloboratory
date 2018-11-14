@@ -77,7 +77,6 @@ TargetedTower = Class {
         self.rotating = false
         self.angleToTarget = 0
         self.rotationTime = rotationTime
-        self.projectiles = {}
 
         self.attackTimer = Timer.new()
         self.attackTimer:every(self.attackInterval, function()
@@ -116,20 +115,9 @@ TargetedTower = Class {
         if self.currentTarget and not self.rotating then
             self.angleToTarget = self:calculateAngleToTarget()
         end
-
-        for i = #self.projectiles, 1, -1 do
-            self.projectiles[i]:update(dt)
-            if self.projectiles[i].markedForDeath then
-                table.remove(self.projectiles, i)
-            end
-        end
     end;
     draw = function(self)
         Tower.draw(self)
-
-        for i, projectile in pairs(self.projectiles) do
-            projectile:draw()
-        end
     end;
     addMutation = function(self, mutation, animation)
         Tower.addMutation(self, mutation, animation)

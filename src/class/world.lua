@@ -7,6 +7,8 @@ World = Class {
         self.goal = nil
         self.structures = {}
         self.enemies = {}
+        self.projectiles = {}
+        self.impacts = {}
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE/4)
         self.isSpawning = false
         self:setupTimers()
@@ -91,8 +93,28 @@ World = Class {
             self:processCollisionForTower(structure)
         end
 
+        for i = #self.projectiles, 1, -1 do
+            self.projectiles[i]:update(dt)
+            self:processCollisionForProjectile(self.projectiles[i], dt)
+
+            if self.projectiles[i].markedForDeath then
+                self.collisionWorld:remove(self.projectiles[i])
+                table.remove(self.projectiles, i)
+            end
+        end
+
+        for i = #self.impacts, 1, -1 do
+            self:processCollisionForImpact(self.impacts[i], dt)
+
+            self.collisionWorld:remove(self.impacts[i])
+            table.remove(self.impacts, i)
+        end
+
         for i = #self.enemies, 1, -1 do
-            self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin)))
+            if not self.enemies[i].markedForDeath then
+                self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin)))
+            end
+            
             if self.enemies[i].markedForDeath then
                 playerController.wallet:refund(self.enemies[i].yield, self.enemies[i].worldOrigin)
             end
@@ -130,6 +152,10 @@ World = Class {
             structure:draw()
         end
 
+        for i, projectile in pairs(self.projectiles) do
+            projectile:draw()
+        end
+
         for i, enemy in pairs(self.enemies) do
             enemy:draw()
         end
@@ -156,8 +182,8 @@ World = Class {
     end;
     processCollisionForEnemy = function(self, enemy, dt)
         local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/4, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/4, function() return "cross" end)
-        for j = len, 1, -1 do 
-            local collision = cols[j]
+        for i = len, 1, -1 do 
+            local collision = cols[i]
             
             if collision.other.type == "TOWER" then
                 if collision.other.archetype == "TARGETTED" then
@@ -179,6 +205,29 @@ World = Class {
             tower:disarm()
         end
     end;
+    processCollisionForProjectile = function(self, projectile, dt)
+        local actualX, actualY, cols, len = self.collisionWorld:move(projectile, projectile.worldOrigin.x - projectile.width/2, projectile.worldOrigin.y - projectile.height/2, function() return "cross" end)
+        for i = len, 1, -1 do 
+            local collision = cols[i]
+      
+            if collision.other.type == "ENEMY" then
+                projectile.markedForDeath = true
+                local impact = projectile:hitTarget()
+                if impact then 
+                    self:addImpact(impact)
+                end  
+            end
+        end
+    end;
+    processCollisionForImpact = function(self, impact, dt)
+        local actualX, actualY, cols, len = self.collisionWorld:check(impact, impact.worldOrigin.x, impact.worldOrigin.y, function() return "cross" end)
+        for i = 1, len do 
+            local collision = cols[i]
+            if collision.other.type == "ENEMY" then
+                impact:attack(collision.other, dt)
+            end
+        end
+    end;
     getStructureAt = function(self, gridOrigin)
         local cell = self.grid:getCell(gridOrigin)
         if cell then
@@ -188,5 +237,13 @@ World = Class {
     displayBlueprint = function(self, blueprint, screenOrigin)
         assert(blueprint)
         self.grid:displayBlueprint(blueprint, self.grid:calculateGridCoordinatesFromScreen(screenOrigin))
+    end;
+    addProjectile = function(self, projectile)
+        self.collisionWorld:add(projectile, projectile:calculateHitbox())
+        table.insert(self.projectiles, projectile)
+    end;
+    addImpact = function(self, impact)
+        self.collisionWorld:add(impact, impact:calculateHitbox())
+        table.insert(self.impacts, impact)
     end;
 }
