@@ -18,8 +18,15 @@ Grid = Class {
             end
         end  
 
-        self:setSpawn(Vector(0,0))
-        self:setGoal(Vector(self.cols-1, self.rows-1))
+        for x = 0, self.cols-1, 1 do
+            for y = 0, self.rows-1, 1 do
+                self.cells[x][y]:setNeighbours(self:getNeighbours(self.cells[x][y]))
+            end
+        end  
+
+        self:setSpawn(Vector(0,0), false)
+        self:setGoal(Vector(self.cols-1, self.rows-1), false)
+        self:calculateHeuristics()
         self:calculatePaths()
     end;
     update = function(self, dt)
@@ -89,19 +96,24 @@ Grid = Class {
             return self.cells[gridOrigin.x][gridOrigin.y]
         end
     end;
-    setGoal = function(self, position)
+    setGoal = function(self, position, calculatePaths)
         if not self:isValidGridCoords(position) then return end
         if self.goal then self.goal:reset() end
         self.goal = self.cells[position.x][position.y]
         self.goal:setGoal()
-        self:calculatePaths()
+        if calculatePaths then
+            self:calculateHeuristics()
+            self:calculatePaths()
+        end
     end;
-    setSpawn = function(self, position)
+    setSpawn = function(self, position, calculatePaths)
         if not self:isValidGridCoords(position) then return end
         if self.spawn then self.spawn:reset() end
         self.spawn = self.cells[position.x][position.y]
         self.spawn:setSpawn()
-        self:calculatePaths()
+        if calculatePaths then
+            self:calculatePaths()
+        end
     end;
     occupyCell = function(self, position, occupant)
         if not self:isValidGridCoords(position) then return end
@@ -114,19 +126,30 @@ Grid = Class {
     getNeighbours = function(self, target)
         assert(target.gridOrigin and target.gridOrigin.x and target.gridOrigin.y)
         local neighbours = {}
-        if target.gridOrigin.x < self.cols-1 and self.cells[target.gridOrigin.x + 1][target.gridOrigin.y]:isValidPath() then
+        if target.gridOrigin.x < self.cols-1 and self.cells[target.gridOrigin.x + 1][target.gridOrigin.y] then
             table.insert(neighbours, self.cells[target.gridOrigin.x + 1][target.gridOrigin.y])
         end
-        if target.gridOrigin.x > 0 and self.cells[target.gridOrigin.x - 1][target.gridOrigin.y]:isValidPath() then
+        if target.gridOrigin.x > 0 and self.cells[target.gridOrigin.x - 1][target.gridOrigin.y] then
             table.insert(neighbours, self.cells[target.gridOrigin.x - 1][target.gridOrigin.y])
         end
-        if target.gridOrigin.y < self.rows-1 and self.cells[target.gridOrigin.x][target.gridOrigin.y + 1]:isValidPath() then
+        if target.gridOrigin.y < self.rows-1 and self.cells[target.gridOrigin.x][target.gridOrigin.y + 1] then
             table.insert(neighbours, self.cells[target.gridOrigin.x][target.gridOrigin.y + 1])
         end
-        if target.gridOrigin.y > 0 and self.cells[target.gridOrigin.x][target.gridOrigin.y - 1]:isValidPath() then
+        if target.gridOrigin.y > 0 and self.cells[target.gridOrigin.x][target.gridOrigin.y - 1] then
             table.insert(neighbours, self.cells[target.gridOrigin.x][target.gridOrigin.y - 1])
         end
         return neighbours
+    end;
+    --[[
+        Calculate heuristic value for all cells. Only needs to happen when the goal is moved.
+    ]]
+    calculateHeuristics = function(self)
+        if not self.goal then return end;
+        for i = 0, self.cols-1, 1 do
+            for j = 0, self.rows-1, 1 do
+                self.cells[i][j].heuristic = self:heuristic(self.cells[i][j])
+            end
+        end
     end;
     --[[
         Calculate best 'next-move' for each cell using breadth-first search.
@@ -136,13 +159,11 @@ Grid = Class {
     calculatePaths = function(self)
         if not self.goal then return end;
         self.validPath = false
-
         -- clear existing cameFrom records
         for i = 0, self.cols-1, 1 do
             for j = 0, self.rows-1, 1 do
                 self.cells[i][j].cameFrom = nil
                 self.cells[i][j].distanceToGoal = 0
-                self.cells[i][j].heuristic = self:heuristic(self.cells[i][j])
             end
         end
         
@@ -153,11 +174,13 @@ Grid = Class {
         while #openSet > 0 do
             local current = table.remove(openSet)
 
-            for i, next in pairs(self:getNeighbours(current)) do
-                if not next.cameFrom or next.distanceToGoal > current.distanceToGoal + next.heuristic + 1 then
-                    table.insert(openSet, next)
-                    next.cameFrom = current
-                    next.distanceToGoal = math.floor(current.distanceToGoal + current.heuristic + 1)
+            for i, next in pairs(current.neighbours) do
+                if next:isValidPath() then
+                    if not next.cameFrom or next.distanceToGoal > current.distanceToGoal + next.heuristic + 1 then
+                        table.insert(openSet, next)
+                        next.cameFrom = current
+                        next.distanceToGoal = math.floor(current.distanceToGoal + current.heuristic + 1)
+                    end
                 end
             end;
         end

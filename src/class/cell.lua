@@ -11,6 +11,7 @@ Cell = Class {
         self.cameFrom = nil
         self.heuristic = nil 
         self.distanceToGoal = 0
+        self.neighbours = {}
     end;
     __tostring = function(self)
         return self.gridOrigin.x..","..self.gridOrigin.y
@@ -37,6 +38,11 @@ Cell = Class {
                 love.graphics.setColor(constants.COLOURS.SPAWN_INACTIVE)
             end
             love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
+        end
+
+        if debug then
+            love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
+            love.graphics.print(self.distanceToGoal, self.gridOrigin.x*constants.GRID.CELL_SIZE, self.gridOrigin.y*constants.GRID.CELL_SIZE)
         end
     end;
     occupy = function(self, occupant)
@@ -72,5 +78,8 @@ Cell = Class {
     end;
     centre = function(self)
         return Vector(self.worldOrigin.x + constants.GRID.CELL_SIZE/2, self.worldOrigin.y + constants.GRID.CELL_SIZE/2)
+    end;
+    setNeighbours = function(self, neighbours)
+        self.neighbours = neighbours
     end;
 }
