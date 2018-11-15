@@ -91,7 +91,7 @@ function love.draw()
         cameraController:draw()
         inputController:draw()
         Util.l.resetColour()
-        -- Util.l.renderStats()
+        Util.l.renderStats()
     end
     if paused then
         love.graphics.setColor(1,0,0)
