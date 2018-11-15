@@ -201,9 +201,9 @@ Grid = Class {
         local cell = self:getCell(gridOrigin)
         if cell then
             if self:isOccupied(gridOrigin, blueprint.width, blueprint.height) then
-                love.graphics.setColor(constants.COLOURS.HOVERED_INVALID)
+                love.graphics.setColor(constants.COLOURS.BLUEPRINT_INVALID)
             else
-                love.graphics.setColor(constants.COLOURS.HOVERED)
+                love.graphics.setColor(constants.COLOURS.BLUEPRINT_VALID)
             end
 
             blueprint:draw(cell.worldOrigin)

@@ -22,8 +22,9 @@ return {
         GAINS_TEXT_POSITIVE = {1,1,0},
         GAINS_TEXT_NEGATIVE = {1,0,0},
         EMPTY = {0,0,0},
-        HOVERED = {0,1,0, 0.7},
-        HOVERED_INVALID = {1,0,0, 0.7},
+        BLUEPRINT_VALID = {0,1,0, 0.7},
+        BLUEPRINT_INVALID = {1,0,0, 0.7},
+        BLUEPRINT_RANGE = {0.8,0.5,0},
         OBSTACLE = {1,1,1, 0.5}, --debug 
         GOAL = {1,1,0},
         SPAWN_ACTIVE = {0,0,1},

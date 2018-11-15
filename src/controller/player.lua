@@ -4,9 +4,9 @@ require("src.class.wallet")
 PlayerController = Class {
     init = function(self)
         self.ALL_BLUEPRINTS = {
-            ["OBSTACLE"] = Blueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2),
-            ["SAW"] = Blueprint("SAW", assets.blueprints.saw, 2, 2),
-            ["CANNON"] = Blueprint("CANNON", assets.blueprints.cannon, 2, 2)
+            ["OBSTACLE"] = Blueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2, 0),
+            ["SAW"] = Blueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, constants.STRUCTURE.SAW.TARGETTING_RADIUS),
+            ["CANNON"] = Blueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, constants.STRUCTURE.CANNON.TARGETTING_RADIUS)
         }
 
         self.blueprints = {
