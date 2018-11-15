@@ -189,10 +189,12 @@ World = Class {
         if tower.armed then
             local x, y, width, height = tower:calculateHitbox()
             local actualX, actualY, cols, len = self.collisionWorld:check(tower, x, y, function() return "cross" end)
+            local playOnHit = true
             for i = 1, len do 
                 local collision = cols[i]
                 if collision.other.type == "ENEMY" then
-                    tower:attack(collision.other)
+                    tower:attack(collision.other, playOnHit)
+                    playOnHit = false
                 end
             end
             tower:disarm()
