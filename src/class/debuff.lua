@@ -1,16 +1,32 @@
 Debuff = Class {
-    init = function(self, type, owner, debuffDuration, tickDuration)
+    init = function(self, type, owner, debuffDuration, tickDuration, particle)
         self.type = type
         self.duration = debuffDuration
         self.tickDuration = tickDuration
         self.timer = Timer.new()
         self.alive = true
         self.owner = owner
-
+        if particle then
+            self:initialiseParticleSystem(particle, constants.DEBUFF.MAX_PARTICLES)
+        end
         self:apply()
+    end;
+    initialiseParticleSystem = function(self, particle, maxParticles)
+        self.particleSystem = love.graphics.newParticleSystem(particle, maxParticles)
+        self.particleSystem:setEmissionRate(6)
+        self.particleSystem:setEmissionArea('normal', 4, 4)
+        self.particleSystem:setLinearAcceleration(-5, -5, 5, 5)
+        self.particleSystem:setSizes(1, 0.5, 0.3)
+        self.particleSystem:setRotation(0, math.pi)
+        self.particleSystem:setParticleLifetime(0.5, 1)
+        self.particleSystem:emit(3)
     end;
     update = function(self, dt)
         self.timer:update(dt) 
+
+        if self.particleSystem then
+            self.particleSystem:update(dt)
+        end
     end;
     apply = function(self)
         self.timer:clear()
@@ -23,6 +39,11 @@ Debuff = Class {
             self.alive = false
         end)
     end;
+    draw = function(self, position)
+        if self.particleSystem then
+            love.graphics.draw(self.particleSystem, position.x, position.y)
+        end
+    end;
     activate = function(self)
     end;
     deactivate = function(self)
@@ -32,7 +53,7 @@ Debuff = Class {
 Inflame = Class {
     __includes = Debuff,
     init = function(self, owner)
-        Debuff.init(self, "INFLAME", owner, constants.DEBUFF.INFLAME.DURATION, constants.DEBUFF.INFLAME.TICK_DURATION)
+        Debuff.init(self, "INFLAME", owner, constants.DEBUFF.INFLAME.DURATION, constants.DEBUFF.INFLAME.TICK_DURATION, assets.particles.flame)
         self.damagePerTick = constants.DEBUFF.INFLAME.DAMAGE_PER_TICK
     end;
     update = function(self, dt)
@@ -56,7 +77,7 @@ Inflame = Class {
 Freeze = Class {
     __includes = Debuff,
     init = function(self, owner)
-        Debuff.init(self, "FREEZE", owner, constants.DEBUFF.FREEZE.DURATION, constants.DEBUFF.FREEZE.TICK_DURATION)
+        Debuff.init(self, "FREEZE", owner, constants.DEBUFF.FREEZE.DURATION, constants.DEBUFF.FREEZE.TICK_DURATION, nil)
         self.speedModifier = constants.DEBUFF.FREEZE.SPEED_MODIFIER
     end;
     update = function(self, dt)
@@ -87,7 +108,7 @@ Freeze = Class {
 Electrify = Class {
     __includes = Debuff,
     init = function(self, owner)
-        Debuff.init(self, "ELECTRIFY", owner, constants.DEBUFF.ELECTRIFY.DURATION, constants.DEBUFF.ELECTRIFY.TICK_DURATION)
+        Debuff.init(self, "ELECTRIFY", owner, constants.DEBUFF.ELECTRIFY.DURATION, constants.DEBUFF.ELECTRIFY.TICK_DURATION, nil)
     end;
     update = function(self, dt)
         Debuff.update(self, dt)

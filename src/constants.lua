@@ -203,6 +203,7 @@ return {
         }
     },
     DEBUFF = {
+        MAX_PARTICLES = 8,
         INFLAME = {
             DURATION = 2,
             TICK_DURATION = 0.1,

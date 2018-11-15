@@ -79,6 +79,10 @@ Enemy = Class {
             love.graphics.rectangle('fill', x, y, healthWidth*self.health/self.maxHealth, healthHeight)
         end
 
+        Util.l.resetColour()
+        for i, debuff in pairs(self.debuffs) do
+            debuff:draw(self.worldOrigin)
+        end
     end;
     triggerHealthBar = function(self)
         self.showHealth = true
