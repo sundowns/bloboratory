@@ -48,6 +48,7 @@ Cannonball = Class {
     end;
     --hitTarget can optionally return an 'Impact', to inflict some AoE effect/damage
     hitTarget = function(self)
+        HomingProjectile.hitTarget(self)
         if self.target then
             self.target:takeDamage(self.damage, true)
 
@@ -58,6 +59,8 @@ Cannonball = Class {
                     self.mutation:attack(self.target, 1)
                 end
             end
+        elseif self.mutation.areaOfEffect then --if our enemy is dead, explode on the spot!
+            return self.mutation:createImpact(self.worldOrigin)
         end
     end;
 }

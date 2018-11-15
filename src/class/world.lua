@@ -101,10 +101,16 @@ World = Class {
         end
 
         for i = #self.impacts, 1, -1 do
-            self:processCollisionForImpact(self.impacts[i], dt)
+            self.impacts[i]:update(dt)
+            if self.impacts[i].active then
+                self:processCollisionForImpact(self.impacts[i], dt)
+                self.collisionWorld:remove(self.impacts[i])
+                self.impacts[i]:deactivate()
+            end
 
-            self.collisionWorld:remove(self.impacts[i])
-            table.remove(self.impacts, i)
+            if self.impacts[i].markedForDeath then
+                table.remove(self.impacts, i)
+            end
         end
 
         for i = #self.enemies, 1, -1 do
@@ -123,6 +129,11 @@ World = Class {
             end
         end
 
+        -- Loop over the alive enemies FORWARDS detecting collisions. Doing it forwards ensures targetted towers pick the next enemy, rather than the last
+        for i, enemy in pairs(self.enemies) do
+            self:processCollisionForEnemy(enemy, dt)
+        end
+
         local camX, camY = cameraController:mousePosition()
         local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, camX, camY, function() return "cross" end)
 
@@ -131,11 +142,6 @@ World = Class {
             if entity.type == "ENEMY" then
                 entity:triggerHealthBar()
             end
-        end
-
-        -- Loop over the alive enemies FORWARDS detecting collisions. Doing it forwards ensures targetted towers pick the next enemy, rather than the last
-        for i, enemy in pairs(self.enemies) do
-            self:processCollisionForEnemy(enemy, dt)
         end
 
         if roundController:isEnemyPhase() then
@@ -154,6 +160,10 @@ World = Class {
 
         for i, enemy in pairs(self.enemies) do
             enemy:draw()
+        end
+
+        for i, impact in pairs(self.impacts) do
+            impact:draw()
         end
 
         if debug == true then 
@@ -206,7 +216,6 @@ World = Class {
             local collision = cols[i]
       
             if collision.other.type == "ENEMY" then
-                projectile.markedForDeath = true
                 local impact = projectile:hitTarget()
                 if impact then 
                     self:addImpact(impact)

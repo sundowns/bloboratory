@@ -17,10 +17,14 @@ FireMutation = Class {
     __includes = Mutation,
     init = function(self)
         Mutation.init(self, "FIRE", constants.MUTATIONS.FIRE.COST)
+        self.areaOfEffect = true
     end;
     attack = function(self, other, dt)
         Mutation.attack(self, other, dt)
         other:applyDebuff(Inflame(other))
+    end;
+    createImpact = function(self, origin)
+        return FireImpact(origin)
     end;
 }
 

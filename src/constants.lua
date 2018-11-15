@@ -91,13 +91,19 @@ return {
         },
     },
     IMPACTS = {
+        BASE_OPACITY = 0.4,
+        FADEOUT_DURATION = 1.5,
         ELECTRIC = {
             WIDTH = 150,
             HEIGHT = 150,
         },
         ICE = {
-            WIDTH = 300,
-            HEIGHT = 300,
+            WIDTH = 200,
+            HEIGHT = 200,
+        },
+        FIRE = {
+            WIDTH = 150,
+            HEIGHT = 150,
         },
     },
     PROJECTILE = {

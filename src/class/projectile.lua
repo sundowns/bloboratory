@@ -25,7 +25,7 @@ Projectile = Class {
         return self.worldOrigin.x-self.width/2, self.worldOrigin.y-self.height/2, self.width, self.height
     end;
     hitTarget = function(self)
-        print("[WARNING] projectile base hitTarget triggered. Missing subclass override?")
+        self.markedForDeath = true
     end;
 }
 
@@ -44,7 +44,7 @@ HomingProjectile = Class {
         self:moveBy(delta.x*dt*self.speed, delta.y*dt*self.speed)
 
         if self.target.markedForDeath or self.target.hitGoal then
-            self.markedForDeath = true
+            self:hitTarget()
         end
     end;
     draw = function(self)
