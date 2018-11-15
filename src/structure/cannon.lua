@@ -15,10 +15,6 @@ Cannon = Class {
     end;
     update = function(self, dt)
         TargetedTower.update(self, dt)
-
-        if self.currentTarget then
-            self.attackTimer:update(dt)
-        end
     end;
     shoot = function(self)
         local centre = self:centre()

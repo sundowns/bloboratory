@@ -91,7 +91,7 @@ return {
         },
     },
     IMPACTS = {
-        BASE_OPACITY = 0.4,
+        BASE_OPACITY = 0.3,
         FADEOUT_DURATION = 1.5,
         ELECTRIC = {
             WIDTH = 150,
@@ -205,17 +205,17 @@ return {
     DEBUFF = {
         INFLAME = {
             DURATION = 2,
-            TICK_DURATION = 0.5,
-            DAMAGE_PER_TICK = 2,
+            TICK_DURATION = 0.1,
+            DAMAGE_PER_TICK = 0.4,
         },
         FREEZE = {
             DURATION = 2,
-            TICK_DURATION = 0.5,
+            TICK_DURATION = 0.25,
             SPEED_MODIFIER = 0.5, -- 50% total speed
         },
         ELECTRIFY = {
             DURATION = 3,
-            TICK_DURATION = 0.5,
+            TICK_DURATION = 0.25,
         },
     }
 }

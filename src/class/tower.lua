@@ -80,9 +80,7 @@ TargetedTower = Class {
 
         self.attackTimer = Timer.new()
         self.attackTimer:every(self.attackInterval, function()
-            if self.currentTarget then
-                self:shoot()
-            end
+            self.canShoot = true
         end)
     end;
     spottedEnemy = function(self, enemy)
@@ -114,6 +112,15 @@ TargetedTower = Class {
 
         if self.currentTarget and not self.rotating then
             self.angleToTarget = self:calculateAngleToTarget()
+        end
+
+        if not self.canShoot then
+            self.attackTimer:update(dt)
+        end
+
+        if self.canShoot and self.currentTarget then
+            self:shoot()
+            self.canShoot = false
         end
     end;
     draw = function(self)
