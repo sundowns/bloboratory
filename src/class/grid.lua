@@ -17,6 +17,10 @@ Grid = Class {
                 self.cells[i][j] = Cell(Vector(i, j), self:calculateWorldCoordinatesFromGrid(Vector(i, j)))
             end
         end  
+
+        self:setSpawn(Vector(0,0))
+        self:setGoal(Vector(self.cols-1, self.rows-1))
+        self:calculatePaths()
     end;
     update = function(self, dt)
         for i = 0, self.cols-1 do
