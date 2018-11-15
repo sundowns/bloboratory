@@ -24,7 +24,6 @@ RoundController = Class {
     end;
     startRound = function(self)
         if self:isBuildPhase() then
-            world:toggleSpawning()
             self.currentRound:start()
         end
     end;

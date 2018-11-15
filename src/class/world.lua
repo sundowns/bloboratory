@@ -10,7 +10,6 @@ World = Class {
         self.projectiles = {}
         self.impacts = {}
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE/4)
-        self.isSpawning = false
         self:setupTimers()
 
         self.collisionWorld:add(inputController.mouse, inputController.mouse:calculateHitbox())
@@ -81,8 +80,6 @@ World = Class {
                 newEnemy.worldOrigin = (Vector(worldOrigin.x + constants.GRID.CELL_SIZE/2, worldOrigin.y + constants.GRID.CELL_SIZE/2))
                 table.insert(self.enemies, newEnemy)
                 self.collisionWorld:add(newEnemy, newEnemy:calculateHitbox())
-            else 
-                self.isSpawning = false
             end
         end
     end;
@@ -141,13 +138,12 @@ World = Class {
             self:processCollisionForEnemy(enemy, dt)
         end
 
-        self.isSpawning = roundController:isEnemyPhase()
-        if self.isSpawning then
+        if roundController:isEnemyPhase() then
             self.spawnTimer:update(dt)
         end
     end;
     draw = function(self)
-        self.grid:draw(self.isSpawning)
+        self.grid:draw(roundController:isEnemyPhase())
         for i, structure in pairs(self.structures) do
             structure:draw()
         end
@@ -176,9 +172,6 @@ World = Class {
                 self:spawnEnemyAt(self.grid.spawn.gridOrigin)
             end
         end)
-    end;
-    toggleSpawning = function(self)
-        self.isSpawning = not self.isSpawning
     end;
     processCollisionForEnemy = function(self, enemy, dt)
         local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/4, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/4, function() return "cross" end)
