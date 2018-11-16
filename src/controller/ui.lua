@@ -69,40 +69,63 @@ UiController = Class {
                 end
                 nk.windowEnd()
 
+                local crucible_style = {
+                    ['window'] = {
+                        ['background'] = '#c89870',
+                        ['fixed background'] = '#615348',
+                    },
+                }
+                nk.stylePush(crucible_style)
                 if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight, 'border') then
                     self:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    if nk.button('1') then 
-                        -- Crucible stuff
-                    end
-                    if nk.button('2') then 
-                        -- Crucible stuff
-                    end
-                    if nk.button('3') then 
-                        -- Crucible stuff
-                    end
-                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    if nk.button('4') then 
-                        -- Crucible stuff
-                    end
-                    if nk.button('5') then 
-                        -- Crucible stuff
-                    end
-                    if nk.button('6') then 
-                        -- Crucible stuff
+                    for i=3, 1, -1 do 
+                        local style = {
+                            ['button'] = {
+                                ['normal'] = world.crucible.slots[i].image,
+                                ['hover'] = world.crucible.slots[i].image_hovered,
+                                ['active'] = world.crucible.slots[i].image,
+                            },
+                        }
+                        nk.stylePush(style)
+                        if nk.button('') then 
+                            print("Crucible button: " ..i.."")
+                        end
+                        nk.stylePop()
                     end
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    if nk.button('7') then 
-                        -- Crucible stuff
+                    for i=6, 4, -1 do 
+                        local style = {
+                            ['button'] = {
+                                ['normal'] = world.crucible.slots[i].image,
+                                ['hover'] = world.crucible.slots[i].image_hovered,
+                                ['active'] = world.crucible.slots[i].image,
+                            },
+                        }
+                        nk.stylePush(style)
+                        if nk.button('') then 
+                            print("Crucible button: " ..i.."")
+                        end
+                        nk.stylePop()
                     end
-                    if nk.button('8') then 
-                        -- Crucible stuff
-                    end
-                    if nk.button('9') then 
-                        -- Crucible stuff
+                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                    for i=9, 7, -1 do 
+                        local style = {
+                            ['button'] = {
+                                ['normal'] = world.crucible.slots[i].image,
+                                ['hover'] = world.crucible.slots[i].image_hovered,
+                                ['active'] = world.crucible.slots[i].image,
+                            },
+                        }
+                        nk.stylePush(style)
+                        if nk.button('') then 
+                            print("Crucible button: " ..i.."")
+                        end
+                        nk.stylePop()
                     end
                 end
                 nk.windowEnd()
+                nk.stylePop()
 
                 if playerController.currentSelectedStructure ~= nil then 
                     if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
