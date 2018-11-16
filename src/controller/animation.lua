@@ -4,7 +4,7 @@ AnimationController = Class {
     end;
     loadSpriteSheet = function(self, spriteName)
         local err, sprite_file
-        sprite_file, err = love.filesystem.load('src/animation/'.. spriteName ..'.lua')
+        sprite_file, err = love.filesystem.load('src/animation/'.. string.lower(spriteName) ..'.lua')
         if not sprite_file then
           print('[ERROR] The following error happend: ' .. tostring(err))
           return nil
