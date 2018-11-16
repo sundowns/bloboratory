@@ -1,7 +1,6 @@
 InputController = Class {
     init = function(self)
         --cargo doesnt cooperate with new cursor easy cause we cant :getData() in LOVE >11.0.
-        self.placingTowerCursor = love.mouse.newCursor("asset/cursors/green.png",assets.cursors.green:getWidth()/3, assets.cursors.green:getHeight()/3)
         self.isPlacingTower = false
         self.mouse = Mouse(Vector(love.mouse.getPosition()))
     end;
@@ -10,11 +9,6 @@ InputController = Class {
     end;
     togglePlacingTower = function(self)
         self.isPlacingTower = not self.isPlacingTower
-        if self.isPlacingTower then
-            love.mouse.setCursor(self.placingTowerCursor)
-        else
-            love.mouse.setCursor()
-        end
     end;
     keypressed = function(self, key)
         if tonumber(key) and roundController:isBuildPhase() then

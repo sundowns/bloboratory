@@ -42,6 +42,7 @@ function love.load()
     require("src.class.enemy")
     require("src.class.round")
     require("src.class.world")
+    require("src.class.crucible")
     -- TODO: require entire directories instead
     require("src.structure.obstacle")
     require("src.structure.cannon") 

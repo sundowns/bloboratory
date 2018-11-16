@@ -190,17 +190,39 @@ return {
     },
     UI = {
         MENU = {
-            X = 0,
-            Y = 0.86,
-            WIDTH = 1,
-            HEIGHT = 0.145,
+            X = 0.15,
+            Y = 0.88,
+            WIDTH = 0.25,
+            HEIGHT = 0.125,
+            LAYOUTROW_HEIGHT = 0.055,
         },
         WALLET = {
             X = 0.775,
             Y = 0.02,
             WIDTH = 0.2,
             HEIGHT = 0.03,
-        }
+        },
+        CRUCIBLE = {
+            X = 0.4,
+            Y = 0.755,
+            WIDTH = 0.2,
+            HEIGHT = 0.25,
+            LAYOUTROW_HEIGHT = 0.075,
+        },
+        SELECTED = {
+            X = 0.6,
+            Y = 0.88,
+            WIDTH = 0.25,
+            HEIGHT = 0.125,
+            LAYOUTROW_HEIGHT = 0.055,
+        },
+        STATS = {
+            X = 0.85,
+            Y = 0.88,
+            WIDTH = 0.15,
+            HEIGHT = 0.125,
+            LAYOUTROW_HEIGHT = 0.1
+        },
     },
     DEBUFF = {
         MAX_PARTICLES = 8,
