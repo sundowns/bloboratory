@@ -79,7 +79,7 @@ UiController = Class {
                 if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight, 'border') then
                     self:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    for i=3, 1, -1 do 
+                    for i=1, 3, 1 do 
                         local style = {
                             ['button'] = {
                                 ['normal'] = world.crucible.slots[i].image,
@@ -94,7 +94,7 @@ UiController = Class {
                         nk.stylePop()
                     end
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    for i=6, 4, -1 do 
+                    for i=4, 6, 1 do 
                         local style = {
                             ['button'] = {
                                 ['normal'] = world.crucible.slots[i].image,
@@ -109,7 +109,7 @@ UiController = Class {
                         nk.stylePop()
                     end
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    for i=9, 7, -1 do 
+                    for i=7, 9, 1 do 
                         local style = {
                             ['button'] = {
                                 ['normal'] = world.crucible.slots[i].image,
