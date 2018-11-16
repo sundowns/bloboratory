@@ -221,7 +221,7 @@ return {
             Y = 0.88,
             WIDTH = 0.15,
             HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 1
+            LAYOUTROW_HEIGHT = 0.1
         },
     },
     DEBUFF = {
