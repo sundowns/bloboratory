@@ -23,9 +23,5 @@ Slot = Class {
     init = function(self, id)
         self.id = id
         self.enemies = {0,0,0}
-        self.image = love.graphics.newImage('asset/unused/art/SLOT_CLEAN.png')
-        self.image_hovered = love.graphics.newImage('asset/unused/art/SLOT_CLEAN_HOVERED.png')
-    end;
-
-    
+    end;    
 }

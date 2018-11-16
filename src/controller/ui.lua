@@ -4,6 +4,19 @@ UiController = Class {
         self.mainMenu = true
         self.buildMenu = false
         self.upgradeMenu = false
+        self.styles = {
+            CRUCIBLE = {
+                ['window'] = {
+                    ['background'] = '#c89870',
+                    ['fixed background'] = '#615348',
+                },
+                ['button'] = {
+                    ['normal'] = assets.ui.slotClean,
+                    ['hover'] = assets.ui.slotCleanHovered,
+                    ['active'] = assets.ui.slotClean,
+                },
+            }
+        }
     end;
     triggerResize = function(self)
         self.resizeTriggered = true
@@ -69,59 +82,18 @@ UiController = Class {
                 end
                 nk.windowEnd()
 
-                local crucible_style = {
-                    ['window'] = {
-                        ['background'] = '#c89870',
-                        ['fixed background'] = '#615348',
-                    },
-                }
-                nk.stylePush(crucible_style)
+                nk.stylePush(self.styles.CRUCIBLE)
                 if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight, 'border') then
                     self:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    for i=1, 3, 1 do 
-                        local style = {
-                            ['button'] = {
-                                ['normal'] = world.crucible.slots[i].image,
-                                ['hover'] = world.crucible.slots[i].image_hovered,
-                                ['active'] = world.crucible.slots[i].image,
-                            },
-                        }
-                        nk.stylePush(style)
+                    for i=1, 9 do 
+                        if i+1 % 3 == 0 then
+                            nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                        end
+                
                         if nk.button('') then 
                             print("Crucible button: " ..i.."")
                         end
-                        nk.stylePop()
-                    end
-                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    for i=4, 6, 1 do 
-                        local style = {
-                            ['button'] = {
-                                ['normal'] = world.crucible.slots[i].image,
-                                ['hover'] = world.crucible.slots[i].image_hovered,
-                                ['active'] = world.crucible.slots[i].image,
-                            },
-                        }
-                        nk.stylePush(style)
-                        if nk.button('') then 
-                            print("Crucible button: " ..i.."")
-                        end
-                        nk.stylePop()
-                    end
-                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    for i=7, 9, 1 do 
-                        local style = {
-                            ['button'] = {
-                                ['normal'] = world.crucible.slots[i].image,
-                                ['hover'] = world.crucible.slots[i].image_hovered,
-                                ['active'] = world.crucible.slots[i].image,
-                            },
-                        }
-                        nk.stylePush(style)
-                        if nk.button('') then 
-                            print("Crucible button: " ..i.."")
-                        end
-                        nk.stylePop()
                     end
                 end
                 nk.windowEnd()
