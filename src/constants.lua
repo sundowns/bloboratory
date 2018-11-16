@@ -190,9 +190,9 @@ return {
     },
     UI = {
         MENU = {
-            X = 0.25,
+            X = 0.15,
             Y = 0.88,
-            WIDTH = 0.5,
+            WIDTH = 0.25,
             HEIGHT = 0.125,
             LAYOUTROW_HEIGHT = 0.055,
         },
@@ -202,8 +202,15 @@ return {
             WIDTH = 0.2,
             HEIGHT = 0.03,
         },
+        CRUCIBLE = {
+            X = 0.4,
+            Y = 0.8,
+            WIDTH = 0.2,
+            HEIGHT = 0.2,
+            LAYOUTROW_HEIGHT = 0.061,
+        },
         SELECTED = {
-            X = 0.75,
+            X = 0.6,
             Y = 0.88,
             WIDTH = 0.25,
             HEIGHT = 0.125,

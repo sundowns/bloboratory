@@ -67,6 +67,41 @@ UiController = Class {
                 end
                 nk.windowEnd()
 
+                if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
+                    self:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
+                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                    if nk.button('1') then 
+                        -- Crucible stuff
+                    end
+                    if nk.button('2') then 
+                        -- Crucible stuff
+                    end
+                    if nk.button('3') then 
+                        -- Crucible stuff
+                    end
+                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                    if nk.button('4') then 
+                        -- Crucible stuff
+                    end
+                    if nk.button('5') then 
+                        -- Crucible stuff
+                    end
+                    if nk.button('6') then 
+                        -- Crucible stuff
+                    end
+                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                    if nk.button('7') then 
+                        -- Crucible stuff
+                    end
+                    if nk.button('8') then 
+                        -- Crucible stuff
+                    end
+                    if nk.button('9') then 
+                        -- Crucible stuff
+                    end
+                end
+                nk.windowEnd()
+
                 if playerController.currentSelectedStructure ~= nil then 
                     if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
                         self:handleResize(constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight)
