@@ -216,6 +216,13 @@ return {
             HEIGHT = 0.125,
             LAYOUTROW_HEIGHT = 0.055,
         },
+        STATS = {
+            X = 0.85,
+            Y = 0.88,
+            WIDTH = 0.15,
+            HEIGHT = 0.125,
+            LAYOUTROW_HEIGHT = 1
+        },
     },
     DEBUFF = {
         MAX_PARTICLES = 8,
