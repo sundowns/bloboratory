@@ -1,6 +1,8 @@
 UiController = Class {
     init = function(self)
         self.resizeTriggered = true
+        self.mainMenu = true
+        self.buildMenu = false
     end;
     triggerResize = function(self)
         self.resizeTriggered = true
@@ -31,14 +33,44 @@ UiController = Class {
             if roundController:isBuildPhase() then 
                 if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)
-                    nk.layoutRow('dynamic', 50, {(1/3),(1/3),(1/6),(1/6)})
-                    if nk.button('Place Obstacle') then 
-                        playerController:setCurrentBlueprint(1)
-                    end
-                    if nk.button('Place Saw') then 
-                        playerController:setCurrentBlueprint(2)
-                    end
-                    if playerController.currentSelectedStructure ~= nil then 
+                    nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
+                    if self.mainMenu then 
+                        if nk.button('Build') then 
+                            self.mainMenu = false
+                            self.buildMenu = true
+                        end
+                    elseif self.buildMenu then 
+                        if nk.button('Place Obstacle') then 
+                            playerController:setCurrentBlueprint(1)
+                        end
+                        if nk.button('Place Saw') then 
+                            playerController:setCurrentBlueprint(2)
+                        end
+                    end 
+                    nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
+                    if self.mainMenu then 
+                        if nk.button('Start Wave') then
+                            if world.grid.validPath then
+                                roundController:startRound()
+                            end
+                        end
+                    elseif self.buildMenu then 
+                        if nk.button('Place Cannon') then 
+                            playerController:setCurrentBlueprint(3)
+                        end
+                        if nk.button('Back') then
+                            self.buildMenu = false
+                            self.mainMenu = true
+                        end
+                    end 
+
+                end
+                nk.windowEnd()
+
+                if playerController.currentSelectedStructure ~= nil then 
+                    if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
+                        self:handleResize(constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight)
+                        nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
                         if nk.button('Fire') then 
                             if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
                                 playerController.currentSelectedStructure:addMutation(FireMutation()) 
@@ -49,17 +81,7 @@ UiController = Class {
                                 playerController.currentSelectedStructure:addMutation(IceMutation()) 
                             end
                         end
-                    end
-                    nk.layoutRow('dynamic', 50, {(1/3),(1/3),(1/6),(1/6)})
-                    if nk.button('Place Cannon') then 
-                        playerController:setCurrentBlueprint(3)
-                    end
-                    if nk.button('Start Wave') then
-                        if world.grid.validPath then
-                            roundController:startRound()
-                        end
-                    end
-                    if playerController.currentSelectedStructure ~= nil then 
+                        nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
                         if nk.button('Elec') then 
                             if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
                                 playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
@@ -69,8 +91,8 @@ UiController = Class {
                             playerController:refundCurrentStructure()
                         end
                     end
+                    nk.windowEnd()
                 end
-                nk.windowEnd()
             end
         nk.frameEnd()
         self.resizeTriggered = false

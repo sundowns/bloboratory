@@ -190,17 +190,25 @@ return {
     },
     UI = {
         MENU = {
-            X = 0,
-            Y = 0.86,
-            WIDTH = 1,
-            HEIGHT = 0.145,
+            X = 0.25,
+            Y = 0.88,
+            WIDTH = 0.5,
+            HEIGHT = 0.125,
+            LAYOUTROW_HEIGHT = 0.055,
         },
         WALLET = {
             X = 0.775,
             Y = 0.02,
             WIDTH = 0.2,
             HEIGHT = 0.03,
-        }
+        },
+        SELECTED = {
+            X = 0.75,
+            Y = 0.88,
+            WIDTH = 0.25,
+            HEIGHT = 0.125,
+            LAYOUTROW_HEIGHT = 0.055,
+        },
     },
     DEBUFF = {
         MAX_PARTICLES = 8,
