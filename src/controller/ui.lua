@@ -118,7 +118,9 @@ UiController = Class {
                     end 
                 end
                 nk.windowEnd()
+                nk.stylePop()
 
+                nk.stylePush(self.styles.MAIN_MENU)
                 if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight), {1/2, 1/2})
@@ -151,8 +153,8 @@ UiController = Class {
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Blob') then 
                             for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing], 1)
-                                table.insert(world.crucible.slots[self.isChoosing], Blob(Vector(0,0)))
+                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
+                                table.insert(world.crucible.slots[self.isChoosing].enemies, Blob(Vector(0,0)))
                             end
                             self.isChoosing = 0
                         end
@@ -164,8 +166,8 @@ UiController = Class {
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Large Blob') then 
                             for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing], 1)
-                                table.insert(world.crucible.slots[self.isChoosing], LargeBlob(Vector(0,0)))
+                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
+                                table.insert(world.crucible.slots[self.isChoosing].enemies, LargeBlob(Vector(0,0)))
                             end
                             self.isChoosing = 0
                         end
@@ -177,8 +179,8 @@ UiController = Class {
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Fire Blob') then 
                             for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing], 1)
-                                table.insert(world.crucible.slots[self.isChoosing], BlobFire(Vector(0,0)))
+                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
+                                table.insert(world.crucible.slots[self.isChoosing].enemies, BlobFire(Vector(0,0)))
                             end
                             self.isChoosing = 0
                         end 
@@ -190,8 +192,8 @@ UiController = Class {
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Large Fire Blob') then 
                             for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing], 1)
-                                table.insert(world.crucible.slots[self.isChoosing], LargeBlobFire(Vector(0,0)))
+                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
+                                table.insert(world.crucible.slots[self.isChoosing].enemies, LargeBlobFire(Vector(0,0)))
                             end
                             self.isChoosing = 0
                         end 
@@ -203,8 +205,8 @@ UiController = Class {
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Ice Blob') then 
                             for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing], 1)
-                                table.insert(world.crucible.slots[self.isChoosing], BlobIce(Vector(0,0)))
+                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
+                                table.insert(world.crucible.slots[self.isChoosing].enemies, BlobIce(Vector(0,0)))
                             end
                             self.isChoosing = 0
                         end 
@@ -260,7 +262,9 @@ UiController = Class {
                     end
                 end
                 nk.windowEnd()
+                nk.stylePop()
 
+                nk.stylePush(self.styles.SELECT_MENU)
                 if nk.windowBegin('Stats', constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.STATS.LAYOUTROW_HEIGHT*windowHeight), {0.2, 0.8})

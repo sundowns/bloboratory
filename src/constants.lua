@@ -226,7 +226,7 @@ return {
         },
         PICKER = {
             X = 0.25,
-            Y = 0.25,
+            Y = 0.2,
             WIDTH = 0.5,
             HEIGHT = 0.5,
             LAYOUTROW_HEIGHT = 0.1,
