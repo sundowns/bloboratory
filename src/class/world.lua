@@ -50,6 +50,7 @@ World = Class {
         self.collisionWorld:add(newTower, newTower:calculateHitbox())
         self.grid:occupySpaces(newTower)
         self.grid:calculatePaths()
+        audioController:playAny("PLACE_STRUCTURE")
 
         playerController.wallet:charge(newTower:getTotalCost(), Vector(newTower.worldOrigin.x + newTower.width/2*constants.GRID.CELL_SIZE, newTower.worldOrigin.y))
         return true --a tower was placed  
@@ -58,6 +59,7 @@ World = Class {
         table.insert(self.structures, newStructure)
         self.grid:occupySpaces(newStructure)
         self.grid:calculatePaths()
+        audioController:playAny("PLACE_STRUCTURE")
 
         playerController.wallet:charge(newStructure:getTotalCost(), Vector(newStructure.worldOrigin.x + newStructure.width/2*constants.GRID.CELL_SIZE, newStructure.worldOrigin.y))
         return true --an obstacle was placed

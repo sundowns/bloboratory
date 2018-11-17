@@ -3,11 +3,11 @@ BlobElectric = Class {
     init = function(self, worldOrigin)
         Enemy.init(self, "BLOB-ELECTRIC", worldOrigin, constants.ENEMY.BLOBELECTRIC.HEALTH, constants.ENEMY.BLOBELECTRIC.SPEED, constants.ENEMY.BLOBELECTRIC.YIELD, animationController:createInstance("BLOB-ELECTRIC"))
         self.onHit = ripple.newSound{
-            source = assets.enemies.audio.blobHit,
+            source = assets.audio.enemies.blobHit,
             volume = 0.8
         }
         self.deathSound = ripple.newSound{
-            source = assets.enemies.audio.blobDeathElec,
+            source = assets.audio.enemies.blobDeathElec,
             volume = 0.6
         }
     end;
