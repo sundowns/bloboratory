@@ -1,32 +1,70 @@
 AudioController = Class {
     init = function(self)
         self.music = ripple.newSound {
-            source = assets.audio.music.music1,
-            volume = 0.35,
+            source = assets.audio.music.doom,
+            volume = 0.375,
         }
         self.music:setLooping(true)
-        -- self.music:play()
+        self.music:play()
         self.tracklists = { 
             ["PLACE_STRUCTURE"] = TrackList({
                 ripple.newSound {
-                    source = assets.audio.structure.placing1,
-                    volume = 0.6
+                    source = assets.audio.structures.placing1,
+                    volume = 0.5
                 },
                 ripple.newSound {
-                    source = assets.audio.structure.placing2,
-                    volume = 0.6
+                    source = assets.audio.structures.placing2,
+                    volume = 0.5
                 }
             }),
             ["REFUND"] = TrackList({
                 ripple.newSound {
-                    source = assets.audio.structure.refund1,
-                    volume = 1.2
+                    source = assets.audio.structures.refund1,
+                    volume = 3
                 },
                 ripple.newSound {
-                    source = assets.audio.structure.refund2,
-                    volume = 1.2
+                    source = assets.audio.structures.refund2,
+                    volume = 3
                 }
             }),
+            ["ENEMY_HIT"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.enemies.blobHit1,
+                    volume = 0.8
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.blobHit2,
+                    volume = 1
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.blobHit3,
+                    volume = 0.8
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.blobHit4,
+                    volume = 1 
+                },
+            }),
+            ["ENEMY_DEATH"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.enemies.blobDeath1,
+                    volume = 0.8
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.blobDeath2,
+                    volume = 0.3
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.blobDeath3,
+                    volume = 1.8
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.blobDeath4,
+                    volume = 1.3
+                },
+                
+            }),
+            
         }
     end;
     playNext = function(self, tracklistId)

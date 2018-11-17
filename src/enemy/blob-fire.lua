@@ -2,12 +2,6 @@ BlobFire = Class {
     __includes = Enemy,
     init = function(self, worldOrigin)
         Enemy.init(self, "BLOB-FIRE", worldOrigin, constants.ENEMY.BLOBFIRE.HEALTH, constants.ENEMY.BLOBFIRE.SPEED, constants.ENEMY.BLOBFIRE.YIELD, animationController:createInstance("BLOB-FIRE"))
-        self.onHit = ripple.newSound{
-            source = assets.audio.enemies.blobHitFire,
-        }
-        self.deathSound = ripple.newSound{
-            source = assets.audio.enemies.blobDeath,
-        }
     end;
     update = function(self, dt, currentCell)
         local destroy = Enemy.update(self, dt, currentCell)

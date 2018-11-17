@@ -109,11 +109,11 @@ Enemy = Class {
         if not dt then dt = 1 end -- allows the function to work with constant attacks (melee) and projectiles
         self.health = self.health - (damage*dt)
         if playHitSound then
-            self.onHit:play()
+            audioController:playAny("ENEMY_HIT")
         end
         self.markedForDeath = self.health < 0
         if self.markedForDeath then 
-            self.deathSound:play()
+            audioController:playAny("ENEMY_DEATH")
         end
         self:triggerHealthBar()
     end;
