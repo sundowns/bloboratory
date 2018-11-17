@@ -5,6 +5,8 @@ World = Class {
         self.origin = origin
         self.grid = Grid(self.origin, rows, cols)
         self.goal = nil
+        self.spawnAnimation = animationController:createInstance("SPAWN") --TODO: Put this somewhere better
+        self.goalAnimation = animationController:createInstance("GOAL")
         self.structures = {}
         self.enemies = {}
         self.projectiles = {}
@@ -148,6 +150,9 @@ World = Class {
         if roundController:isEnemyPhase() then
             self.spawnTimer:update(dt)
         end
+
+        animationController:updateSpriteInstance(self.spawnAnimation, dt)
+        animationController:updateSpriteInstance(self.goalAnimation, dt)
     end;
     draw = function(self)
         self.grid:draw(roundController:isEnemyPhase())
