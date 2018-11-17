@@ -2,6 +2,7 @@ Camera = require("lib.camera")
 
 CameraController = Class {
     init = function(self, origin)
+        self.cameraTimer = Timer.new()
         self.camera = Camera(origin:unpack())
         self.camera:zoom(0.8)
         self:calculateCameraBounds()
@@ -31,6 +32,7 @@ CameraController = Class {
         self.camera:detach()
     end;
     update = function(self, dt)
+        self.cameraTimer:update(dt)
         if love.window.hasMouseFocus() then
             local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, inputController.mouse.origin.x, inputController.mouse.origin.y, function() return "cross" end)
     
@@ -81,6 +83,13 @@ CameraController = Class {
                 zone:draw()
             end
         end
+    end;
+    shake = function(self, duration)
+        assert(duration > 0)
+        local orig_x, orig_y = self.camera:position()
+        self.cameraTimer:during(duration, function()
+            self.camera:lookAt(orig_x + math.random(-2,2), orig_y + math.random(-2,2))
+        end)
     end;
 }
 

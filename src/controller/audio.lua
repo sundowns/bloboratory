@@ -61,10 +61,32 @@ AudioController = Class {
                 ripple.newSound {
                     source = assets.audio.enemies.blobDeath4,
                     volume = 1.3
-                },
-                
+                }, 
             }),
-            
+            ["START_ROUND"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.misc.roundStart,
+                    volume = 0.5
+                },
+            }),
+            ["UPGRADE_FIRE"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.structures.upgradeFire,
+                    volume = 1
+                },
+            }),
+            ["UPGRADE_ICE"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.structures.upgradeIce,
+                    volume = 1
+                },
+            }),
+            ["UPGRADE_ELECTRIC"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.structures.upgradeElectric,
+                    volume = 1
+                },
+            }),
         }
     end;
     playNext = function(self, tracklistId)
