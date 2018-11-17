@@ -4,18 +4,49 @@ UiController = Class {
         self.mainMenu = true
         self.buildMenu = false
         self.upgradeMenu = false
+        self.isChoosing = 0
         self.styles = {
             CRUCIBLE = {
                 ['window'] = {
                     ['background'] = '#c89870',
-                    ['fixed background'] = '#615348',
+                    ['fixed background'] = assets.ui.menuCrucible,
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.slotClean,
                     ['hover'] = assets.ui.slotCleanHovered,
                     ['active'] = assets.ui.slotClean,
                 },
-            }
+            },
+            MAIN_MENU = {
+                ['window'] = {
+                    ['background'] = '#c89870',
+                    ['fixed background'] = assets.ui.menuRight,
+                },
+                ['button'] = {
+                    ['normal'] = assets.ui.button,
+                    ['hover'] = assets.ui.buttonHovered,
+                    ['active'] = assets.ui.button,
+                    ['text background'] = '#c89870',
+                    ['text normal'] = '#000000',
+                    ['text hovered'] = '#FFFFFF',
+                    ['text active'] = '#000000',
+                },
+            },
+            SELECT_MENU = {
+                ['window'] = {
+                    ['background'] = '#c89870',
+                    ['fixed background'] = assets.ui.menuLeft,
+                },
+                ['button'] = {
+                    ['normal'] = assets.ui.button,
+                    ['hover'] = assets.ui.buttonHovered,
+                    ['active'] = assets.ui.button,
+                    ['text background'] = '#c89870',
+                    ['text normal'] = '#000000',
+                    ['text hovered'] = '#000000',
+                    ['text active'] = '#000000',
+                },
+            },
         }
     end;
     triggerResize = function(self)
@@ -45,6 +76,7 @@ UiController = Class {
             nk.windowEnd()
 
             if roundController:isBuildPhase() then 
+                nk.stylePush(self.styles.MAIN_MENU)
                 if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
@@ -78,12 +110,12 @@ UiController = Class {
                             self.mainMenu = true
                         end
                     end 
-
                 end
                 nk.windowEnd()
+                nk.stylePop()
 
                 nk.stylePush(self.styles.CRUCIBLE)
-                if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight, 'border') then
+                if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
                     for i=1, 9 do 
@@ -91,15 +123,91 @@ UiController = Class {
                             nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
                         end
                 
-                        if nk.button('') then 
-                            print("Crucible button: " ..i.."")
+                        if nk.button('') then
+                            self.isChoosing = i
                         end
                     end
                 end
                 nk.windowEnd()
                 nk.stylePop()
 
+                if self.isChoosing > 0 then 
+                    if nk.windowBegin('PICKER', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
+                        self:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
+                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
+                        if nk.button('Blob') then 
+                            for i=1, 3 do
+                                table.remove(world.crucible.slots[self.isChoosing], 1)
+                                table.insert(world.crucible.slots[self.isChoosing], Blob(Vector(0,0)))
+                            end
+                            self.isChoosing = 0
+                        end
+                        nk.label('HP: ' ..constants.ENEMY.BLOB.HEALTH.. '', 'centered')
+                        nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
+                        nk.label('')
+                        nk.label('')
+                        nk.image(assets.ui.slotClean)
+                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
+                        if nk.button('Large Blob') then 
+                            for i=1, 3 do
+                                table.remove(world.crucible.slots[self.isChoosing], 1)
+                                table.insert(world.crucible.slots[self.isChoosing], LargeBlob(Vector(0,0)))
+                            end
+                            self.isChoosing = 0
+                        end
+                        nk.label('HP: ' ..constants.ENEMY.LARGEBLOB.HEALTH.. '', 'centered')
+                        nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
+                        nk.label('')
+                        nk.label('')
+                        nk.image(assets.ui.slotClean)
+                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
+                        if nk.button('Fire Blob') then 
+                            for i=1, 3 do
+                                table.remove(world.crucible.slots[self.isChoosing], 1)
+                                table.insert(world.crucible.slots[self.isChoosing], BlobFire(Vector(0,0)))
+                            end
+                            self.isChoosing = 0
+                        end 
+                        nk.label('HP: ' ..constants.ENEMY.BLOBFIRE.HEALTH.. '', 'centered')
+                        nk.label('YIELD: Fire +' ..constants.ENEMY.BLOBFIRE.YIELD.FIRE..'', 'centered')
+                        nk.label('')
+                        nk.label('')
+                        nk.image(assets.ui.slotClean)
+                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
+                        if nk.button('Large Fire Blob') then 
+                            for i=1, 3 do
+                                table.remove(world.crucible.slots[self.isChoosing], 1)
+                                table.insert(world.crucible.slots[self.isChoosing], LargeBlobFire(Vector(0,0)))
+                            end
+                            self.isChoosing = 0
+                        end 
+                        nk.label('HP: ' ..constants.ENEMY.LARGEBLOBFIRE.HEALTH.. '', 'centered')
+                        nk.label('YIELD: Fire +' ..constants.ENEMY.LARGEBLOBFIRE.YIELD.FIRE..'', 'centered')
+                        nk.label('')
+                        nk.label('')
+                        nk.image(assets.ui.slotClean)
+                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
+                        if nk.button('Ice Blob') then 
+                            for i=1, 3 do
+                                table.remove(world.crucible.slots[self.isChoosing], 1)
+                                table.insert(world.crucible.slots[self.isChoosing], BlobIce(Vector(0,0)))
+                            end
+                            self.isChoosing = 0
+                        end 
+                        nk.label('HP: ' ..constants.ENEMY.BLOBICE.HEALTH.. '', 'centered')
+                        nk.label('YIELD: Ice +' ..constants.ENEMY.BLOBICE.YIELD.ICE..'', 'centered')
+                        nk.label('')
+                        nk.label('')
+                        nk.image(assets.ui.slotClean)
+                    else -- Allow 'close' button to work
+                        self.isChoosing = 0 
+                    end
+                    nk.windowEnd()
+                end
+
+
                 if playerController.currentSelectedStructure ~= nil then 
+                    nk.stylePush(self.styles.SELECT_MENU)
                     if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
                         self:handleResize(constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight)
                         nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
@@ -137,6 +245,7 @@ UiController = Class {
                         end
                     end
                     nk.windowEnd()
+                    nk.stylePop()
 
                     if nk.windowBegin('Stats', constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight) then
                         self:handleResize(constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight)

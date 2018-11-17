@@ -217,6 +217,13 @@ return {
             HEIGHT = 0.125,
             LAYOUTROW_HEIGHT = 0.1
         },
+        PICKER = {
+            X = 0.25,
+            Y = 0.25,
+            WIDTH = 0.5,
+            HEIGHT = 0.5,
+            LAYOUTROW_HEIGHT = 0.1,
+        },
     },
     DEBUFF = {
         MAX_PARTICLES = 8,
