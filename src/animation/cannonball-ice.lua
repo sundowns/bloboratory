@@ -18,7 +18,7 @@ return {
                 offset_y = 0,
                 scale_x = 2,
                 scale_y = 2,
-                rotate_to_target = false,
+                rotate_to_target = true,
                 rotation = 0
             },
         },

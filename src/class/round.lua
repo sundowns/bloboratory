@@ -13,6 +13,11 @@ Round = Class{
         self.enemiesSpawned = self.enemiesSpawned + 1
         return enemy
     end;
+    peekNextEnemy = function(self) --use for enemy look-ahead (colouring spawner)
+        if self.enemies[self.enemiesSpawned + 1] then
+            return self.enemies[self.enemiesSpawned + 1]
+        end
+    end;
     start = function(self)
         self.hasStarted = true
     end;

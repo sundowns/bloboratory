@@ -12,13 +12,13 @@ Projectile = Class {
         self.height = height
         self.markedForDeath = false
         self.mutation = mutation
+        self.angle = 0
     end;
     update = function(self, dt)
-        print('?')
         animationController:updateSpriteInstance(self.animation, dt)
     end;
     draw = function(self)
-        animationController:drawStructureSpriteInstance(self.animation, self.worldOrigin, 1, 1)
+        animationController:drawStructureSpriteInstance(self.animation, self.worldOrigin, 1, 1, self.angle)
     end;
     moveBy = function(self, dx, dy)
         self.worldOrigin = Vector(self.worldOrigin.x + dx, self.worldOrigin.y + dy)
@@ -39,8 +39,15 @@ HomingProjectile = Class {
         self.target = target
         self.archetype = "HOMING"
     end;
+    calculateAngleToTarget = function(self)
+        if not self.target then return 0 end
+        local dy = self.worldOrigin.y - self.target.worldOrigin.y  
+        local dx = self.target.worldOrigin.x - self.worldOrigin.x
+        return math.atan2(dx, dy)
+    end;
     update = function(self, dt)
         Projectile.update(self, dt)
+        self.angle = self:calculateAngleToTarget()
         local dx = self.target.worldOrigin.x - self.worldOrigin.x 
         local dy = self.target.worldOrigin.y - self.worldOrigin.y
         local delta = Vector(dx, dy):normalizeInplace()

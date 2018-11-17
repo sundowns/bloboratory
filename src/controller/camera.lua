@@ -5,26 +5,26 @@ CameraController = Class {
         self.cameraTimer = Timer.new()
         self.camera = Camera(origin:unpack())
         self.camera:zoom(0.8)
-        self:calculateCameraBounds()
+        -- self:calculateCameraBounds()
     end;
-    calculateCameraBounds = function(self)
-        self.cameraPanZones = {
-            CameraPanZone("TOP", Vector(love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH,love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH - love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH*2, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT, false),
-            CameraPanZone("RIGHT", Vector(love.graphics.getWidth()*(1-constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH*2),love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT - love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT*2, false),
-            CameraPanZone("BOTTOM", Vector(love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH,love.graphics.getHeight()*(1-constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT*2)), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH - love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH*2, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT, false),
-            CameraPanZone("LEFT", Vector(love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH,love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT - love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT*2, false),
-            CameraPanZone("FASTTOP", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT, true),
-            CameraPanZone("FASTRIGHT", Vector(love.graphics.getWidth()*(1-constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH),0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT, true),
-            CameraPanZone("FASTBOTTOM", Vector(0,love.graphics.getHeight()*(1-constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT)), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT, true),
-            CameraPanZone("FASTLEFT", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT, true),
-        }
-        self.collisionWorld = bump.newWorld(love.graphics.getWidth()/100)
-        for i, zone in pairs(self.cameraPanZones) do
-            self.collisionWorld:add(zone, zone.origin.x, zone.origin.y, zone.width, zone.height)
-        end
+    -- calculateCameraBounds = function(self)
+    --     self.cameraPanZones = {
+    --         CameraPanZone("TOP", Vector(love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH,love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH - love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH*2, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT, false),
+    --         CameraPanZone("RIGHT", Vector(love.graphics.getWidth()*(1-constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH*2),love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT - love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT*2, false),
+    --         CameraPanZone("BOTTOM", Vector(love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH,love.graphics.getHeight()*(1-constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT*2)), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH - love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH*2, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT, false),
+    --         CameraPanZone("LEFT", Vector(love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH,love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT - love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT*2, false),
+    --         CameraPanZone("FASTTOP", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT, true),
+    --         CameraPanZone("FASTRIGHT", Vector(love.graphics.getWidth()*(1-constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH),0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT, true),
+    --         CameraPanZone("FASTBOTTOM", Vector(0,love.graphics.getHeight()*(1-constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT)), love.graphics.getWidth()*constants.CAMERA.PANZONES.TOP_BOTTOM.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.TOP_BOTTOM.HEIGHT, true),
+    --         CameraPanZone("FASTLEFT", Vector(0,0), love.graphics.getWidth()*constants.CAMERA.PANZONES.LEFT_RIGHT.WIDTH, love.graphics.getHeight()*constants.CAMERA.PANZONES.LEFT_RIGHT.HEIGHT, true),
+    --     }
+    --     self.collisionWorld = bump.newWorld(love.graphics.getWidth()/100)
+    --     for i, zone in pairs(self.cameraPanZones) do
+    --         self.collisionWorld:add(zone, zone.origin.x, zone.origin.y, zone.width, zone.height)
+    --     end
 
-        self.collisionWorld:add(inputController.mouse, inputController.mouse.origin.x, inputController.mouse.origin.y, inputController.mouse.width, inputController.mouse.height)
-    end;
+    --     self.collisionWorld:add(inputController.mouse, inputController.mouse.origin.x, inputController.mouse.origin.y, inputController.mouse.width, inputController.mouse.height)
+    -- end;
     attach = function(self)
         self.camera:attach()
     end;
@@ -33,40 +33,40 @@ CameraController = Class {
     end;
     update = function(self, dt)
         self.cameraTimer:update(dt)
-        if love.window.hasMouseFocus() then
-            local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, inputController.mouse.origin.x, inputController.mouse.origin.y, function() return "cross" end)
+        -- if love.window.hasMouseFocus() then
+        --     local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, inputController.mouse.origin.x, inputController.mouse.origin.y, function() return "cross" end)
     
-            local collided = #cols > 0
-            local accelerated = false
-            for i = 1, #cols do 
-                if cols[i].other.fast then
-                    accelerated = true
-                end
+        --     local collided = #cols > 0
+        --     local accelerated = false
+        --     for i = 1, #cols do 
+        --         if cols[i].other.fast then
+        --             accelerated = true
+        --         end
     
-            end
+        --     end
     
-            if collided then
-                local direction = Vector(inputController.mouse.origin.x - love.graphics.getWidth()/2, inputController.mouse.origin.y - love.graphics.getHeight()/2):normalizeInplace()
-                if accelerated then
-                    self.camera:move(dt*constants.CAMERA.SPEED*constants.CAMERA.ADDITIONAL_SPEED_MODIFIER*direction.x, dt*constants.CAMERA.SPEED*constants.CAMERA.ADDITIONAL_SPEED_MODIFIER*direction.y)
-                else
-                    self.camera:move(dt*constants.CAMERA.SPEED*direction.x, dt*constants.CAMERA.SPEED*direction.y)
-                end
-            end
-        end
+        --     if collided then
+        --         local direction = Vector(inputController.mouse.origin.x - love.graphics.getWidth()/2, inputController.mouse.origin.y - love.graphics.getHeight()/2):normalizeInplace()
+        --         if accelerated then
+        --             self.camera:move(dt*constants.CAMERA.SPEED*constants.CAMERA.ADDITIONAL_SPEED_MODIFIER*direction.x, dt*constants.CAMERA.SPEED*constants.CAMERA.ADDITIONAL_SPEED_MODIFIER*direction.y)
+        --         else
+        --             self.camera:move(dt*constants.CAMERA.SPEED*direction.x, dt*constants.CAMERA.SPEED*direction.y)
+        --         end
+        --     end
+        -- end
        
-        if love.keyboard.isDown('left') then
-            self.camera:move(-dt*constants.CAMERA.SPEED, 0)
-        end
-        if love.keyboard.isDown('right') then
-            self.camera:move(dt*constants.CAMERA.SPEED, 0)
-        end
-        if love.keyboard.isDown('up') then
-            self.camera:move(0, -dt*constants.CAMERA.SPEED)
-        end
-        if love.keyboard.isDown('down') then
-            self.camera:move(0, dt*constants.CAMERA.SPEED)
-        end
+        -- if love.keyboard.isDown('left') then
+        --     self.camera:move(-dt*constants.CAMERA.SPEED, 0)
+        -- end
+        -- if love.keyboard.isDown('right') then
+        --     self.camera:move(dt*constants.CAMERA.SPEED, 0)
+        -- end
+        -- if love.keyboard.isDown('up') then
+        --     self.camera:move(0, -dt*constants.CAMERA.SPEED)
+        -- end
+        -- if love.keyboard.isDown('down') then
+        --     self.camera:move(0, dt*constants.CAMERA.SPEED)
+        -- end
     end;
     getWorldCoordinates = function(self, screenOrigin)
         return Vector(self.camera:worldCoords(screenOrigin.x, screenOrigin.y))
@@ -78,17 +78,18 @@ CameraController = Class {
         return self.camera:mousePosition()
     end;
     draw = function(self)
-        if debug then
-            for i, zone in pairs(self.cameraPanZones) do
-                zone:draw()
-            end
-        end
+        -- if debug then
+        --     for i, zone in pairs(self.cameraPanZones) do
+        --         zone:draw()
+        --     end
+        -- end
     end;
-    shake = function(self, duration)
+    shake = function(self, duration, jitter)
         assert(duration > 0)
+        jitter = jitter or 2
         local orig_x, orig_y = self.camera:position()
         self.cameraTimer:during(duration, function()
-            self.camera:lookAt(orig_x + math.random(-2,2), orig_y + math.random(-2,2))
+            self.camera:lookAt(orig_x + math.random(-jitter,jitter), orig_y + math.random(-jitter,jitter))
         end)
     end;
 }

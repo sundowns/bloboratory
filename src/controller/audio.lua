@@ -20,11 +20,11 @@ AudioController = Class {
             ["REFUND"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.refund1,
-                    volume = 3
+                    volume = 10
                 },
                 ripple.newSound {
                     source = assets.audio.structures.refund2,
-                    volume = 3
+                    volume = 10
                 }
             }),
             ["ENEMY_HIT"] = TrackList({
@@ -72,13 +72,13 @@ AudioController = Class {
             ["UPGRADE_FIRE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.upgradeFire,
-                    volume = 1
+                    volume = 1.5
                 },
             }),
             ["UPGRADE_ICE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.upgradeIce,
-                    volume = 1
+                    volume = 1.5
                 },
             }),
             ["UPGRADE_ELECTRIC"] = TrackList({
@@ -112,7 +112,6 @@ TrackList = Class {
         end
     end;
     playAny = function(self)
-        print(#self.tracks)
         self.tracks[love.math.random(1, #self.tracks)]:play()
     end;
 }

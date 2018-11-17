@@ -35,7 +35,7 @@ World = Class {
         elseif type == "OBSTACLE" then
             if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
-                    self:addNewStructure(Obstacle(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                    self:addNewObstacle(Obstacle(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
 
                     if not playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
                         inputController:togglePlacingTower()
@@ -45,24 +45,23 @@ World = Class {
         end
         return placedTower
     end;
-    addNewTower = function(self, newTower)
-        table.insert(self.structures, newTower)
-        self.collisionWorld:add(newTower, newTower:calculateHitbox())
-        self.grid:occupySpaces(newTower)
+    addNewStructure = function(self, structure)
+        table.insert(self.structures, structure)
+        self.grid:occupySpaces(structure)
         self.grid:calculatePaths()
         audioController:playAny("PLACE_STRUCTURE")
 
-        playerController.wallet:charge(newTower:getTotalCost(), Vector(newTower.worldOrigin.x + newTower.width/2*constants.GRID.CELL_SIZE, newTower.worldOrigin.y))
-        return true --a tower was placed  
+        playerController.wallet:charge(structure:getTotalCost(), Vector(structure.worldOrigin.x + structure.width/2*constants.GRID.CELL_SIZE, structure.worldOrigin.y))
+        return true --a structure was placed
     end;
-    addNewStructure = function(self, newStructure)
-        table.insert(self.structures, newStructure)
-        self.grid:occupySpaces(newStructure)
-        self.grid:calculatePaths()
-        audioController:playAny("PLACE_STRUCTURE")
-
-        playerController.wallet:charge(newStructure:getTotalCost(), Vector(newStructure.worldOrigin.x + newStructure.width/2*constants.GRID.CELL_SIZE, newStructure.worldOrigin.y))
-        return true --an obstacle was placed
+    addNewObstacle = function(self, obstacle)
+        cameraController:shake(0.3, 0.7)
+        return self:addNewStructure(obstacle)
+    end;
+    addNewTower = function(self, newTower)
+        self.collisionWorld:add(newTower, newTower:calculateHitbox())
+        cameraController:shake(0.4, 1)
+        return self:addNewStructure(newTower)
     end;
     removeStructure = function(self, structure)
         assert(structure)
@@ -176,7 +175,7 @@ World = Class {
         end
 
         if debug == true then 
-            love.graphics.setColor(constants.COLOURS.ENEMY)
+            love.graphics.setColor(constants.COLOURS.DEBUG_HITBOX)
             local items, len = self.collisionWorld:getItems()
             for i =#items, 1, -1 do
                 love.graphics.rectangle('line', self.collisionWorld:getRect(items[i]))

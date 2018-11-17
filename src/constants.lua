@@ -19,6 +19,7 @@ return {
     },
     COLOURS = {
         DEBUG_PRINT = {0,1,0}, --debug
+        DEBUG_HITBOX = {1,0,0},
         BLUEPRINT_VALID = {0,1,0, 0.7},
         BLUEPRINT_INVALID = {1,0,0, 0.7},
         BLUEPRINT_RANGE = {0.8,0.5,0},
