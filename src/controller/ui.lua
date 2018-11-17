@@ -18,6 +18,9 @@ UiController = Class {
                 },
             },
             MAIN_MENU = {
+                ['text'] = {
+                    ['color'] = '#000000', 
+                },
                 ['window'] = {
                     ['background'] = '#c89870',
                     ['fixed background'] = assets.ui.menuRight,
@@ -33,6 +36,9 @@ UiController = Class {
                 },
             },
             SELECT_MENU = {
+                ['text'] = {
+                    ['color'] = '#000000', 
+                },
                 ['window'] = {
                     ['background'] = '#c89870',
                     ['fixed background'] = assets.ui.menuLeft,
@@ -43,7 +49,7 @@ UiController = Class {
                     ['active'] = assets.ui.button,
                     ['text background'] = '#c89870',
                     ['text normal'] = '#000000',
-                    ['text hovered'] = '#000000',
+                    ['text hovered'] = '#FFFFFF',
                     ['text active'] = '#000000',
                 },
             },
@@ -110,6 +116,14 @@ UiController = Class {
                             self.mainMenu = true
                         end
                     end 
+                end
+                nk.windowEnd()
+
+                if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then
+                    self:handleResize(constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight)
+                    nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight), {1/2, 1/2})
+                    nk.label('Rounds:')
+                    nk.label('50')
                 end
                 nk.windowEnd()
                 nk.stylePop()
@@ -246,7 +260,6 @@ UiController = Class {
                     end
                 end
                 nk.windowEnd()
-                nk.stylePop()
 
                 if nk.windowBegin('Stats', constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight)
@@ -255,6 +268,7 @@ UiController = Class {
                     nk.label('Things go here')
                 end
                 nk.windowEnd()
+                nk.stylePop()
             end
         nk.frameEnd()
         self.resizeTriggered = false
