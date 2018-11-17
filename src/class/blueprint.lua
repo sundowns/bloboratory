@@ -16,6 +16,7 @@ Blueprint = Class {
 
         if self.hitboxRadius > 0 then
             love.graphics.setColor(constants.COLOURS.BLUEPRINT_RANGE)
+            love.graphics.setLineWidth(5)
             love.graphics.rectangle('line', origin.x - self.hitboxRadius*constants.GRID.CELL_SIZE, origin.y - self.hitboxRadius*constants.GRID.CELL_SIZE, (2*self.hitboxRadius+self.width)*constants.GRID.CELL_SIZE, (2*self.hitboxRadius+self.height)*constants.GRID.CELL_SIZE)
         end
     end;

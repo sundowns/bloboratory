@@ -37,7 +37,8 @@ Grid = Class {
         end
     end;
     draw = function(self, isSpawning)
-        love.graphics.setColor(1,1,1,0.5)
+        love.graphics.setColor(1,1,1,0.8)
+        love.graphics.setLineWidth(10)
         love.graphics.rectangle('line', self.origin.x, self.origin.y, (self.cols)*constants.GRID.CELL_SIZE, (self.rows)*constants.GRID.CELL_SIZE)
 
         for i = 0, self.cols-1 do
@@ -46,8 +47,10 @@ Grid = Class {
             end
         end
 
-        if self.validPath then
-            love.graphics.setColor(0,1,1)
+        if self.validPath and roundController:isBuildPhase() then
+            love.graphics.setColor(constants.COLOURS.OPTIMAL_PATH)
+            love.graphics.setLineWidth(10)
+            love.graphics.setLineJoin('bevel')
             love.graphics.line(self.optimalPath)
         end
     end;

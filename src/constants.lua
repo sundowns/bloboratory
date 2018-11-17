@@ -26,7 +26,8 @@ return {
         TOWER = {0.5,0,0.5}, -- debug
         CAMERA_PANZONES = {1,0.5,0}, -- debug,
         PROJECTILE = {0,0.5,1},
-        SELECTION = {1,1,0}
+        SELECTION = {1,1,0},
+        OPTIMAL_PATH = {0,1,0.2,0.5}
     },
     GRID = {
         COLUMNS = 36,

@@ -30,6 +30,7 @@ Structure = Class {
 
         if self.isSelected then
             love.graphics.setColor(constants.COLOURS.SELECTION)
+            love.graphics.setLineWidth(2)
             love.graphics.rectangle('line', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE*self.width, constants.GRID.CELL_SIZE*self.height)
         end
     end;
