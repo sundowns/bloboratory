@@ -4,7 +4,8 @@ UiController = Class {
         self.mainMenu = true
         self.buildMenu = false
         self.upgradeMenu = false
-        self.isChoosing = 0
+        self.isChoosing = false
+        self.choice = 0
         self.styles = {
             CRUCIBLE = {
                 ['window'] = {
@@ -140,20 +141,21 @@ UiController = Class {
                         end
                 
                         if nk.button('') then
-                            self.isChoosing = i
+                            self.choice = i
+                            self.isChoosing = true
                         end
                     end
                 end
                 nk.windowEnd()
                 nk.stylePop()
 
-                if self.isChoosing > 0 then 
+                if self.isChoosing then 
                     if nk.windowBegin('PICKER', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                         self:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Blob') then 
-                            world.crucible.slots[self.isChoosing].enemies = {Blob(Vector(0,0)),Blob(Vector(0,0)),Blob(Vector(0,0))}
-                            self.isChoosing = 0
+                            world.crucible.slots[self.choice].enemies = {Blob(Vector(0,0)),Blob(Vector(0,0)),Blob(Vector(0,0))}
+                            self.isChoosing = false
                         end
                         nk.label('HP: ' ..constants.ENEMY.BLOB.HEALTH.. '', 'centered')
                         nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
@@ -162,8 +164,8 @@ UiController = Class {
                         nk.image(assets.ui.slotClean)
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Large Blob') then 
-                            world.crucible.slots[self.isChoosing].enemies = {LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0))}
-                            self.isChoosing = 0
+                            world.crucible.slots[self.choice].enemies = {LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0))}
+                            self.isChoosing = false
                         end
                         nk.label('HP: ' ..constants.ENEMY.LARGEBLOB.HEALTH.. '', 'centered')
                         nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
@@ -171,14 +173,16 @@ UiController = Class {
                         nk.label('')
                         nk.image(assets.ui.slotClean)
                     else -- Allow 'close' button to work
-                        self.isChoosing = 0 
+                        self.isChoosing = false
+                        self.choice = 0
                     end
                     nk.windowEnd()
                 end
-                if self.isChoosing == 0 then 
-                    print("isChoosing = 0")
+                print(self.choice)
+                if self.isChoosing then 
+                    print("isChoosing ")
                 else 
-                    print("isChoosing = " ..self.isChoosing.. "")
+                    print("isChoosing NOT")
                 end 
 
                 nk.stylePush(self.styles.SELECT_MENU)
