@@ -3,10 +3,10 @@ LargeBlobIce = Class {
     init = function(self, worldOrigin)
         Enemy.init(self, "LARGEBLOB-ICE", worldOrigin, constants.ENEMY.LARGEBLOBICE.HEALTH, constants.ENEMY.LARGEBLOBICE.SPEED, constants.ENEMY.LARGEBLOBICE.YIELD, animationController:createInstance("LARGEBLOB-ICE"))
         self.onHit = ripple.newSound{
-            source = love.audio.newSource('asset/enemies/sound/largeBlobHit.wav', 'static')
+            source = assets.enemies.audio.largeblobHit,
         }
         self.deathSound = ripple.newSound{
-            source = love.audio.newSource('asset/enemies/sound/blobDeathIce.wav', 'static'),
+            source = assets.enemies.audio.blobDeathIce,
             volume = 2
         }
     end;
