@@ -19,18 +19,10 @@ return {
     },
     COLOURS = {
         DEBUG_PRINT = {0,1,0}, --debug
-        GAINS_TEXT_POSITIVE = {1,1,0},
-        GAINS_TEXT_NEGATIVE = {1,0,0},
-        EMPTY = {0,0,0},
         BLUEPRINT_VALID = {0,1,0, 0.7},
         BLUEPRINT_INVALID = {1,0,0, 0.7},
         BLUEPRINT_RANGE = {0.8,0.5,0},
-        OBSTACLE = {1,1,1, 0.5}, --debug 
-        GOAL = {1,1,0},
-        SPAWN_ACTIVE = {0,0,1},
-        SPAWN_INACTIVE = {1,0,0},
         TOWER = {0.5,0,0.5}, -- debug
-        ENEMY = {1,0,0}, -- debug
         CAMERA_PANZONES = {1,0.5,0}, -- debug,
         PROJECTILE = {0,0.5,1},
         SELECTION = {1,1,0}

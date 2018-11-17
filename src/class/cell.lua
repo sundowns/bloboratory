@@ -29,15 +29,10 @@ Cell = Class {
         end
 
         if self.isGoal then
-            love.graphics.setColor(constants.COLOURS.GOAL)
-            love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE)
+            animationController:drawStructureSpriteInstance(world.goalAnimation, self.worldOrigin, 1, 1)
         elseif self.isSpawn then
-            if isSpawning then
-                love.graphics.setColor(constants.COLOURS.SPAWN_ACTIVE)
-            else
-                love.graphics.setColor(constants.COLOURS.SPAWN_INACTIVE)
-            end
-            love.graphics.rectangle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.GRID.CELL_SIZE, constants.GRID.CELL_SIZE) 
+            --TODO: Change the state to spawning when we are spawning (do that elsewhere u idiot)
+            animationController:drawStructureSpriteInstance(world.spawnAnimation, self.worldOrigin, 1, 1) 
         end
 
         -- if debug then

@@ -17,6 +17,7 @@ RoundController = Class {
         end
     end;
     nextRound = function(self)
+        animationController:changeSpriteState(world.spawnAnimation, "DEFAULT")
         if self.rounds[self.roundIndex + 1] then 
             self.roundIndex = self.roundIndex + 1
             self.currentRound = self.rounds[self.roundIndex]
@@ -25,6 +26,7 @@ RoundController = Class {
     startRound = function(self)
         if self:isBuildPhase() then
             self.currentRound:start()
+            animationController:changeSpriteState(world.spawnAnimation, "SPAWNING")
         end
     end;
     isBuildPhase = function(self)
