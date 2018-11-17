@@ -174,8 +174,9 @@ World = Class {
             impact:draw()
         end
 
-        if debug == true then 
+        if debug then 
             love.graphics.setColor(constants.COLOURS.DEBUG_HITBOX)
+            love.graphics.setLineWidth(1)
             local items, len = self.collisionWorld:getItems()
             for i =#items, 1, -1 do
                 love.graphics.rectangle('line', self.collisionWorld:getRect(items[i]))
