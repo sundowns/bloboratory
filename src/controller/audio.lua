@@ -71,20 +71,20 @@ AudioController = Class {
             }),
             ["UPGRADE_FIRE"] = TrackList({
                 ripple.newSound {
-                    source = assets.audio.misc.upgradeFire,
-                    volume = 0.1
+                    source = assets.audio.structures.upgradeFire,
+                    volume = 1
                 },
             }),
             ["UPGRADE_ICE"] = TrackList({
                 ripple.newSound {
-                    source = assets.audio.misc.upgradeIce,
-                    volume = 0.1
+                    source = assets.audio.structures.upgradeIce,
+                    volume = 1
                 },
             }),
-            ["UPGRADE_ELEC"] = TrackList({
+            ["UPGRADE_ELECTRIC"] = TrackList({
                 ripple.newSound {
-                    source = assets.audio.misc.upgradeFire,
-                    volume = 0.1
+                    source = assets.audio.structures.upgradeElectric,
+                    volume = 1
                 },
             }),
         }

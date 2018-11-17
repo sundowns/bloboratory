@@ -28,6 +28,7 @@ RoundController = Class {
             self.currentRound:start()
             animationController:changeSpriteState(world.spawnAnimation, "SPAWNING")
             audioController:playAny("START_ROUND")
+            cameraController:shake(0.5)
         end
     end;
     isBuildPhase = function(self)
