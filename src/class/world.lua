@@ -160,6 +160,7 @@ World = Class {
             structure:draw()
         end
 
+        Util.l.resetColour()
         for i, projectile in pairs(self.projectiles) do
             projectile:draw()
         end

@@ -32,9 +32,15 @@ Cannon = Class {
 Cannonball = Class {
     __includes=HomingProjectile,
     init = function(self, worldOrigin, target, damage, mutation)
-        HomingProjectile.init(self, worldOrigin, target, constants.PROJECTILE.CANNONBALL.SPEED, constants.PROJECTILE.CANNONBALL.WIDTH, constants.PROJECTILE.CANNONBALL.HEIGHT, mutation)
-        self.damage = damage
         self.projectileType = "CANNONBALL"
+        local anim = nil
+        if mutation then
+            anim = animationController:createInstance(self.projectileType..'-'..mutation.id)
+        else
+            anim = animationController:createInstance(self.projectileType)
+        end
+        HomingProjectile.init(self, worldOrigin, anim, target, constants.PROJECTILE.CANNONBALL.SPEED, constants.PROJECTILE.CANNONBALL.WIDTH, constants.PROJECTILE.CANNONBALL.HEIGHT, mutation)
+        self.damage = damage
     end;
     update = function(self, dt)
         HomingProjectile.update(self, dt)
