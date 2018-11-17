@@ -152,10 +152,7 @@ UiController = Class {
                         self:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Blob') then 
-                            for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
-                                table.insert(world.crucible.slots[self.isChoosing].enemies, Blob(Vector(0,0)))
-                            end
+                            world.crucible.slots[self.isChoosing].enemies = {Blob(Vector(0,0)),Blob(Vector(0,0)),Blob(Vector(0,0))}
                             self.isChoosing = 0
                         end
                         nk.label('HP: ' ..constants.ENEMY.BLOB.HEALTH.. '', 'centered')
@@ -165,53 +162,11 @@ UiController = Class {
                         nk.image(assets.ui.slotClean)
                         nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                         if nk.button('Large Blob') then 
-                            for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
-                                table.insert(world.crucible.slots[self.isChoosing].enemies, LargeBlob(Vector(0,0)))
-                            end
+                            world.crucible.slots[self.isChoosing].enemies = {LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0))}
                             self.isChoosing = 0
                         end
                         nk.label('HP: ' ..constants.ENEMY.LARGEBLOB.HEALTH.. '', 'centered')
                         nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
-                        nk.label('')
-                        nk.label('')
-                        nk.image(assets.ui.slotClean)
-                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
-                        if nk.button('Fire Blob') then 
-                            for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
-                                table.insert(world.crucible.slots[self.isChoosing].enemies, BlobFire(Vector(0,0)))
-                            end
-                            self.isChoosing = 0
-                        end 
-                        nk.label('HP: ' ..constants.ENEMY.BLOBFIRE.HEALTH.. '', 'centered')
-                        nk.label('YIELD: Fire +' ..constants.ENEMY.BLOBFIRE.YIELD.FIRE..'', 'centered')
-                        nk.label('')
-                        nk.label('')
-                        nk.image(assets.ui.slotClean)
-                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
-                        if nk.button('Large Fire Blob') then 
-                            for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
-                                table.insert(world.crucible.slots[self.isChoosing].enemies, LargeBlobFire(Vector(0,0)))
-                            end
-                            self.isChoosing = 0
-                        end 
-                        nk.label('HP: ' ..constants.ENEMY.LARGEBLOBFIRE.HEALTH.. '', 'centered')
-                        nk.label('YIELD: Fire +' ..constants.ENEMY.LARGEBLOBFIRE.YIELD.FIRE..'', 'centered')
-                        nk.label('')
-                        nk.label('')
-                        nk.image(assets.ui.slotClean)
-                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
-                        if nk.button('Ice Blob') then 
-                            for i=1, 3 do
-                                table.remove(world.crucible.slots[self.isChoosing].enemies, 1)
-                                table.insert(world.crucible.slots[self.isChoosing].enemies, BlobIce(Vector(0,0)))
-                            end
-                            self.isChoosing = 0
-                        end 
-                        nk.label('HP: ' ..constants.ENEMY.BLOBICE.HEALTH.. '', 'centered')
-                        nk.label('YIELD: Ice +' ..constants.ENEMY.BLOBICE.YIELD.ICE..'', 'centered')
                         nk.label('')
                         nk.label('')
                         nk.image(assets.ui.slotClean)
@@ -221,9 +176,9 @@ UiController = Class {
                     nk.windowEnd()
                 end
                 if self.isChoosing == 0 then 
-                    print("It's zero")
+                    print("isChoosing = 0")
                 else 
-                    print("It's " ..self.isChoosing.. "")
+                    print("isChoosing = " ..self.isChoosing.. "")
                 end 
 
                 nk.stylePush(self.styles.SELECT_MENU)
