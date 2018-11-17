@@ -220,7 +220,11 @@ UiController = Class {
                     end
                     nk.windowEnd()
                 end
-
+                if self.isChoosing == 0 then 
+                    print("It's zero")
+                else 
+                    print("It's " ..self.isChoosing.. "")
+                end 
 
                 nk.stylePush(self.styles.SELECT_MENU)
                 if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
