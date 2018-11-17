@@ -15,8 +15,8 @@ Projectile = Class {
     update = function(self, dt)
     end;
     draw = function(self)
-        love.graphics.setColor(constants.COLOURS.PROJECTILE)
-        love.graphics.circle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.PROJECTILE.RADIUS)
+        -- love.graphics.setColor(constants.COLOURS.PROJECTILE)
+        -- love.graphics.circle('fill', self.worldOrigin.x, self.worldOrigin.y, constants.PROJECTILE.RADIUS)
     end;
     moveBy = function(self, dx, dy)
         self.worldOrigin = Vector(self.worldOrigin.x + dx, self.worldOrigin.y + dy)
@@ -31,9 +31,9 @@ Projectile = Class {
 
 HomingProjectile = Class {
     __includes=Projectile,
-    init = function(self, worldOrigin, target, speed, width, height, mutation)
+    init = function(self, worldOrigin, anim, target, speed, width, height, mutation)
         assert(target)
-        Projectile.init(self, worldOrigin, speed, width, height, mutation)
+        Projectile.init(self, worldOrigin, anim, speed, width, height, mutation)
         self.target = target
         self.archetype = "HOMING"
     end;
