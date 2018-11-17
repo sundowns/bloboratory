@@ -68,6 +68,7 @@ PlayerController = Class {
         self.wallet:refund(self.currentSelectedStructure:getTotalCost(), self.currentSelectedStructure:centre())
         world:removeStructure(self.currentSelectedStructure)
         self:toggleStructureSelection()
+        audioController:playAny("REFUND")
     end;
     draw = function(self)
         self.wallet:draw()

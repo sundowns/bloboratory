@@ -8,6 +8,7 @@ inputController = {}
 uiController = {}
 animationController = {}
 roundController = {}
+audioController = {}
 world = {}
 
 local paused = false
@@ -29,6 +30,7 @@ function love.load()
     require('src.controller.round')
     require("src.controller.player")
     require("src.controller.ui")
+    require("src.controller.audio")
     require("src.class.cell")
     require("src.class.grid")
     require("src.class.blueprint")
@@ -60,6 +62,7 @@ function love.load()
     love.keyboard.setKeyRepeat(true) -- For nuklear
     nk.init()
     uiController = UiController()
+    audioController = AudioController()
     inputController = InputController()
     playerController = PlayerController()
     animationController = AnimationController()

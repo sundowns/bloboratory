@@ -2,13 +2,6 @@ LargeBlobElectric = Class {
     __includes = Enemy,
     init = function(self, worldOrigin)
         Enemy.init(self, "LARGEBLOB-ELECTRIC", worldOrigin, constants.ENEMY.LARGEBLOBELECTRIC.HEALTH, constants.ENEMY.LARGEBLOBELECTRIC.SPEED, constants.ENEMY.LARGEBLOBELECTRIC.YIELD, animationController:createInstance("LARGEBLOB-ELECTRIC"))
-        self.onHit = ripple.newSound{
-            source = assets.enemies.audio.largeBlobHit,
-        }
-        self.deathSound = ripple.newSound{
-            source = assets.enemies.audio.blobDeathElec,
-            volume = 0.6
-        }
     end;
     update = function(self, dt, currentCell)
         local destroy =  Enemy.update(self, dt, currentCell)
