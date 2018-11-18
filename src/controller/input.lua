@@ -42,7 +42,7 @@ InputController = Class {
             end
     end;  
     mousepressed = function(self, screenOrigin, button)
-        if not self:isAboveTray(screenOrigin) or not nk.windowIsHidden(constants.UI.PICKER.NAME) then return end
+        if not self:isAboveTray(screenOrigin) or not nk.windowIsHidden(constants.UI.PICKER.NAME) or not nk.windowIsHidden(constants.UI.OPTIONS_MENU.NAME) then return end
         local gridOrigin = world.grid:calculateGridCoordinatesFromScreen(screenOrigin)
         if self.isPlacingTower then
             if world:placeStructure(gridOrigin, playerController.currentBlueprint.name) then

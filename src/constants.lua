@@ -229,6 +229,8 @@ return {
         STATS = {
             X = 0.85,
             Y = 0.88,
+            IMG_X = 0.86,
+            IMG_Y = 0.89,
             WIDTH = 0.15,
             HEIGHT = 0.125,
             LAYOUTROW_HEIGHT = 0.1,

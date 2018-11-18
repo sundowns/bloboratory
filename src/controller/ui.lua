@@ -149,6 +149,7 @@ UiController = Class {
                         nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
                     end 
                 end
+                nk.windowEnd()
 
                 nk.stylePush(self.styles.MAIN_MENU)
                 if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then
@@ -159,7 +160,6 @@ UiController = Class {
                 end
                 nk.windowEnd()
                 nk.stylePop()
-
 
                 nk.stylePush(self.styles.CRUCIBLE)
                 if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
@@ -256,7 +256,7 @@ UiController = Class {
                     self:handleResize(constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.STATS.LAYOUTROW_HEIGHT*windowHeight), {0.2, 0.8})
                     nk.spacing(1)
-                    nk.label('Things go here')
+
                 end
                 nk.windowEnd()
                 nk.stylePop()
@@ -271,5 +271,10 @@ UiController = Class {
     draw = function(self)
         Util.l.resetColour()
         nk.draw()
+        if playerController.currentSelectedStructure then
+            if roundController:isBuildPhase() then 
+                playerController.currentSelectedStructure:doThing(Vector(constants.UI.STATS.IMG_X*love.graphics.getWidth(), constants.UI.STATS.IMG_Y*love.graphics.getHeight()))
+            end
+        end
     end;
 }
