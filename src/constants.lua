@@ -49,18 +49,18 @@ return {
             ATTACK_INTERVAL = 0.3, 
             TARGETTING_RADIUS = 1, --additional cell radii
             COST = {
-                SCRAP = 5,
+                SCRAP = 30,
             }
         },
         CANNON = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 3, --damage per HIT 
+            ATTACK_DAMAGE = 5, --damage per HIT 
             TARGETTING_RADIUS = 5, --additional cell radii
             ATTACK_INTERVAL = 0.5,
             COST = {
-                SCRAP = 10,
+                SCRAP = 30,
             },
             ROTATION_TIME = 0.2
         }
@@ -68,19 +68,19 @@ return {
     MUTATIONS = {
         FIRE = {
             COST = {
-                FIRE = 10
+                FIRE = 50
             }
         },
         ELECTRIC = {
             COST = {
-                ELECTRIC = 10
+                ELECTRIC = 50
             },
             MINIMUM_DAMAGE = 0.25, -- always applied! see below
             MAXIMUM_EXTRA_DAMAGE = 2, --total maximum is this + minimum
         },
         ICE = {
             COST = {
-                ICE = 10
+                ICE = 50
             }
         },
     },
@@ -120,25 +120,25 @@ return {
             HEALTH = 10,
             SPEED = 150,
             YIELD = {
-                SCRAP = 1
+                SCRAP = 2
             },
         },
         BLOBFIRE = {
-            HEALTH = 12,
+            HEALTH = 30,
             SPEED = 150,
             YIELD = {
                 FIRE = 1
             },
         },
         BLOBICE = {
-            HEALTH = 12,
+            HEALTH = 30,
             SPEED = 150,
             YIELD = {
                 ICE = 1
             },
         },
         BLOBELECTRIC = {
-            HEALTH = 12,
+            HEALTH = 30,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1
@@ -146,7 +146,7 @@ return {
         },
     },
     CURRENCY = {
-        STARTING_SCRAP = 100,
+        STARTING_SCRAP = 75,
         GAINS = {
             DRIFT_SPEED = 50,
             TIME_TO_LIVE = 1,
