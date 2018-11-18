@@ -198,8 +198,8 @@ UiController = Class {
                             nk.stylePush({
                                 ['button'] = {
                                     ['normal'] = blueprint.image,
-                                    ['hover'] = blueprint.image,
-                                    ['active'] = blueprint.image,
+                                    ['hover'] = blueprint.imageHovered,
+                                    ['active'] = blueprint.imageActive,
                                 },
                             })
                         end
@@ -230,6 +230,10 @@ UiController = Class {
                         end
                         nk.spacing(2)
                         nk.label(blueprint.name)
+
+                        for key, value in pairs(blueprint.yield) do
+                            nk.label(key .. ':' .. value, 'centered', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
+                        end
                     end
 
                     if self.firstRun then

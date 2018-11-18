@@ -139,4 +139,8 @@ Enemy = Class {
     calculateHitbox = function(self)
         return self.worldOrigin.x - constants.GRID.CELL_SIZE/4, self.worldOrigin.y - constants.GRID.CELL_SIZE/4, constants.GRID.CELL_SIZE/2, constants.GRID.CELL_SIZE/2
     end;
+    scaleHealth = function(self, healthModifier)
+        self.maxHealth = self.maxHealth * healthModifier
+        self.health = self.maxHealth
+    end;
 }

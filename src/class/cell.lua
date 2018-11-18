@@ -31,7 +31,6 @@ Cell = Class {
         if self.isGoal then
             animationController:drawStructureSpriteInstance(world.goalAnimation, self.worldOrigin, 1, 1)
         elseif self.isSpawn then
-            --TODO: Change the state to spawning when we are spawning (do that elsewhere u idiot)
             animationController:drawStructureSpriteInstance(world.spawnAnimation, self.worldOrigin, 1, 1) 
         end
 
