@@ -10,7 +10,9 @@ RoundController = Class {
         return self.currentRound.enemiesSpawned < #self.currentRound.enemies
     end;
     nextEnemy = function(self)
-        return self.currentRound:getNextEnemy()
+        local enemy = self.currentRound:getNextEnemy()
+        Timer.after(constants.ENEMY.SPAWN_INTERVAL/2, function() self:updateCauldron() end) 
+        return enemy
     end;
     enemyDefeated = function(self)
         self.currentRound.enemiesDefeated = self.currentRound.enemiesDefeated + 1
@@ -37,7 +39,8 @@ RoundController = Class {
                 self.currentRound:setEnemies(roundEnemies)
                 world:setupTimers()
                 self.currentRound:start()
-                animationController:changeSpriteState(world.spawnAnimation, "SPAWNING")
+                -- animationController:changeSpriteState(world.spawnAnimation, "SPAWNING")
+                self:updateCauldron()
                 audioController:playAny("START_ROUND")
                 cameraController:shake(0.5, 3)
             else 
@@ -46,6 +49,14 @@ RoundController = Class {
                 return
             end
         end
+    end;
+    updateCauldron = function(self)
+        local nextEnemy = self.currentRound:peekNextEnemy()
+        if nextEnemy then
+            animationController:changeSpriteState(world.spawnAnimation, "SPAWNING_"..nextEnemy.element)
+        end
+        --peek next enemy
+        --change cauldron state based on a type
     end;
     isBuildPhase = function(self)
         return not self.currentRound.hasStarted

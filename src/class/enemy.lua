@@ -6,9 +6,10 @@ local ORIENTATIONS = {
 }
 
 Enemy = Class {
-    init = function(self, enemyType, worldOrigin, health, speed, yield, animation)
+    init = function(self, enemyType, element, worldOrigin, health, speed, yield, animation)
         assert(worldOrigin.x and worldOrigin.y)
         self.type = "ENEMY" -- used to check for valid collisions
+        self.element = element -- used to decide cauldron colour
         self.enemyType = enemyType
         self.worldOrigin = worldOrigin
         self.maxHealth = health
