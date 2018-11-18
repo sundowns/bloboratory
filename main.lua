@@ -119,7 +119,7 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.resize(w, h)
-    cameraController:calculateCameraBounds()
+    -- cameraController:calculateCameraBounds()
     uiController:triggerResize()
 end
 
