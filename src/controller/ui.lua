@@ -121,6 +121,36 @@ UiController = Class {
                 nk.windowEnd()
                 nk.stylePop()
 
+                if nk.windowBegin(constants.UI.OPTIONS_MENU.NAME, constants.UI.OPTIONS_MENU.X*windowWidth, constants.UI.OPTIONS_MENU.Y*windowHeight, constants.UI.OPTIONS_MENU.WIDTH*windowWidth, constants.UI.OPTIONS_MENU.HEIGHT*windowHeight) then 
+                    self:handleResize(constants.UI.OPTIONS_MENU.X*windowWidth, constants.UI.OPTIONS_MENU.Y*windowHeight, constants.UI.OPTIONS_MENU.WIDTH*windowWidth, constants.UI.OPTIONS_MENU.HEIGHT*windowHeight)
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+                    if nk.button("Resume Game") then 
+                        nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                    end 
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+                    if nk.button("Sound") then 
+
+                    end 
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+                    if nk.button("Exit Game") then 
+                        love.event.quit()
+                    end 
+                    if self.firstRun then
+                        nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                    end
+                else 
+                    nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                end
+                nk.windowEnd()
+
+                if nk.windowBegin(constants.UI.OPTIONS_BUTTON.NAME, constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight) then 
+                    self:handleResize(constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight)
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_BUTTON.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+                    if nk.button("OPTIONS") then 
+                        nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
+                    end 
+                end
+
                 nk.stylePush(self.styles.MAIN_MENU)
                 if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight)
@@ -143,7 +173,7 @@ UiController = Class {
                 
                         if nk.button('') then
                             self.choice = i
-                            nk.windowShow('PICKER')
+                            nk.windowShow(constants.UI.PICKER.NAME)
                         end
                     end
                 end
@@ -151,7 +181,7 @@ UiController = Class {
                 nk.stylePop()
 
 
-                if nk.windowBegin('PICKER', '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
+                if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                     self:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                     if nk.button('Blob') then 
@@ -170,10 +200,10 @@ UiController = Class {
                     nk.spacing(2)
                     nk.image(assets.ui.slotClean)
                     if self.firstRun then
-                        nk.windowHide('PICKER')
+                        nk.windowHide(constants.UI.PICKER.NAME)
                     end
                 else -- Allow 'close' button to work
-                    nk.windowHide('PICKER')
+                    nk.windowHide(constants.UI.PICKER.NAME)
                 end
                 nk.windowEnd()
 

@@ -183,8 +183,21 @@ return {
         }
     },
     UI = {
-        OPTIONS = {
-            
+        OPTIONS_MENU = {
+            X = 0.4,
+            Y = 0.35,
+            WIDTH = 0.2,
+            HEIGHT = 0.16,
+            LAYOUTROW_HEIGHT = 0.045,
+            NAME = 'OptionsMenu'
+        },
+        OPTIONS_BUTTON = {
+            X = 0.01,
+            Y = 0.01,
+            WIDTH = 0.075,
+            HEIGHT = 0.025,
+            LAYOUTROW_HEIGHT = 0.015,
+            NAME = 'OptionsButton'
         },
         MENU = {
             X = 0.15,
@@ -233,7 +246,7 @@ return {
             WIDTH = 0.5,
             HEIGHT = 0.5,
             LAYOUTROW_HEIGHT = 0.1,
-            NAME = 'PICKER'
+            NAME = 'Picker'
         },
     },
     DEBUFF = {
