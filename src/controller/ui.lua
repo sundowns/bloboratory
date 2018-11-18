@@ -111,7 +111,7 @@ UiController = Class {
                             playerController:setCurrentBlueprint(3)
                         end
                         nk.spacing(3)
-                        if nk.button('B') then
+                        if nk.button('Back') then
                             self.buildMenu = false
                             self.mainMenu = true
                         end
@@ -211,8 +211,8 @@ UiController = Class {
                 if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight)                        
                     if playerController.currentSelectedStructure ~= nil then 
-                        nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
                         if self.upgradeMenu then 
+                            nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                             if nk.button('Fire') then 
                                 if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
                                     playerController.currentSelectedStructure:addMutation(FireMutation()) 
@@ -225,17 +225,19 @@ UiController = Class {
                                     self.upgradeMenu = false
                                 end
                             end
-                            nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
+                            nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                             if nk.button('Elec') then 
                                 if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
                                     playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
                                     self.upgradeMenu = false
                                 end                           
                             end
+                            nk.spacing(3)
                             if nk.button('Back') then 
                                 self.upgradeMenu = false
                             end
                         else
+                            nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 2)
                             if nk.button('Upgrade') then 
                                 self.upgradeMenu = true
                             end
