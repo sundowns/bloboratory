@@ -1,7 +1,7 @@
 Blob = Class {
     __includes = Enemy,
     init = function(self, worldOrigin)
-        Enemy.init(self, "BLOB", worldOrigin, constants.ENEMY.BLOB.HEALTH, constants.ENEMY.BLOB.SPEED, constants.ENEMY.BLOB.YIELD, animationController:createInstance("BLOB"))
+        Enemy.init(self, "BLOB", "NONE", worldOrigin, constants.ENEMY.BLOB.HEALTH, constants.ENEMY.BLOB.SPEED, constants.ENEMY.BLOB.YIELD, animationController:createInstance("BLOB"))
     end;
     update = function(self, dt, currentCell)
         local destroy = Enemy.update(self, dt, currentCell)
