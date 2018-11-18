@@ -85,9 +85,10 @@ UiController = Class {
             if roundController:isBuildPhase() then 
                 nk.stylePush(self.styles.MAIN_MENU)
                 if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
-                    self:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)
-                    nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
+                    self:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)    
+                    
                     if self.mainMenu then 
+                        nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 2)
                         if nk.button('Build') then 
                             self.mainMenu = false
                             self.buildMenu = true
@@ -98,21 +99,19 @@ UiController = Class {
                             end
                         end
                     elseif self.buildMenu then 
-                        if nk.button('Place Obstacle') then 
+                        nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
+                        if nk.button('', assets.blueprints.obstacle) then 
                             playerController:setCurrentBlueprint(1)
                         end
-                        if nk.button('Place Saw') then 
+                        if nk.button('', assets.blueprints.saw) then 
                             playerController:setCurrentBlueprint(2)
                         end
-                    end 
-                    nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
-                    if self.mainMenu then 
-                        -- Other mainmenu stuff
-                    elseif self.buildMenu then 
-                        if nk.button('Place Cannon') then 
+                        nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
+                        if nk.button('', assets.blueprints.cannon) then 
                             playerController:setCurrentBlueprint(3)
                         end
-                        if nk.button('Back') then
+                        nk.spacing(3)
+                        if nk.button('B') then
                             self.buildMenu = false
                             self.mainMenu = true
                         end
@@ -174,6 +173,7 @@ UiController = Class {
                         if nk.button('') then
                             self.choice = i
                             nk.windowShow(constants.UI.PICKER.NAME)
+                            playerController:toggleStructureSelection(playerController.currentSelectedStructure)
                         end
                     end
                 end

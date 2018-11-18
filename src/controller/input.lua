@@ -42,7 +42,7 @@ InputController = Class {
             end
     end;  
     mousepressed = function(self, screenOrigin, button)
-        if nk.windowIsAnyHovered() and not nk.windowIsHidden(constants.UI.PICKER.NAME) and not nk.windowIsHidden(constants.UI.OPTIONS_MENU.NAME) then return end
+        if not self:isAboveTray(screenOrigin) or not nk.windowIsHidden(constants.UI.PICKER.NAME) then return end
         local gridOrigin = world.grid:calculateGridCoordinatesFromScreen(screenOrigin)
         if self.isPlacingTower then
             if world:placeStructure(gridOrigin, playerController.currentBlueprint.name) then
@@ -57,6 +57,9 @@ InputController = Class {
             love.graphics.setColor(0,0.8,0,1)
             self.mouse:draw()
         end
+    end;
+    isAboveTray = function(self, screenOrigin)
+        return screenOrigin.y < love.graphics.getHeight() * constants.UI.CRUCIBLE.Y  
     end;
 }
 

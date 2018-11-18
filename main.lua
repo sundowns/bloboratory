@@ -127,8 +127,8 @@ function love.keyreleased(key, scancode)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
-    inputController:mousepressed(Vector(x, y), button)
     nk.mousepressed(x, y, button, istouch)
+    inputController:mousepressed(Vector(x, y), button)
 end
 
 function love.mousereleased(x, y, button, istouch)
