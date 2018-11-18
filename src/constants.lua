@@ -183,6 +183,9 @@ return {
         }
     },
     UI = {
+        OPTIONS = {
+            
+        },
         MENU = {
             X = 0.15,
             Y = 0.88,
@@ -230,6 +233,7 @@ return {
             WIDTH = 0.5,
             HEIGHT = 0.5,
             LAYOUTROW_HEIGHT = 0.1,
+            NAME = 'PICKER'
         },
     },
     DEBUFF = {
