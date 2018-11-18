@@ -2,7 +2,7 @@ RoundController = Class {
     init = function(self)
         self.roundIndex = 0
         self.currentRound = Round(0)
-        self.totalRounds = 5
+        self.totalRounds = 10
         self.crucible = Crucible(3)
         self.ENEMY_BLUEPRINTS = require("src.enemy-blueprints")
     end;
