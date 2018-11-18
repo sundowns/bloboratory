@@ -4,7 +4,6 @@ UiController = Class {
         self.mainMenu = true
         self.buildMenu = false
         self.upgradeMenu = false
-        self.isChoosing = false
         self.firstRun = true
         self.choice = 0
         self.styles = {
@@ -86,9 +85,10 @@ UiController = Class {
             if roundController:isBuildPhase() then 
                 nk.stylePush(self.styles.MAIN_MENU)
                 if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
-                    self:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)
-                    nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
+                    self:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)    
+                    
                     if self.mainMenu then 
+                        nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 2)
                         if nk.button('Build') then 
                             self.mainMenu = false
                             self.buildMenu = true
@@ -99,20 +99,18 @@ UiController = Class {
                             end
                         end
                     elseif self.buildMenu then 
-                        if nk.button('Place Obstacle') then 
+                        nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
+                        if nk.button('', assets.blueprints.obstacle) then 
                             playerController:setCurrentBlueprint(1)
                         end
-                        if nk.button('Place Saw') then 
+                        if nk.button('', assets.blueprints.saw) then 
                             playerController:setCurrentBlueprint(2)
                         end
-                    end 
-                    nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
-                    if self.mainMenu then 
-                        -- Other mainmenu stuff
-                    elseif self.buildMenu then 
-                        if nk.button('Place Cannon') then 
+                        nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
+                        if nk.button('', assets.blueprints.cannon) then 
                             playerController:setCurrentBlueprint(3)
                         end
+                        nk.spacing(3)
                         if nk.button('Back') then
                             self.buildMenu = false
                             self.mainMenu = true
@@ -121,6 +119,60 @@ UiController = Class {
                 end
                 nk.windowEnd()
                 nk.stylePop()
+
+                if nk.windowBegin(constants.UI.OPTIONS_MENU.NAME, constants.UI.OPTIONS_MENU.X*windowWidth, constants.UI.OPTIONS_MENU.Y*windowHeight, constants.UI.OPTIONS_MENU.WIDTH*windowWidth, constants.UI.OPTIONS_MENU.HEIGHT*windowHeight) then 
+                    self:handleResize(constants.UI.OPTIONS_MENU.X*windowWidth, constants.UI.OPTIONS_MENU.Y*windowHeight, constants.UI.OPTIONS_MENU.WIDTH*windowWidth, constants.UI.OPTIONS_MENU.HEIGHT*windowHeight)
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+                    if nk.button("Resume Game") then 
+                        nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                    end 
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+                    if nk.button("Sound") then 
+                        nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                        nk.windowShow(constants.UI.OPTIONS_SOUND.NAME)
+                    end 
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
+                    if nk.button("Exit Game") then 
+                        love.event.quit()
+                    end 
+                    if self.firstRun then
+                        nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                    end
+                else 
+                    nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                end
+                nk.windowEnd()
+
+                if nk.windowBegin(constants.UI.OPTIONS_BUTTON.NAME, constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight) then 
+                    self:handleResize(constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight)
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_BUTTON.LAYOUTROW_HEIGHT*windowHeight), 1)
+                    if nk.button("OPTIONS") then 
+                        nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
+                    end 
+                end
+                nk.windowEnd()
+
+                if nk.windowBegin(constants.UI.OPTIONS_SOUND.NAME, constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight) then 
+                    self:handleResize(constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight)
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
+                    nk.label("Music Volume:") 
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight), 1)
+                    audioController.music.volume = nk.slider(0, audioController.music.volume, 1, 0.01)
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight*0.5), 1)
+                    if nk.button("Back") then 
+                        nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
+                        nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
+                    end 
+
+                    if self.firstRun then
+                        nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
+                    end
+                else 
+                    nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
+                end
+                nk.windowEnd()
+
+
 
                 nk.stylePush(self.styles.MAIN_MENU)
                 if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then
@@ -131,7 +183,6 @@ UiController = Class {
                 end
                 nk.windowEnd()
                 nk.stylePop()
-
 
                 nk.stylePush(self.styles.CRUCIBLE)
                 if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
@@ -144,8 +195,8 @@ UiController = Class {
                 
                         if nk.button('') then
                             self.choice = i
-                            nk.windowShow('PICKERONE')
-                            self.isChoosing = true
+                            nk.windowShow(constants.UI.PICKER.NAME)
+                            playerController:toggleStructureSelection(playerController.currentSelectedStructure)
                         end
                     end
                 end
@@ -153,12 +204,11 @@ UiController = Class {
                 nk.stylePop()
 
 
-                if nk.windowBegin('PICKERONE', 'PICKER', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
+                if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                     self:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                     if nk.button('Blob') then 
                         world.crucible.slots[self.choice].enemies = {Blob(Vector(0,0)),Blob(Vector(0,0)),Blob(Vector(0,0))}
-                        self.isChoosing = false
                     end
                     nk.label('HP: ' ..constants.ENEMY.BLOB.HEALTH.. '', 'centered')
                     nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
@@ -167,17 +217,16 @@ UiController = Class {
                     nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
                     if nk.button('Large Blob') then 
                         world.crucible.slots[self.choice].enemies = {LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0))}
-                        self.isChoosing = false
                     end
                     nk.label('HP: ' ..constants.ENEMY.LARGEBLOB.HEALTH.. '', 'centered')
                     nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
                     nk.spacing(2)
                     nk.image(assets.ui.slotClean)
                     if self.firstRun then
-                        nk.windowHide('PICKERONE')
+                        nk.windowHide(constants.UI.PICKER.NAME)
                     end
                 else -- Allow 'close' button to work
-                    nk.windowHide('PICKERONE')
+                    nk.windowHide(constants.UI.PICKER.NAME)
                 end
                 nk.windowEnd()
 
@@ -185,8 +234,8 @@ UiController = Class {
                 if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight)                        
                     if playerController.currentSelectedStructure ~= nil then 
-                        nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
                         if self.upgradeMenu then 
+                            nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                             if nk.button('Fire') then 
                                 if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
                                     playerController.currentSelectedStructure:addMutation(FireMutation()) 
@@ -199,17 +248,19 @@ UiController = Class {
                                     self.upgradeMenu = false
                                 end
                             end
-                            nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {(1/2),(1/2)})
+                            nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                             if nk.button('Elec') then 
                                 if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
                                     playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
                                     self.upgradeMenu = false
                                 end                           
                             end
+                            nk.spacing(3)
                             if nk.button('Back') then 
                                 self.upgradeMenu = false
                             end
                         else
+                            nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 2)
                             if nk.button('Upgrade') then 
                                 self.upgradeMenu = true
                             end
@@ -228,7 +279,7 @@ UiController = Class {
                     self:handleResize(constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.STATS.LAYOUTROW_HEIGHT*windowHeight), {0.2, 0.8})
                     nk.spacing(1)
-                    nk.label('Things go here')
+
                 end
                 nk.windowEnd()
                 nk.stylePop()
@@ -243,5 +294,10 @@ UiController = Class {
     draw = function(self)
         Util.l.resetColour()
         nk.draw()
+        if playerController.currentSelectedStructure then
+            if roundController:isBuildPhase() then 
+                playerController.currentSelectedStructure:doThing(Vector(constants.UI.STATS.IMG_X*love.graphics.getWidth(), constants.UI.STATS.IMG_Y*love.graphics.getHeight()))
+            end
+        end
     end;
 }
