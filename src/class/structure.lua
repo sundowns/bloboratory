@@ -21,7 +21,6 @@ Structure = Class {
     end;
     doThing = function(self, origin)
         Util.l.resetColour()
-        print(origin)
         animationController:drawStructureSpriteInstance(self.animation, origin, self.width, self.height, self.angleToTarget)
     end;
     draw = function(self)
