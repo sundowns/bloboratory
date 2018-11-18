@@ -144,34 +144,6 @@ return {
                 ELECTRIC = 1
             },
         },
-        LARGEBLOB = {
-            HEALTH = 20,
-            SPEED = 120,
-            YIELD = {
-                SCRAP = 3
-            },
-        },
-        LARGEBLOBFIRE = {
-            HEALTH = 20,
-            SPEED = 120,
-            YIELD = {
-                FIRE = 3
-            },
-        },
-        LARGEBLOBICE = {
-            HEALTH = 20,
-            SPEED = 120,
-            YIELD = {
-                ICE = 3
-            },
-        },
-        LARGEBLOBELECTRIC = {
-            HEALTH = 20,
-            SPEED = 120,
-            YIELD = {
-                ELECTRIC = 3
-            },
-        },
     },
     CURRENCY = {
         STARTING_SCRAP = 100,
