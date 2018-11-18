@@ -1,8 +1,10 @@
 RoundController = Class {
-    init = function(self, rounds)
-        self.roundIndex = 1
-        self.rounds = rounds
-        self.currentRound = self.rounds[self.roundIndex]
+    init = function(self)
+        self.roundIndex = 0
+        self.currentRound = Round(0)
+        self.totalRounds = 5
+        self.crucible = Crucible(3)
+        self.ENEMY_BLUEPRINTS = require("src.enemy-blueprints")
     end;
     canSpawn = function(self)
         return self.currentRound.enemiesSpawned < #self.currentRound.enemies
@@ -17,18 +19,31 @@ RoundController = Class {
         end
     end;
     nextRound = function(self)
-        animationController:changeSpriteState(world.spawnAnimation, "DEFAULT")
-        if self.rounds[self.roundIndex + 1] then 
+        if self.roundIndex + 1 > self.totalRounds then
+            print('u win idiot') --TODO: win condition
+        else
+            self.crucible:reset()
             self.roundIndex = self.roundIndex + 1
-            self.currentRound = self.rounds[self.roundIndex]
-        end 
+            animationController:changeSpriteState(world.spawnAnimation, "DEFAULT")
+            self.currentRound = Round(self.roundIndex)
+            uiController.firstRun = true
+        end
     end;
     startRound = function(self)
         if self:isBuildPhase() then
-            self.currentRound:start()
-            animationController:changeSpriteState(world.spawnAnimation, "SPAWNING")
-            audioController:playAny("START_ROUND")
-            cameraController:shake(0.5, 3)
+            -- build the crucible enemies
+            local roundEnemies = self.crucible:constructEnemies()
+            if #roundEnemies > 0 then -- check they make sense
+                self.currentRound:setEnemies(roundEnemies)
+                self.currentRound:start()
+                animationController:changeSpriteState(world.spawnAnimation, "SPAWNING")
+                audioController:playAny("START_ROUND")
+                cameraController:shake(0.5, 3)
+            else 
+                --TODO: tell em to fuckoff
+                print('[ERROR] Add enemies to crucible before starting round')
+                return
+            end
         end
     end;
     isBuildPhase = function(self)

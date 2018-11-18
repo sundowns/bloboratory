@@ -57,6 +57,7 @@ function love.load()
     require("src.enemy.largeblob-fire")
     require("src.enemy.largeblob-ice")
     require("src.enemy.largeblob-electric")
+    require("src.class.enemyblueprint")
     
     love.graphics.setDefaultFilter('nearest')
     love.keyboard.setKeyRepeat(true) -- For nuklear
@@ -66,7 +67,7 @@ function love.load()
     inputController = InputController()
     playerController = PlayerController()
     animationController = AnimationController()
-    roundController = RoundController(require("src.rounds"))
+    roundController = RoundController()
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
     cameraController = CameraController(Vector(world.origin.x + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.ROWS/1.7*constants.GRID.CELL_SIZE))
 end

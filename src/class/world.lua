@@ -12,7 +12,6 @@ World = Class {
         self.projectiles = {}
         self.impacts = {}
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE/4)
-        self.crucible = Crucible()
         self:setupTimers()
 
         self.collisionWorld:add(inputController.mouse, inputController.mouse:calculateHitbox())
