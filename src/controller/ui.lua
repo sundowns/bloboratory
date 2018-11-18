@@ -128,9 +128,10 @@ UiController = Class {
                     end 
                     nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
                     if nk.button("Sound") then 
-
+                        nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                        nk.windowShow(constants.UI.OPTIONS_SOUND.NAME)
                     end 
-                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
                     if nk.button("Exit Game") then 
                         love.event.quit()
                     end 
@@ -144,12 +145,34 @@ UiController = Class {
 
                 if nk.windowBegin(constants.UI.OPTIONS_BUTTON.NAME, constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight) then 
                     self:handleResize(constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight)
-                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_BUTTON.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_BUTTON.LAYOUTROW_HEIGHT*windowHeight), 1)
                     if nk.button("OPTIONS") then 
                         nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
                     end 
                 end
                 nk.windowEnd()
+
+                if nk.windowBegin(constants.UI.OPTIONS_SOUND.NAME, constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight) then 
+                    self:handleResize(constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight)
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
+                    nk.label("Master Volume:") 
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight), 1)
+                    audioController.music.volume = nk.slider(0, audioController.music.volume, 1, 0.01)
+                    nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight*0.5), 1)
+                    if nk.button("Back") then 
+                        nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
+                        nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
+                    end 
+
+                    if self.firstRun then
+                        nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
+                    end
+                else 
+                    nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
+                end
+                nk.windowEnd()
+
+
 
                 nk.stylePush(self.styles.MAIN_MENU)
                 if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then

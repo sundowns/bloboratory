@@ -199,6 +199,14 @@ return {
             LAYOUTROW_HEIGHT = 0.015,
             NAME = 'OptionsButton'
         },
+        OPTIONS_SOUND = {
+            X = 0.4,
+            Y = 0.45,
+            WIDTH = 0.2,
+            HEIGHT = 0.16,
+            LAYOUTROW_HEIGHT = 0.06,
+            NAME = 'OptionsSound'
+        },
         MENU = {
             X = 0.15,
             Y = 0.88,
