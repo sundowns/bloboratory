@@ -22,6 +22,6 @@ Crucible = Class {
 Slot = Class {
     init = function(self, id)
         self.id = id
-        self.enemies = {0,0,0}
+        self.enemies = {}
     end;    
 }
