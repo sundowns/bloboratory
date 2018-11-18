@@ -34,7 +34,7 @@ World = Class {
         elseif type == "OBSTACLE" then
             if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
-                    self:addNewObstacle(Obstacle(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                    placedTower = self:addNewObstacle(Obstacle(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
 
                     if not playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
                         inputController:togglePlacingTower()
@@ -150,6 +150,8 @@ World = Class {
         if roundController:isEnemyPhase() then
             self.spawnTimer:update(dt)
         end
+
+
 
         animationController:updateSpriteInstance(self.spawnAnimation, dt)
         animationController:updateSpriteInstance(self.goalAnimation, dt)

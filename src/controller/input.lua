@@ -2,6 +2,7 @@ InputController = Class {
     init = function(self)
         --cargo doesnt cooperate with new cursor easy cause we cant :getData() in LOVE >11.0.
         self.isPlacingTower = false
+
         self.mouse = Mouse(Vector(love.mouse.getPosition()))
     end;
     update = function(self, dt)

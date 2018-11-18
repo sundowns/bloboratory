@@ -17,6 +17,10 @@ Options = Class {
                 nk.windowShow(constants.UI.OPTIONS_SOUND.NAME)
             end 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
+            if nk.button("Restart Game") then 
+                love.event.quit("restart")
+            end 
+            nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
             if nk.button("Exit Game") then 
                 love.event.quit()
             end 

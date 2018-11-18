@@ -157,9 +157,9 @@ return {
     UI = {
         OPTIONS_MENU = {
             X = 0.4,
-            Y = 0.35,
+            Y = 0.33,
             WIDTH = 0.2,
-            HEIGHT = 0.16,
+            HEIGHT = 0.21,
             LAYOUTROW_HEIGHT = 0.045,
             NAME = 'OptionsMenu'
         },
