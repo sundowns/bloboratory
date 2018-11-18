@@ -56,7 +56,7 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 5, --damage per HIT 
+            ATTACK_DAMAGE = 6, --damage per HIT 
             TARGETTING_RADIUS = 5, --additional cell radii
             ATTACK_INTERVAL = 0.5,
             COST = {
@@ -68,19 +68,19 @@ return {
     MUTATIONS = {
         FIRE = {
             COST = {
-                FIRE = 50
+                FIRE = 25
             }
         },
         ELECTRIC = {
             COST = {
-                ELECTRIC = 50
+                ELECTRIC = 25
             },
             MINIMUM_DAMAGE = 0.25, -- always applied! see below
             MAXIMUM_EXTRA_DAMAGE = 2, --total maximum is this + minimum
         },
         ICE = {
             COST = {
-                ICE = 50
+                ICE = 25
             }
         },
     },
@@ -117,28 +117,28 @@ return {
             HEIGHT = 3
         },
         BLOB = {
-            HEALTH = 10,
+            HEALTH = 20,
             SPEED = 150,
             YIELD = {
                 SCRAP = 2
             },
         },
         BLOBFIRE = {
-            HEALTH = 30,
+            HEALTH = 35,
             SPEED = 150,
             YIELD = {
                 FIRE = 1
             },
         },
         BLOBICE = {
-            HEALTH = 30,
+            HEALTH = 35,
             SPEED = 150,
             YIELD = {
                 ICE = 1
             },
         },
         BLOBELECTRIC = {
-            HEALTH = 30,
+            HEALTH = 35,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1

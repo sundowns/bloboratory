@@ -34,7 +34,7 @@ RoundController = Class {
     startRound = function(self)
         if self:isBuildPhase() then
             -- build the crucible enemies
-            local roundEnemies = self.crucible:constructEnemies(1 + self.roundIndex-1/self.totalRounds) --TODO: do something cleverer for health scaling
+            local roundEnemies = self.crucible:constructEnemies(self.roundIndex, self.totalRounds) --TODO: do something cleverer for health scaling
             if #roundEnemies > 0 then -- check they make sense
                 self.currentRound:setEnemies(roundEnemies)
                 world:setupTimers()
