@@ -6,6 +6,14 @@ Crucible = Class {
             table.insert(self.slots, Slot(i))
         end
     end;
+    slotIsEmpty = function(self, index)
+        assert(self.slots[index])
+        return self.slots[index].blueprint == nil
+    end;
+    resetSlot = function(self, index)
+        assert(self.slots[index])
+        return self.slots[index]:reset()
+    end;
     constructEnemies = function(self, roundIndex, totalRounds)
         local enemies = {}
         local healthmodifier = self:calculateHealthScaling(roundIndex, totalRounds)
