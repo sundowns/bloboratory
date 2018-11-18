@@ -91,11 +91,18 @@ TargetedTower = Class {
             self.rotating = true
         end
     end;
-    calculateAngleToTarget = function(self)
+    calculateAngleToTarget = function(self, extrapolateEnemyPosition, extrapolationTime)
         if not self.currentTarget then return 0 end
         local centre = self:centre()
-        local dy = centre.y - self.currentTarget.worldOrigin.y  
-        local dx = self.currentTarget.worldOrigin.x - centre.x
+        local dx, dy = 0
+        if extrapolateEnemyPosition then
+            local extrapolatedPosition = self.currentTarget:getExtrapolatedPosition(extrapolationTime)
+            dy = centre.y - extrapolatedPosition.y  
+            dx = extrapolatedPosition.x - centre.x
+        else
+            dy = centre.y - self.currentTarget.worldOrigin.y  
+            dx = self.currentTarget.worldOrigin.x - centre.x
+        end
         return math.atan2(dx, dy)
     end;
     update = function(self, dt)
@@ -106,7 +113,7 @@ TargetedTower = Class {
         end
 
         if self.currentTarget and self.targetIsNew then
-            Timer.tween(self.rotationTime, self, {angleToTarget = self:calculateAngleToTarget()}, 'in-out-sine')
+            Timer.tween(self.rotationTime, self, {angleToTarget = self:calculateAngleToTarget(true, self.rotationTime)})
             Timer.after(self.rotationTime, function() self.rotating = false end)
             self.targetIsNew = false
         end
