@@ -2,7 +2,7 @@ Crucible = Class {
     init = function(self, enemiesPerSlot)
         self.slots = {}
         self.enemiesPerSlot = enemiesPerSlot
-        for i=9, 0, -1 do 
+        for i=9, 1, -1 do 
             table.insert(self.slots, Slot(i))
         end
     end;

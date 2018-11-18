@@ -7,6 +7,7 @@ Picker = Class {
                 ['window'] = {
                     ['background'] = '#c89870',
                     ['fixed background'] = assets.ui.menuCrucible,
+                    ['padding'] = {x = 13, y = 35}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.slotClean,
@@ -34,6 +35,7 @@ Picker = Class {
                                 ['normal'] = blueprint.image,
                                 ['hover'] = blueprint.imageHovered,
                                 ['active'] = blueprint.imageActive,
+                                ['image padding'] = { x = 100, y = 100}, --TODO: this doesnt seem to work how i expect (or at all)
                             },
                         })
                     end
@@ -55,7 +57,7 @@ Picker = Class {
     
             if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                 uiController:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
-                
+
                 if self.choice > 0 and not roundController.crucible:slotIsEmpty(self.choice) then
                     nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/4*windowHeight, 1)
                     if nk.button('REMOVE') then
