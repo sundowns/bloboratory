@@ -112,7 +112,7 @@ Enemy = Class {
         if playHitSound then
             audioController:playAny("ENEMY_HIT")
         end
-        self.markedForDeath = self.health < 0
+        self.markedForDeath = self.health <= 0
         if self.markedForDeath then 
             audioController:playAny("ENEMY_DEATH")
         end
