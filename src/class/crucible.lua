@@ -6,10 +6,10 @@ Crucible = Class {
             table.insert(self.slots, Slot(i))
         end
     end;
-    constructEnemies = function(self)
+    constructEnemies = function(self, healthmodifier)
         local enemies = {}
         for i, slot in pairs(self.slots) do
-            for j, slotEnemy in pairs(slot:constructNEnemies(self.enemiesPerSlot, 1)) do
+            for j, slotEnemy in pairs(slot:constructNEnemies(self.enemiesPerSlot, healthmodifier)) do
                 enemies[#enemies+1] = slotEnemy
             end
         end
