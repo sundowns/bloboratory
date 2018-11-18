@@ -15,6 +15,11 @@ Crucible = Class {
         end
         return enemies
     end;
+    reset = function(self)
+        for i, slot in pairs(self.slots) do
+            slot:reset()
+        end
+    end
 }
 
 Slot = Class {
@@ -24,6 +29,9 @@ Slot = Class {
     end;
     setBlueprint = function(self, blueprint)
         self.blueprint = blueprint
+    end;
+    reset = function(self)
+        self.blueprint = nil
     end;
     constructNEnemies = function(self, n, healthmodifier)
         assert(n)

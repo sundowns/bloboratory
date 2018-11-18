@@ -1,7 +1,7 @@
 RoundController = Class {
     init = function(self)
         self.roundIndex = 0
-        self.currentRound = Round(0, {})
+        self.currentRound = Round(0)
         self.totalRounds = 5
         self.crucible = Crucible(3)
         self.ENEMY_BLUEPRINTS = require("src.enemy-blueprints")
@@ -22,8 +22,11 @@ RoundController = Class {
         if self.roundIndex + 1 > self.totalRounds then
             print('u win idiot') --TODO: win condition
         else
+            self.crucible:reset()
             self.roundIndex = self.roundIndex + 1
             animationController:changeSpriteState(world.spawnAnimation, "DEFAULT")
+            self.currentRound = Round(self.roundIndex)
+            uiController.firstRun = true
         end
     end;
     startRound = function(self)
@@ -31,8 +34,7 @@ RoundController = Class {
             -- build the crucible enemies
             local roundEnemies = self.crucible:constructEnemies()
             if #roundEnemies > 0 then -- check they make sense
-                self.currentRound = Round(self.roundIndex, roundEnemies)
-                uiController.firstRun = false
+                self.currentRound:setEnemies(roundEnemies)
                 self.currentRound:start()
                 animationController:changeSpriteState(world.spawnAnimation, "SPAWNING")
                 audioController:playAny("START_ROUND")
