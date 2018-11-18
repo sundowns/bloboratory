@@ -15,6 +15,10 @@ AudioController = Class {
                 ripple.newSound {
                     source = assets.audio.structures.placing2,
                     volume = 0.5
+                },
+                ripple.newSound {
+                    source = assets.audio.structures.placing3,
+                    volume = 0.3
                 }
             }),
             ["REFUND"] = TrackList({
@@ -85,6 +89,18 @@ AudioController = Class {
                 ripple.newSound {
                     source = assets.audio.structures.upgradeElectric,
                     volume = 1
+                },
+            }),
+            ["INSUFFICIENT_FUNDS"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.misc.insufficientFunds,
+                    volume = 0.5
+                },
+            }),
+            ["CANNON_SHOOT"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.structures.cannonShoot,
+                    volume = 5
                 },
             }),
         }

@@ -25,17 +25,11 @@ InputController = Class {
             elseif key == "r" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
             elseif key == "f" and playerController.currentSelectedStructure then
-                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
-                    playerController.currentSelectedStructure:addMutation(FireMutation()) 
-                end
+                playerController:upgradeCurrentStructure("FIRE")
             elseif key == "i" and playerController.currentSelectedStructure then
-                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ICE.COST) then
-                    playerController.currentSelectedStructure:addMutation(IceMutation()) 
-                end
+                playerController:upgradeCurrentStructure("ICE")
             elseif key == "e" and playerController.currentSelectedStructure then
-                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
-                    playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
-                end
+                playerController:upgradeCurrentStructure("ELECTRIC")
             end
             elseif key == "escape" then
                 love.event.quit()

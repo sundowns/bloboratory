@@ -32,10 +32,14 @@ PlayerController = Class {
             elseif self.wallet:canAfford(self.blueprints[index].cost)  then
                 --theyre switching to a different one, check they can afford it
                 self.currentBlueprint = self.blueprints[index]
+            else
+                audioController:playAny("INSUFFICIENT_FUNDS")
             end
         elseif self.wallet:canAfford(self.blueprints[index].cost) then
             self.currentBlueprint = self.blueprints[index]
             inputController:togglePlacingTower()
+        else
+            audioController:playAny("INSUFFICIENT_FUNDS")
         end
     end;
     toggleStructureSelection = function(self, structure)
@@ -75,6 +79,24 @@ PlayerController = Class {
 
         if inputController.isPlacingTower and self.currentBlueprint then
             world:displayBlueprint(self.currentBlueprint, inputController.mouse.origin)
+        end
+    end;
+    upgradeCurrentStructure = function(self, upgradeType)
+        if not self.currentSelectedStructure or not self.currentSelectedStructure.mutable then return false end
+        if self.wallet:canAfford(constants.MUTATIONS[upgradeType].COST) then
+            local mutation = nil
+            if upgradeType == "FIRE" then
+                mutation = FireMutation()
+            elseif upgradeType == "ICE" then
+                mutation = IceMutation()
+            elseif upgradeType == "ELECTRIC" then
+                mutation = ElectricMutation()
+            end
+            self.currentSelectedStructure:addMutation(mutation) 
+            return true
+        else
+            audioController:playAny("INSUFFICIENT_FUNDS")
+            return false
         end
     end;
 }

@@ -251,23 +251,20 @@ UiController = Class {
                         if self.upgradeMenu then 
                             nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                             if nk.button('Fire') then 
-                                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.FIRE.COST) then
-                                    playerController.currentSelectedStructure:addMutation(FireMutation()) 
+                                if playerController:upgradeCurrentStructure("FIRE") then --TODO: we can generify these
                                     self.upgradeMenu = false
                                 end
                             end
                             if nk.button('Ice') then 
-                                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ICE.COST) then
-                                    playerController.currentSelectedStructure:addMutation(IceMutation()) 
+                                if playerController:upgradeCurrentStructure("ICE") then --TODO: we can generify these
                                     self.upgradeMenu = false
                                 end
                             end
                             nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                             if nk.button('Elec') then 
-                                if playerController.currentSelectedStructure.mutable and playerController.wallet:canAfford(constants.MUTATIONS.ELECTRIC.COST) then
-                                    playerController.currentSelectedStructure:addMutation(ElectricMutation()) 
+                                if playerController:upgradeCurrentStructure("ELECTRICITY") then --TODO: we can generify these
                                     self.upgradeMenu = false
-                                end                           
+                                end                     
                             end
                             nk.spacing(3)
                             if nk.button('Back') then 

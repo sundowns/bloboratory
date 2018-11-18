@@ -22,6 +22,7 @@ Cannon = Class {
         local newY = centre.y - constants.STRUCTURE.CANNON.BARREL_LENGTH*math.cos(self.angleToTarget)
 
         world:addProjectile(Cannonball(Vector(newX, newY), self.currentTarget, self.attackDamage, self.mutation))
+        audioController:playAny("CANNON_SHOOT")
     end;
     addMutation = function(self, mutation)
         assert(mutation and mutation.id)
