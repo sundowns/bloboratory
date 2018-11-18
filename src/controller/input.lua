@@ -42,7 +42,7 @@ InputController = Class {
             end
     end;  
     mousepressed = function(self, screenOrigin, button)
-        if nk.windowIsAnyHovered() then return end
+        if nk.windowIsAnyHovered() and not nk.windowIsHidden("PICKERONE") then return end
         local gridOrigin = world.grid:calculateGridCoordinatesFromScreen(screenOrigin)
         if self.isPlacingTower then
             if world:placeStructure(gridOrigin, playerController.currentBlueprint.name) then

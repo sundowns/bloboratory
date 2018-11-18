@@ -1,4 +1,4 @@
-Blueprint = Class {
+StructureBlueprint = Class {
     init = function(self, name, image, width, height, scaleX, scaleY, hitboxRadius)
         self.name = name
         self.image = image

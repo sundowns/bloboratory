@@ -33,7 +33,7 @@ function love.load()
     require("src.controller.audio")
     require("src.class.cell")
     require("src.class.grid")
-    require("src.class.blueprint")
+    require("src.class.structureblueprint")
     require("src.class.floatingtext")
     require("src.class.projectile")
     require("src.class.impact")
@@ -119,7 +119,6 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.resize(w, h)
-    -- cameraController:calculateCameraBounds()
     uiController:triggerResize()
 end
 
