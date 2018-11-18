@@ -3,6 +3,8 @@ RoundController = Class {
         self.roundIndex = 1
         self.rounds = rounds
         self.currentRound = self.rounds[self.roundIndex]
+        self.crucible = Crucible(3)
+        self.ENEMY_BLUEPRINTS = require("src.enemy-blueprints")
     end;
     canSpawn = function(self)
         return self.currentRound.enemiesSpawned < #self.currentRound.enemies
@@ -18,10 +20,10 @@ RoundController = Class {
     end;
     nextRound = function(self)
         animationController:changeSpriteState(world.spawnAnimation, "DEFAULT")
-        if self.rounds[self.roundIndex + 1] then 
-            self.roundIndex = self.roundIndex + 1
-            self.currentRound = self.rounds[self.roundIndex]
-        end 
+        -- if self.rounds[self.roundIndex + 1] then 
+        --     self.roundIndex = self.roundIndex + 1
+        --     self.currentRound = self.rounds[self.roundIndex]
+        -- end 
     end;
     startRound = function(self)
         if self:isBuildPhase() then

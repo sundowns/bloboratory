@@ -57,6 +57,7 @@ function love.load()
     require("src.enemy.largeblob-fire")
     require("src.enemy.largeblob-ice")
     require("src.enemy.largeblob-electric")
+    require("src.class.enemyblueprint")
     
     love.graphics.setDefaultFilter('nearest')
     love.keyboard.setKeyRepeat(true) -- For nuklear

@@ -188,15 +188,31 @@ UiController = Class {
                 if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
                     self:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    for i=1, 9 do 
+                    for i=1, #roundController.crucible.slots do 
+                        local blueprint = roundController.crucible.slots[i].blueprint
                         if i+1 % 3 == 0 then
                             nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                        end
+
+                        if blueprint then
+                            nk.stylePush({
+                                ['button'] = {
+                                    ['normal'] = blueprint.image,
+                                    ['hover'] = blueprint.image,
+                                    ['active'] = blueprint.image,
+                                },
+                            })
                         end
                 
                         if nk.button('') then
                             self.choice = i
                             nk.windowShow(constants.UI.PICKER.NAME)
                             playerController:toggleStructureSelection(playerController.currentSelectedStructure)
+                        end
+
+
+                        if blueprint then
+                            nk.stylePop()
                         end
                     end
                 end
@@ -206,22 +222,16 @@ UiController = Class {
 
                 if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                     self:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
-                    nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
-                    if nk.button('Blob') then 
-                        world.crucible.slots[self.choice].enemies = {Blob(Vector(0,0)),Blob(Vector(0,0)),Blob(Vector(0,0))}
+                    
+                    for i, blueprint in pairs(roundController.ENEMY_BLUEPRINTS) do
+                        nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
+                        if nk.button('', blueprint.image) then
+                            roundController.crucible.slots[self.choice]:setBlueprint(blueprint)
+                        end
+                        nk.spacing(2)
+                        nk.label(blueprint.name)
                     end
-                    nk.label('HP: ' ..constants.ENEMY.BLOB.HEALTH.. '', 'centered')
-                    nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
-                    nk.spacing(2)
-                    nk.image(assets.ui.slotClean)
-                    nk.layoutRow('dynamic', (constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight), {(1/6),(1/6),(1/6),(1/6),(1/6),(1/6)})
-                    if nk.button('Large Blob') then 
-                        world.crucible.slots[self.choice].enemies = {LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0)),LargeBlob(Vector(0,0))}
-                    end
-                    nk.label('HP: ' ..constants.ENEMY.LARGEBLOB.HEALTH.. '', 'centered')
-                    nk.label('YIELD: Scrap +' ..constants.ENEMY.BLOB.YIELD.SCRAP..'', 'centered')
-                    nk.spacing(2)
-                    nk.image(assets.ui.slotClean)
+
                     if self.firstRun then
                         nk.windowHide(constants.UI.PICKER.NAME)
                     end
