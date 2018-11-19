@@ -64,13 +64,19 @@ Tray = Class {
                 nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
                 if nk.button('', assets.blueprints.obstacle) then 
                     playerController:setCurrentBlueprint(1)
+                elseif nk.widgetIsHovered() then
+                    nk.tooltip("Obstacle: Cost = 1 scrap")
                 end
                 if nk.button('', assets.blueprints.saw) then 
                     playerController:setCurrentBlueprint(2)
+                elseif nk.widgetIsHovered() then
+                    nk.tooltip("Saw: Cost = 30 scrap")
                 end
                 nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
                 if nk.button('', assets.blueprints.cannon) then 
                     playerController:setCurrentBlueprint(3)
+                elseif nk.widgetIsHovered() then
+                    nk.tooltip("Cannon: Cost = 30 scrap")
                 end
                 nk.spacing(3)
                 if nk.button('Back') then
@@ -100,13 +106,19 @@ Tray = Class {
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                     if nk.button('Fire') then 
                         playerController:upgradeCurrentStructure("FIRE")
+                    elseif nk.widgetIsHovered() then
+                        nk.tooltip("Fire: Applies damage over time debuff. Cost = 30 flint")
                     end
                     if nk.button('Ice') then 
                         playerController:upgradeCurrentStructure("ICE")
+                    elseif nk.widgetIsHovered() then
+                        nk.tooltip("Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
                     end
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                     if nk.button('Elec') then 
-                        playerController:upgradeCurrentStructure("ELECTRIC")                     
+                        playerController:upgradeCurrentStructure("ELECTRIC")    
+                    elseif nk.widgetIsHovered() then
+                        nk.tooltip("Elec: Applies high variance bonus damage. Cost = 30 charge")                 
                     end
                     nk.spacing(3)
                     if nk.button('Back') then 

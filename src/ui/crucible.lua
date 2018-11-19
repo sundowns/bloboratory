@@ -1,7 +1,7 @@
 Picker = Class {
     init = function(self)
         self.choice = 0
-        self.tooltip_slot_default = "Click a crucible slot to select an enemy to send this round"
+        self.tooltip_slot_default = "Select enemies here to be sent this round."
         self.tooltip_slot_current = self.tooltip_slot_default
         self.styles = {
             CRUCIBLE = {
@@ -34,14 +34,6 @@ Picker = Class {
                     if i+1 % 3 == 0 then
                         nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
                     end
-    
-                    if nk.widgetIsHovered() then 
-                        nk.stylePush({['window'] = {
-                            ['background'] = '#000000'}
-                        })
-                        nk.tooltip(self.tooltip_slot_current)
-                        nk.stylePop()
-                    end
 
                     if blueprint then
                         nk.stylePush({
@@ -63,6 +55,12 @@ Picker = Class {
                         self.choice = i
                         nk.windowShow(constants.UI.PICKER.NAME)
                         playerController:toggleStructureSelection(playerController.currentSelectedStructure)
+                    elseif nk.widgetIsHovered() then 
+                        nk.stylePush({['window'] = {
+                            ['background'] = '#000000'}
+                        })
+                        nk.tooltip(self.tooltip_slot_current)
+                        nk.stylePop()
                     end
     
                     if blueprint then
