@@ -75,8 +75,8 @@ return {
             COST = {
                 ELECTRIC = 25
             },
-            MINIMUM_DAMAGE = 0.25, -- always applied! see below
-            MAXIMUM_EXTRA_DAMAGE = 2, --total maximum is this + minimum
+            MINIMUM_DAMAGE = 0.5, -- always applied! see below
+            MAXIMUM_EXTRA_DAMAGE = 8, --total maximum is this + minimum
         },
         ICE = {
             COST = {
