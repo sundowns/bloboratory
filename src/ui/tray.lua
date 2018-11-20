@@ -45,32 +45,32 @@ Tray = Class {
         nk.stylePush(self.styles.MAIN_MENU)
         if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)    
-            
-            nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
-            if nk.button('', assets.blueprints.obstacle) then 
-                playerController:setCurrentBlueprint(1)
-            elseif nk.widgetIsHovered() then
-                nk.tooltip("Obstacle: Cost = 1 scrap")
-            end
-            if nk.button('', assets.blueprints.saw) then 
-                playerController:setCurrentBlueprint(2)
-            elseif nk.widgetIsHovered() then
-                nk.tooltip("Saw: Cost = 30 scrap")
-            end
+            if roundController:isBuildPhase() then 
+                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
+                if nk.button('', assets.blueprints.obstacle) then 
+                    playerController:setCurrentBlueprint(1)
+                elseif nk.widgetIsHovered() then
+                    nk.tooltip("Obstacle: Cost = 1 scrap")
+                end
+                if nk.button('', assets.blueprints.saw) then 
+                    playerController:setCurrentBlueprint(2)
+                elseif nk.widgetIsHovered() then
+                    nk.tooltip("Saw: Cost = 30 scrap")
+                end
 
-            nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
-            if nk.button('', assets.blueprints.cannon) then 
-                playerController:setCurrentBlueprint(3)
-            elseif nk.widgetIsHovered() then
-                nk.tooltip("Cannon: Cost = 30 scrap")
-            end
-            nk.spacing(3)
-            if nk.button('Start Wave') then
-                if world.grid.validPath then
-                    roundController:startRound()
+                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
+                if nk.button('', assets.blueprints.cannon) then 
+                    playerController:setCurrentBlueprint(3)
+                elseif nk.widgetIsHovered() then
+                    nk.tooltip("Cannon: Cost = 30 scrap")
+                end
+                nk.spacing(3)
+                if nk.button('Start Wave') then
+                    if world.grid.validPath then
+                        roundController:startRound()
+                    end
                 end
             end
-
         end
         nk.windowEnd()
         nk.stylePop()
@@ -89,27 +89,29 @@ Tray = Class {
         if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight)                        
             if playerController.currentSelectedStructure ~= nil then 
-                nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                if nk.button('Fire') then 
-                    playerController:upgradeCurrentStructure("FIRE")
-                elseif nk.widgetIsHovered() then
-                    nk.tooltip("Fire: Applies damage over time debuff. Cost = 30 flint")
-                end
-                if nk.button('Ice') then 
-                    playerController:upgradeCurrentStructure("ICE")
-                elseif nk.widgetIsHovered() then
-                    nk.tooltip("Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
-                end
+                if roundController:isBuildPhase() then 
+                    nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
+                    if nk.button('Fire') then 
+                        playerController:upgradeCurrentStructure("FIRE")
+                    elseif nk.widgetIsHovered() then
+                        nk.tooltip("Fire: Applies damage over time debuff. Cost = 30 flint")
+                    end
+                    if nk.button('Ice') then 
+                        playerController:upgradeCurrentStructure("ICE")
+                    elseif nk.widgetIsHovered() then
+                        nk.tooltip("Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
+                    end
 
-                nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                if nk.button('Elec') then 
-                    playerController:upgradeCurrentStructure("ELECTRIC")    
-                elseif nk.widgetIsHovered() then
-                    nk.tooltip("Elec: Applies high variance bonus damage. Cost = 30 charge")                 
-                end
-                nk.spacing(3)
-                if nk.button('Refund') then 
-                    playerController:refundCurrentStructure()
+                    nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
+                    if nk.button('Elec') then 
+                        playerController:upgradeCurrentStructure("ELECTRIC")    
+                    elseif nk.widgetIsHovered() then
+                        nk.tooltip("Elec: Applies high variance bonus damage. Cost = 30 charge")                 
+                    end
+                    nk.spacing(3)
+                    if nk.button('Refund') then 
+                        playerController:refundCurrentStructure()
+                    end
                 end
             end
         end

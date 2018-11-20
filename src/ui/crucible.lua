@@ -50,7 +50,6 @@ Picker = Class {
                             self:tooltipSlotClear()
                         end
                     end
-    
                     if nk.button('') then
                         self.choice = i
                         nk.windowShow(constants.UI.PICKER.NAME)
