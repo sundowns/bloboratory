@@ -6,14 +6,15 @@ Picker = Class {
         self.styles = {
             CRUCIBLE = {
                 ['window'] = {
-                    ['background'] = '#c89870',
                     ['fixed background'] = assets.ui.menuCrucible,
-                    ['padding'] = {x = 13, y = 35}
+                    ['padding'] = {x = 13, y = 60}
                 },
                 ['button'] = {
-                    ['normal'] = nk.colorRGBA(0,0,0,0),
-                    ['hover'] = nk.colorRGBA(147,96,51,128),
-                    ['active'] = nk.colorRGBA(108,70,37,128),
+                    ['border color'] = constants.COLOURS.UI.NONE,
+                    ['normal'] = constants.COLOURS.UI.NONE,
+                    ['hover'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['active'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['padding'] = { x = 100, y = 100}
                 },
             },
         }
@@ -41,7 +42,6 @@ Picker = Class {
                                 ['normal'] = blueprint.image,
                                 ['hover'] = blueprint.imageHovered,
                                 ['active'] = blueprint.imageActive,
-                                ['image padding'] = { x = 100, y = 100}, --TODO: this doesnt seem to work how i expect (or at all)
                             },
                         })
                         self:tooltipSlotUpdate(blueprint)

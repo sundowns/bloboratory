@@ -70,6 +70,12 @@ AnimationController = Class {
             end
         end
     end;
+    drawProjectileSpriteInstance = function(self, instance, position, cellsWidth, cellsHeight, targettingAngle)
+        for i, layer in pairs(instance.animations) do
+            local w, h = layer.animation:getDimensions()
+            layer.animation:draw(instance.sprite.image, position.x, position.y, targettingAngle, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
+        end
+    end;
     drawEnemySpriteInstance = function(self, instance, position, orientation)
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()

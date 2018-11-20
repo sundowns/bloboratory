@@ -4,38 +4,38 @@ Tray = Class {
         self.styles = {
             MAIN_MENU = {
                 ['text'] = {
-                    ['color'] = '#000000', 
+                    ['color'] = constants.COLOURS.UI.BLACK, 
                 },
                 ['window'] = {
-                    ['background'] = '#c89870',
+                    ['background'] = constants.COLOURS.UI.PANEL_LIGHT,
                     ['fixed background'] = assets.ui.menuRight,
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
                     ['hover'] = assets.ui.buttonHovered,
                     ['active'] = assets.ui.button,
-                    ['text background'] = '#c89870',
-                    ['text normal'] = '#000000',
-                    ['text hovered'] = '#FFFFFF',
-                    ['text active'] = '#000000',
+                    ['text background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['text normal'] = constants.COLOURS.UI.BLACK,
+                    ['text hovered'] = constants.COLOURS.UI.WHITE,
+                    ['text active'] = constants.COLOURS.UI.BLACK,
                 },
             },
             SELECT_MENU = {
                 ['text'] = {
-                    ['color'] = '#000000', 
+                    ['color'] = constants.COLOURS.UI.BLACK, 
                 },
                 ['window'] = {
-                    ['background'] = '#c89870',
+                    ['background'] = constants.COLOURS.UI.PANEL_LIGHT,
                     ['fixed background'] = assets.ui.menuLeft,
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
                     ['hover'] = assets.ui.buttonHovered,
                     ['active'] = assets.ui.button,
-                    ['text background'] = '#c89870',
-                    ['text normal'] = '#000000',
-                    ['text hovered'] = '#FFFFFF',
-                    ['text active'] = '#000000',
+                    ['text background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['text normal'] = constants.COLOURS.UI.BLACK,
+                    ['text hovered'] = constants.COLOURS.UI.WHITE,
+                    ['text active'] = constants.COLOURS.UI.BLACK,
                     },
                 },
             }

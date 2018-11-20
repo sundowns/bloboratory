@@ -28,7 +28,15 @@ return {
         CAMERA_PANZONES = {1,0.5,0}, -- debug,
         PROJECTILE = {0,0.5,1},
         SELECTION = {1,1,0},
-        OPTIMAL_PATH = {0,1,0.2,0.5}
+        OPTIMAL_PATH = {0,1,0.2,0.5},
+        UI = {
+            NONE = nk.colorRGBA(0,0,0,0),
+            BLACK = nk.colorRGBA(0,0,0,255),
+            WHITE = nk.colorRGBA(255,255,255,255),
+            PANEL = nk.colorRGBA(48, 31, 17, 255),
+            PANEL_LIGHT = nk.colorRGBA(147,96,51,128),
+            PANEL_DARK = nk.colorRGBA(108,70,37,128),
+        },
     },
     GRID = {
         COLUMNS = 36,
@@ -148,6 +156,9 @@ return {
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
+        STARTING_FIRE = 100, -- TODO: make these 0
+        STARTING_ICE = 100,
+        STARTING_ELECTRIC = 100,
         GAINS = {
             DRIFT_SPEED = 50,
             TIME_TO_LIVE = 1,
@@ -198,7 +209,7 @@ return {
             Y = 0.755,
             WIDTH = 0.2,
             HEIGHT = 0.25,
-            LAYOUTROW_HEIGHT = 0.06,
+            LAYOUTROW_HEIGHT = 0.0525,
         },
         SELECTED = {
             X = 0.6,

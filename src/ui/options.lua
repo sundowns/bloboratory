@@ -3,16 +3,16 @@ Options = Class {
     init = function(self)      
         self.style = {
                 ['window'] = {
-                    ['fixed background'] = nk.colorRGBA(0,0,0,0),
+                    ['fixed background'] = constants.COLOURS.UI.NONE,
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
                     ['hover'] = assets.ui.buttonHovered,
                     ['active'] = assets.ui.button,
-                    ['text background'] = '#c89870',
-                    ['text normal'] = '#000000',
-                    ['text hovered'] = '#FFFFFF',
-                    ['text active'] = '#000000',
+                    ['text background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['text normal'] = constants.COLOURS.UI.BLACK,
+                    ['text hovered'] = constants.COLOURS.UI.WHITE,
+                    ['text active'] = constants.COLOURS.UI.BLACK,
                 },
             }
     end; 

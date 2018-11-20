@@ -9,9 +9,9 @@ Wallet = Class {
     init = function(self)
         self.currencies = {
             ["SCRAP"] = Currency("SCRAP", {0.7,0.7,0.7}, constants.CURRENCY.STARTING_SCRAP),
-            ["FIRE"] = Currency("FIRE", {1,0.6,0}, 0),
-            ["ICE"] = Currency("ICE", {0,0.8,0.8}, 0),
-            ["ELECTRIC"] = Currency("ELECTRIC", {0.8,0.8,0}, 0),
+            ["FIRE"] = Currency("FIRE", {1,0.6,0}, constants.CURRENCY.STARTING_FIRE),
+            ["ICE"] = Currency("ICE", {0,0.8,0.8}, constants.CURRENCY.STARTING_ICE),
+            ["ELECTRIC"] = Currency("ELECTRIC", {0.8,0.8,0}, constants.CURRENCY.STARTING_ELECTRIC),
         }
         self.totalCurrencies = #CURRENCIES
         self.floatingGains = {}
