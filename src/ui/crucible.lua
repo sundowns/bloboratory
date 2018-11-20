@@ -1,6 +1,8 @@
 Picker = Class {
     init = function(self)
         self.choice = 0
+        self.tooltip_slot_default = "Select enemies here to be sent this round."
+        self.tooltip_slot_current = self.tooltip_slot_default
         self.styles = {
             CRUCIBLE = {
                 ['window'] = {
@@ -16,6 +18,12 @@ Picker = Class {
             },
         }
     end; 
+    tooltipSlotClear = function(self)
+        self.tooltip_slot_current = self.tooltip_slot_default
+    end;
+    tooltipSlotUpdate = function(self, enemy)
+        self.tooltip_slot_current = "This slot sends "..enemy.name.." this round"
+    end;
     display = function(self, windowWidth, windowHeight)
             nk.stylePush(self.styles.CRUCIBLE)
             if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
@@ -26,7 +34,7 @@ Picker = Class {
                     if i+1 % 3 == 0 then
                         nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
                     end
-    
+
                     if blueprint then
                         nk.stylePush({
                             ['button'] = {
@@ -36,14 +44,23 @@ Picker = Class {
                                 ['image padding'] = { x = 100, y = 100}, --TODO: this doesnt seem to work how i expect (or at all)
                             },
                         })
+                        self:tooltipSlotUpdate(blueprint)
+                    else
+                        if self.tooltip_slot_current ~= self.tooltip_slot_default then
+                            self:tooltipSlotClear()
+                        end
                     end
-    
                     if nk.button('') then
                         self.choice = i
                         nk.windowShow(constants.UI.PICKER.NAME)
                         playerController:toggleStructureSelection(playerController.currentSelectedStructure)
+                    elseif nk.widgetIsHovered() then 
+                        nk.stylePush({['window'] = {
+                            ['background'] = '#000000'}
+                        })
+                        nk.tooltip(self.tooltip_slot_current)
+                        nk.stylePop()
                     end
-    
     
                     if blueprint then
                         nk.stylePop()

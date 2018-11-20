@@ -160,16 +160,16 @@ return {
             X = 0.4,
             Y = 0.33,
             WIDTH = 0.2,
-            HEIGHT = 0.21,
-            LAYOUTROW_HEIGHT = 0.045,
+            HEIGHT = 0.4,
+            LAYOUTROW_HEIGHT = 0.055,
             NAME = 'OptionsMenu'
         },
         OPTIONS_BUTTON = {
             X = 0.01,
             Y = 0.01,
             WIDTH = 0.075,
-            HEIGHT = 0.025,
-            LAYOUTROW_HEIGHT = 0.015,
+            HEIGHT = 0.04,
+            LAYOUTROW_HEIGHT = 0.036,
             NAME = 'OptionsButton'
         },
         OPTIONS_SOUND = {

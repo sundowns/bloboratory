@@ -32,11 +32,9 @@ UiController = Class {
             end
             nk.windowEnd()
 
-            if roundController:isBuildPhase() then 
-                self.options:display(windowWidth, windowHeight)
-                self.tray:display(windowWidth,windowHeight)
-                self.picker:display(windowWidth, windowHeight)
-            end
+            self.options:display(windowWidth, windowHeight)
+            self.tray:display(windowWidth,windowHeight)
+            self.picker:display(windowWidth, windowHeight)
  
             if self.firstRun then
                 self.firstRun = false
@@ -48,9 +46,7 @@ UiController = Class {
         Util.l.resetColour()
         nk.draw()
         if playerController.currentSelectedStructure then
-            if roundController:isBuildPhase() then 
-                playerController.currentSelectedStructure:doThing(Vector(constants.UI.STATS.IMG_X*love.graphics.getWidth(), constants.UI.STATS.IMG_Y*love.graphics.getHeight()))
-            end
+            playerController.currentSelectedStructure:doThing(Vector(constants.UI.STATS.IMG_X*love.graphics.getWidth(), constants.UI.STATS.IMG_Y*love.graphics.getHeight()))
         end
     end;
 }
