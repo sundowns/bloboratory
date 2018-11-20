@@ -10,9 +10,9 @@ Picker = Class {
                     ['padding'] = {x = 13, y = 35}
                 },
                 ['button'] = {
-                    ['normal'] = assets.ui.slotClean,
-                    ['hover'] = assets.ui.slotCleanHovered,
-                    ['active'] = assets.ui.slotClean,
+                    ['normal'] = nk.colorRGBA(0,0,0,0),
+                    ['hover'] = nk.colorRGBA(147,96,51,128),
+                    ['active'] = nk.colorRGBA(108,70,37,128),
                 },
             },
         }
