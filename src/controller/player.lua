@@ -8,18 +8,33 @@ PlayerController = Class {
             ["SAW"] = StructureBlueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, constants.STRUCTURE.SAW.TARGETTING_RADIUS),
             ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, constants.STRUCTURE.CANNON.TARGETTING_RADIUS)
         }
+        self.blueprints = {}
+        self:addNewStructureBlueprint("OBSTACLE")
+        self:addNewStructureBlueprint("SAW") -- TODO: will be unlocked, not a default valu
+        self:addNewStructureBlueprint("CANNON")  -- TODO: will be unlocked, not a default value
 
-        self.blueprints = {
-            self.STRUCTURE_BLUEPRINTS["OBSTACLE"]
-        }
-        table.insert(self.blueprints, self.STRUCTURE_BLUEPRINTS["SAW"]) -- TODO: will be unlocked, not a default value
-        table.insert(self.blueprints, self.STRUCTURE_BLUEPRINTS["CANNON"]) -- TODO: will be unlocked, not a default value
         self.currentBlueprint = nil
         self.currentSelectedStructure = nil
         self.wallet = Wallet()
     end;
     update = function(self, dt)
         self.wallet:update(dt)
+    end;
+    addNewStructureBlueprint = function(self, blueprintKey)
+        assert(self.STRUCTURE_BLUEPRINTS[blueprintKey], "Tried to add non-existing structure blueprint: "..blueprintKey)
+        local blueprint = self.STRUCTURE_BLUEPRINTS[blueprintKey]:clone()
+        local w, h = blueprint.image:getWidth(), blueprint.image:getHeight()
+        local canvas = love.graphics.newCanvas(128,128)
+        love.graphics.setCanvas(canvas)
+            love.graphics.draw(blueprint.image, 0, 0, 0, canvas:getWidth()/w, canvas:getHeight()/h)
+            love.graphics.setColor(0,0,0,0.5)
+            love.graphics.rectangle('fill', 0, 0, canvas:getWidth()/2, canvas:getWidth()/2)
+            love.graphics.setColor(0.8,1,0)
+            love.graphics.print(#self.blueprints+1, canvas:getWidth()/6, 0, 0, 4, 4)
+            Util.l.resetColour()
+        love.graphics.setCanvas()
+        blueprint:setUIImage(love.graphics.newImage(canvas:newImageData()))
+        table.insert(self.blueprints, blueprint)
     end;
     setCurrentBlueprint = function(self, index)
         if not self.blueprints[index] then return end

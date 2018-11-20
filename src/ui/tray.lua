@@ -50,7 +50,7 @@ Tray = Class {
             if roundController:isBuildPhase() then 
                 nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
                 for i, blueprint in pairs(playerController.blueprints) do
-                    if nk.button('', blueprint.image) then 
+                    if nk.button('', blueprint.uiImage) then 
                         playerController:setCurrentBlueprint(i)
                     elseif nk.widgetIsHovered() then
                         nk.tooltip(blueprint.costToolTip)
