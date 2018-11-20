@@ -3,7 +3,7 @@ Options = Class {
     init = function(self)      
         self.style = {
                 ['window'] = {
-                    ['fixed background'] = assets.ui.opacity,
+                    ['fixed background'] = nk.colorRGBA(0,0,0,0),
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
