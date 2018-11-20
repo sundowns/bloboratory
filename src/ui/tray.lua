@@ -37,7 +37,7 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
-                    ['image padding'] = {x = 4, y = 4}
+                    ['image padding'] = {x = 6, y = 6}
                 },
             },
         }
@@ -83,19 +83,19 @@ Tray = Class {
             if playerController.currentSelectedStructure ~= nil then 
                 if roundController:isBuildPhase() then 
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                    if nk.button('Fire') then 
+                    if nk.button('', assets.ui.iconFire) then 
                         playerController:upgradeCurrentStructure("FIRE")
                     elseif nk.widgetIsHovered() then
                         nk.tooltip("Fire: Applies damage over time debuff. Cost = 30 flint")
                     end
-                    if nk.button('Ice') then 
+                    if nk.button('', assets.ui.iconIce) then 
                         playerController:upgradeCurrentStructure("ICE")
                     elseif nk.widgetIsHovered() then
                         nk.tooltip("Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
                     end
 
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                    if nk.button('Elec') then 
+                    if nk.button('', assets.ui.iconElectric) then 
                         playerController:upgradeCurrentStructure("ELECTRIC")    
                     elseif nk.widgetIsHovered() then
                         nk.tooltip("Elec: Applies high variance bonus damage. Cost = 30 charge")                 
