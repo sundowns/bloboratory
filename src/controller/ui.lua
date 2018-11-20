@@ -5,6 +5,7 @@ UiController = Class {
         self.options = Options()
         self.tray = Tray()
         self.picker = Picker()
+        self.font = assets.ui.neuropoliticalRg(12)
     end;
     triggerResize = function(self)
         self.resizeTriggered = true
@@ -17,7 +18,7 @@ UiController = Class {
     update = function(self, dt)
         local windowWidth = love.graphics.getWidth()
         local windowHeight = love.graphics.getHeight()
-        assets.ui.neuropoliticalRg(12)
+        love.graphics.setFont(self.font)
         nk.frameBegin()
             if nk.windowBegin('Wallet', constants.UI.WALLET.X*windowWidth, constants.UI.WALLET.Y*windowHeight, constants.UI.WALLET.WIDTH*windowWidth, constants.UI.WALLET.HEIGHT*windowHeight) then
                 self:handleResize(constants.UI.WALLET.X*windowWidth, constants.UI.WALLET.Y*windowHeight, constants.UI.WALLET.WIDTH*windowWidth, constants.UI.WALLET.HEIGHT*windowHeight)
