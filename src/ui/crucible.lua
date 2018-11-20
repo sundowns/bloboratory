@@ -1,4 +1,3 @@
-
 Picker = Class {
     init = function(self)
         self.choice = 0
@@ -17,7 +16,6 @@ Picker = Class {
             },
         }
     end; 
-
     display = function(self, windowWidth, windowHeight)
             nk.stylePush(self.styles.CRUCIBLE)
             if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
@@ -90,4 +88,3 @@ Picker = Class {
             nk.windowEnd()
     end;
 }
-
