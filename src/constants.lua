@@ -49,7 +49,8 @@ return {
             HEIGHT = 1, --cells
             COST = {
                 SCRAP = 1,
-            }
+            },
+            TOOLTIP = "Obstacle: Cost = 1 scrap",
         },
         SAW = {
             WIDTH = 2, --cells
@@ -59,7 +60,8 @@ return {
             TARGETTING_RADIUS = 1, --additional cell radii
             COST = {
                 SCRAP = 30,
-            }
+            },
+            TOOLTIP = "Saw: Cost = 30 scrap",
         },
         CANNON = {
             WIDTH = 2, --cells
@@ -71,6 +73,7 @@ return {
             COST = {
                 SCRAP = 30,
             },
+            TOOLTIP = "Cannon: Cost = 30 scrap",
             ROTATION_TIME = 0.2
         }
     },

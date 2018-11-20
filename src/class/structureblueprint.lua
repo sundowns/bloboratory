@@ -8,6 +8,7 @@ StructureBlueprint = Class {
         self.scaleY = scaleY or 1
         self.cost = constants.STRUCTURE[self.name].COST
         self.hitboxRadius = hitboxRadius
+        self.costToolTip = constants.STRUCTURE[self.name].TOOLTIP
     end;
     update = function(self)
     end;

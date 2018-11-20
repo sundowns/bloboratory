@@ -36,9 +36,9 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
-                    },
                 },
-            }
+            },
+        }
     end; 
 
     display = function(self, windowWidth, windowHeight)
@@ -47,24 +47,14 @@ Tray = Class {
             uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)    
             if roundController:isBuildPhase() then 
                 nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
-                if nk.button('', assets.blueprints.obstacle) then 
-                    playerController:setCurrentBlueprint(1)
-                elseif nk.widgetIsHovered() then
-                    nk.tooltip("Obstacle: Cost = 1 scrap")
+                for i, blueprint in pairs(playerController.blueprints) do
+                    if nk.button('', blueprint.image) then 
+                        playerController:setCurrentBlueprint(i)
+                    elseif nk.widgetIsHovered() then
+                        nk.tooltip(blueprint.costToolTip)
+                    end
                 end
-                if nk.button('', assets.blueprints.saw) then 
-                    playerController:setCurrentBlueprint(2)
-                elseif nk.widgetIsHovered() then
-                    nk.tooltip("Saw: Cost = 30 scrap")
-                end
-
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
-                if nk.button('', assets.blueprints.cannon) then 
-                    playerController:setCurrentBlueprint(3)
-                elseif nk.widgetIsHovered() then
-                    nk.tooltip("Cannon: Cost = 30 scrap")
-                end
-                nk.spacing(3)
+                nk.spacing(9 - #playerController.blueprints)
                 if nk.button('Start Wave') then
                     if world.grid.validPath then
                         roundController:startRound()
