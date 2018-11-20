@@ -21,7 +21,7 @@ Tower = Class {
     update = function(self, dt)
         Structure.update(self, dt)
     end;
-    draw = function(self)
+    draw = function(self)        
         Structure.draw(self)
     end;
     calculateHitbox = function(self)
@@ -36,10 +36,11 @@ Tower = Class {
 
 MeleeTower = Class {
     __includes = Tower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, attackRange)
         Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
         self.archetype = "MELEE"
         self.armed = false
+        self.targettingRadius = attackRange
 
         self.attackTimer = Timer.new()
         self.attackTimer:every(self.attackInterval, function()
@@ -65,6 +66,13 @@ MeleeTower = Class {
     end;
     disarm = function(self)
         self.armed = false
+    end;
+    draw = function(self)
+        if self.isSelected then
+            love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
+            love.graphics.rectangle('fill', self.worldOrigin.x - self.targettingRadius*constants.GRID.CELL_SIZE, self.worldOrigin.y - self.targettingRadius*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.width)*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.height)*constants.GRID.CELL_SIZE)
+        end
+        Tower.draw(self)
     end;
 }
 
@@ -132,6 +140,10 @@ TargetedTower = Class {
         end
     end;
     draw = function(self)
+        if self.isSelected then
+            love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
+            love.graphics.rectangle('fill', self.worldOrigin.x - self.targettingRadius*constants.GRID.CELL_SIZE, self.worldOrigin.y - self.targettingRadius*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.width)*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.height)*constants.GRID.CELL_SIZE)
+        end
         Tower.draw(self)
     end;
     addMutation = function(self, mutation, animation)
