@@ -59,6 +59,7 @@ function love.load()
     require("src.class.enemyblueprint")
     require("src.ui.crucible")
     
+    love.graphics.setFont(assets.ui.neuropoliticalRg(12))
     love.graphics.setDefaultFilter('nearest')
     love.keyboard.setKeyRepeat(true) -- For nuklear
     nk.init()

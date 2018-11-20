@@ -202,9 +202,9 @@ return {
             LAYOUTROW_HEIGHT = 0.055,
         },
         WALLET = {
-            X = 0.775,
+            X = 0.725,
             Y = 0.02,
-            WIDTH = 0.2,
+            WIDTH = 0.25,
             HEIGHT = 0.03,
         },
         CRUCIBLE = {
