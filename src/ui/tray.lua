@@ -18,6 +18,7 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
+                    ['image padding'] = {x = 4, y = 4}
                 },
             },
             SELECT_MENU = {
@@ -36,6 +37,7 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
+                    ['image padding'] = {x = 4, y = 4}
                 },
             },
         }
@@ -99,7 +101,7 @@ Tray = Class {
                         nk.tooltip("Elec: Applies high variance bonus damage. Cost = 30 charge")                 
                     end
                     nk.spacing(3)
-                    if nk.button('Refund') then 
+                    if nk.button('', assets.ui.refund) then 
                         playerController:refundCurrentStructure()
                     end
                 end
