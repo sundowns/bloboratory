@@ -21,8 +21,8 @@ Tower = Class {
     update = function(self, dt)
         Structure.update(self, dt)
     end;
-    draw = function(self)        
-        Structure.draw(self)
+    draw = function(self, blockingPath)        
+        Structure.draw(self, blockingPath)
     end;
     calculateHitbox = function(self)
         -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
@@ -67,12 +67,12 @@ MeleeTower = Class {
     disarm = function(self)
         self.armed = false
     end;
-    draw = function(self)
+    draw = function(self, blockingPath)
         if self.isSelected then
             love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
             love.graphics.rectangle('fill', self.worldOrigin.x - self.targettingRadius*constants.GRID.CELL_SIZE, self.worldOrigin.y - self.targettingRadius*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.width)*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.height)*constants.GRID.CELL_SIZE)
         end
-        Tower.draw(self)
+        Tower.draw(self, blockingPath)
     end;
 }
 
@@ -139,12 +139,12 @@ TargetedTower = Class {
             self.canShoot = false
         end
     end;
-    draw = function(self)
+    draw = function(self, blockingPath)
         if self.isSelected then
             love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
             love.graphics.rectangle('fill', self.worldOrigin.x - self.targettingRadius*constants.GRID.CELL_SIZE, self.worldOrigin.y - self.targettingRadius*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.width)*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.height)*constants.GRID.CELL_SIZE)
         end
-        Tower.draw(self)
+        Tower.draw(self, blockingPath)
     end;
     addMutation = function(self, mutation, animation)
         Tower.addMutation(self, mutation, animation)

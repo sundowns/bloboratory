@@ -20,11 +20,15 @@ Structure = Class {
         end
     end;
     drawAt = function(self, origin)
-        Util.l.resetColour()
+        -- Util.l.resetColour()
         animationController:drawStructureSpriteInstance(self.animation, origin, self.width, self.height, self.angleToTarget)
     end;
-    draw = function(self)
+    draw = function(self, blockingPath)
         if self.animation then
+            Util.l.resetColour()
+            if blockingPath then
+                love.graphics.setColor(1,0,0,0.8)
+            end
             self:drawAt(self.worldOrigin)
         elseif self.type == "TOWER" then --defaults to make adding new towers not suck
             love.graphics.setColor(constants.COLOURS.TOWER)

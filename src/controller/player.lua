@@ -19,6 +19,7 @@ PlayerController = Class {
         self.wallet = Wallet()
         self.hasWon = false
         self.hasLost = false
+        self.lastPlacedStructure = nil
     end;
     update = function(self, dt)
         self.wallet:update(dt)
@@ -132,5 +133,10 @@ PlayerController = Class {
         self.hasWon = true
         audioController:stopMusic()
         -- TODO: play some wicked victory music
+    end;
+    newStructurePlaced = function(self, structure)
+        self.wallet:charge(structure:getTotalCost(), Vector(structure.worldOrigin.x + structure.width/2*constants.GRID.CELL_SIZE, structure.worldOrigin.y))
+        self:toggleStructureSelection(structure)
+        self.lastPlacedStructure = {gridOrigin = structure.gridOrigin:clone()}
     end;
 }
