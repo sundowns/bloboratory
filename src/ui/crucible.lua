@@ -29,41 +29,43 @@ Picker = Class {
             nk.stylePush(self.styles.CRUCIBLE)
             if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
                 uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
-                nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                for i=1, #roundController.crucible.slots do 
-                    local blueprint = roundController.crucible.slots[i].blueprint
-                    if i+1 % 3 == 0 then
-                        nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
-                    end
-
-                    if blueprint then
-                        nk.stylePush({
-                            ['button'] = {
-                                ['normal'] = blueprint.image,
-                                ['hover'] = blueprint.imageHovered,
-                                ['active'] = blueprint.imageActive,
-                            },
-                        })
-                        self:tooltipSlotUpdate(blueprint)
-                    else
-                        if self.tooltip_slot_current ~= self.tooltip_slot_default then
-                            self:tooltipSlotClear()
+                if roundController:isBuildPhase() then 
+                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                    for i=1, #roundController.crucible.slots do 
+                        local blueprint = roundController.crucible.slots[i].blueprint
+                        if i+1 % 3 == 0 then
+                            nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
                         end
-                    end
-                    if nk.button('') then
-                        self.choice = i
-                        nk.windowShow(constants.UI.PICKER.NAME)
-                        playerController:toggleStructureSelection(playerController.currentSelectedStructure)
-                    elseif nk.widgetIsHovered() then 
-                        nk.stylePush({['window'] = {
-                            ['background'] = '#000000'}
-                        })
-                        nk.tooltip(self.tooltip_slot_current)
-                        nk.stylePop()
-                    end
-    
-                    if blueprint then
-                        nk.stylePop()
+
+                        if blueprint then
+                            nk.stylePush({
+                                ['button'] = {
+                                    ['normal'] = blueprint.image,
+                                    ['hover'] = blueprint.imageHovered,
+                                    ['active'] = blueprint.imageActive,
+                                },
+                            })
+                            self:tooltipSlotUpdate(blueprint)
+                        else
+                            if self.tooltip_slot_current ~= self.tooltip_slot_default then
+                                self:tooltipSlotClear()
+                            end
+                        end
+                        if nk.button('') then
+                            self.choice = i
+                            nk.windowShow(constants.UI.PICKER.NAME)
+                            playerController:toggleStructureSelection(playerController.currentSelectedStructure)
+                        elseif nk.widgetIsHovered() then 
+                            nk.stylePush({['window'] = {
+                                ['background'] = '#000000'}
+                            })
+                            nk.tooltip(self.tooltip_slot_current)
+                            nk.stylePop()
+                        end
+        
+                        if blueprint then
+                            nk.stylePop()
+                        end
                     end
                 end
             end
