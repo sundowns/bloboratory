@@ -111,6 +111,7 @@ PlayerController = Class {
             elseif upgradeType == "ELECTRIC" then
                 mutation = ElectricMutation()
             end
+            mutation:lookupStats(self.currentSelectedStructure.towerType)
             self.currentSelectedStructure:addMutation(mutation) 
             return true
         else

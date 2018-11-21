@@ -75,9 +75,9 @@ Debuff = Class {
 
 Inflame = Class {
     __includes = Debuff,
-    init = function(self, owner)
-        Debuff.init(self, "INFLAME", owner, constants.DEBUFF.INFLAME.DURATION, constants.DEBUFF.INFLAME.TICK_DURATION, FIRE_PARTICLE_QUADS)
-        self.damagePerTick = constants.DEBUFF.INFLAME.DAMAGE_PER_TICK
+    init = function(self, owner, stats)
+        Debuff.init(self, "INFLAME", owner, stats.DURATION, stats.TICK_DURATION, FIRE_PARTICLE_QUADS)
+        self.damagePerTick = stats.DAMAGE_PER_TICK
     end;
     update = function(self, dt)
         Debuff.update(self, dt)
@@ -98,9 +98,9 @@ Inflame = Class {
 
 Freeze = Class {
     __includes = Debuff,
-    init = function(self, owner)
-        Debuff.init(self, "FREEZE", owner, constants.DEBUFF.FREEZE.DURATION, constants.DEBUFF.FREEZE.TICK_DURATION, ICE_PARTICLE_QUADS)
-        self.speedModifier = constants.DEBUFF.FREEZE.SPEED_MODIFIER
+    init = function(self, owner, stats)
+        Debuff.init(self, "FREEZE", owner, stats.DURATION, stats.TICK_DURATION, ICE_PARTICLE_QUADS)
+        self.speedModifier = stats.SPEED_MODIFIER
     end;
     update = function(self, dt)
         Debuff.update(self, dt)
@@ -128,8 +128,8 @@ Freeze = Class {
 
 Electrify = Class {
     __includes = Debuff,
-    init = function(self, owner)
-        Debuff.init(self, "ELECTRIFY", owner, constants.DEBUFF.ELECTRIFY.DURATION, constants.DEBUFF.ELECTRIFY.TICK_DURATION, ELECTRIC_PARTICLE_QUADS)
+    init = function(self, owner, stats)
+        Debuff.init(self, "ELECTRIFY", owner, stats.DURATION, stats.TICK_DURATION, ELECTRIC_PARTICLE_QUADS)
     end;
     update = function(self, dt)
         Debuff.update(self, dt)

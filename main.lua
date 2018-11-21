@@ -10,6 +10,7 @@ animationController = {}
 roundController = {}
 audioController = {}
 world = {}
+TOWER_STATS = {}
 
 local paused = false
 
@@ -63,6 +64,7 @@ function love.load()
     love.graphics.setDefaultFilter('nearest')
     love.keyboard.setKeyRepeat(true) -- For nuklear
     nk.init()
+    TOWER_STATS = require("src.tower-stats")
     uiController = UiController()
     audioController = AudioController()
     inputController = InputController()
