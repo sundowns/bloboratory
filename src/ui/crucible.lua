@@ -105,5 +105,17 @@ Picker = Class {
                 nk.windowHide(constants.UI.PICKER.NAME)
             end
             nk.windowEnd()
+
+            nk.stylePush({['window'] = {
+                ['fixed background'] = assets.ui.menuCrucibleTop}
+            })
+            if nk.windowBegin('Crucible Top', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight - 32, constants.UI.CRUCIBLE.WIDTH*windowWidth, 32) then
+                uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight - 32, constants.UI.CRUCIBLE.WIDTH*windowWidth, 32)
+
+                nk.layoutRow('dynamic', 30, 1)
+
+            end
+            nk.stylePop()
+            nk.windowEnd()
     end;
 }
