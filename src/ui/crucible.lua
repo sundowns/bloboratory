@@ -7,7 +7,7 @@ Picker = Class {
             CRUCIBLE = {
                 ['window'] = {
                     ['fixed background'] = assets.ui.menuCrucible,
-                    ['padding'] = {x = 13, y = 60}
+                    ['padding'] = {x = 13, y = 35}
                 },
                 ['button'] = {
                     ['border color'] = constants.COLOURS.UI.NONE,

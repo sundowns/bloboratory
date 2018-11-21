@@ -1,7 +1,7 @@
 AudioController = Class {
     init = function(self)
         self.music = ripple.newSound {
-            source = assets.audio.music.doom,
+            source = assets.audio.music.music3,
             volume = 0.375,
         }
         self.music:setLooping(true)

@@ -212,7 +212,7 @@ return {
             Y = 0.755,
             WIDTH = 0.2,
             HEIGHT = 0.25,
-            LAYOUTROW_HEIGHT = 0.0525,
+            LAYOUTROW_HEIGHT = 0.06,
         },
         SELECTED = {
             X = 0.6,
