@@ -74,9 +74,10 @@ Tray = Class {
         nk.stylePush(self.styles.MAIN_MENU)
         if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight)
-            nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight), {1/2, 1/2})
-            nk.label('Rounds:')
-            nk.label('50')
+            nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight/2), 1)
+            nk.label('Rounds: ' .. roundController.roundIndex .. ' / ' .. roundController.totalRounds)
+            nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight/2), 1)
+            nk.label('Lives: ' .. playerController.livesRemaining .. ' / ' .. constants.MISC.STARTING_LIVES)
         end
         nk.windowEnd()
         nk.stylePop()

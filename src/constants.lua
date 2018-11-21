@@ -262,5 +262,8 @@ return {
             DURATION = 3,
             TICK_DURATION = 0.25,
         },
+    },
+    MISC = {
+        STARTING_LIVES = 30,
     }
 }

@@ -23,6 +23,7 @@ Enemy = Class {
         self.markedForDeath = false
         self.hitGoal = false
         self.orientation = ORIENTATIONS.LEFT --angle in radians
+        self.livesToRemove = 1
 
         self.debuffs = {}
     end;
@@ -31,7 +32,7 @@ Enemy = Class {
             self.markedForDeath = true
         end
         if currentCell.isGoal then
-            --TODO: reduce remaining leakcount somehow
+            playerController:leak(self.livesToRemove)
             self.hitGoal = true
         end
         --decide direction to move based on current grid's came_from value (breadth first search)

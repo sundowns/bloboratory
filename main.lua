@@ -77,9 +77,12 @@ function love.update(dt)
     if not paused then
         world:update(dt)
         Timer.update(dt) --the global version is used mostly for tweening/small use-cases
-        uiController:update(dt)
-        inputController:update(dt)
-        cameraController:update(dt)
+
+        if not playerController.hasWon and not playerController.hasLost then
+            uiController:update(dt)
+            inputController:update(dt)
+            cameraController:update(dt)
+        end
         playerController:update(dt)
     end
 end
@@ -94,7 +97,6 @@ function love.draw()
     uiController:draw()
 
     if debug then
-        cameraController:draw()
         inputController:draw()
         Util.l.resetColour()
         Util.l.renderStats()
@@ -148,4 +150,3 @@ end
 function love.wheelmoved(x, y)
     nk.wheelmoved(x, y)
 end
-

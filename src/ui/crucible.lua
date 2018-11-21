@@ -30,11 +30,11 @@ Picker = Class {
                 uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
 
                 if roundController:isBuildPhase() then 
-                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                    nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), 3)
                     for i=1, #roundController.crucible.slots do 
                         local blueprint = roundController.crucible.slots[i].blueprint
                         if i+1 % 3 == 0 then
-                            nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
+                            nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), 3)
                         end
 
                         if blueprint then
@@ -46,15 +46,13 @@ Picker = Class {
                                 },
                             })
                             self:tooltipSlotUpdate(blueprint)
-                        else
-                            if self.tooltip_slot_current ~= self.tooltip_slot_default then
-                                self:tooltipSlotClear()
-                            end
+                        elseif self.tooltip_slot_current ~= self.tooltip_slot_default then
+                            self:tooltipSlotClear()
                         end
 
                         if nk.widgetIsHovered() then 
                             nk.stylePush({['window'] = {
-                                ['background'] = '#000000',
+                                ['background'] = constants.COLOURS.UI.BLACK,
                                 ['padding'] = {x = 5, y = 0}}
                             })
                             nk.tooltip(self.tooltip_slot_current)
@@ -122,9 +120,8 @@ Picker = Class {
                 uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight - 32, constants.UI.CRUCIBLE.WIDTH*windowWidth, 32)
 
                 nk.layoutRow('dynamic', 30, 1)
-
             end
-            nk.stylePop()
             nk.windowEnd()
+            nk.stylePop()
     end;
 }

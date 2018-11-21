@@ -105,6 +105,9 @@ AudioController = Class {
             }),
         }
     end;
+    stopMusic = function(self)
+        self.music:stop()
+    end;
     playNext = function(self, tracklistId)
         assert(self.tracklists[tracklistId], "[ERROR] Attempted to playNext from non-existent tracklist: " .. tracklistId)
         self.tracklists[tracklistId]:playNext()

@@ -12,6 +12,13 @@ InputController = Class {
         self.isPlacingTower = not self.isPlacingTower
     end;
     keypressed = function(self, key)
+        if playerController.hasWon or playerController.hasLost then
+            if key == "escape" then
+                love.event.quit()
+            else
+                return
+            end
+        end
         if tonumber(key) and roundController:isBuildPhase() then
             playerController:setCurrentBlueprint(tonumber(key))
         end
@@ -20,9 +27,9 @@ InputController = Class {
         end
         if not self.isPlacingTower then
             if key == "s" and roundController:isBuildPhase() then
-                world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true)
+                world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
             elseif key == "g" and roundController:isBuildPhase() then
-                world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true)
+                world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
             elseif key == "r" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
             elseif key == "f" and playerController.currentSelectedStructure then

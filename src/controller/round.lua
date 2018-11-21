@@ -1,8 +1,8 @@
 RoundController = Class {
     init = function(self)
-        self.roundIndex = 0
-        self.currentRound = Round(0)
-        self.totalRounds = 10
+        self.roundIndex = 1
+        self.currentRound = Round(1)
+        self.totalRounds = 20
         self.crucible = Crucible(3)
         self.ENEMY_BLUEPRINTS = require("src.enemy-blueprints")
     end;
@@ -22,7 +22,7 @@ RoundController = Class {
     end;
     nextRound = function(self)
         if self.roundIndex + 1 > self.totalRounds then
-            print('u win idiot') --TODO: win condition
+            playerController:victory()
         else
             self.crucible:reset()
             self.roundIndex = self.roundIndex + 1
@@ -34,7 +34,7 @@ RoundController = Class {
     startRound = function(self)
         if self:isBuildPhase() then
             -- build the crucible enemies
-            local roundEnemies = self.crucible:constructEnemies(self.roundIndex, self.totalRounds) --TODO: do something cleverer for health scaling
+            local roundEnemies = self.crucible:constructEnemies(self.roundIndex, self.totalRounds) 
             if #roundEnemies > 0 then -- check they make sense
                 self.currentRound:setEnemies(roundEnemies)
                 world:setupTimers()

@@ -13,9 +13,12 @@ PlayerController = Class {
         self:addNewStructureBlueprint("SAW") -- TODO: will be unlocked, not a default valu
         self:addNewStructureBlueprint("CANNON")  -- TODO: will be unlocked, not a default value
 
+        self.livesRemaining = constants.MISC.STARTING_LIVES
         self.currentBlueprint = nil
         self.currentSelectedStructure = nil
         self.wallet = Wallet()
+        self.hasWon = false
+        self.hasLost = false
     end;
     update = function(self, dt)
         self.wallet:update(dt)
@@ -114,5 +117,21 @@ PlayerController = Class {
             audioController:playAny("INSUFFICIENT_FUNDS")
             return false
         end
+    end;
+    leak = function(self, livesLost)
+        self.livesRemaining = self.livesRemaining - livesLost
+        if self.livesRemaining <= 0 and not self.hasLost and not self.hasWon then
+            self:defeat()
+        end
+    end;
+    defeat = function(self)
+        self.hasLost = true
+        audioController:stopMusic()
+        --TODO: play some bitter defeat music
+    end;
+    victory = function(self)
+        self.hasWon = true
+        audioController:stopMusic()
+        -- TODO: play some wicked victory music
     end;
 }
