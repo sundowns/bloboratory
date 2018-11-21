@@ -209,7 +209,7 @@ return {
         },
         CRUCIBLE = {
             X = 0.4,
-            Y = 0.755,
+            Y = 0.75,
             WIDTH = 0.2,
             HEIGHT = 0.25,
             LAYOUTROW_HEIGHT = 0.0525,

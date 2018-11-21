@@ -14,7 +14,6 @@ Picker = Class {
                     ['normal'] = constants.COLOURS.UI.NONE,
                     ['hover'] = constants.COLOURS.UI.PANEL_LIGHT,
                     ['active'] = constants.COLOURS.UI.PANEL_DARK,
-                    ['padding'] = { x = 100, y = 100}
                 },
             },
         }
@@ -29,6 +28,7 @@ Picker = Class {
             nk.stylePush(self.styles.CRUCIBLE)
             if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
                 uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
+
                 if roundController:isBuildPhase() then 
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), {(1/3),(1/3),(1/3)})
                     for i=1, #roundController.crucible.slots do 
@@ -51,17 +51,26 @@ Picker = Class {
                                 self:tooltipSlotClear()
                             end
                         end
-                        if nk.button('') then
-                            self.choice = i
-                            nk.windowShow(constants.UI.PICKER.NAME)
-                            playerController:toggleStructureSelection(playerController.currentSelectedStructure)
-                        elseif nk.widgetIsHovered() then 
+
+                        if nk.widgetIsHovered() then 
                             nk.stylePush({['window'] = {
-                                ['background'] = '#000000'}
+                                ['background'] = '#000000',
+                                ['padding'] = {x = 5, y = 0}}
                             })
                             nk.tooltip(self.tooltip_slot_current)
                             nk.stylePop()
+                        elseif nk.windowIsHovered() then 
+                            if not nk.windowHasFocus() then 
+                                nk.windowSetFocus('Crucible')
+                            end
                         end
+
+                        if nk.button('Hey') then
+                            self.choice = i
+                            nk.windowShow(constants.UI.PICKER.NAME)
+                            playerController:toggleStructureSelection(playerController.currentSelectedStructure)
+                        end
+
         
                         if blueprint then
                             nk.stylePop()

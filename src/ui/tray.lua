@@ -50,10 +50,14 @@ Tray = Class {
             if roundController:isBuildPhase() then 
                 nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
                 for i, blueprint in pairs(playerController.blueprints) do
+                    self:displayTooltip(blueprint.costToolTip)
                     if nk.button('', blueprint.uiImage) then 
                         playerController:setCurrentBlueprint(i)
-                    elseif nk.widgetIsHovered() then
-                        nk.tooltip(blueprint.costToolTip)
+                    end
+                end
+                if nk.windowIsHovered() and not nk.widgetIsHovered() then 
+                    if not nk.windowHasFocus() then 
+                        nk.windowSetFocus('Menu')
                     end
                 end
                 nk.spacing(9 - #playerController.blueprints)
@@ -83,26 +87,29 @@ Tray = Class {
             if playerController.currentSelectedStructure ~= nil then 
                 if roundController:isBuildPhase() then 
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
+                    self:displayTooltip("Fire: Applies damage over time debuff. Cost = 30 flint")
                     if nk.button('', assets.ui.iconFire) then 
                         playerController:upgradeCurrentStructure("FIRE")
-                    elseif nk.widgetIsHovered() then
-                        nk.tooltip("Fire: Applies damage over time debuff. Cost = 30 flint")
                     end
+                    self:displayTooltip("Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
                     if nk.button('', assets.ui.iconIce) then 
                         playerController:upgradeCurrentStructure("ICE")
-                    elseif nk.widgetIsHovered() then
-                        nk.tooltip("Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
                     end
-
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
+                    self:displayTooltip("Elec: Applies high variance bonus damage. Cost = 30 charge")      
                     if nk.button('', assets.ui.iconElectric) then 
                         playerController:upgradeCurrentStructure("ELECTRIC")    
-                    elseif nk.widgetIsHovered() then
-                        nk.tooltip("Elec: Applies high variance bonus damage. Cost = 30 charge")                 
                     end
                     nk.spacing(3)
+                    self:displayTooltip("Refund tower for full cost")
                     if nk.button('', assets.ui.refund) then 
                         playerController:refundCurrentStructure()
+                    end
+
+                    if nk.windowIsHovered() and not nk.widgetIsHovered() then 
+                        if not nk.windowHasFocus() then 
+                            nk.windowSetFocus('Selected')
+                        end
                     end
                 end
             end
@@ -119,6 +126,19 @@ Tray = Class {
         end
         nk.windowEnd()
         nk.stylePop()
+    end;
+
+    displayTooltip = function(self, tooltip)
+        if nk.widgetIsHovered() then 
+            nk.stylePush({['window'] = {
+                ['background'] = constants.COLOURS.UI.BLACK,
+                ['padding'] = {x = 5, y = 0}},
+                ['text'] = {
+                    ['color'] = constants.COLOURS.UI.WHITE}
+            })
+            nk.tooltip(tooltip)
+            nk.stylePop()
+        end
     end;
 }
 
