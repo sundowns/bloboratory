@@ -63,7 +63,7 @@ Picker = Class {
                             end
                         end
 
-                        if nk.button('Hey') then
+                        if nk.button('') then
                             self.choice = i
                             nk.windowShow(constants.UI.PICKER.NAME)
                             playerController:toggleStructureSelection(playerController.currentSelectedStructure)
