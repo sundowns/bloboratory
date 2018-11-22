@@ -2,7 +2,7 @@ AudioController = Class {
     init = function(self)
         self.music_round = ripple.newSound {
             source = assets.audio.music.doom,
-            volume = 0.375,
+            volume = 0.7,
         }
         self.music_build = ripple.newSound {
             source = assets.audio.music.music3,
