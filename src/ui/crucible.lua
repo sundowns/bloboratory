@@ -6,8 +6,8 @@ Picker = Class {
         self.styles = {
             CRUCIBLE = {
                 ['window'] = {
-                    ['fixed background'] = assets.ui.menuCrucible,
-                    ['padding'] = {x = 13, y = 35}
+                    ['fixed background'] = assets.ui.menuCrucibleBottom,
+                    ['padding'] = {x = 14, y = 12}
                 },
                 ['button'] = {
                     ['border color'] = constants.COLOURS.UI.NONE,
@@ -16,6 +16,17 @@ Picker = Class {
                     ['active'] = constants.COLOURS.UI.PANEL_DARK,
                 },
             },
+            START = {
+                ['window'] = {
+                    ['fixed background'] = assets.ui.menuCrucibleButton,
+                    ['padding'] = {x = 44, y = 10}
+                },
+                ['button'] = {
+                    ['normal'] = assets.ui.startGrey,
+                    ['hover'] = assets.ui.startGrey,
+                    ['active'] = assets.ui.startGrey,
+                },
+            }
         }
     end; 
     tooltipSlotClear = function(self)
@@ -29,7 +40,7 @@ Picker = Class {
             if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
                 uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
 
-                if roundController:isBuildPhase() then 
+                if roundController:isBuildPhase() then
                     nk.layoutRow('dynamic', (constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT*windowHeight), 3)
                     for i=1, #roundController.crucible.slots do 
                         local blueprint = roundController.crucible.slots[i].blueprint
@@ -78,6 +89,34 @@ Picker = Class {
             end
             nk.windowEnd()
             nk.stylePop()
+
+            nk.stylePush(self.styles.START)
+            if nk.windowBegin('Start', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight -48, constants.UI.CRUCIBLE.WIDTH*windowWidth, 0.05*windowHeight) then 
+                uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight -48, constants.UI.CRUCIBLE.WIDTH*windowWidth, 0.05*windowHeight)
+                nk.layoutRow('dynamic', constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT * windowWidth - 44, 1)
+
+                if roundController:isBuildPhase() then
+                    nk.stylePush({['button'] = 
+                        {   
+                            ['active'] = assets.ui.startActive,
+                            ['normal'] = assets.ui.startActive,
+                            ['hovered'] = assets.ui.startActive,
+                        },
+                    })
+                end
+
+                if nk.button('') then
+                    if roundController:isBuildPhase() and world.grid.validPath then
+                        roundController:startRound()
+                    end
+                end
+
+                if roundController:isBuildPhase() then 
+                    nk.stylePop()
+                end
+            end
+            nk.windowEnd()
+            nk.stylePop()
     
             if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                 uiController:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
@@ -112,16 +151,5 @@ Picker = Class {
                 nk.windowHide(constants.UI.PICKER.NAME)
             end
             nk.windowEnd()
-
-            nk.stylePush({['window'] = {
-                ['fixed background'] = assets.ui.menuCrucibleTop}
-            })
-            if nk.windowBegin('Crucible Top', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight - 32, constants.UI.CRUCIBLE.WIDTH*windowWidth, 32) then
-                uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight - 32, constants.UI.CRUCIBLE.WIDTH*windowWidth, 32)
-
-                nk.layoutRow('dynamic', 30, 1)
-            end
-            nk.windowEnd()
-            nk.stylePop()
     end;
 }

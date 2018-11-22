@@ -214,10 +214,10 @@ return {
         },
         CRUCIBLE = {
             X = 0.4,
-            Y = 0.75,
+            Y = 0.76,
             WIDTH = 0.2,
-            HEIGHT = 0.25,
-            LAYOUTROW_HEIGHT = 0.06,
+            HEIGHT = 0.24,
+            LAYOUTROW_HEIGHT = 0.064,
         },
         SELECTED = {
             X = 0.6,

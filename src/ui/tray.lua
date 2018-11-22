@@ -55,12 +55,6 @@ Tray = Class {
                         playerController:setCurrentBlueprint(i)
                     end
                 end
-                nk.spacing(9 - #playerController.blueprints)
-                if nk.button('Start Wave') then
-                    if world.grid.validPath then
-                        roundController:startRound()
-                    end
-                end
                 if nk.windowIsHovered() and not nk.widgetIsHovered() then 
                     if not nk.windowHasFocus() then 
                         nk.windowSetFocus('Menu')
