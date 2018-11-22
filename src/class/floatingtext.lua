@@ -4,7 +4,7 @@ FloatingText = Class {
         assert(origin and origin.x and origin.y)
         assert(tickDelta)
         self.colour = colour
-        self.text = love.graphics.newText(love.graphics.getFont(), {self.colour, text})
+        self.text = love.graphics.newText(assets.ui.neuropoliticalRg(20), {self.colour, text})
         self.origin = origin
         self.tickDelta = tickDelta --a vector stating positional change per second
     end;

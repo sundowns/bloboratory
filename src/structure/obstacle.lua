@@ -7,7 +7,4 @@ Obstacle = Class {
     update = function(self, dt)
         Structure.update(self, dt)
     end;
-    draw = function(self)
-        Structure.draw(self)
-    end
 }

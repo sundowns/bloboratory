@@ -23,6 +23,7 @@ Enemy = Class {
         self.markedForDeath = false
         self.hitGoal = false
         self.orientation = ORIENTATIONS.LEFT --angle in radians
+        self.livesToRemove = 1
 
         self.debuffs = {}
     end;
@@ -31,7 +32,7 @@ Enemy = Class {
             self.markedForDeath = true
         end
         if currentCell.isGoal then
-            --TODO: reduce remaining leakcount somehow
+            playerController:leak(self.livesToRemove)
             self.hitGoal = true
         end
         --decide direction to move based on current grid's came_from value (breadth first search)
@@ -144,4 +145,11 @@ Enemy = Class {
         self.maxHealth = self.maxHealth * healthModifier
         self.health = self.maxHealth
     end;
+    getExtrapolatedPosition = function(self, elapsedTime)
+        local moveToX = self.movingTo.gridOrigin.x * constants.GRID.CELL_SIZE + constants.GRID.CELL_SIZE/2
+        local moveToY = self.movingTo.gridOrigin.y * constants.GRID.CELL_SIZE + constants.GRID.CELL_SIZE/2
+
+        local delta = Vector(moveToX - self.worldOrigin.x, moveToY - self.worldOrigin.y):normalizeInplace()
+        return Vector(delta.x*elapsedTime*self.speed, delta.y*elapsedTime*self.speed) 
+    end
 }

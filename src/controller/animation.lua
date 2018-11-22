@@ -11,7 +11,6 @@ AnimationController = Class {
         end
 
         self.spriteBank[spriteName] = sprite_file()
-        -- Util.t.print(self.spriteBank[spriteName])
         return self.spriteBank[spriteName]
     end;
     createInstance = function(self, spriteName, currentState, size_scale, rotation)
@@ -68,6 +67,12 @@ AnimationController = Class {
             else
                 layer.animation:draw(instance.sprite.image, position.x+cellsWidth*w*layer.scale.x/2, position.y+cellsHeight*h*layer.scale.y/2, layer.rotation, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
             end
+        end
+    end;
+    drawProjectileSpriteInstance = function(self, instance, position, cellsWidth, cellsHeight, targettingAngle)
+        for i, layer in pairs(instance.animations) do
+            local w, h = layer.animation:getDimensions()
+            layer.animation:draw(instance.sprite.image, position.x, position.y, targettingAngle, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
         end
     end;
     drawEnemySpriteInstance = function(self, instance, position, orientation)

@@ -23,11 +23,20 @@ return {
         BLUEPRINT_VALID = {0,1,0, 0.7},
         BLUEPRINT_INVALID = {1,0,0, 0.7},
         BLUEPRINT_RANGE = {0.8,0.5,0},
+        STRUCTURE_RANGE = {0.8,0.5,0,0.3},
         TOWER = {0.5,0,0.5}, -- debug
         CAMERA_PANZONES = {1,0.5,0}, -- debug,
         PROJECTILE = {0,0.5,1},
         SELECTION = {1,1,0},
-        OPTIMAL_PATH = {0,1,0.2,0.5}
+        OPTIMAL_PATH = {0,1,0.2,0.5},
+        UI = {
+            NONE = nk.colorRGBA(0,0,0,0),
+            BLACK = nk.colorRGBA(0,0,0,255),
+            WHITE = nk.colorRGBA(255,255,255,255),
+            PANEL = nk.colorRGBA(48, 31, 17, 255),
+            PANEL_LIGHT = nk.colorRGBA(147,96,51,128),
+            PANEL_DARK = nk.colorRGBA(108,70,37,128),
+        },
     },
     GRID = {
         COLUMNS = 36,
@@ -40,7 +49,8 @@ return {
             HEIGHT = 1, --cells
             COST = {
                 SCRAP = 1,
-            }
+            },
+            TOOLTIP = "Obstacle: Cost = 1 scrap",
         },
         SAW = {
             WIDTH = 2, --cells
@@ -50,37 +60,37 @@ return {
             TARGETTING_RADIUS = 1, --additional cell radii
             COST = {
                 SCRAP = 30,
-            }
+            },
+            TOOLTIP = "Saw: Cost = 30 scrap",
         },
         CANNON = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 5, --damage per HIT 
+            ATTACK_DAMAGE = 6, --damage per HIT 
             TARGETTING_RADIUS = 5, --additional cell radii
             ATTACK_INTERVAL = 0.5,
             COST = {
                 SCRAP = 30,
             },
+            TOOLTIP = "Cannon: Cost = 30 scrap",
             ROTATION_TIME = 0.2
         }
     },
     MUTATIONS = {
         FIRE = {
             COST = {
-                FIRE = 50
+                FIRE = 30
             }
         },
         ELECTRIC = {
             COST = {
-                ELECTRIC = 50
+                ELECTRIC = 30
             },
-            MINIMUM_DAMAGE = 0.25, -- always applied! see below
-            MAXIMUM_EXTRA_DAMAGE = 2, --total maximum is this + minimum
         },
         ICE = {
             COST = {
-                ICE = 50
+                ICE = 30
             }
         },
     },
@@ -117,28 +127,28 @@ return {
             HEIGHT = 3
         },
         BLOB = {
-            HEALTH = 10,
+            HEALTH = 8,
             SPEED = 150,
             YIELD = {
                 SCRAP = 2
             },
         },
         BLOBFIRE = {
-            HEALTH = 30,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 FIRE = 1
             },
         },
         BLOBICE = {
-            HEALTH = 30,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 ICE = 1
             },
         },
         BLOBELECTRIC = {
-            HEALTH = 30,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1
@@ -147,6 +157,9 @@ return {
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
+        STARTING_FIRE = 0, 
+        STARTING_ICE = 0,
+        STARTING_ELECTRIC = 0,
         GAINS = {
             DRIFT_SPEED = 50,
             TIME_TO_LIVE = 1,
@@ -157,18 +170,18 @@ return {
     UI = {
         OPTIONS_MENU = {
             X = 0.4,
-            Y = 0.35,
+            Y = 0.33,
             WIDTH = 0.2,
-            HEIGHT = 0.16,
-            LAYOUTROW_HEIGHT = 0.045,
+            HEIGHT = 0.4,
+            LAYOUTROW_HEIGHT = 0.055,
             NAME = 'OptionsMenu'
         },
         OPTIONS_BUTTON = {
             X = 0.01,
             Y = 0.01,
             WIDTH = 0.075,
-            HEIGHT = 0.025,
-            LAYOUTROW_HEIGHT = 0.015,
+            HEIGHT = 0.04,
+            LAYOUTROW_HEIGHT = 0.036,
             NAME = 'OptionsButton'
         },
         OPTIONS_SOUND = {
@@ -187,17 +200,17 @@ return {
             LAYOUTROW_HEIGHT = 0.055,
         },
         WALLET = {
-            X = 0.775,
+            X = 0.725,
             Y = 0.02,
-            WIDTH = 0.2,
+            WIDTH = 0.25,
             HEIGHT = 0.03,
         },
         CRUCIBLE = {
             X = 0.4,
-            Y = 0.755,
+            Y = 0.75,
             WIDTH = 0.2,
             HEIGHT = 0.25,
-            LAYOUTROW_HEIGHT = 0.075,
+            LAYOUTROW_HEIGHT = 0.06,
         },
         SELECTED = {
             X = 0.6,
@@ -233,19 +246,22 @@ return {
     },
     DEBUFF = {
         MAX_PARTICLES = 8,
-        INFLAME = {
-            DURATION = 2,
-            TICK_DURATION = 0.1,
-            DAMAGE_PER_TICK = 0.4,
-        },
-        FREEZE = {
-            DURATION = 2,
-            TICK_DURATION = 0.25,
-            SPEED_MODIFIER = 0.5, -- 50% total speed
-        },
-        ELECTRIFY = {
-            DURATION = 3,
-            TICK_DURATION = 0.25,
-        },
+        -- INFLAME = {
+        --     DURATION = 2,
+        --     TICK_DURATION = 0.1,
+        --     DAMAGE_PER_TICK = 0.4,
+        -- },
+        -- FREEZE = {
+        --     DURATION = 2,
+        --     TICK_DURATION = 0.25,
+        --     SPEED_MODIFIER = 0.5, -- 50% total speed
+        -- },
+        -- ELECTRIFY = {
+        --     DURATION = 3,
+        --     TICK_DURATION = 0.25,
+        -- },
+    },
+    MISC = {
+        STARTING_LIVES = 30,
     }
 }

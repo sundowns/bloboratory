@@ -18,7 +18,7 @@ Projectile = Class {
         animationController:updateSpriteInstance(self.animation, dt)
     end;
     draw = function(self)
-        animationController:drawStructureSpriteInstance(self.animation, self.worldOrigin, 1, 1, self.angle)
+        animationController:drawProjectileSpriteInstance(self.animation, self.worldOrigin, 1, 1, self.angle)
     end;
     moveBy = function(self, dx, dy)
         self.worldOrigin = Vector(self.worldOrigin.x + dx, self.worldOrigin.y + dy)

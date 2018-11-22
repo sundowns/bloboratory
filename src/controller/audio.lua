@@ -1,12 +1,18 @@
 AudioController = Class {
     init = function(self)
-        self.music = ripple.newSound {
+        self.music_round = ripple.newSound {
             source = assets.audio.music.doom,
+            volume = 0.7,
+        }
+        self.music_build = ripple.newSound {
+            source = assets.audio.music.music3,
             volume = 0.375,
         }
+        self.music = self.music_build
         self.music:setLooping(true)
         self.music:play()
         self.tracklists = { 
+
             ["PLACE_STRUCTURE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.placing1,
@@ -73,6 +79,18 @@ AudioController = Class {
                     volume = 0.5
                 },
             }),
+            ["WINNER"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.misc.winner,
+                    volume = 1
+                },
+            }),
+            ["YOULOSE"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.misc.youlose,
+                    volume = 1
+                },
+            }),
             ["UPGRADE_FIRE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.upgradeFire,
@@ -105,6 +123,9 @@ AudioController = Class {
             }),
         }
     end;
+    stopMusic = function(self)
+        self.music:stop()
+    end;
     playNext = function(self, tracklistId)
         assert(self.tracklists[tracklistId], "[ERROR] Attempted to playNext from non-existent tracklist: " .. tracklistId)
         self.tracklists[tracklistId]:playNext()
@@ -112,6 +133,16 @@ AudioController = Class {
     playAny = function(self, tracklistId)
         assert(self.tracklists[tracklistId], "[ERROR] Attempted to playAny from non-existent tracklist: " .. tracklistId)
         self.tracklists[tracklistId]:playAny()
+    end;
+    toggleRoundMusic = function(self)
+        self:stopMusic()
+        if roundController:isBuildPhase() then 
+            self.music = self.music_build
+            self.music:play()
+        else 
+            self.music = self.music_round
+            self.music:play()
+        end
     end;
 }
 

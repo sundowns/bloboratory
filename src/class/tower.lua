@@ -21,8 +21,8 @@ Tower = Class {
     update = function(self, dt)
         Structure.update(self, dt)
     end;
-    draw = function(self)
-        Structure.draw(self)
+    draw = function(self, blockingPath)        
+        Structure.draw(self, blockingPath)
     end;
     calculateHitbox = function(self)
         -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
@@ -36,10 +36,11 @@ Tower = Class {
 
 MeleeTower = Class {
     __includes = Tower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, attackRange)
         Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
         self.archetype = "MELEE"
         self.armed = false
+        self.targettingRadius = attackRange
 
         self.attackTimer = Timer.new()
         self.attackTimer:every(self.attackInterval, function()
@@ -66,6 +67,13 @@ MeleeTower = Class {
     disarm = function(self)
         self.armed = false
     end;
+    draw = function(self, blockingPath)
+        if self.isSelected then
+            love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
+            love.graphics.rectangle('fill', self.worldOrigin.x - self.targettingRadius*constants.GRID.CELL_SIZE, self.worldOrigin.y - self.targettingRadius*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.width)*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.height)*constants.GRID.CELL_SIZE)
+        end
+        Tower.draw(self, blockingPath)
+    end;
 }
 
 TargetedTower = Class {
@@ -91,11 +99,18 @@ TargetedTower = Class {
             self.rotating = true
         end
     end;
-    calculateAngleToTarget = function(self)
+    calculateAngleToTarget = function(self, extrapolateEnemyPosition, extrapolationTime)
         if not self.currentTarget then return 0 end
         local centre = self:centre()
-        local dy = centre.y - self.currentTarget.worldOrigin.y  
-        local dx = self.currentTarget.worldOrigin.x - centre.x
+        local dx, dy = 0
+        if extrapolateEnemyPosition then
+            local extrapolatedPosition = self.currentTarget:getExtrapolatedPosition(extrapolationTime)
+            dy = centre.y - extrapolatedPosition.y  
+            dx = extrapolatedPosition.x - centre.x
+        else
+            dy = centre.y - self.currentTarget.worldOrigin.y  
+            dx = self.currentTarget.worldOrigin.x - centre.x
+        end
         return math.atan2(dx, dy)
     end;
     update = function(self, dt)
@@ -106,7 +121,7 @@ TargetedTower = Class {
         end
 
         if self.currentTarget and self.targetIsNew then
-            Timer.tween(self.rotationTime, self, {angleToTarget = self:calculateAngleToTarget()}, 'in-out-sine')
+            Timer.tween(self.rotationTime, self, {angleToTarget = self:calculateAngleToTarget()})
             Timer.after(self.rotationTime, function() self.rotating = false end)
             self.targetIsNew = false
         end
@@ -124,8 +139,12 @@ TargetedTower = Class {
             self.canShoot = false
         end
     end;
-    draw = function(self)
-        Tower.draw(self)
+    draw = function(self, blockingPath)
+        if self.isSelected then
+            love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
+            love.graphics.rectangle('fill', self.worldOrigin.x - self.targettingRadius*constants.GRID.CELL_SIZE, self.worldOrigin.y - self.targettingRadius*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.width)*constants.GRID.CELL_SIZE, (2*self.targettingRadius+self.height)*constants.GRID.CELL_SIZE)
+        end
+        Tower.draw(self, blockingPath)
     end;
     addMutation = function(self, mutation, animation)
         Tower.addMutation(self, mutation, animation)

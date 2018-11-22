@@ -18,31 +18,25 @@ World = Class {
     end;
     placeStructure = function(self, gridOrigin, type)
         if not self.grid:isValidGridCoords(gridOrigin) then return end
-        local placedTower = false
         if type == "SAW" then
             if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.SAW.COST) then
-                    placedTower = self:addNewTower(Saw(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                    self:addNewTower(Saw(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
                 end
             end
         elseif type == "CANNON" then
             if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.CANNON.WIDTH, constants.STRUCTURE.CANNON.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.CANNON.COST) then
-                    placedTower = self:addNewTower(Cannon(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                    self:addNewTower(Cannon(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
                 end
             end
         elseif type == "OBSTACLE" then
             if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.OBSTACLE.WIDTH, constants.STRUCTURE.OBSTACLE.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
                     self:addNewObstacle(Obstacle(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
-
-                    if not playerController.wallet:canAfford(constants.STRUCTURE.OBSTACLE.COST) then
-                        inputController:togglePlacingTower()
-                    end
                 end
             end
         end
-        return placedTower
     end;
     addNewStructure = function(self, structure)
         table.insert(self.structures, structure)
@@ -50,17 +44,16 @@ World = Class {
         self.grid:calculatePaths()
         audioController:playAny("PLACE_STRUCTURE")
 
-        playerController.wallet:charge(structure:getTotalCost(), Vector(structure.worldOrigin.x + structure.width/2*constants.GRID.CELL_SIZE, structure.worldOrigin.y))
-        return true --a structure was placed
+        playerController:newStructurePlaced(structure)
     end;
     addNewObstacle = function(self, obstacle)
         cameraController:shake(0.3, 0.7)
-        return self:addNewStructure(obstacle)
+        self:addNewStructure(obstacle)
     end;
     addNewTower = function(self, newTower)
         self.collisionWorld:add(newTower, newTower:calculateHitbox())
         cameraController:shake(0.4, 1)
-        return self:addNewStructure(newTower)
+        self:addNewStructure(newTower)
     end;
     removeStructure = function(self, structure)
         assert(structure)
@@ -157,7 +150,11 @@ World = Class {
     draw = function(self)
         self.grid:draw(roundController:isEnemyPhase())
         for i, structure in pairs(self.structures) do
-            structure:draw()
+            if not self.grid.validPath and playerController.lastPlacedStructure.gridOrigin == structure.gridOrigin then
+                structure:draw(true)
+            else
+                structure:draw(false)
+            end
         end
 
         Util.l.resetColour()

@@ -10,20 +10,21 @@ animationController = {}
 roundController = {}
 audioController = {}
 world = {}
+TOWER_STATS = {}
 
 local paused = false
 
 function love.load()
     assets = require('lib.cargo').init('asset')
     Class = require("lib.class")
+    nk = require("nuklear")
     Vector = require("lib.vector")
     Timer = require("lib.timer")
     Util = require("lib.util")
-    constants = require("src.constants")
     bump = require("lib.bump")
     anim8 = require("lib.anim8")
     ripple = require("lib.ripple")
-    nk = require("nuklear")
+    constants = require("src.constants")
     require("src.ui.crucible")
     require("src.ui.options")
     require("src.ui.tray")
@@ -59,9 +60,11 @@ function love.load()
     require("src.class.enemyblueprint")
     require("src.ui.crucible")
     
+    love.graphics.setFont(assets.ui.neuropoliticalRg(12))
     love.graphics.setDefaultFilter('nearest')
     love.keyboard.setKeyRepeat(true) -- For nuklear
     nk.init()
+    TOWER_STATS = require("src.tower-stats")
     uiController = UiController()
     audioController = AudioController()
     inputController = InputController()
@@ -76,9 +79,12 @@ function love.update(dt)
     if not paused then
         world:update(dt)
         Timer.update(dt) --the global version is used mostly for tweening/small use-cases
-        uiController:update(dt)
-        inputController:update(dt)
-        cameraController:update(dt)
+
+        if not playerController.hasWon and not playerController.hasLost then
+            uiController:update(dt)
+            inputController:update(dt)
+            cameraController:update(dt)
+        end
         playerController:update(dt)
     end
 end
@@ -93,7 +99,6 @@ function love.draw()
     uiController:draw()
 
     if debug then
-        cameraController:draw()
         inputController:draw()
         Util.l.resetColour()
         Util.l.renderStats()
@@ -147,4 +152,3 @@ end
 function love.wheelmoved(x, y)
     nk.wheelmoved(x, y)
 end
-

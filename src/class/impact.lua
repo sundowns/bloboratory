@@ -1,5 +1,5 @@
 Impact = Class {
-    init = function(self, worldOrigin, width, height, attackFunction)
+    init = function(self, worldOrigin, width, height)
         self.type = "IMPACT"
         self.worldOrigin = worldOrigin
         self.width = width
@@ -34,34 +34,37 @@ Impact = Class {
 
 IceImpact = Class {
     __includes = Impact,
-    init = function(self, origin, attackFunction)
-        Impact.init(self, origin, constants.IMPACTS.ICE.WIDTH, constants.IMPACTS.ICE.HEIGHT, attackFunction)
+    init = function(self, origin, stats)
+        Impact.init(self, origin, constants.IMPACTS.ICE.WIDTH, constants.IMPACTS.ICE.HEIGHT)
         self.colour = {0,0,1,0.5} -- TODO: remove and replace with proper animation/something pretty
+        self.stats = stats
     end;
     attack = function(self, other)
-        other:applyDebuff(Freeze(other))
+        other:applyDebuff(Freeze(other, self.stats))
     end;
 }
 
 ElectricImpact = Class {
     __includes = Impact,
-    init = function(self, origin)
-        Impact.init(self, origin, constants.IMPACTS.ELECTRIC.WIDTH, constants.IMPACTS.ELECTRIC.HEIGHT, attackFunction)
+    init = function(self, origin, stats)
+        Impact.init(self, origin, constants.IMPACTS.ELECTRIC.WIDTH, constants.IMPACTS.ELECTRIC.HEIGHT)
         self.colour = {1,1,0,0.5} -- TODO: remove and replace with proper animation/something pretty
+        self.stats = stats
     end;
     attack = function(self, other)
-        other:takeDamage(constants.MUTATIONS.ELECTRIC.MINIMUM_DAMAGE + Util.m.roundToNthDecimal(love.math.random()*constants.MUTATIONS.ELECTRIC.MAXIMUM_EXTRA_DAMAGE, 3), false)
-        other:applyDebuff(Electrify(other))
+        other:takeDamage(self.stats.MINIMUM_DAMAGE + Util.m.roundToNthDecimal(love.math.random()*self.stats.MAXIMUM_EXTRA_DAMAGE, 3), false)
+        other:applyDebuff(Electrify(other, self.stats))
     end;
 }
 
 FireImpact = Class {
     __includes = Impact,
-    init = function(self, origin, attackFunction)
-        Impact.init(self, origin, constants.IMPACTS.FIRE.WIDTH, constants.IMPACTS.FIRE.HEIGHT, attackFunction)
+    init = function(self, origin, stats)
+        Impact.init(self, origin, constants.IMPACTS.FIRE.WIDTH, constants.IMPACTS.FIRE.HEIGHT)
         self.colour = {0.8,0.5,0} -- TODO: remove and replace with proper animation/something pretty
+        self.stats = stats
     end;
     attack = function(self, other)
-        other:applyDebuff(Inflame(other))
+        other:applyDebuff(Inflame(other, self.stats))
     end;
 }

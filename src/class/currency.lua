@@ -1,8 +1,9 @@
 Currency = Class{
-    init = function(self, name, colour, value)
+    init = function(self, name, colour, value, image)
         self.name = name
         self.colour = colour
         self.value = value
+        self.image = image
     end;
     draw = function(self, x, y)
         love.graphics.setColor(self.colour)

@@ -2,6 +2,7 @@ InputController = Class {
     init = function(self)
         --cargo doesnt cooperate with new cursor easy cause we cant :getData() in LOVE >11.0.
         self.isPlacingTower = false
+
         self.mouse = Mouse(Vector(love.mouse.getPosition()))
     end;
     update = function(self, dt)
@@ -11,6 +12,13 @@ InputController = Class {
         self.isPlacingTower = not self.isPlacingTower
     end;
     keypressed = function(self, key)
+        if playerController.hasWon or playerController.hasLost then
+            if key == "escape" then
+                love.event.quit()
+            else
+                return
+            end
+        end
         if tonumber(key) and roundController:isBuildPhase() then
             playerController:setCurrentBlueprint(tonumber(key))
         end
@@ -19,9 +27,9 @@ InputController = Class {
         end
         if not self.isPlacingTower then
             if key == "s" and roundController:isBuildPhase() then
-                world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true)
+                world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
             elseif key == "g" and roundController:isBuildPhase() then
-                world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true)
+                world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
             elseif key == "r" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
             elseif key == "f" and playerController.currentSelectedStructure then
@@ -39,7 +47,8 @@ InputController = Class {
         if not self:isAboveTray(screenOrigin) or not nk.windowIsHidden(constants.UI.PICKER.NAME) or not nk.windowIsHidden(constants.UI.OPTIONS_MENU.NAME) then return end
         local gridOrigin = world.grid:calculateGridCoordinatesFromScreen(screenOrigin)
         if self.isPlacingTower then
-            if world:placeStructure(gridOrigin, playerController.currentBlueprint.name) then
+            world:placeStructure(gridOrigin, playerController.currentBlueprint.name)
+            if not love.keyboard.isDown('lshift') or not playerController.wallet:canAfford(playerController.currentBlueprint.cost) then
                 self:togglePlacingTower()
             end
         else

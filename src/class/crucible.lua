@@ -2,18 +2,31 @@ Crucible = Class {
     init = function(self, enemiesPerSlot)
         self.slots = {}
         self.enemiesPerSlot = enemiesPerSlot
-        for i=9, 0, -1 do 
+        for i=9, 1, -1 do 
             table.insert(self.slots, Slot(i))
         end
     end;
-    constructEnemies = function(self, healthmodifier)
+    slotIsEmpty = function(self, index)
+        assert(self.slots[index])
+        return self.slots[index].blueprint == nil
+    end;
+    resetSlot = function(self, index)
+        assert(self.slots[index])
+        return self.slots[index]:reset()
+    end;
+    constructEnemies = function(self, roundIndex, totalRounds)
         local enemies = {}
+        local healthmodifier = self:calculateHealthScaling(roundIndex, totalRounds)
         for i, slot in pairs(self.slots) do
             for j, slotEnemy in pairs(slot:constructNEnemies(self.enemiesPerSlot, healthmodifier)) do
                 enemies[#enemies+1] = slotEnemy
             end
         end
         return enemies
+    end;
+    calculateHealthScaling = function(self, roundIndex, totalRounds)
+        local multiplier = 0.7
+        return multiplier * (1 + roundIndex-1/totalRounds)
     end;
     reset = function(self)
         for i, slot in pairs(self.slots) do

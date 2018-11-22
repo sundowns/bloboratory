@@ -1,83 +1,72 @@
 
 Tray = Class {
     init = function(self)
-        self.mainMenu = true
-        self.buildMenu = false
-        self.upgradeMenu = false
         self.styles = {
             MAIN_MENU = {
                 ['text'] = {
-                    ['color'] = '#000000', 
+                    ['color'] = constants.COLOURS.UI.BLACK, 
                 },
                 ['window'] = {
-                    ['background'] = '#c89870',
+                    ['background'] = constants.COLOURS.UI.PANEL_LIGHT,
                     ['fixed background'] = assets.ui.menuRight,
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
                     ['hover'] = assets.ui.buttonHovered,
                     ['active'] = assets.ui.button,
-                    ['text background'] = '#c89870',
-                    ['text normal'] = '#000000',
-                    ['text hovered'] = '#FFFFFF',
-                    ['text active'] = '#000000',
+                    ['text background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['text normal'] = constants.COLOURS.UI.BLACK,
+                    ['text hovered'] = constants.COLOURS.UI.WHITE,
+                    ['text active'] = constants.COLOURS.UI.BLACK,
+                    ['image padding'] = {x = 4, y = 4}
                 },
             },
             SELECT_MENU = {
                 ['text'] = {
-                    ['color'] = '#000000', 
+                    ['color'] = constants.COLOURS.UI.BLACK, 
                 },
                 ['window'] = {
-                    ['background'] = '#c89870',
+                    ['background'] = constants.COLOURS.UI.PANEL_LIGHT,
                     ['fixed background'] = assets.ui.menuLeft,
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
                     ['hover'] = assets.ui.buttonHovered,
                     ['active'] = assets.ui.button,
-                    ['text background'] = '#c89870',
-                    ['text normal'] = '#000000',
-                    ['text hovered'] = '#FFFFFF',
-                    ['text active'] = '#000000',
-                    },
+                    ['text background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['text normal'] = constants.COLOURS.UI.BLACK,
+                    ['text hovered'] = constants.COLOURS.UI.WHITE,
+                    ['text active'] = constants.COLOURS.UI.BLACK,
+                    ['image padding'] = {x = 6, y = 6}
                 },
-            }
+            },
+        }
     end; 
 
     display = function(self, windowWidth, windowHeight)
         nk.stylePush(self.styles.MAIN_MENU)
         if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)    
-            
-            if self.mainMenu then 
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 2)
-                if nk.button('Build') then 
-                    self.mainMenu = false
-                    self.buildMenu = true
+            if roundController:isBuildPhase() then 
+                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
+                for i, blueprint in pairs(playerController.blueprints) do
+                    self:displayTooltip(blueprint.costToolTip)
+                    if nk.button('', blueprint.uiImage) then 
+                        playerController:setCurrentBlueprint(i)
+                    end
                 end
+                nk.spacing(9 - #playerController.blueprints)
                 if nk.button('Start Wave') then
                     if world.grid.validPath then
                         roundController:startRound()
                     end
                 end
-            elseif self.buildMenu then 
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
-                if nk.button('', assets.blueprints.obstacle) then 
-                    playerController:setCurrentBlueprint(1)
+                if nk.windowIsHovered() and not nk.widgetIsHovered() then 
+                    if not nk.windowHasFocus() then 
+                        nk.windowSetFocus('Menu')
+                    end
                 end
-                if nk.button('', assets.blueprints.saw) then 
-                    playerController:setCurrentBlueprint(2)
-                end
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
-                if nk.button('', assets.blueprints.cannon) then 
-                    playerController:setCurrentBlueprint(3)
-                end
-                nk.spacing(3)
-                if nk.button('Back') then
-                    self.buildMenu = false
-                    self.mainMenu = true
-                end
-            end 
+            end
         end
         nk.windowEnd()
         nk.stylePop()
@@ -85,9 +74,10 @@ Tray = Class {
         nk.stylePush(self.styles.MAIN_MENU)
         if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight)
-            nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight), {1/2, 1/2})
-            nk.label('Rounds:')
-            nk.label('50')
+            nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight/2), 1)
+            nk.label('Rounds: ' .. roundController.roundIndex .. ' / ' .. roundController.totalRounds)
+            nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight/2), 1)
+            nk.label('Lives: ' .. playerController.livesRemaining .. ' / ' .. constants.MISC.STARTING_LIVES)
         end
         nk.windowEnd()
         nk.stylePop()
@@ -96,30 +86,31 @@ Tray = Class {
         if nk.windowBegin('Selected', constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight)                        
             if playerController.currentSelectedStructure ~= nil then 
-                if self.upgradeMenu then 
+                if roundController:isBuildPhase() then 
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                    if nk.button('Fire') then 
+                    self:displayTooltip(" Fire: Applies damage over time debuff. Cost = 30 flint")
+                    if nk.button('', assets.ui.iconFire) then 
                         playerController:upgradeCurrentStructure("FIRE")
                     end
-                    if nk.button('Ice') then 
+                    self:displayTooltip(" Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
+                    if nk.button('', assets.ui.iconIce) then 
                         playerController:upgradeCurrentStructure("ICE")
                     end
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                    if nk.button('Elec') then 
-                        playerController:upgradeCurrentStructure("ELECTRIC")                     
+                    self:displayTooltip(" Elec: Applies high variance bonus damage. Cost = 30 charge")      
+                    if nk.button('', assets.ui.iconElectric) then 
+                        playerController:upgradeCurrentStructure("ELECTRIC")    
                     end
                     nk.spacing(3)
-                    if nk.button('Back') then 
-                        self.upgradeMenu = false
-                    end
-                else
-                    nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 2)
-                    if nk.button('Upgrade') then 
-                        self.upgradeMenu = true
-                    end
-                    if nk.button('Refund') then 
+                    self:displayTooltip(" Refund tower for full cost")
+                    if nk.button('', assets.ui.refund) then 
                         playerController:refundCurrentStructure()
-                        self.upgradeMenu = false
+                    end
+
+                    if nk.windowIsHovered() and not nk.widgetIsHovered() then 
+                        if not nk.windowHasFocus() then 
+                            nk.windowSetFocus('Selected')
+                        end
                     end
                 end
             end
@@ -136,6 +127,19 @@ Tray = Class {
         end
         nk.windowEnd()
         nk.stylePop()
+    end;
+
+    displayTooltip = function(self, tooltip)
+        if nk.widgetIsHovered() then 
+            nk.stylePush({['window'] = {
+                ['background'] = constants.COLOURS.UI.BLACK,
+                ['padding'] = {x = 5, y = 0}},
+                ['text'] = {
+                    ['color'] = constants.COLOURS.UI.WHITE}
+            })
+            nk.tooltip(' ' ..tooltip)
+            nk.stylePop()
+        end
     end;
 }
 

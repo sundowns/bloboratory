@@ -5,9 +5,9 @@ Saw = Class {
         MeleeTower.init(self, animationController:createInstance(self.towerType),
             gridOrigin, worldOrigin, constants.STRUCTURE.SAW.WIDTH,
             constants.STRUCTURE.SAW.HEIGHT, constants.STRUCTURE.SAW.COST,
-            constants.STRUCTURE.SAW.ATTACK_DAMAGE, constants.STRUCTURE.SAW.ATTACK_INTERVAL
+            constants.STRUCTURE.SAW.ATTACK_DAMAGE, constants.STRUCTURE.SAW.ATTACK_INTERVAL,
+            constants.STRUCTURE.SAW.TARGETTING_RADIUS
         )
-        self.targettingRadius = constants.STRUCTURE.SAW.TARGETTING_RADIUS
     end;
     update = function(self, dt)
         MeleeTower.update(self, dt)

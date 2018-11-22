@@ -14,7 +14,7 @@ Round = Class{
         return enemy
     end;
     peekNextEnemy = function(self) --use for enemy look-ahead (colouring spawner!)
-        if self.enemies[self.enemiesSpawned + 1] then
+        if self.enemies and self.enemies[self.enemiesSpawned + 1] then
             return self.enemies[self.enemiesSpawned + 1]
         end
     end;
