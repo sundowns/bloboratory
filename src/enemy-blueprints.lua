@@ -11,4 +11,7 @@ return {
     ["BLOB-ELECTRIC"] = EnemyBlueprint("BLOB (ELECTRIC)", assets.blueprints['blob-electric'], constants.ENEMY.BLOBELECTRIC.YIELD, function(params)
         return BlobElectric(params.origin)
     end),
+    ["BLOB-SKULL"] = EnemyBlueprint("BLOB (SKULL)", assets.blueprints['blob-fire'], constants.ENEMY.BLOBSKULL.YIELD, function(params)
+        return BlobSkull(params.origin)
+    end),
 }

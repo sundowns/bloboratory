@@ -154,6 +154,13 @@ return {
                 ELECTRIC = 1
             },
         },
+        BLOBSKULL = {
+            HEALTH = 60,
+            SPEED = 100,
+            YIELD = {
+                SCRAP = 10,
+            },
+        },
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
@@ -260,6 +267,9 @@ return {
         --     DURATION = 3,
         --     TICK_DURATION = 0.25,
         -- },
+    },
+    RECIPE = {
+        BONEMEAL = {2,3,2,0,1,0,0,1,0}
     },
     MISC = {
         STARTING_LIVES = 30,
