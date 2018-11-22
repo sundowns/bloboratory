@@ -6,6 +6,7 @@ Crucible = Class {
             table.insert(self.slots, Slot(i))
         end
         self.currentRecipe = {}
+        self.isRecipe = true
     end;
     slotIsEmpty = function(self, index)
         assert(self.slots[index])
@@ -24,17 +25,10 @@ Crucible = Class {
                 enemies[#enemies+1] = slotEnemy
             end
         end
-        if self.currentRecipe[1] == 2 and self.currentRecipe[2] == 3 then 
-            if self.currentRecipe[3] == 2 and self.currentRecipe[4] == 0 then 
-                if self.currentRecipe[5] == 1 and self.currentRecipe[6] == 0 then 
-                    if self.currentRecipe[7] == 0 and self.currentRecipe[8] == 1 then 
-                        if self.currentRecipe[9] == 0 then 
-                            table.insert(enemies, BlobSkull(Vector(0,0)))
-                            table.insert(enemies, BlobSkull(Vector(0,0)))
-                            table.insert(enemies, BlobSkull(Vector(0,0)))
-                        end 
-                    end 
-                end
+
+        if self:compareRecipe() then 
+            for i=1, 3 do 
+                table.insert(enemies, BlobSkull(Vector(0,0)))
             end
         end
         self:clearRecipe()
@@ -49,8 +43,19 @@ Crucible = Class {
             slot:reset()
         end
     end;
+    compareRecipe = function(self)
+        for i, entry in pairs(self.currentRecipe) do 
+            for j, recipe in pairs(constants.RECIPE) do 
+                for k, entry in pairs(recipe) do 
+                    if recipe[i] ~= self.currentRecipe[i] then return false end
+                end
+            end
+        end
+        return true
+    end;
     clearRecipe = function(self)
         self.currentRecipe = {}
+        self.isRecipe = false
     end
 }
 
