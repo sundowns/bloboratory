@@ -19,6 +19,7 @@ PlayerController = Class {
         self.wallet = Wallet()
         self.hasWon = false
         self.hasLost = false
+        self.lastPlacedStructure = nil
     end;
     update = function(self, dt)
         self.wallet:update(dt)
@@ -32,10 +33,9 @@ PlayerController = Class {
             love.graphics.draw(blueprint.image, 0, 0, 0, canvas:getWidth()/w, canvas:getHeight()/h)
             love.graphics.setColor(0,0,0,0.5)
             love.graphics.rectangle('fill', 0, 0, canvas:getWidth()/2, canvas:getWidth()/2)
-            love.graphics.setColor(0.8,1,0)
-            love.graphics.setFont(assets.ui.neuropoliticalRg(14))
-            love.graphics.print(#self.blueprints+1, 0, -14, 0, 4, 4)
             Util.l.resetColour()
+            local text = love.graphics.newText(assets.ui.neuropoliticalRg(14), { {0.8,1,0}, #self.blueprints+1})
+            love.graphics.draw(text, canvas:getWidth()/4 - text:getWidth()*2, -14, 0, 4, 4)
         love.graphics.setCanvas()
         blueprint:setUIImage(love.graphics.newImage(canvas:newImageData()))
         table.insert(self.blueprints, blueprint)
@@ -111,6 +111,7 @@ PlayerController = Class {
             elseif upgradeType == "ELECTRIC" then
                 mutation = ElectricMutation()
             end
+            mutation:lookupStats(self.currentSelectedStructure.towerType)
             self.currentSelectedStructure:addMutation(mutation) 
             return true
         else
@@ -135,5 +136,10 @@ PlayerController = Class {
         audioController:stopMusic()
         audioController:playAny("WINNER")
         -- TODO: play some wicked victory music
+    end;
+    newStructurePlaced = function(self, structure)
+        self.wallet:charge(structure:getTotalCost(), Vector(structure.worldOrigin.x + structure.width/2*constants.GRID.CELL_SIZE, structure.worldOrigin.y))
+        self:toggleStructureSelection(structure)
+        self.lastPlacedStructure = {gridOrigin = structure.gridOrigin:clone()}
     end;
 }

@@ -44,8 +44,7 @@ World = Class {
         self.grid:calculatePaths()
         audioController:playAny("PLACE_STRUCTURE")
 
-        playerController.wallet:charge(structure:getTotalCost(), Vector(structure.worldOrigin.x + structure.width/2*constants.GRID.CELL_SIZE, structure.worldOrigin.y))
-        playerController:toggleStructureSelection(structure)
+        playerController:newStructurePlaced(structure)
     end;
     addNewObstacle = function(self, obstacle)
         cameraController:shake(0.3, 0.7)
@@ -145,15 +144,17 @@ World = Class {
             self.spawnTimer:update(dt)
         end
 
-
-
         animationController:updateSpriteInstance(self.spawnAnimation, dt)
         animationController:updateSpriteInstance(self.goalAnimation, dt)
     end;
     draw = function(self)
         self.grid:draw(roundController:isEnemyPhase())
         for i, structure in pairs(self.structures) do
-            structure:draw()
+            if not self.grid.validPath and playerController.lastPlacedStructure.gridOrigin == structure.gridOrigin then
+                structure:draw(true)
+            else
+                structure:draw(false)
+            end
         end
 
         Util.l.resetColour()

@@ -87,8 +87,6 @@ return {
             COST = {
                 ELECTRIC = 25
             },
-            MINIMUM_DAMAGE = 0.2, -- always applied! see below
-            MAXIMUM_EXTRA_DAMAGE = 6, --total maximum is this + minimum
         },
         ICE = {
             COST = {
@@ -248,20 +246,20 @@ return {
     },
     DEBUFF = {
         MAX_PARTICLES = 8,
-        INFLAME = {
-            DURATION = 2,
-            TICK_DURATION = 0.1,
-            DAMAGE_PER_TICK = 0.4,
-        },
-        FREEZE = {
-            DURATION = 2,
-            TICK_DURATION = 0.25,
-            SPEED_MODIFIER = 0.5, -- 50% total speed
-        },
-        ELECTRIFY = {
-            DURATION = 3,
-            TICK_DURATION = 0.25,
-        },
+        -- INFLAME = {
+        --     DURATION = 2,
+        --     TICK_DURATION = 0.1,
+        --     DAMAGE_PER_TICK = 0.4,
+        -- },
+        -- FREEZE = {
+        --     DURATION = 2,
+        --     TICK_DURATION = 0.25,
+        --     SPEED_MODIFIER = 0.5, -- 50% total speed
+        -- },
+        -- ELECTRIFY = {
+        --     DURATION = 3,
+        --     TICK_DURATION = 0.25,
+        -- },
     },
     MISC = {
         STARTING_LIVES = 30,

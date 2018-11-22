@@ -1,24 +1,47 @@
+local PARTICLES_GRID_WIDTH = 8
+local ELECTRIC_PARTICLE_QUADS = {
+    love.graphics.newQuad(0*PARTICLES_GRID_WIDTH, 3*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(0*PARTICLES_GRID_WIDTH, 0*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(1*PARTICLES_GRID_WIDTH, 3*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(1*PARTICLES_GRID_WIDTH, 0*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(2*PARTICLES_GRID_WIDTH, 3*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(2*PARTICLES_GRID_WIDTH, 0*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+}
+local ICE_PARTICLE_QUADS = {
+    love.graphics.newQuad(0*PARTICLES_GRID_WIDTH, 1*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(1*PARTICLES_GRID_WIDTH, 1*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(2*PARTICLES_GRID_WIDTH, 1*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+}
+local FIRE_PARTICLE_QUADS = {
+    love.graphics.newQuad(0*PARTICLES_GRID_WIDTH, 2*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(1*PARTICLES_GRID_WIDTH, 2*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+    love.graphics.newQuad(2*PARTICLES_GRID_WIDTH, 2*PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, PARTICLES_GRID_WIDTH, assets.particles.mutators:getDimensions()),
+}
+
 Debuff = Class {
-    init = function(self, type, owner, debuffDuration, tickDuration, particle)
+    init = function(self, type, owner, debuffDuration, tickDuration, particleQuads)
         self.type = type
         self.duration = debuffDuration
         self.tickDuration = tickDuration
         self.timer = Timer.new()
         self.alive = true
         self.owner = owner
-        if particle then
-            self:initialiseParticleSystem(particle, constants.DEBUFF.MAX_PARTICLES)
+        if particleQuads then
+            self:initialiseParticleSystem(assets.particles.mutators, constants.DEBUFF.MAX_PARTICLES, particleQuads)
         end
         self:apply()
     end;
-    initialiseParticleSystem = function(self, particle, maxParticles)
+    initialiseParticleSystem = function(self, particle, maxParticles, quads)
         self.particleSystem = love.graphics.newParticleSystem(particle, maxParticles)
+        if quads then
+            self.particleSystem:setQuads(quads)
+        end
         self.particleSystem:setEmissionRate(6)
-        self.particleSystem:setEmissionArea('normal', 4, 4)
-        self.particleSystem:setLinearAcceleration(-5, -5, 5, 5)
-        self.particleSystem:setSizes(1, 0.5, 0.3)
-        self.particleSystem:setRotation(0, math.pi)
-        self.particleSystem:setParticleLifetime(0.5, 1)
+        self.particleSystem:setEmissionArea('normal', 5, 3)
+        self.particleSystem:setLinearAcceleration(-4, -4, 4, 2)
+        self.particleSystem:setSizes(0.5, 1, 0.3)
+        self.particleSystem:setRotation(0, math.pi/2)
+        self.particleSystem:setParticleLifetime(0.5, 2)
         self.particleSystem:emit(3)
     end;
     update = function(self, dt)
@@ -52,16 +75,15 @@ Debuff = Class {
 
 Inflame = Class {
     __includes = Debuff,
-    init = function(self, owner)
-        Debuff.init(self, "INFLAME", owner, constants.DEBUFF.INFLAME.DURATION, constants.DEBUFF.INFLAME.TICK_DURATION, assets.particles.flame)
-        self.damagePerTick = constants.DEBUFF.INFLAME.DAMAGE_PER_TICK
+    init = function(self, owner, stats)
+        Debuff.init(self, "INFLAME", owner, stats.DURATION, stats.TICK_DURATION, FIRE_PARTICLE_QUADS)
+        self.damagePerTick = stats.DAMAGE_PER_TICK
     end;
     update = function(self, dt)
         Debuff.update(self, dt)
     end;
     tick = function(self)
         self.owner:takeDamage(self.damagePerTick, false) --TODO: pass in a mutator specific sound (zap, sizzle, freeze?)
-        --TODO: emit some particles?
     end;
     apply = function(self)
         Debuff.apply(self)
@@ -76,15 +98,14 @@ Inflame = Class {
 
 Freeze = Class {
     __includes = Debuff,
-    init = function(self, owner)
-        Debuff.init(self, "FREEZE", owner, constants.DEBUFF.FREEZE.DURATION, constants.DEBUFF.FREEZE.TICK_DURATION, nil)
-        self.speedModifier = constants.DEBUFF.FREEZE.SPEED_MODIFIER
+    init = function(self, owner, stats)
+        Debuff.init(self, "FREEZE", owner, stats.DURATION, stats.TICK_DURATION, ICE_PARTICLE_QUADS)
+        self.speedModifier = stats.SPEED_MODIFIER
     end;
     update = function(self, dt)
         Debuff.update(self, dt)
     end;
     tick = function(self)
-        --TODO: emit some particles?
     end;
     apply = function(self)
         Debuff.apply(self)
@@ -107,8 +128,8 @@ Freeze = Class {
 
 Electrify = Class {
     __includes = Debuff,
-    init = function(self, owner)
-        Debuff.init(self, "ELECTRIFY", owner, constants.DEBUFF.ELECTRIFY.DURATION, constants.DEBUFF.ELECTRIFY.TICK_DURATION, nil)
+    init = function(self, owner, stats)
+        Debuff.init(self, "ELECTRIFY", owner, stats.DURATION, stats.TICK_DURATION, ELECTRIC_PARTICLE_QUADS)
     end;
     update = function(self, dt)
         Debuff.update(self, dt)

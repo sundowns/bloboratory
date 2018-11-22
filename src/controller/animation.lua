@@ -11,7 +11,6 @@ AnimationController = Class {
         end
 
         self.spriteBank[spriteName] = sprite_file()
-        -- Util.t.print(self.spriteBank[spriteName])
         return self.spriteBank[spriteName]
     end;
     createInstance = function(self, spriteName, currentState, size_scale, rotation)

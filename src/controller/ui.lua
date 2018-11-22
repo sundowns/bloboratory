@@ -6,8 +6,8 @@ UiController = Class {
         self.tray = Tray()
         self.picker = Picker()
         self.font = assets.ui.neuropoliticalRg(12)
-        self.victoryText = love.graphics.newText(assets.ui.neuropoliticalRg(48), {"V I C T O R Y", {0,1,0}})
-        self.defeatText = love.graphics.newText(assets.ui.neuropoliticalRg(48), {"D E F E A T", {1,0,0}})
+        self.victoryText = love.graphics.newText(assets.ui.neuropoliticalRg(48), {{0,1,0}, "V I C T O R Y"})
+        self.defeatText = love.graphics.newText(assets.ui.neuropoliticalRg(48), {{1,0,0}, "D E F E A T"})
     end;
     triggerResize = function(self)
         self.resizeTriggered = true
