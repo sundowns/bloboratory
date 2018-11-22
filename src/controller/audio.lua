@@ -1,7 +1,7 @@
 AudioController = Class {
     init = function(self)
         self.music_round = ripple.newSound {
-            source = assets.audio.music.doom,
+            source = assets.audio.music.doom2,
             volume = 0.7,
         }
         self.music_build = ripple.newSound {
@@ -12,7 +12,6 @@ AudioController = Class {
         self.music:setLooping(true)
         self.music:play()
         self.tracklists = { 
-
             ["PLACE_STRUCTURE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.placing1,
