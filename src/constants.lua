@@ -154,6 +154,13 @@ return {
                 ELECTRIC = 1
             },
         },
+        BLOBSKULL = {
+            HEALTH = 60,
+            SPEED = 100,
+            YIELD = {
+                SCRAP = 10,
+            },
+        },
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
