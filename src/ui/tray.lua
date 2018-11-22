@@ -74,19 +74,21 @@ Tray = Class {
             if playerController.currentSelectedStructure ~= nil then 
                 if roundController:isBuildPhase() then 
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                    self:displayTooltip(" Fire: Applies damage over time debuff. Cost = 30 flint")
-                    if nk.button('', assets.ui.iconFire) then 
-                        playerController:upgradeCurrentStructure("FIRE")
+                    if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
+                        self:displayTooltip(" Fire: Applies damage over time debuff. Cost = 30 flint")
+                        if nk.button('', assets.ui.iconFire) then 
+                            playerController:upgradeCurrentStructure("FIRE")
+                        end
+                        self:displayTooltip(" Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
+                        if nk.button('', assets.ui.iconIce) then 
+                            playerController:upgradeCurrentStructure("ICE")
+                        end
+                        self:displayTooltip(" Elec: Applies high variance bonus damage. Cost = 30 charge")      
+                        if nk.button('', assets.ui.iconElectric) then 
+                            playerController:upgradeCurrentStructure("ELECTRIC")    
+                        end
+                        nk.spacing(1)
                     end
-                    self:displayTooltip(" Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
-                    if nk.button('', assets.ui.iconIce) then 
-                        playerController:upgradeCurrentStructure("ICE")
-                    end
-                    self:displayTooltip(" Elec: Applies high variance bonus damage. Cost = 30 charge")      
-                    if nk.button('', assets.ui.iconElectric) then 
-                        playerController:upgradeCurrentStructure("ELECTRIC")    
-                    end
-                    nk.spacing(1)
                     self:displayTooltip(" Refund tower for full cost")
                     if nk.button('', assets.ui.refund) then 
                         playerController:refundCurrentStructure()

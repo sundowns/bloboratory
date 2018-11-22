@@ -19,7 +19,7 @@ Picker = Class {
             START = {
                 ['window'] = {
                     ['fixed background'] = assets.ui.menuCrucibleButton,
-                    ['padding'] = {x = 44, y = 10}
+                    ['padding'] = {x = 44, y = 8}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.startGrey,
@@ -93,7 +93,7 @@ Picker = Class {
             nk.stylePush(self.styles.START)
             if nk.windowBegin('Start', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight -48, constants.UI.CRUCIBLE.WIDTH*windowWidth, 0.05*windowHeight) then 
                 uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight -48, constants.UI.CRUCIBLE.WIDTH*windowWidth, 0.05*windowHeight)
-                nk.layoutRow('dynamic', constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT * windowWidth - 44, 1)
+                nk.layoutRow('dynamic', constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT * windowWidth - 42, 1)
 
                 if roundController:isBuildPhase() then
                     nk.stylePush({['button'] = 
