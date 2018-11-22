@@ -57,6 +57,7 @@ function love.load()
     require("src.enemy.blob-fire")
     require("src.enemy.blob-ice")
     require("src.enemy.blob-electric")
+    require("src.enemy.blob-skull")
     require("src.class.enemyblueprint")
     require("src.ui.crucible")
     

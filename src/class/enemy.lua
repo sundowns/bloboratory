@@ -6,7 +6,7 @@ local ORIENTATIONS = {
 }
 
 Enemy = Class {
-    init = function(self, enemyType, element, worldOrigin, health, speed, yield, animation)
+    init = function(self, enemyType, element, worldOrigin, health, speed, yield, animation, recipeIndex)
         assert(worldOrigin.x and worldOrigin.y)
         self.type = "ENEMY" -- used to check for valid collisions
         self.element = element -- used to decide cauldron colour
@@ -24,6 +24,7 @@ Enemy = Class {
         self.hitGoal = false
         self.orientation = ORIENTATIONS.LEFT --angle in radians
         self.livesToRemove = 1
+        self.recipeIndex = recipeIndex
 
         self.debuffs = {}
     end;
