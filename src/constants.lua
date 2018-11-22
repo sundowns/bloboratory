@@ -80,17 +80,17 @@ return {
     MUTATIONS = {
         FIRE = {
             COST = {
-                FIRE = 25
+                FIRE = 30
             }
         },
         ELECTRIC = {
             COST = {
-                ELECTRIC = 25
+                ELECTRIC = 30
             },
         },
         ICE = {
             COST = {
-                ICE = 25
+                ICE = 30
             }
         },
     },
@@ -127,28 +127,28 @@ return {
             HEIGHT = 3
         },
         BLOB = {
-            HEALTH = 20,
+            HEALTH = 8,
             SPEED = 150,
             YIELD = {
                 SCRAP = 2
             },
         },
         BLOBFIRE = {
-            HEALTH = 35,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 FIRE = 1
             },
         },
         BLOBICE = {
-            HEALTH = 35,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 ICE = 1
             },
         },
         BLOBELECTRIC = {
-            HEALTH = 35,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1
