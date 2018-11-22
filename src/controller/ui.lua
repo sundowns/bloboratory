@@ -50,9 +50,6 @@ UiController = Class {
     draw = function(self)
         Util.l.resetColour()
         nk.draw()
-        if playerController.currentSelectedStructure then
-            playerController.currentSelectedStructure:drawAt(Vector(constants.UI.STATS.IMG_X*love.graphics.getWidth(), constants.UI.STATS.IMG_Y*love.graphics.getHeight()))
-        end
         Util.l.resetColour()
         if playerController.hasWon then
             love.graphics.draw(self.victoryText, love.graphics.getWidth()/2 - self.victoryText:getWidth()/2, love.graphics.getHeight()/2)

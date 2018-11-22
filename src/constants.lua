@@ -200,11 +200,11 @@ return {
             NAME = 'OptionsSound'
         },
         MENU = {
-            X = 0.15,
+            X = 0,
             Y = 0.88,
-            WIDTH = 0.25,
+            WIDTH = 0.4,
             HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.055,
+            LAYOUTROW_HEIGHT = 0.0775,
         },
         WALLET = {
             X = 0.725,
@@ -222,25 +222,9 @@ return {
         SELECTED = {
             X = 0.6,
             Y = 0.88,
-            WIDTH = 0.25,
+            WIDTH = 0.4,
             HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.055,
-        },
-        STATS = {
-            X = 0.85,
-            Y = 0.88,
-            IMG_X = 0.86,
-            IMG_Y = 0.89,
-            WIDTH = 0.15,
-            HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.1,
-        },
-        ROUNDS = {
-            X = 0,
-            Y = 0.88,
-            WIDTH = 0.15,
-            HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.1,
+            LAYOUTROW_HEIGHT = 0.0775,
         },
         PICKER = {
             X = 0.25,

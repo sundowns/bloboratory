@@ -8,7 +8,8 @@ Tray = Class {
                 },
                 ['window'] = {
                     ['background'] = constants.COLOURS.UI.PANEL_LIGHT,
-                    ['fixed background'] = assets.ui.menuRight,
+                    ['fixed background'] = assets.ui.menuLeft,
+                    ['padding'] = {x = 14, y = 22}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
@@ -27,7 +28,8 @@ Tray = Class {
                 },
                 ['window'] = {
                     ['background'] = constants.COLOURS.UI.PANEL_LIGHT,
-                    ['fixed background'] = assets.ui.menuLeft,
+                    ['fixed background'] = assets.ui.menuRight,
+                    ['padding'] = {x = 14, y = 22}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
@@ -37,7 +39,7 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
-                    ['image padding'] = {x = 6, y = 6}
+                    ['image padding'] = {x = 4, y = 4}
                 },
             },
         }
@@ -46,9 +48,10 @@ Tray = Class {
     display = function(self, windowWidth, windowHeight)
         nk.stylePush(self.styles.MAIN_MENU)
         if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
-            uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight)    
+            uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) 
             if roundController:isBuildPhase() then 
                 nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
+                nk.spacing(2)
                 for i, blueprint in pairs(playerController.blueprints) do
                     self:displayTooltip(blueprint.costToolTip)
                     if nk.button('', blueprint.uiImage) then 
@@ -61,17 +64,6 @@ Tray = Class {
                     end
                 end
             end
-        end
-        nk.windowEnd()
-        nk.stylePop()
-
-        nk.stylePush(self.styles.MAIN_MENU)
-        if nk.windowBegin('Rounds', constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight) then
-            uiController:handleResize(constants.UI.ROUNDS.X*windowWidth, constants.UI.ROUNDS.Y*windowHeight, constants.UI.ROUNDS.WIDTH*windowWidth, constants.UI.ROUNDS.HEIGHT*windowHeight)
-            nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight/2), 1)
-            nk.label('Rounds: ' .. roundController.roundIndex .. ' / ' .. roundController.totalRounds)
-            nk.layoutRow('dynamic', (constants.UI.ROUNDS.LAYOUTROW_HEIGHT*windowHeight/2), 1)
-            nk.label('Lives: ' .. playerController.livesRemaining .. ' / ' .. constants.MISC.STARTING_LIVES)
         end
         nk.windowEnd()
         nk.stylePop()
@@ -90,12 +82,11 @@ Tray = Class {
                     if nk.button('', assets.ui.iconIce) then 
                         playerController:upgradeCurrentStructure("ICE")
                     end
-                    nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
                     self:displayTooltip(" Elec: Applies high variance bonus damage. Cost = 30 charge")      
                     if nk.button('', assets.ui.iconElectric) then 
                         playerController:upgradeCurrentStructure("ELECTRIC")    
                     end
-                    nk.spacing(3)
+                    nk.spacing(1)
                     self:displayTooltip(" Refund tower for full cost")
                     if nk.button('', assets.ui.refund) then 
                         playerController:refundCurrentStructure()
@@ -108,16 +99,6 @@ Tray = Class {
                     end
                 end
             end
-        end
-        nk.windowEnd()
-        nk.stylePop()
-
-        nk.stylePush(self.styles.SELECT_MENU)
-        if nk.windowBegin('Stats', constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight) then
-            uiController:handleResize(constants.UI.STATS.X*windowWidth, constants.UI.STATS.Y*windowHeight, constants.UI.STATS.WIDTH*windowWidth, constants.UI.STATS.HEIGHT*windowHeight)
-            nk.layoutRow('dynamic', (constants.UI.STATS.LAYOUTROW_HEIGHT*windowHeight), {0.2, 0.8})
-            nk.spacing(1)
-
         end
         nk.windowEnd()
         nk.stylePop()
