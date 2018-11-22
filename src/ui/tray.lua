@@ -55,15 +55,15 @@ Tray = Class {
                         playerController:setCurrentBlueprint(i)
                     end
                 end
-                if nk.windowIsHovered() and not nk.widgetIsHovered() then 
-                    if not nk.windowHasFocus() then 
-                        nk.windowSetFocus('Menu')
-                    end
-                end
                 nk.spacing(9 - #playerController.blueprints)
                 if nk.button('Start Wave') then
                     if world.grid.validPath then
                         roundController:startRound()
+                    end
+                end
+                if nk.windowIsHovered() and not nk.widgetIsHovered() then 
+                    if not nk.windowHasFocus() then 
+                        nk.windowSetFocus('Menu')
                     end
                 end
             end
@@ -88,21 +88,21 @@ Tray = Class {
             if playerController.currentSelectedStructure ~= nil then 
                 if roundController:isBuildPhase() then 
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                    self:displayTooltip("Fire: Applies damage over time debuff. Cost = 30 flint")
+                    self:displayTooltip(" Fire: Applies damage over time debuff. Cost = 30 flint")
                     if nk.button('', assets.ui.iconFire) then 
                         playerController:upgradeCurrentStructure("FIRE")
                     end
-                    self:displayTooltip("Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
+                    self:displayTooltip(" Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
                     if nk.button('', assets.ui.iconIce) then 
                         playerController:upgradeCurrentStructure("ICE")
                     end
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
-                    self:displayTooltip("Elec: Applies high variance bonus damage. Cost = 30 charge")      
+                    self:displayTooltip(" Elec: Applies high variance bonus damage. Cost = 30 charge")      
                     if nk.button('', assets.ui.iconElectric) then 
                         playerController:upgradeCurrentStructure("ELECTRIC")    
                     end
                     nk.spacing(3)
-                    self:displayTooltip("Refund tower for full cost")
+                    self:displayTooltip(" Refund tower for full cost")
                     if nk.button('', assets.ui.refund) then 
                         playerController:refundCurrentStructure()
                     end
@@ -137,7 +137,7 @@ Tray = Class {
                 ['text'] = {
                     ['color'] = constants.COLOURS.UI.WHITE}
             })
-            nk.tooltip(tooltip)
+            nk.tooltip(' ' ..tooltip)
             nk.stylePop()
         end
     end;

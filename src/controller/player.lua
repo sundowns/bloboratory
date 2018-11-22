@@ -127,11 +127,13 @@ PlayerController = Class {
     defeat = function(self)
         self.hasLost = true
         audioController:stopMusic()
+        audioController:playAny("YOULOSE")
         --TODO: play some bitter defeat music
     end;
     victory = function(self)
         self.hasWon = true
         audioController:stopMusic()
+        audioController:playAny("WINNER")
         -- TODO: play some wicked victory music
     end;
 }

@@ -1,7 +1,7 @@
 Picker = Class {
     init = function(self)
         self.choice = 0
-        self.tooltip_slot_default = "Select enemies here to be sent this round."
+        self.tooltip_slot_default = " Select enemies to be sent this round."
         self.tooltip_slot_current = self.tooltip_slot_default
         self.styles = {
             CRUCIBLE = {
@@ -22,7 +22,7 @@ Picker = Class {
         self.tooltip_slot_current = self.tooltip_slot_default
     end;
     tooltipSlotUpdate = function(self, enemy)
-        self.tooltip_slot_current = "This slot sends "..enemy.name.." this round"
+        self.tooltip_slot_current = " This slot sends "..enemy.name.." this round"
     end;
     display = function(self, windowWidth, windowHeight)
             nk.stylePush(self.styles.CRUCIBLE)

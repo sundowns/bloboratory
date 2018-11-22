@@ -69,7 +69,6 @@ Options = Class {
                 nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
                 nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
             end 
-
             if uiController.firstRun then
                 nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
             end

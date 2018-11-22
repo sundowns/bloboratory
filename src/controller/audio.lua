@@ -73,6 +73,18 @@ AudioController = Class {
                     volume = 0.5
                 },
             }),
+            ["WINNER"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.misc.winner,
+                    volume = 1
+                },
+            }),
+            ["YOULOSE"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.misc.youlose,
+                    volume = 1
+                },
+            }),
             ["UPGRADE_FIRE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.upgradeFire,

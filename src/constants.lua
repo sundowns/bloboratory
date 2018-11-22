@@ -159,9 +159,9 @@ return {
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
-        STARTING_FIRE = 100, -- TODO: make these 0
-        STARTING_ICE = 100,
-        STARTING_ELECTRIC = 100,
+        STARTING_FIRE = 0, 
+        STARTING_ICE = 0,
+        STARTING_ELECTRIC = 0,
         GAINS = {
             DRIFT_SPEED = 50,
             TIME_TO_LIVE = 1,
