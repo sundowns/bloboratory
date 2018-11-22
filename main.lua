@@ -73,7 +73,7 @@ function love.load()
     animationController = AnimationController()
     roundController = RoundController()
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
-    cameraController = CameraController(Vector(world.origin.x + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.ROWS/1.7*constants.GRID.CELL_SIZE))
+    cameraController = CameraController(Vector(world.origin.x + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.ROWS/1.5*constants.GRID.CELL_SIZE))
 end
 
 function love.update(dt)
