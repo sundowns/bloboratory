@@ -29,6 +29,7 @@ RoundController = Class {
             animationController:changeSpriteState(world.spawnAnimation, "DEFAULT")
             self.currentRound = Round(self.roundIndex)
             uiController.firstRun = true
+            audioController:toggleRoundMusic()
         end
     end;
     startRound = function(self)
@@ -43,6 +44,7 @@ RoundController = Class {
                 self:updateCauldron()
                 audioController:playAny("START_ROUND")
                 cameraController:shake(0.5, 3)
+                audioController:toggleRoundMusic()
             else 
                 --TODO: tell em to fuckoff
                 print('[ERROR] Add enemies to crucible before starting round')
