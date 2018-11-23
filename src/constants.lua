@@ -172,8 +172,8 @@ return {
             },
         },
         BLOBSKULL = {
-            HEALTH = 60,
-            SPEED = 100,
+            HEALTH = 50,
+            SPEED = 110,
             YIELD = {
                 SCRAP = 10,
             },

@@ -1,7 +1,8 @@
 Picker = Class {
     init = function(self)
         self.choice = 0
-        self.tooltip_slot_default = "  Select enemies to be sent this round."
+        self.prepareToHide = false -- Make sure we hide at end of window frame
+        self.tooltip_slot_default = " Select enemies to be sent this round."
         self.tooltip_slot_current = self.tooltip_slot_default
         self.styles = {
             CRUCIBLE = {
@@ -66,6 +67,9 @@ Picker = Class {
     end;
     tooltipSlotUpdate = function(self, enemy)
         self.tooltip_slot_current = " This slot sends "..enemy.name.." this round"
+    end;
+    pickerIsOpen = function(self)
+
     end;
     display = function(self, windowWidth, windowHeight)
             nk.stylePush(self.styles.CRUCIBLE)
@@ -189,8 +193,8 @@ Picker = Class {
                         end                        
                     end
                 end
-    
-                if uiController.firstRun then
+
+                if uiController.firstRun or self.prepareToHide then
                     nk.windowHide(constants.UI.PICKER.NAME)
                 end
             else -- Allow 'close' button to work
