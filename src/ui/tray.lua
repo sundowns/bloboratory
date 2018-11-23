@@ -7,7 +7,7 @@ Tray = Class {
                     ['color'] = constants.COLOURS.UI.BLACK, 
                 },
                 ['window'] = {
-                    ['background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['fixed background'] = assets.ui.menuLeft,
                     ['padding'] = {x = 14, y = 22}
                 },
@@ -15,7 +15,7 @@ Tray = Class {
                     ['normal'] = assets.ui.button,
                     ['hover'] = assets.ui.buttonHovered,
                     ['active'] = assets.ui.button,
-                    ['text background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['text background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
@@ -27,7 +27,7 @@ Tray = Class {
                     ['color'] = constants.COLOURS.UI.BLACK, 
                 },
                 ['window'] = {
-                    ['background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['fixed background'] = assets.ui.menuRight,
                     ['padding'] = {x = 14, y = 22}
                 },
@@ -35,7 +35,7 @@ Tray = Class {
                     ['normal'] = assets.ui.button,
                     ['hover'] = assets.ui.buttonHovered,
                     ['active'] = assets.ui.button,
-                    ['text background'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['text background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
@@ -50,8 +50,8 @@ Tray = Class {
         if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) 
             if roundController:isBuildPhase() then 
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), 5)
-                nk.spacing(2)
+                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {2/5, 1/5, 1/5, 1/5})
+                nk.spacing(1)
                 for i, blueprint in pairs(playerController.blueprints) do
                     self:displayTooltip(blueprint.costToolTip)
                     if nk.button('', blueprint.uiImage) then 

@@ -121,6 +121,7 @@ PlayerController = Class {
     end;
     leak = function(self, livesLost)
         self.livesRemaining = self.livesRemaining - livesLost
+        audioController:playAny("ENEMY_LEAK")
         if self.livesRemaining <= 0 and not self.hasLost and not self.hasWon then
             self:defeat()
         end

@@ -32,10 +32,14 @@ return {
         UI = {
             NONE = nk.colorRGBA(0,0,0,0),
             BLACK = nk.colorRGBA(0,0,0,255),
+            DISABLED = nk.colorRGBA(32,32,32,255),
             WHITE = nk.colorRGBA(255,255,255,255),
             PANEL = nk.colorRGBA(48, 31, 17, 255),
-            PANEL_LIGHT = nk.colorRGBA(147,96,51,128),
-            PANEL_DARK = nk.colorRGBA(108,70,37,128),
+            PANEL_LIGHT = nk.colorRGBA(147,96,51,255),
+            PANEL_DARK = nk.colorRGBA(108,70,37,255),
+            PANEL_TRANSPARENT = nk.colorRGBA(48, 31, 17, 128),
+            PANEL_TRANSPARENT_LIGHT = nk.colorRGBA(147,96,51,128),
+            PANEL_TRANSPARENT_DARK = nk.colorRGBA(108,70,37,128),
         },
     },
     GRID = {
@@ -161,6 +165,15 @@ return {
                 SCRAP = 10,
             },
         },
+        BLOBTEETH = {
+            HEALTH = 60,
+            SPEED = 100,
+            YIELD = {
+                FIRE = 5,
+                ICE = 5,
+                ELECTRIC = 5,
+            },
+        },
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
@@ -237,20 +250,6 @@ return {
     },
     DEBUFF = {
         MAX_PARTICLES = 8,
-        -- INFLAME = {
-        --     DURATION = 2,
-        --     TICK_DURATION = 0.1,
-        --     DAMAGE_PER_TICK = 0.4,
-        -- },
-        -- FREEZE = {
-        --     DURATION = 2,
-        --     TICK_DURATION = 0.25,
-        --     SPEED_MODIFIER = 0.5, -- 50% total speed
-        -- },
-        -- ELECTRIFY = {
-        --     DURATION = 3,
-        --     TICK_DURATION = 0.25,
-        -- },
     },
     MUSIC = { -- index must match musicList index
         ROUND = 0.7,
@@ -277,6 +276,12 @@ return {
             0.3,
             1.8,
             1.3,
+        },
+        ENEMY_LEAK = {
+            4,
+            4,
+            4,
+            4,
         },
         START_ROUND = {
             0.5,

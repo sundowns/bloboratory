@@ -1,5 +1,5 @@
 EnemyBlueprint = Class {
-    init = function(self, name, image, yield, buildEnemy)
+    init = function(self, name, image, yield, isBoss, buildEnemy)
         self.name = name
         self.image = image
         self.imageHovered = love.graphics.newCanvas(self.image:getWidth(), self.image:getHeight())
@@ -21,6 +21,7 @@ EnemyBlueprint = Class {
 
         self.yield = yield
         self.buildEnemy = buildEnemy
+        self.isBoss = isBoss
     end;
     construct = function(self, params, healthMultiplier)
         local enemy = self.buildEnemy(params)

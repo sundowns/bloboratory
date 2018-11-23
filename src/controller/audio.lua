@@ -12,8 +12,9 @@ AudioController = Class {
                 volume = constants.MUSIC[BUILD],
             },
         }
+        self.musicList.BUILD:setLooping(true)
+        self.musicList.ROUND:setLooping(true)
         self.music = self.musicList.BUILD
-        self.music:setLooping(true)
         self.music:play()
         self.tracklists = { 
             ["PLACE_STRUCTURE"] = TrackList({
@@ -74,6 +75,24 @@ AudioController = Class {
                 ripple.newSound {
                     source = assets.audio.enemies.blobDeath4,
                     volume = constants.AUDIO.ENEMY_DEATH[4],
+                }, 
+            }),
+            ["ENEMY_LEAK"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.enemies.leak1,
+                    volume = constants.AUDIO.ENEMY_LEAK[1],
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.leak2,
+                    volume = constants.AUDIO.ENEMY_LEAK[2],
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.leak3,
+                    volume = constants.AUDIO.ENEMY_LEAK[3],
+                },
+                ripple.newSound {
+                    source = assets.audio.enemies.leak4,
+                    volume = constants.AUDIO.ENEMY_LEAK[4],
                 }, 
             }),
             ["START_ROUND"] = TrackList({
