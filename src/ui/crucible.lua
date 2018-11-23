@@ -196,6 +196,7 @@ Picker = Class {
 
                 if uiController.firstRun or self.prepareToHide then
                     nk.windowHide(constants.UI.PICKER.NAME)
+                    self.prepareToHide = false
                 end
             else -- Allow 'close' button to work
                 nk.windowHide(constants.UI.PICKER.NAME)
