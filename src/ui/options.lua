@@ -63,9 +63,15 @@ Options = Class {
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
             nk.label("Music Volume:") 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight), 1)
-            audioController.music.volume = nk.slider(0, audioController.music.volume, 1, 0.01)
+            audioController.music_multiplier = nk.slider(0, audioController.music_multiplier, 1, 0.01)
+            nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
+            nk.label("SFX Volume:") 
+            nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight), 1)
+            audioController.sfx_multiplier = nk.slider(0, audioController.sfx_multiplier, 1, 0.01)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight*0.5), 1)
             if nk.button("Back") then 
+                audioController:updateMusicVolume()
+                audioController:updateSfxVolume()
                 nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
                 nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
             end 

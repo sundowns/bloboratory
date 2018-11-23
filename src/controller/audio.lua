@@ -1,123 +1,128 @@
 AudioController = Class {
     init = function(self)
-        self.music_round = ripple.newSound {
-            source = assets.audio.music.doom2,
-            volume = 0.7,
+        self.music_multiplier = 1
+        self.sfx_multiplier = 1
+        self.musicList = {
+            ROUND = ripple.newSound {
+                source = assets.audio.music.doom2,
+                volume = constants.MUSIC[ROUND],
+            },
+            BUILD = ripple.newSound {
+                source = assets.audio.music.music3,
+                volume = constants.MUSIC[BUILD],
+            },
         }
-        self.music_build = ripple.newSound {
-            source = assets.audio.music.music3,
-            volume = 0.375,
-        }
-        self.music = self.music_build
+        self.music = self.musicList.BUILD
         self.music:setLooping(true)
         self.music:play()
         self.tracklists = { 
             ["PLACE_STRUCTURE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.placing1,
-                    volume = 0.5
+                    volume = constants.AUDIO.PLACE_STRUCTURE[1]
                 },
                 ripple.newSound {
                     source = assets.audio.structures.placing2,
-                    volume = 0.5
+                    volume = constants.AUDIO.PLACE_STRUCTURE[2]
                 },
                 ripple.newSound {
                     source = assets.audio.structures.placing3,
-                    volume = 0.3
+                    volume = constants.AUDIO.PLACE_STRUCTURE[3]
                 }
             }),
             ["REFUND"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.refund1,
-                    volume = 10
+                    volume = constants.AUDIO.REFUND[1]
                 },
                 ripple.newSound {
                     source = assets.audio.structures.refund2,
-                    volume = 10
+                    volume = constants.AUDIO.REFUND[2]
                 }
             }),
             ["ENEMY_HIT"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.enemies.blobHit1,
-                    volume = 0.8
+                    volume = constants.AUDIO.ENEMY_HIT[1]
                 },
                 ripple.newSound {
                     source = assets.audio.enemies.blobHit2,
-                    volume = 1
+                    volume = constants.AUDIO.ENEMY_HIT[2]
                 },
                 ripple.newSound {
                     source = assets.audio.enemies.blobHit3,
-                    volume = 0.8
+                    volume = constants.AUDIO.ENEMY_HIT[3]
                 },
                 ripple.newSound {
                     source = assets.audio.enemies.blobHit4,
-                    volume = 1 
+                    volume = constants.AUDIO.ENEMY_HIT[4]
                 },
             }),
             ["ENEMY_DEATH"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.enemies.blobDeath1,
-                    volume = 0.8
+                    volume = constants.AUDIO.ENEMY_DEATH[1],
                 },
                 ripple.newSound {
                     source = assets.audio.enemies.blobDeath2,
-                    volume = 0.3
+                    volume = constants.AUDIO.ENEMY_DEATH[2],
                 },
                 ripple.newSound {
                     source = assets.audio.enemies.blobDeath3,
-                    volume = 1.8
+                    volume = constants.AUDIO.ENEMY_DEATH[3],
                 },
                 ripple.newSound {
                     source = assets.audio.enemies.blobDeath4,
-                    volume = 1.3
+                    volume = constants.AUDIO.ENEMY_DEATH[4],
                 }, 
             }),
             ["START_ROUND"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.misc.roundStart,
-                    volume = 0.5
+                    volume = constants.AUDIO.START_ROUND[1], 
                 },
             }),
             ["WINNER"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.misc.winner,
-                    volume = 1
+                    volume = constants.AUDIO.WINNER[1],
                 },
             }),
             ["YOULOSE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.misc.youlose,
-                    volume = 1
+                    volume = constants.AUDIO.YOULOSE.VOLUME,
+                    constant = constants.AUDIO.YOULOSE[1]
                 },
             }),
             ["UPGRADE_FIRE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.upgradeFire,
-                    volume = 1.5
+                    volume = constants.AUDIO.UPGRADE_FIRE[1],
                 },
             }),
             ["UPGRADE_ICE"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.upgradeIce,
-                    volume = 1.5
+                    volume = constants.AUDIO.UPGRADE_ICE[1], 
                 },
             }),
             ["UPGRADE_ELECTRIC"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.upgradeElectric,
-                    volume = 1
+                    volume = constants.AUDIO.UPGRADE_ELECTRIC[1],
                 },
             }),
             ["INSUFFICIENT_FUNDS"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.misc.insufficientFunds,
-                    volume = 0.5
+                    volume = constants.AUDIO.INSUFFICIENT_FUNDS[1],
                 },
             }),
             ["CANNON_SHOOT"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.cannonShoot,
-                    volume = 5
+                    volume = constants.AUDIO.CANNON_SHOOT[1],
                 },
             }),
         }
@@ -133,13 +138,25 @@ AudioController = Class {
         assert(self.tracklists[tracklistId], "[ERROR] Attempted to playAny from non-existent tracklist: " .. tracklistId)
         self.tracklists[tracklistId]:playAny()
     end;
+    updateMusicVolume = function(self)
+        for i, track in ipairs(self.musicList) do 
+            track.volume = (constants.MUSIC[i] * self.music_multiplier)
+        end
+    end;
+    updateSfxVolume = function(self)
+        for i, tracklist in pairs(self.tracklists) do 
+            for j, item in pairs(tracklist.tracks) do 
+                item.volume = (constants.AUDIO[i][j] * self.sfx_multiplier)
+            end
+        end
+    end;
     toggleRoundMusic = function(self)
         self:stopMusic()
         if roundController:isBuildPhase() then 
-            self.music = self.music_build
+            self.music = self.musicList.BUILD
             self.music:play()
         else 
-            self.music = self.music_round
+            self.music = self.musicList.ROUND
             self.music:play()
         end
     end;

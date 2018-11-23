@@ -193,9 +193,9 @@ return {
         },
         OPTIONS_SOUND = {
             X = 0.4,
-            Y = 0.45,
+            Y = 0.3,
             WIDTH = 0.2,
-            HEIGHT = 0.16,
+            HEIGHT = 0.3,
             LAYOUTROW_HEIGHT = 0.06,
             NAME = 'OptionsSound'
         },
@@ -251,6 +251,57 @@ return {
         --     DURATION = 3,
         --     TICK_DURATION = 0.25,
         -- },
+    },
+    MUSIC = { -- index must match musicList index
+        ROUND = 0.7,
+        BUILD = 0.375,
+    },
+    AUDIO = { -- constant index must match tracklist index
+        PLACE_STRUCTURE = {
+            0.5,
+            0.5,
+            0.3,
+        },
+        REFUND = {
+            10,
+            10,
+        },
+        ENEMY_HIT = {
+            0.8,
+            1,
+            0.8,
+            1,
+        },
+        ENEMY_DEATH = {
+            0.8,
+            0.3,
+            1.8,
+            1.3,
+        },
+        START_ROUND = {
+            0.5,
+        },
+        WINNER = {
+            1,
+        },
+        YOULOSE = {
+            1,
+        },
+        UPGRADE_FIRE = {
+            1.5,
+        },
+        UPGRADE_ICE = {
+            1.5,
+        },
+        UPGRADE_ELECTRIC = {
+            1,
+        },
+        INSUFFICIENT_FUNDS = {
+            0.5,
+        },
+        CANNON_SHOOT = {
+            5,
+        },
     },
     RECIPE = {
         BONEMEAL = {2,3,2,0,1,0,0,1,0}
