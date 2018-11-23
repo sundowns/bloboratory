@@ -6,12 +6,14 @@ PlayerController = Class {
         self.STRUCTURE_BLUEPRINTS = {
             ["OBSTACLE"] = StructureBlueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2, 0),
             ["SAW"] = StructureBlueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, constants.STRUCTURE.SAW.TARGETTING_RADIUS),
-            ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, constants.STRUCTURE.CANNON.TARGETTING_RADIUS)
+            ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, constants.STRUCTURE.CANNON.TARGETTING_RADIUS),
+            ["LASERGUN"] = StructureBlueprint("LASERGUN", assets.blueprints.cannon, 2, 2, 1, 1, constants.STRUCTURE.LASERGUN.LINE_LENGTH, constants.STRUCTURE.LASERGUN.LINE_HEIGHT)
         }
         self.blueprints = {}
         self:addNewStructureBlueprint("OBSTACLE")
         self:addNewStructureBlueprint("SAW") -- TODO: will be unlocked, not a default valu
         self:addNewStructureBlueprint("CANNON")  -- TODO: will be unlocked, not a default value
+        self:addNewStructureBlueprint("LASERGUN") -- TODO: will be unlocked, not a default value
 
         self.livesRemaining = constants.MISC.STARTING_LIVES
         self.currentBlueprint = nil

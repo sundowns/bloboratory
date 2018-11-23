@@ -36,6 +36,12 @@ World = Class {
                     self:addNewObstacle(Obstacle(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
                 end
             end
+        elseif type == "LASERGUN" then 
+            if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.LASERGUN.WIDTH, constants.STRUCTURE.LASERGUN.HEIGHT) then
+                if playerController.wallet:canAfford(constants.STRUCTURE.LASERGUN.COST) then
+                    self:addNewTower(Lasergun(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                end
+            end
         end
     end;
     addNewStructure = function(self, structure)
