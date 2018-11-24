@@ -168,14 +168,6 @@ Picker = Class {
             if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                 uiController:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
 
-                if self.choice > 0 and not roundController.crucible:slotIsEmpty(self.choice) then
-                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/4*windowHeight, 1)
-                    if nk.button('REMOVE') then
-                        roundController.crucible:resetSlot(self.choice)
-                        nk.windowHide(constants.UI.PICKER.NAME)
-                    end
-                end
-
                 for i, blueprint in pairs(roundController.ENEMY_BLUEPRINTS) do
                     if not blueprint.isBoss then
                         nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {2/12, 1/12, 5/12, 1/12, 2/12, 1/12, 1/12})
@@ -192,6 +184,18 @@ Picker = Class {
                             nk.label(value, 'centered', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
                         end                        
                     end
+                end
+
+                if self.choice > 0 and not roundController.crucible:slotIsEmpty(self.choice) then
+                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/4*windowHeight, 1)
+                    nk.stylePush({
+                        ['font'] = assets.ui.planerRegular(18),
+                    })
+                    if nk.button('REMOVE') then
+                        roundController.crucible:resetSlot(self.choice)
+                        nk.windowHide(constants.UI.PICKER.NAME)
+                    end
+                    nk.stylePop()
                 end
 
                 if uiController.firstRun or self.prepareToHide then
