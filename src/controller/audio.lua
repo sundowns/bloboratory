@@ -179,10 +179,10 @@ AudioController = Class {
     toggleRoundMusic = function(self)
         self:stopMusic()
         if roundController:isBuildPhase() then 
-            self.music = self.musicList.BUILD
+            self.music = self.musicList[2]
             self.music:play()
         else 
-            self.music = self.musicList.ROUND
+            self.music = self.musicList[1]
             self.music:play()
         end
     end;
