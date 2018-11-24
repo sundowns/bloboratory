@@ -131,7 +131,6 @@ RoundController = Class {
     end;
     startRound = function(self)
         if self:isBuildPhase() then
-            print('start round')
             -- build the crucible enemies
             local roundEnemies = self.crucible:constructEnemies(self.roundIndex, self.totalRounds) 
             if #roundEnemies > 0 then

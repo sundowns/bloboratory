@@ -197,7 +197,7 @@ return {
             DRIFT_SPEED = 50,
             TIME_TO_LIVE = 1,
             X_OFFSET = 22.8,
-            Y_OFFSET = 12,
+            Y_OFFSET = 24,
         }
     },
     UI = {
@@ -319,7 +319,7 @@ return {
             0.5,
         },
         CANNON_SHOOT = {
-            5,
+            1,
         },
         LASERGUN_SHOOT = {
             1,

@@ -166,7 +166,6 @@ AudioController = Class {
     updateMusicVolume = function(self)
         for i, track in pairs(self.musicList) do 
             track.volume = (constants.MUSIC[i] * self.music_multiplier)
-            print(self.music_multiplier .. ", " ..track.volume)
         end
     end;
     updateSfxVolume = function(self)
