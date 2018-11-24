@@ -137,7 +137,7 @@ World = Class {
         end
 
         local camX, camY = cameraController:mousePosition()
-        local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, camX, camY, function() return "cross" end)
+        local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, camX - inputController.mouse.width/2, camY - inputController.mouse.height/2, function() return "cross" end)
 
         for i = 1, len do
             local entity = cols[i].other
@@ -218,7 +218,9 @@ World = Class {
                     playOnHit = false
                 end
             end
-            tower:disarm()
+            if len > 0 then
+                tower:disarm()
+            end
         end
     end;
     processCollisionForProjectile = function(self, projectile, dt)
@@ -260,5 +262,9 @@ World = Class {
     addImpact = function(self, impact)
         self.collisionWorld:add(impact, impact:calculateHitbox())
         table.insert(self.impacts, impact)
+    end;
+    updateTowerHitbox = function(self, structure)
+        assert(self.collisionWorld:hasItem(structure))
+        self.collisionWorld:update(structure, structure:calculateHitbox())
     end;
 }

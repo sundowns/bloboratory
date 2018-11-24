@@ -13,8 +13,8 @@ return {
             }
         },
         MOUSE = {
-            WIDTH = 5,
-            HEIGHT = 5
+            WIDTH = 20,
+            HEIGHT = 20
         }
     },
     COLOURS = {
@@ -86,7 +86,7 @@ return {
             BARREL_LENGTH = 32, --used to offset projectiles
             ATTACK_DAMAGE = 4, --damage per HIT 
             LINE_LENGTH = 16, 
-            LINE_WIDTH = -0.5,
+            LINE_WIDTH = 0.5,
             ATTACK_INTERVAL = 1.5,
             COST = {
                 SCRAP = 30,

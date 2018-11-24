@@ -34,8 +34,10 @@ InputController = Class {
                 world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
             elseif key == "g" and roundController:isBuildPhase() then
                 world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
-            elseif key == "r" and roundController:isBuildPhase() then 
+            elseif key == "x" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
+            elseif key == "r" and roundController:isBuildPhase() then 
+                playerController:rotateCurrentStructure()
             elseif key == "f" and playerController.currentSelectedStructure and roundController:isBuildPhase() then
                 playerController:upgradeCurrentStructure("FIRE")
             elseif key == "i" and playerController.currentSelectedStructure and roundController:isBuildPhase() then
@@ -76,7 +78,8 @@ Mouse = Class {
         self.type = "MOUSE"
     end;
     update = function(self, dt)
-        self.origin = Vector(love.mouse.getPosition())
+        local mouseX, mouseY = love.mouse.getPosition()
+        self.origin = Vector(mouseX - self.width/2, mouseY - self.height/2)
     end;
     draw = function(self)
         love.graphics.rectangle('line', self.origin.x, self.origin.y, self.width, self.height)

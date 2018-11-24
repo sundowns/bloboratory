@@ -59,6 +59,13 @@ AnimationController = Class {
             layer.animation:update(dt)
         end
     end;
+    updateInstanceRotation = function(self, instance, rotation)
+        for i, layer in pairs(instance.animations) do
+            if not layer.rotateToTarget then
+                layer.rotation = rotation
+            end
+        end
+    end;
     drawStructureSpriteInstance = function(self, instance, position, cellsWidth, cellsHeight, targettingAngle)
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
