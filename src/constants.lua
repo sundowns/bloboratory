@@ -216,7 +216,7 @@ return {
             X = 0,
             Y = 0,
             WIDTH = 1,
-            HEIGHT = 0.05,
+            HEIGHT = 0.055,
             LAYOUTROW_HEIGHT = 0.03
         },
         MENU = {

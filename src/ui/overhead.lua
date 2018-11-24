@@ -1,30 +1,21 @@
 Overhead = Class {
     init = function(self)      
         self.style = {
-            OVERHEAD = {
-                ['window'] = {
-                    ['fixed background'] = assets.ui.menuRight,
-                    ['padding'] = {x = 20, y = 20}
-                },
-                ['button'] = {
-                    ['normal'] = assets.ui.button,
-                    ['hover'] = assets.ui.buttonHovered,
-                    ['active'] = assets.ui.button,
-                    ['text background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
-                    ['text normal'] = constants.COLOURS.UI.BLACK,
-                    ['text hovered'] = constants.COLOURS.UI.WHITE,
-                    ['text active'] = constants.COLOURS.UI.BLACK,
-                },
+            ['window'] = {
+                ['fixed background'] = assets.ui.menuRight,
+                ['padding'] = {x = 0, y = 19}
             },
-            WALLET = {
-                ['window'] = {
-                    ['fixed background'] = assets.ui.menuRight,
-                    ['padding'] = {x = 10, y = 60}
-                },
-            },
+            ['button'] = {
+                ['normal'] = assets.ui.button,
+                ['hover'] = assets.ui.buttonHovered,
+                ['active'] = assets.ui.button,
+                ['text background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
+                ['text normal'] = constants.COLOURS.UI.BLACK,
+                ['text hovered'] = constants.COLOURS.UI.WHITE,
+                ['text active'] = constants.COLOURS.UI.BLACK,
+            }
         }
     end; 
-
     draw = function(self)
         local count = 1
         for key, currency in pairs(playerController.wallet.currencies) do
@@ -39,11 +30,10 @@ Overhead = Class {
     end;
 
     display = function(self, windowWidth, windowHeight)
-        nk.stylePush(self.style.OVERHEAD)
+        nk.stylePush(self.style)
         if nk.windowBegin('Overhead', constants.UI.OVERHEAD.X*windowWidth, constants.UI.OVERHEAD.Y*windowHeight, constants.UI.OVERHEAD.WIDTH*windowWidth, constants.UI.OVERHEAD.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.OVERHEAD.X*windowWidth, constants.UI.OVERHEAD.Y*windowHeight, constants.UI.OVERHEAD.WIDTH*windowWidth, constants.UI.OVERHEAD.HEIGHT*windowHeight)
-            nk.layoutRowBegin('dynamic', constants.UI.OVERHEAD.LAYOUTROW_HEIGHT, (2 + playerController.wallet.totalCurrencies*2))
-            nk.layoutRowPush(0.1)
+            nk.layoutRow('dynamic', constants.UI.OVERHEAD.LAYOUTROW_HEIGHT, {0.15, 0.85})
             if nk.windowIsHovered() and not nk.widgetIsHovered() then 
                 if not nk.windowHasFocus() then 
                     nk.windowSetFocus('Overhead')
@@ -52,15 +42,7 @@ Overhead = Class {
             if nk.button("OPTIONS") then 
                 nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
             end 
-            nk.layoutRowPush(0.6)
             nk.spacing(1)
-            for key, currency in pairs(playerController.wallet.currencies) do
-                nk.layoutRowPush(0.06/playerController.wallet.totalCurrencies)
-                --nk.image(currency.image)
-                nk.layoutRowPush(0.14/playerController.wallet.totalCurrencies)
-                --nk.label(currency.value, 'centered', nk.colorRGBA(currency:colourRGB()))
-            end
-            nk.layoutRowEnd()
         end
         nk.windowEnd()
         nk.stylePop()
