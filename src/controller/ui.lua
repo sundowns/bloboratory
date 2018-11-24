@@ -41,9 +41,8 @@ UiController = Class {
         Util.l.resetColour()
         nk.draw()
         Util.l.resetColour()
-        love.graphics.setColor(0, 0, 0)
-        love.graphics.print('Round: '.. roundController.roundIndex .. ' / ' .. roundController.totalRounds, love.graphics.getWidth()/4, love.graphics.getHeight()/50)
-        love.graphics.print('Lives: '.. playerController.livesRemaining .. ' / ' .. constants.MISC.STARTING_LIVES, love.graphics.getWidth()/2, love.graphics.getHeight()/50)
+        self.overhead:draw()
+
 
         if playerController.hasWon then
             love.graphics.draw(self.victoryText, love.graphics.getWidth()/2 - self.victoryText:getWidth()/2, love.graphics.getHeight()/2)
