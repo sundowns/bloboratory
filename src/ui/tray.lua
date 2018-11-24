@@ -9,7 +9,7 @@ Tray = Class {
                 ['window'] = {
                     ['background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['fixed background'] = assets.ui.menuLeft,
-                    ['padding'] = {x = 0, y = 22}
+                    ['padding'] = {x = 0, y = 24}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
@@ -30,7 +30,7 @@ Tray = Class {
                 ['window'] = {
                     ['background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['fixed background'] = assets.ui.menuRight,
-                    ['padding'] = {x = 14, y = 22}
+                    ['padding'] = {x = 0, y = 24}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
@@ -40,8 +40,8 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
-                    ['image padding'] = {x = 4, y = 4},
-                    ['padding'] = {x = 9, y = 9}
+                    ['image padding'] = {x = 4, y = 5},
+                    ['padding'] = {x = 2, y = 3}
                 },
             },
         }
@@ -75,7 +75,8 @@ Tray = Class {
             uiController:handleResize(constants.UI.SELECTED.X*windowWidth, constants.UI.SELECTED.Y*windowHeight, constants.UI.SELECTED.WIDTH*windowWidth, constants.UI.SELECTED.HEIGHT*windowHeight)                        
             if playerController.currentSelectedStructure ~= nil then 
                 if roundController:isBuildPhase() then 
-                    nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), 5)
+                    nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {0.03, 1/7, 1/7, 1/7, 1/7, 0.055, 1/7, 1/7})
+                    nk.spacing(1)
                     if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
                         self:displayTooltip(" Fire: Applies damage over time debuff. Cost = 30 flint")
                         if nk.button('', assets.ui.iconFire) then 
@@ -89,7 +90,17 @@ Tray = Class {
                         if nk.button('', assets.ui.iconElectric) then 
                             playerController:upgradeCurrentStructure("ELECTRIC")    
                         end
-                        nk.spacing(1)
+                        nk.spacing(2)
+                        if playerController.currentSelectedStructure.towerType == "LASERGUN" then 
+                            self:displayTooltip(" Rotate 90 degrees")
+                            if nk.button('', assets.ui.iconScrap) then
+                                playerController:rotateCurrentStructure()
+                            end
+                        else
+                            nk.spacing(1)
+                        end 
+                    else
+                        nk.spacing(6)
                     end
                     self:displayTooltip(" Refund tower for full cost")
                     if nk.button('', assets.ui.refund) then 

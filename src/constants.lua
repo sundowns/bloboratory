@@ -237,7 +237,7 @@ return {
             Y = 0.88,
             WIDTH = 0.4,
             HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.0775,
+            LAYOUTROW_HEIGHT = 0.0725,
         },
         CRUCIBLE = {
             X = 0.4,
@@ -251,7 +251,7 @@ return {
             Y = 0.88,
             WIDTH = 0.4,
             HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.0775,
+            LAYOUTROW_HEIGHT = 0.0725,
         },
         PICKER = {
             X = 0.25,
