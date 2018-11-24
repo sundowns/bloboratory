@@ -96,7 +96,7 @@ PlayerController = Class {
         audioController:playAny("REFUND")
     end;
     rotateCurrentStructure = function(self)
-        if not self.currentSelectedStructure then
+        if not self.currentSelectedStructure or not self.currentSelectedStructure.rotatable then
             return 
         end
         self.currentSelectedStructure:rotateClockwise()
