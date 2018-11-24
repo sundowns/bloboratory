@@ -190,7 +190,7 @@ TargetedTower = Class {
     resetTimers = function(self)
         self.attackTimer = Timer.new()
         self.attackTimer:every(self.attackInterval, function()
-            self:arm()
+            self.canShoot = true
         end)
     end;
     spottedEnemy = function(self, enemy)

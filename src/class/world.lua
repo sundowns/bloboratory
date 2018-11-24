@@ -228,7 +228,7 @@ World = Class {
             for i = 1, len do 
                 if cols[i].other.type == "ENEMY" then
                     if tower.archetype == "MELEE" then
-                        tower:attack(collision.other, playOnHit)
+                        tower:attack(cols[i].other, playOnHit)
                         playOnHit = false
                         tower:disarm()
                     elseif tower.archetype == "LINE" then
