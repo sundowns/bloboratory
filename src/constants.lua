@@ -63,9 +63,9 @@ return {
             ATTACK_INTERVAL = 0.3, 
             TARGETTING_RADIUS = 1, --additional cell radii
             COST = {
-                SCRAP = 30,
+                SCRAP = 25,
             },
-            TOOLTIP = "Saw: Cost = 30 scrap",
+            TOOLTIP = "Saw: Cost = 25 scrap",
         },
         CANNON = {
             WIDTH = 2, --cells
@@ -89,9 +89,9 @@ return {
             LINE_WIDTH = 0.5,
             ATTACK_INTERVAL = 1.5,
             COST = {
-                SCRAP = 30,
+                SCRAP = 40,
             },
-            TOOLTIP = "Laserbeam: Cost = 30 scrap",
+            TOOLTIP = "Laserbeam: Cost = 40 scrap",
         },
     },
     MUTATIONS = {

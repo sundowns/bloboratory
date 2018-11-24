@@ -68,3 +68,82 @@ FireImpact = Class {
         other:applyDebuff(Inflame(other, self.stats))
     end;
 }
+
+LaserImpact = Class {
+    __includes = Impact,
+    init = function(self, origin, stats, dimensions)
+        Impact.init(self, origin, dimensions.width, dimensions.height)
+        self.colour = {0.7,0,0.7} -- TODO: remove and replace with proper animation/something pretty
+        self.stats = stats
+    end;
+    attack = function(self, other)
+        other:takeDamage(self.stats.BASE_DAMAGE, true, 1)
+    end;
+    calculateHitbox = function(self)
+        return self.worldOrigin.x, self.worldOrigin.y, self.width, self.height
+    end;
+    draw = function(self)
+        love.graphics.setColor(self.colour[1], self.colour[2], self.colour[3], self.opacity)
+        love.graphics.rectangle('fill', self:calculateHitbox())
+    end;
+}
+
+LaserFireImpact = Class {
+    __includes = Impact,
+    init = function(self, origin, stats, dimensions)
+        Impact.init(self, origin, dimensions.width, dimensions.height)
+        self.colour = {1,0,0} -- TODO: remove and replace with proper animation/something pretty
+        self.stats = stats
+    end;
+    attack = function(self, other)
+        other:takeDamage(self.stats.BASE_DAMAGE, true, 1)
+        other:applyDebuff(Inflame(other, self.stats))
+    end;
+    calculateHitbox = function(self)
+        return self.worldOrigin.x, self.worldOrigin.y, self.width, self.height
+    end;
+    draw = function(self)
+        love.graphics.setColor(self.colour[1], self.colour[2], self.colour[3], self.opacity)
+        love.graphics.rectangle('fill', self:calculateHitbox())
+    end;
+}
+
+LaserElectricImpact = Class {
+    __includes = Impact,
+    init = function(self, origin, stats, dimensions)
+        Impact.init(self, origin, dimensions.width, dimensions.height)
+        self.colour = {1,1,0} -- TODO: remove and replace with proper animation/something pretty
+        self.stats = stats
+    end;
+    attack = function(self, other)
+        other:takeDamage(self.stats.BASE_DAMAGE + self.stats.MINIMUM_DAMAGE + Util.m.roundToNthDecimal(love.math.random()*self.stats.MAXIMUM_EXTRA_DAMAGE, 3), true, 1)
+        other:applyDebuff(Electrify(other, self.stats))
+    end;
+    calculateHitbox = function(self)
+        return self.worldOrigin.x, self.worldOrigin.y, self.width, self.height
+    end;
+    draw = function(self)
+        love.graphics.setColor(self.colour[1], self.colour[2], self.colour[3], self.opacity)
+        love.graphics.rectangle('fill', self:calculateHitbox())
+    end;
+}
+
+LaserIceImpact = Class {
+    __includes = Impact,
+    init = function(self, origin, stats, dimensions)
+        Impact.init(self, origin, dimensions.width, dimensions.height)
+        self.colour = {0,0,1} -- TODO: remove and replace with proper animation/something pretty
+        self.stats = stats
+    end;
+    attack = function(self, other)
+        other:takeDamage(self.stats.BASE_DAMAGE, true, 1)
+        other:applyDebuff(Freeze(other, self.stats))
+    end;
+    calculateHitbox = function(self)
+        return self.worldOrigin.x, self.worldOrigin.y, self.width, self.height
+    end;
+    draw = function(self)
+        love.graphics.setColor(self.colour[1], self.colour[2], self.colour[3], self.opacity)
+        love.graphics.rectangle('fill', self:calculateHitbox())
+    end;
+}

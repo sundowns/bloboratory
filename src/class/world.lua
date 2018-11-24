@@ -10,7 +10,14 @@ World = Class {
         self.structures = {}
         self.enemies = {}
         self.projectiles = {}
-        self.impacts = {}
+        self.impacts = {}    init = function(self, origin, stats)
+            Impact.init(self, origin, constants.IMPACTS.FIRE.WIDTH, constants.IMPACTS.FIRE.HEIGHT)
+            self.colour = {0.8,0.5,0} -- TODO: remove and replace with proper animation/something pretty
+            self.stats = stats
+        end;
+        attack = function(self, other)
+            other:applyDebuff(Inflame(other, self.stats))
+        end;
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE/4)
         self:setupTimers()
 
@@ -193,6 +200,12 @@ World = Class {
                 self:spawnEnemyAt(self.grid.spawn.gridOrigin)
             end
         end)
+
+        for i, structure in pairs(self.structures) do
+            if structure.type == "TOWER" then
+                structure:resetTimers()
+            end
+        end
     end;
     processCollisionForEnemy = function(self, enemy, dt)
         local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/4, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/4, function() return "cross" end)
@@ -211,14 +224,23 @@ World = Class {
             local x, y, width, height = tower:calculateHitbox()
             local actualX, actualY, cols, len = self.collisionWorld:check(tower, x, y, function() return "cross" end)
             local playOnHit = true
+            local createImpact = false
             for i = 1, len do 
-                local collision = cols[i]
-                if collision.other.type == "ENEMY" then
-                    tower:attack(collision.other, playOnHit)
-                    playOnHit = false
+                if cols[i].other.type == "ENEMY" then
+                    if tower.archetype == "MELEE" then
+                        tower:attack(collision.other, playOnHit)
+                        playOnHit = false
+                        tower:disarm()
+                    elseif tower.archetype == "LINE" then
+                        createImpact = true
+                    end
                 end
             end
-            if len > 0 then
+            if createImpact then
+                --create an impact
+                if tower.towerType == "LASERGUN" then
+                    self:addImpact(tower:fireLaser())
+                end
                 tower:disarm()
             end
         end
