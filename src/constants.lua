@@ -79,7 +79,20 @@ return {
             },
             TOOLTIP = "Cannon: Cost = 30 scrap",
             ROTATION_TIME = 0.2
-        }
+        },
+        LASERGUN = {
+            WIDTH = 2, --cells
+            HEIGHT = 2, --cells
+            BARREL_LENGTH = 32, --used to offset projectiles
+            ATTACK_DAMAGE = 4, --damage per HIT 
+            LINE_LENGTH = 16, 
+            LINE_WIDTH = -0.5,
+            ATTACK_INTERVAL = 1.5,
+            COST = {
+                SCRAP = 30,
+            },
+            TOOLTIP = "Laserbeam: Cost = 30 scrap",
+        },
     },
     MUTATIONS = {
         FIRE = {
@@ -106,8 +119,8 @@ return {
             HEIGHT = 150,
         },
         ICE = {
-            WIDTH = 200,
-            HEIGHT = 200,
+            WIDTH = 150,
+            HEIGHT = 150,
         },
         FIRE = {
             WIDTH = 150,
@@ -159,8 +172,8 @@ return {
             },
         },
         BLOBSKULL = {
-            HEALTH = 60,
-            SPEED = 100,
+            HEALTH = 50,
+            SPEED = 110,
             YIELD = {
                 SCRAP = 10,
             },

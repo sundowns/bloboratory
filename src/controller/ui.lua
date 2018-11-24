@@ -41,7 +41,7 @@ UiController = Class {
             self.options:display(windowWidth, windowHeight)
             self.tray:display(windowWidth,windowHeight)
             self.picker:display(windowWidth, windowHeight)
- 
+
             if self.firstRun then
                 self.firstRun = false
             end

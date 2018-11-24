@@ -76,6 +76,57 @@ MeleeTower = Class {
     end;
 }
 
+LineTower = Class {
+    __includes = Tower,
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, lineLength, lineWidth)
+        Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
+        self.archetype = "MELEE"
+        self.armed = false
+        self.lineLength = lineLength
+        self.lineWidth = lineWidth
+
+        self.attackTimer = Timer.new()
+        self.attackTimer:every(self.attackInterval, function()
+            self:arm()
+        end)
+    end;
+    update = function(self, dt)
+        Tower.update(self, dt)
+        self.attackTimer:update(dt)
+    end;
+    attack = function(self, other, playOnHit)
+        other:takeDamage(self.attackDamage, playOnHit, 1)
+        audioController:playAny("UPGRADE_ELECTRIC")
+        if self.mutation then
+            self.mutation:attack(other, 1)
+        end
+    end;
+    addMutation = function(self, mutation, animation)
+        Tower.addMutation(self, mutation, animation)
+    end;
+    arm = function(self)
+        self.armed = true
+    end;
+    disarm = function(self)
+        self.armed = false
+    end;
+    calculateHitbox = function(self)
+        -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
+        local x = self.worldOrigin.x - self.lineLength * constants.GRID.CELL_SIZE
+        local y = self.worldOrigin.y - self.lineWidth * constants.GRID.CELL_SIZE 
+        local width = self.lineLength *constants.GRID.CELL_SIZE
+        local height = (self.height + self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
+        return x, y, width, height
+    end;
+    draw = function(self, blockingPath)
+        if self.isSelected then
+            love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
+            love.graphics.rectangle('fill', self.worldOrigin.x - self.lineLength*constants.GRID.CELL_SIZE, self.worldOrigin.y - self.lineWidth*constants.GRID.CELL_SIZE, (self.lineLength+self.width)*constants.GRID.CELL_SIZE, (self.lineWidth+self.height)*constants.GRID.CELL_SIZE/1.5)
+        end
+        Tower.draw(self, blockingPath)
+    end;
+}
+
 TargetedTower = Class {
     __includes = Tower,
     init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, rotationTime, attackDamage, attackInterval)

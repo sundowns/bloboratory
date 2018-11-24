@@ -23,7 +23,11 @@ InputController = Class {
             playerController:setCurrentBlueprint(tonumber(key))
         end
         if key == "escape" then
-            self:togglePlacingTower()
+            if not nk.windowIsHidden(constants.UI.PICKER.NAME) then 
+                uiController.picker.prepareToHide = true
+            elseif self.isPlacingTower then
+                self:togglePlacingTower()
+            end
         end
         if not self.isPlacingTower then
             if key == "s" and roundController:isBuildPhase() then
@@ -39,9 +43,7 @@ InputController = Class {
             elseif key == "e" and playerController.currentSelectedStructure and roundController:isBuildPhase() then
                 playerController:upgradeCurrentStructure("ELECTRIC")
             end
-            elseif key == "escape" then
-                love.event.quit()
-            end
+        end
     end;  
     mousepressed = function(self, screenOrigin, button)
         if not self:isAboveTray(screenOrigin) or not nk.windowIsHidden(constants.UI.PICKER.NAME) or not nk.windowIsHidden(constants.UI.OPTIONS_MENU.NAME) then return end
