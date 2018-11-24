@@ -47,17 +47,6 @@ Options = Class {
         nk.windowEnd()
         nk.stylePop()
 
-        nk.stylePush(self.style)
-        if nk.windowBegin(constants.UI.OPTIONS_BUTTON.NAME, constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight) then 
-            uiController:handleResize(constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight)
-            nk.layoutRow('dynamic', (constants.UI.OPTIONS_BUTTON.LAYOUTROW_HEIGHT*windowHeight), 1)
-            if nk.button("OPTIONS") then 
-                nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
-            end 
-        end
-        nk.windowEnd()
-        nk.stylePop()
-
         if nk.windowBegin(constants.UI.OPTIONS_SOUND.NAME, constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight) then 
             uiController:handleResize(constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)

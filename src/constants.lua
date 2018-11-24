@@ -212,18 +212,19 @@ return {
             LAYOUTROW_HEIGHT = 0.06,
             NAME = 'OptionsSound'
         },
+        OVERHEAD = {
+            X = 0,
+            Y = 0,
+            WIDTH = 1,
+            HEIGHT = 0.05,
+            LAYOUTROW_HEIGHT = 0.03
+        },
         MENU = {
             X = 0,
             Y = 0.88,
             WIDTH = 0.4,
             HEIGHT = 0.125,
             LAYOUTROW_HEIGHT = 0.0775,
-        },
-        WALLET = {
-            X = 0.725,
-            Y = 0.02,
-            WIDTH = 0.25,
-            HEIGHT = 0.03,
         },
         CRUCIBLE = {
             X = 0.4,

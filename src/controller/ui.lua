@@ -2,6 +2,7 @@ UiController = Class {
     init = function(self)
         self.resizeTriggered = true
         self.firstRun = true
+        self.overhead = Overhead()
         self.options = Options()
         self.tray = Tray()
         self.picker = Picker()
@@ -23,21 +24,8 @@ UiController = Class {
         local windowHeight = love.graphics.getHeight()
         love.graphics.setFont(self.font)
         nk.frameBegin()
-            if nk.windowBegin('Wallet', constants.UI.WALLET.X*windowWidth, constants.UI.WALLET.Y*windowHeight, constants.UI.WALLET.WIDTH*windowWidth, constants.UI.WALLET.HEIGHT*windowHeight) then
-                self:handleResize(constants.UI.WALLET.X*windowWidth, constants.UI.WALLET.Y*windowHeight, constants.UI.WALLET.WIDTH*windowWidth, constants.UI.WALLET.HEIGHT*windowHeight)
-            
-                local width, height = nk.windowGetSize()
-                nk.layoutRowBegin('dynamic', height*0.6, playerController.wallet.totalCurrencies*2)
-                for key, currency in pairs(playerController.wallet.currencies) do
-                    nk.layoutRowPush(0.3/playerController.wallet.totalCurrencies)
-                    nk.image(currency.image)
-                    nk.layoutRowPush(0.7/playerController.wallet.totalCurrencies)
-                    nk.label(currency.value, 'centered', nk.colorRGBA(currency:colourRGB()))
-                end
-                nk.layoutRowEnd()
-            end
-            nk.windowEnd()
 
+            self.overhead:display(windowWidth, windowHeight)
             self.options:display(windowWidth, windowHeight)
             self.tray:display(windowWidth,windowHeight)
             self.picker:display(windowWidth, windowHeight)
@@ -45,6 +33,7 @@ UiController = Class {
             if self.firstRun then
                 self.firstRun = false
             end
+            
         nk.frameEnd()
         self.resizeTriggered = false
     end;
