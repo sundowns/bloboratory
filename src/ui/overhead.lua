@@ -1,6 +1,7 @@
 Overhead = Class {
     init = function(self)      
         self.style = {
+            OVERHEAD = {
                 ['window'] = {
                     ['fixed background'] = assets.ui.menuRight,
                     ['padding'] = {x = 20, y = 20}
@@ -14,15 +15,27 @@ Overhead = Class {
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
                 },
+            },
+            WALLET = {
+                ['window'] = {
+                    ['fixed background'] = assets.ui.menuRight,
+                    ['padding'] = {x = 10, y = 60}
+                },
+            },
         }
     end; 
 
     display = function(self, windowWidth, windowHeight)
-        nk.stylePush(self.style)
+        nk.stylePush(self.style.OVERHEAD)
         if nk.windowBegin('Overhead', constants.UI.OVERHEAD.X*windowWidth, constants.UI.OVERHEAD.Y*windowHeight, constants.UI.OVERHEAD.WIDTH*windowWidth, constants.UI.OVERHEAD.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.OVERHEAD.X*windowWidth, constants.UI.OVERHEAD.Y*windowHeight, constants.UI.OVERHEAD.WIDTH*windowWidth, constants.UI.OVERHEAD.HEIGHT*windowHeight)
             nk.layoutRowBegin('dynamic', constants.UI.OVERHEAD.LAYOUTROW_HEIGHT, (2 + playerController.wallet.totalCurrencies*2))
             nk.layoutRowPush(0.1)
+            if nk.windowIsHovered() and not nk.widgetIsHovered() then 
+                if not nk.windowHasFocus() then 
+                    nk.windowSetFocus('Overhead')
+                end
+            end
             if nk.button("OPTIONS") then 
                 nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
             end 
