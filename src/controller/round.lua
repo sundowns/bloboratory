@@ -1,6 +1,7 @@
 RoundController = Class {
     init = function(self)
         self.roundIndex = 1
+        self.readyToStart = false
         self.currentRound = Round(1)
         self.totalRounds = 20
         self.crucible = Crucible(3)
@@ -85,6 +86,12 @@ RoundController = Class {
             },
         }
     end;
+    update = function(self, dt)
+        if self.readyToStart then
+            roundController:startRound()
+            self.readyToStart = false
+        end
+    end;
     canSpawn = function(self)
         return self.currentRound.enemiesSpawned < #self.currentRound.enemies
     end;
@@ -124,6 +131,7 @@ RoundController = Class {
     end;
     startRound = function(self)
         if self:isBuildPhase() then
+            print('start round')
             -- build the crucible enemies
             local roundEnemies = self.crucible:constructEnemies(self.roundIndex, self.totalRounds) 
             if #roundEnemies > 0 then

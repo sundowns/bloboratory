@@ -153,7 +153,7 @@ Picker = Class {
 
                 if nk.button('') then
                     if roundController:isBuildPhase() and world.grid.validPath then
-                        roundController:startRound()
+                        roundController.readyToStart = true
                     end
                 end
 

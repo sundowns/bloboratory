@@ -48,7 +48,7 @@ return {
             MAXIMUM_EXTRA_DAMAGE = 6, --total maximum is this + minimum
         },
         ICE = {
-            DURATION = 1.5,
+            DURATION = 2,
             TICK_DURATION = 0.25,
             SPEED_MODIFIER = 0.5, -- 50% total speed
         },

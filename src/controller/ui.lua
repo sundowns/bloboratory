@@ -23,7 +23,6 @@ UiController = Class {
         local windowHeight = love.graphics.getHeight()
         love.graphics.setFont(self.font)
         nk.frameBegin()
-
             self.overhead:display(windowWidth, windowHeight)
             self.options:display(windowWidth, windowHeight)
             self.tray:display(windowWidth,windowHeight)
@@ -32,7 +31,6 @@ UiController = Class {
             if self.firstRun then
                 self.firstRun = false
             end
-
         nk.frameEnd()
         self.resizeTriggered = false
     end;

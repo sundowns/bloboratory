@@ -86,6 +86,7 @@ function love.update(dt)
 
         if not playerController.hasWon and not playerController.hasLost then
             uiController:update(dt)
+            roundController:update(dt)
             inputController:update(dt)
             cameraController:update(dt)
         end
