@@ -144,6 +144,12 @@ AudioController = Class {
                     volume = constants.AUDIO.CANNON_SHOOT[1],
                 },
             }),
+            ["LASERGUN_SHOOT"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.structures.lasergunShoot,
+                    volume = constants.AUDIO.LASER_SHOOT[1],
+                },
+            })
         }
     end;
     stopMusic = function(self)

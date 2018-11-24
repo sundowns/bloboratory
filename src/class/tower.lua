@@ -96,7 +96,7 @@ LineTower = Class {
     end;
     attack = function(self, other, playOnHit)
         other:takeDamage(self.attackDamage, playOnHit, 1)
-        audioController:playAny("UPGRADE_ELECTRIC")
+        audioController:playAny("LASERGUN_SHOOT")
         if self.mutation then
             self.mutation:attack(other, 1)
         end

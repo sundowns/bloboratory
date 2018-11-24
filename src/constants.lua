@@ -321,6 +321,9 @@ return {
         CANNON_SHOOT = {
             5,
         },
+        LASER_SHOOT = {
+            1,
+        },
     },
     RECIPE = {
         BONEMEAL = {2,3,2,0,1,0,0,1,0}
