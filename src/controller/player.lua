@@ -4,10 +4,10 @@ require("src.class.wallet")
 PlayerController = Class {
     init = function(self)
         self.STRUCTURE_BLUEPRINTS = {
-            ["OBSTACLE"] = StructureBlueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2, 0),
-            ["SAW"] = StructureBlueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, constants.STRUCTURE.SAW.TARGETTING_RADIUS),
-            ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, constants.STRUCTURE.CANNON.TARGETTING_RADIUS),
-            ["LASERGUN"] = StructureBlueprint("LASERGUN", assets.blueprints.cannon, 2, 2, 1, 1, constants.STRUCTURE.LASERGUN.LINE_LENGTH, constants.STRUCTURE.LASERGUN.LINE_HEIGHT)
+            ["OBSTACLE"] = StructureBlueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2, 0, "NONE"),
+            ["SAW"] = StructureBlueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, {radius = constants.STRUCTURE.SAW.TARGETTING_RADIUS}, "RADIUS"),
+            ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, {radius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS}, "RADIUS"),
+            ["LASERGUN"] = StructureBlueprint("LASERGUN", assets.blueprints.lasergun, 2, 2, 1, 1, {width = constants.STRUCTURE.LASERGUN.LINE_LENGTH, height = constants.STRUCTURE.LASERGUN.LINE_WIDTH}, "LINE")
         }
         self.blueprints = {}
         self:addNewStructureBlueprint("OBSTACLE")

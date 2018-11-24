@@ -15,8 +15,7 @@ Tower = Class {
         self.rotatable = false
         self.attackDamage = attackDamage
         self.attackInterval = attackInterval
-        self.orientation = ORIENTATIONS.RIGHT
-        animationController:updateInstanceRotation(self.animation, self.orientation)
+        self.orientation = ORIENTATIONS.LEFT
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
