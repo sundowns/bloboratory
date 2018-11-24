@@ -9,7 +9,7 @@ Tray = Class {
                 ['window'] = {
                     ['background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['fixed background'] = assets.ui.menuLeft,
-                    ['padding'] = {x = 14, y = 22}
+                    ['padding'] = {x = 0, y = 22}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
@@ -19,8 +19,8 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
-                    ['image padding'] = {x = 4, y = 4},
-                    ['padding'] = {x = 5, y = 2}
+                    ['image padding'] = {x = 4, y = 5},
+                    ['padding'] = {x = 1, y = 3}
                 },
             },
             SELECT_MENU = {
@@ -51,7 +51,7 @@ Tray = Class {
         if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) 
             if roundController:isBuildPhase() then 
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {2/6, 1/6, 1/6, 1/6, 1/6})
+                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {4/10, 1/7, 1/7, 1/7, 1/7})
                 nk.spacing(1)
                 for i, blueprint in pairs(playerController.blueprints) do
                     self:displayTooltip(blueprint.costToolTip)
