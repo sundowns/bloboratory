@@ -307,10 +307,10 @@ return {
             1,
         },
         UPGRADE_FIRE = {
-            1.5,
+            1.2,
         },
         UPGRADE_ICE = {
-            1.5,
+            1.2,
         },
         UPGRADE_ELECTRIC = {
             1,
@@ -319,7 +319,7 @@ return {
             0.5,
         },
         CANNON_SHOOT = {
-            1,
+            0.8,
         },
         LASERGUN_SHOOT = {
             1,
