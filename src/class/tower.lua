@@ -161,7 +161,6 @@ LineTower = Class {
     draw = function(self, blockingPath)
         if self.isSelected then
             love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
-            local x, y, width, height 
             love.graphics.rectangle('fill', self:calculateHitbox())
         end
         Tower.draw(self, blockingPath)
