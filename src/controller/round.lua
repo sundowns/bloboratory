@@ -7,7 +7,7 @@ RoundController = Class {
         self.ENEMY_BLUEPRINTS = require("src.enemy-blueprints")
         self.bossRounds = {
             {
-                roundIndex = 2,
+                roundIndex = 5,
                 crucibleSlots = {
                     {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
