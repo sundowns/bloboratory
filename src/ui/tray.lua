@@ -19,7 +19,8 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
-                    ['image padding'] = {x = 4, y = 4}
+                    ['image padding'] = {x = 4, y = 4},
+                    ['padding'] = {x = 5, y = 2}
                 },
             },
             SELECT_MENU = {

@@ -2,6 +2,9 @@
 Options = Class {
     init = function(self)      
         self.style = {
+                ['text'] = {
+                    ['color'] = constants.COLOURS.UI.WHITE, 
+                },
                 ['window'] = {
                     ['fixed background'] = constants.COLOURS.UI.NONE,
                 },
@@ -9,10 +12,11 @@ Options = Class {
                     ['normal'] = assets.ui.button,
                     ['hover'] = assets.ui.buttonHovered,
                     ['active'] = assets.ui.button,
-                    ['text background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
-                    ['text normal'] = constants.COLOURS.UI.BLACK,
-                    ['text hovered'] = constants.COLOURS.UI.WHITE,
-                    ['text active'] = constants.COLOURS.UI.BLACK,
+                    ['active'] = constants.COLOURS.UI.NONE,
+                    ['text background'] = constants.COLOURS.UI.NONE,
+                    ['text normal'] = constants.COLOURS.UI.WHITE,
+                    ['text hovered'] = constants.COLOURS.UI.BLACK,
+                    ['text active'] = constants.COLOURS.UI.WHITE,
                 },
             }
     end; 
@@ -47,17 +51,7 @@ Options = Class {
         nk.windowEnd()
         nk.stylePop()
 
-        nk.stylePush(self.style)
-        if nk.windowBegin(constants.UI.OPTIONS_BUTTON.NAME, constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight) then 
-            uiController:handleResize(constants.UI.OPTIONS_BUTTON.X*windowWidth, constants.UI.OPTIONS_BUTTON.Y*windowHeight, constants.UI.OPTIONS_BUTTON.WIDTH*windowWidth, constants.UI.OPTIONS_BUTTON.HEIGHT*windowHeight)
-            nk.layoutRow('dynamic', (constants.UI.OPTIONS_BUTTON.LAYOUTROW_HEIGHT*windowHeight), 1)
-            if nk.button("OPTIONS") then 
-                nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
-            end 
-        end
-        nk.windowEnd()
-        nk.stylePop()
-
+        --nk.stylePush(self.style)
         if nk.windowBegin(constants.UI.OPTIONS_SOUND.NAME, constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight) then 
             uiController:handleResize(constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
@@ -82,7 +76,7 @@ Options = Class {
             nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
         end
         nk.windowEnd()
-        nk.stylePop()
+        --nk.stylePop()
     end;
 }
 

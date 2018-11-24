@@ -62,6 +62,7 @@ function love.load()
     require("src.enemy.blob-teeth")
     require("src.class.enemyblueprint")
     require("src.ui.crucible")
+    require("src.ui.overhead")
     
     love.graphics.setFont(assets.ui.neuropoliticalRg(12))
     love.graphics.setDefaultFilter('nearest')
