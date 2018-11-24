@@ -62,7 +62,9 @@ MeleeTower = Class {
         self.archetype = "MELEE"
         self.armed = false
         self.targettingRadius = attackRange
-
+        self.attackTimer = nil
+    end;
+    resetTimers = function(self)
         self.attackTimer = Timer.new()
         self.attackTimer:every(self.attackInterval, function()
             self:arm()
@@ -70,7 +72,9 @@ MeleeTower = Class {
     end;
     update = function(self, dt)
         Tower.update(self, dt)
-        self.attackTimer:update(dt)
+        if self.attackTimer then
+            self.attackTimer:update(dt)
+        end
     end;
     attack = function(self, other, playOnHit)
         other:takeDamage(self.attackDamage, playOnHit, 1)
@@ -102,19 +106,23 @@ LineTower = Class {
     init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, lineLength, lineWidth)
         Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
         self.archetype = "LINE"
-        self.armed = false
+        self.armed = true
         self.lineLength = lineLength
         self.lineWidth = lineWidth
         self.rotatable = true
-
+        self.attackTimer = nil
+    end;
+    resetTimers = function(self)
         self.attackTimer = Timer.new()
-        self.attackTimer:every(self.attackInterval, function()
+        self.attackTimer:after(self.attackInterval, function()
             self:arm()
         end)
     end;
     update = function(self, dt)
         Tower.update(self, dt)
-        self.attackTimer:update(dt)
+        if self.attackTimer then
+            self.attackTimer:update(dt)
+        end
     end;
     attack = function(self, other, playOnHit)
         other:takeDamage(self.attackDamage, playOnHit, 1)
@@ -131,6 +139,7 @@ LineTower = Class {
     end;
     disarm = function(self)
         self.armed = false
+        self:resetTimers()
     end;
     calculateHitbox = function(self)
         local x, y, width, height
@@ -176,10 +185,12 @@ TargetedTower = Class {
         self.rotating = false
         self.angleToTarget = 0
         self.rotationTime = rotationTime
-
+        self.attackTimer = nil
+    end;
+    resetTimers = function(self)
         self.attackTimer = Timer.new()
         self.attackTimer:every(self.attackInterval, function()
-            self.canShoot = true
+            self:arm()
         end)
     end;
     spottedEnemy = function(self, enemy)
@@ -221,7 +232,9 @@ TargetedTower = Class {
         end
 
         if not self.canShoot then
-            self.attackTimer:update(dt)
+            if self.attackTimer then
+                self.attackTimer:update(dt)
+            end
         end
 
         if self.canShoot and self.currentTarget then
