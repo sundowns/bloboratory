@@ -266,8 +266,8 @@ return {
         MAX_PARTICLES = 8,
     },
     MUSIC = { -- index must match musicList index
-        ROUND = 0.7,
-        BUILD = 0.375,
+        0.7,
+        0.475,
     },
     AUDIO = { -- constant index must match tracklist index
         PLACE_STRUCTURE = {

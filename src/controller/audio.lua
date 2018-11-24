@@ -3,18 +3,18 @@ AudioController = Class {
         self.music_multiplier = 1
         self.sfx_multiplier = 1
         self.musicList = {
-            ROUND = ripple.newSound {
+            ripple.newSound {
                 source = assets.audio.music.doom2,
                 volume = constants.MUSIC[ROUND],
             },
-            BUILD = ripple.newSound {
+            ripple.newSound {
                 source = assets.audio.music.music3,
                 volume = constants.MUSIC[BUILD],
             },
         }
-        self.musicList.BUILD:setLooping(true)
-        self.musicList.ROUND:setLooping(true)
-        self.music = self.musicList.BUILD
+        self.musicList[1]:setLooping(true)
+        self.musicList[2]:setLooping(true)
+        self.music = self.musicList[2]
         self.music:play()
         self.tracklists = { 
             ["PLACE_STRUCTURE"] = TrackList({
@@ -164,8 +164,9 @@ AudioController = Class {
         self.tracklists[tracklistId]:playAny()
     end;
     updateMusicVolume = function(self)
-        for i, track in ipairs(self.musicList) do 
+        for i, track in pairs(self.musicList) do 
             track.volume = (constants.MUSIC[i] * self.music_multiplier)
+            print(self.music_multiplier .. ", " ..track.volume)
         end
     end;
     updateSfxVolume = function(self)
