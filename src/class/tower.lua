@@ -1,3 +1,10 @@
+local ORIENTATIONS = {
+    RIGHT = math.rad(0),
+    DOWN = math.rad(90),
+    LEFT = math.rad(180),
+    UP = math.rad(270)
+}
+
 Tower = Class {
     __includes=Structure,
     init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
@@ -7,6 +14,7 @@ Tower = Class {
         self.mutable = true
         self.attackDamage = attackDamage
         self.attackInterval = attackInterval
+        self.orientation = ORIENTATIONS
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
@@ -31,6 +39,17 @@ Tower = Class {
         local width = (self.width + 2*(self.targettingRadius)) *constants.GRID.CELL_SIZE
         local height = (self.height + 2*(self.targettingRadius)) *constants.GRID.CELL_SIZE
         return x, y, width, height
+    end;
+    rotateClockwise = function(self)
+        if self.orientation == ORIENTATIONS.LEFT then
+            self.orientation = ORIENTATIONS.TOP
+        elseif self.orientation == ORIENTATIONS.TOP then
+            self.orientation = ORIENTATIONS.RIGHT
+        elseif self.orientation == ORIENTATIONS.RIGHT then
+            self.orientation = ORIENTATIONS.BOTTOM
+        elseif self.orientation == ORIENTATIONS.BOTTOM then
+            self.orientation = ORIENTATIONS.LEFT
+        end
     end;
 }
 
@@ -80,7 +99,7 @@ LineTower = Class {
     __includes = Tower,
     init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, lineLength, lineWidth)
         Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
-        self.archetype = "MELEE"
+        self.archetype = "LINE"
         self.armed = false
         self.lineLength = lineLength
         self.lineWidth = lineWidth
