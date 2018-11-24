@@ -8,6 +8,7 @@ UiController = Class {
         self.font = assets.ui.neuropoliticalRg(12)
         self.victoryText = love.graphics.newText(assets.ui.neuropoliticalRg(48), {{0,1,0}, "V I C T O R Y"})
         self.defeatText = love.graphics.newText(assets.ui.neuropoliticalRg(48), {{1,0,0}, "D E F E A T"})
+
     end;
     triggerResize = function(self)
         self.resizeTriggered = true
@@ -51,6 +52,11 @@ UiController = Class {
         Util.l.resetColour()
         nk.draw()
         Util.l.resetColour()
+        love.graphics.setColor(0.5, 0.5, 0)
+        love.graphics.print('Round: '.. roundController.roundIndex .. ' / ' .. roundController.totalRounds, 20, love.graphics.getHeight()/2)
+        love.graphics.setColor(0, 0.5, 0)
+        love.graphics.print('Lives: '.. playerController.livesRemaining .. ' / ' .. constants.MISC.STARTING_LIVES, 20, love.graphics.getHeight()/2 + 20)
+
         if playerController.hasWon then
             love.graphics.draw(self.victoryText, love.graphics.getWidth()/2 - self.victoryText:getWidth()/2, love.graphics.getHeight()/2)
         elseif playerController.hasLost then

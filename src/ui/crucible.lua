@@ -1,7 +1,7 @@
 Picker = Class {
     init = function(self)
         self.choice = 0
-        self.tooltip_slot_default = " Select enemies to be sent this round."
+        self.tooltip_slot_default = "  Select enemies to be sent this round."
         self.tooltip_slot_current = self.tooltip_slot_default
         self.styles = {
             CRUCIBLE = {
@@ -12,8 +12,16 @@ Picker = Class {
                 ['button'] = {
                     ['border color'] = constants.COLOURS.UI.NONE,
                     ['normal'] = constants.COLOURS.UI.NONE,
-                    ['hover'] = constants.COLOURS.UI.PANEL_LIGHT,
-                    ['active'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['hover'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
+                    ['active'] = constants.COLOURS.UI.PANEL_TRANSPARENT_DARK,
+                },
+            },
+            CRUCIBLE_LOCKED = {
+                ['button'] = {
+                    ['border color'] = constants.COLOURS.UI.NONE,
+                    ['normal'] = constants.COLOURS.UI.DISABLED,
+                    ['hover'] = constants.COLOURS.UI.DISABLED,
+                    ['active'] = constants.COLOURS.UI.DISABLED,
                 },
             },
             START = {
@@ -26,6 +34,30 @@ Picker = Class {
                     ['hover'] = assets.ui.startGrey,
                     ['active'] = assets.ui.startGrey,
                 },
+            },
+            PICKER = {
+                ['font'] = assets.ui.planerRegular(32),
+                ['window'] = {
+                    ['header'] = {
+                        ['normal'] = constants.COLOURS.UI.PANEL,
+                        ['hover'] = constants.COLOURS.UI.PANEL,
+                        ['active'] = constants.COLOURS.UI.PANEL,
+                        ['close button'] = {
+                            ['normal'] = constants.COLOURS.UI.PANEL,
+                            ['hover'] = constants.COLOURS.UI.PANEL,
+                            ['active'] = constants.COLOURS.UI.PANEL,
+                        }
+                    },
+                    ['fixed background'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['background'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['border color'] = constants.COLOURS.UI.PANEL,
+                },
+                ['button'] = {
+                    ['normal'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['hover'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['active'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['border color'] = constants.COLOURS.UI.PANEL
+                }
             }
         }
     end; 
@@ -37,6 +69,9 @@ Picker = Class {
     end;
     display = function(self, windowWidth, windowHeight)
             nk.stylePush(self.styles.CRUCIBLE)
+            if roundController.crucible.isLocked then
+                nk.stylePush(self.styles.CRUCIBLE_LOCKED)
+            end
             if nk.windowBegin('Crucible', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight) then
                 uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight, constants.UI.CRUCIBLE.WIDTH*windowWidth, constants.UI.CRUCIBLE.HEIGHT*windowHeight)
 
@@ -61,13 +96,15 @@ Picker = Class {
                             self:tooltipSlotClear()
                         end
 
-                        if nk.widgetIsHovered() then 
-                            nk.stylePush({['window'] = {
-                                ['background'] = constants.COLOURS.UI.BLACK,
-                                ['padding'] = {x = 5, y = 0}}
-                            })
-                            nk.tooltip(self.tooltip_slot_current)
-                            nk.stylePop()
+                        if nk.widgetIsHovered() then
+                            if blueprint or not roundController.crucible.isLocked then
+                                nk.stylePush({['window'] = {
+                                    ['background'] = constants.COLOURS.UI.BLACK,
+                                    ['padding'] = {x = 5, y = 0}}
+                                })
+                                nk.tooltip(self.tooltip_slot_current)
+                                nk.stylePop()
+                            end
                         elseif nk.windowIsHovered() then 
                             if not nk.windowHasFocus() then 
                                 nk.windowSetFocus('Crucible')
@@ -75,9 +112,11 @@ Picker = Class {
                         end
 
                         if nk.button('') then
-                            self.choice = i
-                            nk.windowShow(constants.UI.PICKER.NAME)
-                            playerController:toggleStructureSelection(playerController.currentSelectedStructure)
+                            if not roundController.crucible.isLocked then
+                                self.choice = i
+                                nk.windowShow(constants.UI.PICKER.NAME)
+                                playerController:toggleStructureSelection(playerController.currentSelectedStructure)
+                            end
                         end
 
         
@@ -88,8 +127,11 @@ Picker = Class {
                 end
             end
             nk.windowEnd()
+            if roundController.crucible.isLocked then
+                nk.stylePop()
+            end
             nk.stylePop()
-
+            
             nk.stylePush(self.styles.START)
             if nk.windowBegin('Start', constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight -48, constants.UI.CRUCIBLE.WIDTH*windowWidth, 0.05*windowHeight) then 
                 uiController:handleResize(constants.UI.CRUCIBLE.X*windowWidth, constants.UI.CRUCIBLE.Y*windowHeight -48, constants.UI.CRUCIBLE.WIDTH*windowWidth, 0.05*windowHeight)
@@ -117,7 +159,8 @@ Picker = Class {
             end
             nk.windowEnd()
             nk.stylePop()
-    
+            
+            nk.stylePush(self.styles.PICKER)
             if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                 uiController:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
 
@@ -130,17 +173,20 @@ Picker = Class {
                 end
 
                 for i, blueprint in pairs(roundController.ENEMY_BLUEPRINTS) do
-                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, 6)
-                    if nk.button('', blueprint.image) then
-                        roundController.crucible.slots[self.choice]:setBlueprint(blueprint)
-                        nk.windowHide(constants.UI.PICKER.NAME)
-                    end
-                    nk.spacing(1)
-                    nk.label(blueprint.name, 'left')
-                    nk.spacing(1)
-
-                    for key, value in pairs(blueprint.yield) do
-                        nk.label(key .. ':  ' .. value, 'left', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
+                    if not blueprint.isBoss then
+                        nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {2/12, 1/12, 5/12, 1/12, 2/12, 1/12, 1/12})
+                        if nk.button('', blueprint.image) then
+                            roundController.crucible:setSlot(self.choice, blueprint)
+                            nk.windowHide(constants.UI.PICKER.NAME)
+                        end
+                        nk.spacing(1)
+                        nk.label(blueprint.name, 'left')
+                        nk.spacing(1)
+    
+                        for key, value in pairs(blueprint.yield) do
+                            nk.image(playerController.wallet.currencies[key].image)
+                            nk.label(value, 'centered', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
+                        end                        
                     end
                 end
     
@@ -151,5 +197,6 @@ Picker = Class {
                 nk.windowHide(constants.UI.PICKER.NAME)
             end
             nk.windowEnd()
+            nk.stylePop()
     end;
 }

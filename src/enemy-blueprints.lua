@@ -1,17 +1,20 @@
 return {
-    ["BLOB"] = EnemyBlueprint("BLOB", assets.blueprints['blob'], constants.ENEMY.BLOB.YIELD, function(params)
+    ["BLOB"] = EnemyBlueprint("BLOB", assets.blueprints['blob'], constants.ENEMY.BLOB.YIELD, false, function(params)
         return Blob(params.origin)
     end),
-    ["BLOB-FIRE"] = EnemyBlueprint("BLOB (FIRE)", assets.blueprints['blob-fire'], constants.ENEMY.BLOBFIRE.YIELD, function(params)
+    ["BLOB-FIRE"] = EnemyBlueprint("FIRE BLOB", assets.blueprints['blob-fire'], constants.ENEMY.BLOBFIRE.YIELD, false, function(params)
         return BlobFire(params.origin)
     end),
-    ["BLOB-ICE"] = EnemyBlueprint("BLOB (ICE)", assets.blueprints['blob-ice'], constants.ENEMY.BLOBICE.YIELD, function(params)
+    ["BLOB-ICE"] = EnemyBlueprint("ICE BLOB", assets.blueprints['blob-ice'], constants.ENEMY.BLOBICE.YIELD, false, function(params)
         return BlobIce(params.origin)
     end),
-    ["BLOB-ELECTRIC"] = EnemyBlueprint("BLOB (ELECTRIC)", assets.blueprints['blob-electric'], constants.ENEMY.BLOBELECTRIC.YIELD, function(params)
+    ["BLOB-ELECTRIC"] = EnemyBlueprint("ELECTRIC BLOB", assets.blueprints['blob-electric'], constants.ENEMY.BLOBELECTRIC.YIELD, false, function(params)
         return BlobElectric(params.origin)
     end),
-    ["BLOB-SKULL"] = EnemyBlueprint("BLOB (SKULL)", assets.blueprints['blob-fire'], constants.ENEMY.BLOBSKULL.YIELD, function(params)
+    ["BLOB-SKULL"] = EnemyBlueprint("BLOB (SKULL)", assets.blueprints['blob-skull'], constants.ENEMY.BLOBSKULL.YIELD, true, function(params)
         return BlobSkull(params.origin)
+    end),
+    ["BLOB-TEETH"] = EnemyBlueprint("BLOB (TEETH)", assets.blueprints['blob-teeth'], constants.ENEMY.BLOBTEETH.YIELD, true, function(params)
+        return BlobTeeth(params.origin)
     end),
 }

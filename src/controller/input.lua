@@ -32,11 +32,11 @@ InputController = Class {
                 world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
             elseif key == "r" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
-            elseif key == "f" and playerController.currentSelectedStructure then
+            elseif key == "f" and playerController.currentSelectedStructure and roundController:isBuildPhase() then
                 playerController:upgradeCurrentStructure("FIRE")
-            elseif key == "i" and playerController.currentSelectedStructure then
+            elseif key == "i" and playerController.currentSelectedStructure and roundController:isBuildPhase() then
                 playerController:upgradeCurrentStructure("ICE")
-            elseif key == "e" and playerController.currentSelectedStructure then
+            elseif key == "e" and playerController.currentSelectedStructure and roundController:isBuildPhase() then
                 playerController:upgradeCurrentStructure("ELECTRIC")
             end
             elseif key == "escape" then
