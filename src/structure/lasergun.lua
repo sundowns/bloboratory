@@ -2,7 +2,6 @@ Lasergun = Class {
     __includes=LineTower,
     init = function(self, gridOrigin, worldOrigin)
         self.towerType = "LASERGUN"
-        self.orientation = "LEFT"
         LineTower.init(self, animationController:createInstance(self.towerType),
             gridOrigin, worldOrigin, constants.STRUCTURE.LASERGUN.WIDTH,
             constants.STRUCTURE.LASERGUN.HEIGHT, constants.STRUCTURE.LASERGUN.COST,

@@ -12,9 +12,11 @@ Tower = Class {
         self.type = "TOWER" -- used to check for valid collisions
         self.mutation = nil
         self.mutable = true
+        self.rotatable = false
         self.attackDamage = attackDamage
         self.attackInterval = attackInterval
-        self.orientation = ORIENTATIONS
+        self.orientation = ORIENTATIONS.RIGHT
+        animationController:updateInstanceRotation(self.animation, self.orientation)
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
@@ -41,14 +43,15 @@ Tower = Class {
         return x, y, width, height
     end;
     rotateClockwise = function(self)
-        if self.orientation == ORIENTATIONS.LEFT then
-            self.orientation = ORIENTATIONS.TOP
-        elseif self.orientation == ORIENTATIONS.TOP then
-            self.orientation = ORIENTATIONS.RIGHT
-        elseif self.orientation == ORIENTATIONS.RIGHT then
-            self.orientation = ORIENTATIONS.BOTTOM
-        elseif self.orientation == ORIENTATIONS.BOTTOM then
-            self.orientation = ORIENTATIONS.LEFT
+        if self.rotatable then
+            self.orientation = self.orientation + math.rad(90)
+            if self.orientation >= math.rad(360) then
+                self.orientation = self.orientation - math.rad(360)
+            end
+            if self.angleToTarget then
+                self.angleToTarget = self.angleToTarget + math.rad(90)
+            end
+            animationController:updateInstanceRotation(self.animation, self.orientation)
         end
     end;
 }
@@ -103,6 +106,7 @@ LineTower = Class {
         self.armed = false
         self.lineLength = lineLength
         self.lineWidth = lineWidth
+        self.rotatable = true
 
         self.attackTimer = Timer.new()
         self.attackTimer:every(self.attackInterval, function()
@@ -130,17 +134,35 @@ LineTower = Class {
         self.armed = false
     end;
     calculateHitbox = function(self)
-        -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
-        local x = self.worldOrigin.x - self.lineLength * constants.GRID.CELL_SIZE
-        local y = self.worldOrigin.y - self.lineWidth * constants.GRID.CELL_SIZE 
-        local width = self.lineLength *constants.GRID.CELL_SIZE
-        local height = (self.height + self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
+        local x, y, width, height
+        if self.orientation == ORIENTATIONS.LEFT then
+            x = self.worldOrigin.x - self.lineLength * constants.GRID.CELL_SIZE
+            y = self.worldOrigin.y + self.lineWidth * constants.GRID.CELL_SIZE
+            width = self.lineLength * constants.GRID.CELL_SIZE
+            height = (self.height - self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
+        elseif self.orientation == ORIENTATIONS.UP then
+            x = self.worldOrigin.x + self.lineWidth * constants.GRID.CELL_SIZE
+            y = self.worldOrigin.y - self.lineLength * constants.GRID.CELL_SIZE
+            width = (self.height - self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
+            height = self.lineLength *constants.GRID.CELL_SIZE
+        elseif self.orientation == ORIENTATIONS.RIGHT then
+            x = self.worldOrigin.x + (self.width*constants.GRID.CELL_SIZE)
+            y = self.worldOrigin.y + self.lineWidth * constants.GRID.CELL_SIZE
+            width = self.lineLength *constants.GRID.CELL_SIZE
+            height = (self.height - self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
+        elseif self.orientation == ORIENTATIONS.DOWN then
+            x = self.worldOrigin.x + self.lineWidth * constants.GRID.CELL_SIZE
+            y = self.worldOrigin.y + self.height * constants.GRID.CELL_SIZE
+            width = (self.height - self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
+            height = self.lineLength *constants.GRID.CELL_SIZE
+        end
         return x, y, width, height
     end;
     draw = function(self, blockingPath)
         if self.isSelected then
             love.graphics.setColor(constants.COLOURS.STRUCTURE_RANGE)
-            love.graphics.rectangle('fill', self.worldOrigin.x - self.lineLength*constants.GRID.CELL_SIZE, self.worldOrigin.y - self.lineWidth*constants.GRID.CELL_SIZE, (self.lineLength+self.width)*constants.GRID.CELL_SIZE, (self.lineWidth+self.height)*constants.GRID.CELL_SIZE/1.5)
+            local x, y, width, height 
+            love.graphics.rectangle('fill', self:calculateHitbox())
         end
         Tower.draw(self, blockingPath)
     end;

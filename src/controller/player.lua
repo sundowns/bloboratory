@@ -95,6 +95,13 @@ PlayerController = Class {
         self:toggleStructureSelection()
         audioController:playAny("REFUND")
     end;
+    rotateCurrentStructure = function(self)
+        if not self.currentSelectedStructure then
+            return 
+        end
+        self.currentSelectedStructure:rotateClockwise()
+        world:updateTowerHitbox(self.currentSelectedStructure)
+    end;
     draw = function(self)
         self.wallet:draw()
 
