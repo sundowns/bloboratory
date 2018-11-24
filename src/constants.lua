@@ -321,7 +321,7 @@ return {
         CANNON_SHOOT = {
             5,
         },
-        LASER_SHOOT = {
+        LASERGUN_SHOOT = {
             1,
         },
     },

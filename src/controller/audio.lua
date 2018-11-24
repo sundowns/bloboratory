@@ -147,7 +147,7 @@ AudioController = Class {
             ["LASERGUN_SHOOT"] = TrackList({
                 ripple.newSound {
                     source = assets.audio.structures.lasergunShoot,
-                    volume = constants.AUDIO.LASER_SHOOT[1],
+                    volume = constants.AUDIO.LASERGUN_SHOOT[1],
                 },
             })
         }
