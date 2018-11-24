@@ -106,7 +106,7 @@ PlayerController = Class {
         self.wallet:draw()
 
         if inputController.isPlacingTower and self.currentBlueprint then
-            world:displayBlueprint(self.currentBlueprint, inputController.mouse.origin)
+            world:displayBlueprint(self.currentBlueprint, inputController.mouse:centre())
         end
     end;
     upgradeCurrentStructure = function(self, upgradeType)

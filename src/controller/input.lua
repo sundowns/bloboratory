@@ -87,4 +87,7 @@ Mouse = Class {
     calculateHitbox = function(self)
         return self.origin.x, self.origin.y, self.width, self.height
     end;
+    centre = function(self)
+        return Vector(self.origin.x + self.width/2, self.origin.y + self.height/2)
+    end;
 }
