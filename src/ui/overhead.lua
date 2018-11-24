@@ -9,7 +9,6 @@ Overhead = Class {
                 ['normal'] = assets.ui.button,
                 ['hover'] = assets.ui.buttonHovered,
                 ['active'] = assets.ui.button,
-                ['active'] = constants.COLOURS.UI.NONE,
                 ['text background'] = constants.COLOURS.UI.NONE,
                 ['text normal'] = constants.COLOURS.UI.WHITE,
                 ['text hovered'] = constants.COLOURS.UI.BLACK,
