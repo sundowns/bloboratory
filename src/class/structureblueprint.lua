@@ -2,7 +2,7 @@ StructureBlueprint = Class {
     init = function(self, name, image, width, height, scaleX, scaleY, hitboxDimensions, hitboxType)
         self.name = name
         self.image = image
-        self.uiImage = nil
+        self.uiImages = {}
         self.width = width -- width (in cells) of the blueprinted structure
         self.height = height -- height (in cells) of the blueprinted structure
         self.scaleX = scaleX or 1
@@ -12,8 +12,8 @@ StructureBlueprint = Class {
         self.costToolTip = constants.STRUCTURE[self.name].TOOLTIP
         self.hitboxType = hitboxType
     end;
-    setUIImage = function(self, image)
-        self.uiImage = image
+    setUIImages = function(self, imagesTable)
+        self.uiImages = imagesTable
     end;
     update = function(self)
     end;

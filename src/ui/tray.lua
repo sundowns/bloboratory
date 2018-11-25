@@ -23,6 +23,13 @@ Tray = Class {
                     ['padding'] = {x = 1, y = 3}
                 },
             },
+            DISABLED = {
+                ['button'] = {
+                    ['normal'] = assets.ui.buttonDisabled,
+                    ['hover'] = assets.ui.buttonDisabled,
+                    ['active'] = assets.ui.buttonDisabled,
+                }
+            },
             SELECT_MENU = {
                 ['text'] = {
                     ['color'] = constants.COLOURS.UI.BLACK, 
@@ -56,11 +63,20 @@ Tray = Class {
                 nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {4/10, 1/7, 1/7, 1/7, 1/7})
                 nk.spacing(1)
                 for i, blueprint in pairs(playerController.blueprints) do
+                    local state = "ACTIVE"
+                    if not playerController.wallet:canAfford(blueprint.cost) then
+                        state = "DISABLED"
+                        nk.stylePush(self.styles.DISABLED)
+                    end
                     self:displayTooltip(blueprint.costToolTip)
-                    if nk.button('', blueprint.uiImage) then 
+                    if nk.button('', blueprint.uiImages[state]) then 
                         if playerController:setCurrentBlueprint(i) then
                             audioController:playAny("BUTTON_PRESS")
                         end
+                    end
+
+                    if not playerController.wallet:canAfford(blueprint.cost) then
+                        nk.stylePop()
                     end
                 end
                 if nk.windowIsHovered() and not nk.widgetIsHovered() then 
@@ -81,28 +97,14 @@ Tray = Class {
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {0.03, 1/7, 1/7, 1/7, 1/7, 0.055, 1/7, 1/7})
                     nk.spacing(1)
                     if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
-                        self:displayTooltip(" +DAMAGE OVER TIME. Cost: 30")
-                        if nk.button('', self.hotkeyedImages.FIRE) then 
-                            if playerController:upgradeCurrentStructure("FIRE") then
-                                audioController:playAny("BUTTON_PRESS")
-                            end
-                        end
-                        self:displayTooltip(" +SLOWS ENEMIES. Cost: 30")
-                        if nk.button('', self.hotkeyedImages.ICE) then 
-                            if playerController:upgradeCurrentStructure("ICE") then
-                                audioController:playAny("BUTTON_PRESS")
-                            end
-                        end
-                        self:displayTooltip(" +BASE DAMAGE. Cost: 30")      
-                        if nk.button('', self.hotkeyedImages.ELECTRIC) then 
-                            if playerController:upgradeCurrentStructure("ELECTRIC") then
-                                audioController:playAny("BUTTON_PRESS")
-                            end
-                        end
+                        self:renderUpgradeButton("FIRE", " +DAMAGE OVER TIME. Cost: 30 FIRE")
+                        self:renderUpgradeButton("ICE", " +SLOWS ENEMIES. Cost: 30 ICE")
+                        self:renderUpgradeButton("ELECTRIC", " +BASE DAMAGE. Cost: 30 ELEC")
+                       
                         nk.spacing(2)
                         if playerController.currentSelectedStructure.towerType == "LASERGUN" then 
                             self:displayTooltip(" Rotate")
-                            if nk.button('', self.hotkeyedImages.ROTATE) then
+                            if nk.button('', self.hotkeyedImages.ROTATE.ACTIVE) then
                                 playerController:rotateCurrentStructure()
                             end
                         else
@@ -112,7 +114,7 @@ Tray = Class {
                         nk.spacing(6)
                     end
                     self:displayTooltip(" Refund")
-                    if nk.button('', self.hotkeyedImages.REFUND) then 
+                    if nk.button('', self.hotkeyedImages.REFUND.ACTIVE) then 
                         audioController:playAny("BUTTON_PRESS")
                         playerController:refundCurrentStructure()
                     end
@@ -128,7 +130,6 @@ Tray = Class {
         nk.windowEnd()
         nk.stylePop()
     end;
-
     displayTooltip = function(self, tooltip)
         if nk.widgetIsHovered() then 
             nk.stylePush({['window'] = {
@@ -138,6 +139,24 @@ Tray = Class {
                     ['color'] = constants.COLOURS.UI.WHITE}
             })
             nk.tooltip(' ' ..tooltip)
+            nk.stylePop()
+        end
+    end;
+    renderUpgradeButton = function(self, upgradeType, tooltipText)
+        self:displayTooltip(tooltipText)
+        local state = "ACTIVE"
+        if not playerController.currentSelectedStructure.mutable or not playerController.wallet:canAfford(constants.MUTATIONS[upgradeType].COST) then
+            state = "DISABLED"
+            nk.stylePush(self.styles.DISABLED)
+        end
+
+        if nk.button('', self.hotkeyedImages[upgradeType][state]) then 
+            if playerController:upgradeCurrentStructure(upgradeType) then
+                audioController:playAny("BUTTON_PRESS")
+            end
+        end
+
+        if state == "DISABLED" then
             nk.stylePop()
         end
     end;

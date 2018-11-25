@@ -29,7 +29,7 @@ PlayerController = Class {
     addNewStructureBlueprint = function(self, blueprintKey)
         assert(self.STRUCTURE_BLUEPRINTS[blueprintKey], "Tried to add non-existing structure blueprint: "..blueprintKey)
         local blueprint = self.STRUCTURE_BLUEPRINTS[blueprintKey]:clone()
-        blueprint:setUIImage(uiController:constructHotkeyedImage(blueprint.image, #self.blueprints+1))
+        blueprint:setUIImages(uiController:constructHotkeyedImages(blueprint.image, #self.blueprints+1))
         table.insert(self.blueprints, blueprint)
     end;
     setCurrentBlueprint = function(self, index)
