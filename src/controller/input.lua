@@ -30,11 +30,7 @@ InputController = Class {
             end
         end
         if not self.isPlacingTower then
-            if key == "s" and roundController:isBuildPhase() then
-                world.grid:setSpawn(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
-            elseif key == "g" and roundController:isBuildPhase() then
-                world.grid:setGoal(world.grid:calculateGridCoordinatesFromScreen(self.mouse.origin), true) --TODO: remove
-            elseif key == "x" and roundController:isBuildPhase() then 
+            if key == "x" and roundController:isBuildPhase() then 
                 playerController:refundCurrentStructure()
             elseif key == "r" and roundController:isBuildPhase() then 
                 playerController:rotateCurrentStructure()

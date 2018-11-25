@@ -1,6 +1,6 @@
 
 Tray = Class {
-    init = function(self)
+    init = function(self, hotkeyedImages)
         self.styles = {
             MAIN_MENU = {
                 ['text'] = {
@@ -45,6 +45,7 @@ Tray = Class {
                 },
             },
         }
+        self.hotkeyedImages = hotkeyedImages
     end; 
 
     display = function(self, windowWidth, windowHeight)
@@ -81,19 +82,19 @@ Tray = Class {
                     nk.spacing(1)
                     if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
                         self:displayTooltip(" +DAMAGE OVER TIME. Cost: 30")
-                        if nk.button('', assets.ui.iconFire) then 
+                        if nk.button('', self.hotkeyedImages.FIRE) then 
                             if playerController:upgradeCurrentStructure("FIRE") then
                                 audioController:playAny("BUTTON_PRESS")
                             end
                         end
                         self:displayTooltip(" +SLOWS ENEMIES. Cost: 30")
-                        if nk.button('', assets.ui.iconIce) then 
+                        if nk.button('', self.hotkeyedImages.ICE) then 
                             if playerController:upgradeCurrentStructure("ICE") then
                                 audioController:playAny("BUTTON_PRESS")
                             end
                         end
                         self:displayTooltip(" +BASE DAMAGE. Cost: 30")      
-                        if nk.button('', assets.ui.iconElectric) then 
+                        if nk.button('', self.hotkeyedImages.ELECTRIC) then 
                             if playerController:upgradeCurrentStructure("ELECTRIC") then
                                 audioController:playAny("BUTTON_PRESS")
                             end
@@ -101,8 +102,7 @@ Tray = Class {
                         nk.spacing(2)
                         if playerController.currentSelectedStructure.towerType == "LASERGUN" then 
                             self:displayTooltip(" Rotate")
-                            if nk.button('', assets.ui.iconScrap) then
-                                audioController:playAny("BUTTON_PRESS")
+                            if nk.button('', self.hotkeyedImages.ROTATE) then
                                 playerController:rotateCurrentStructure()
                             end
                         else
@@ -112,7 +112,7 @@ Tray = Class {
                         nk.spacing(6)
                     end
                     self:displayTooltip(" Refund")
-                    if nk.button('', assets.ui.refund) then 
+                    if nk.button('', self.hotkeyedImages.REFUND) then 
                         audioController:playAny("BUTTON_PRESS")
                         playerController:refundCurrentStructure()
                     end

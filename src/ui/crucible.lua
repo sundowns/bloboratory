@@ -66,7 +66,7 @@ Picker = Class {
         self.tooltip_slot_current = self.tooltip_slot_default
     end;
     tooltipSlotUpdate = function(self, enemy)
-        self.tooltip_slot_current = " This slot sends "..enemy.name.." this round"
+        self.tooltip_slot_current = " This slot will send " .. roundController.crucible.enemiesPerSlot .. 'x ' ..enemy.name.."s this round"
     end;
     pickerIsOpen = function(self)
 
@@ -92,7 +92,7 @@ Picker = Class {
                                 ['button'] = {
                                     ['normal'] = blueprint.image,
                                     ['hover'] = blueprint.imageHovered,
-                                    ['active'] = blueprint.imageActive,
+                                    ['active'] = blueprint.imageActive
                                 },
                             })
                             self:tooltipSlotUpdate(blueprint)
@@ -123,7 +123,6 @@ Picker = Class {
                                 playerController:toggleStructureSelection(playerController.currentSelectedStructure)
                             end
                         end
-
         
                         if blueprint then
                             nk.stylePop()
@@ -178,7 +177,7 @@ Picker = Class {
                             nk.windowHide(constants.UI.PICKER.NAME)
                         end
                         nk.spacing(1)
-                        nk.label(blueprint.name, 'left')
+                        nk.label('3x '..blueprint.name, 'left')
                         nk.spacing(1)
     
                         for key, value in pairs(blueprint.yield) do

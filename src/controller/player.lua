@@ -29,17 +29,7 @@ PlayerController = Class {
     addNewStructureBlueprint = function(self, blueprintKey)
         assert(self.STRUCTURE_BLUEPRINTS[blueprintKey], "Tried to add non-existing structure blueprint: "..blueprintKey)
         local blueprint = self.STRUCTURE_BLUEPRINTS[blueprintKey]:clone()
-        local w, h = blueprint.image:getWidth(), blueprint.image:getHeight()
-        local canvas = love.graphics.newCanvas(512,512)
-        love.graphics.setCanvas(canvas)
-            love.graphics.draw(blueprint.image, 0, 0, 0, canvas:getWidth()/w, canvas:getHeight()/h)
-            love.graphics.setColor(0,0,0,0.5)
-            love.graphics.rectangle('fill', 0, 0, canvas:getWidth()/2, canvas:getWidth()/2)
-            Util.l.resetColour()
-            local text = love.graphics.newText(assets.ui.planerRegular(56), { {0.8,1,0}, #self.blueprints+1})
-            love.graphics.draw(text, canvas:getWidth()/4 - text:getWidth()*2, -12, 0, 4, 4)
-        love.graphics.setCanvas()
-        blueprint:setUIImage(love.graphics.newImage(canvas:newImageData()))
+        blueprint:setUIImage(uiController:constructHotkeyedImage(blueprint.image, #self.blueprints+1))
         table.insert(self.blueprints, blueprint)
     end;
     setCurrentBlueprint = function(self, index)
@@ -105,6 +95,7 @@ PlayerController = Class {
             return 
         end
         self.currentSelectedStructure:rotateClockwise()
+        audioController:playAny("BUTTON_PRESS")
         world:updateTowerHitbox(self.currentSelectedStructure)
     end;
     draw = function(self)
