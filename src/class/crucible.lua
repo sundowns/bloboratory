@@ -49,8 +49,10 @@ Crucible = Class {
         self.isLocked = false
     end;
     setSlot = function(self, slotIndex, blueprint)
-        assert(self.slots[slotIndex])
-        self.slots[slotIndex]:setBlueprint(blueprint)
+        -- assert(self.slots[slotIndex])
+        if self.slots[slotIndex] then
+            self.slots[slotIndex]:setBlueprint(blueprint)
+        end
     end;
     -- compareRecipe = function(self)
     --     for i, entry in pairs(self.currentRecipe) do 

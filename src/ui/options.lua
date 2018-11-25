@@ -19,6 +19,7 @@ Options = Class {
                     ['text active'] = constants.COLOURS.UI.WHITE,
                 },
             }
+        self.markedForRestart = false
     end; 
 
     display = function(self, windowWidth, windowHeight)
@@ -36,7 +37,7 @@ Options = Class {
             end 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
             if nk.button("Restart Game") then 
-                love.event.quit("restart")
+                self.markedForRestart = true
             end 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
             if nk.button("Exit Game") then 
@@ -56,15 +57,16 @@ Options = Class {
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
             nk.label("Music Volume:") 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight), 1)
-            audioController.music_multiplier = nk.slider(0, audioController.music_multiplier, 1, 0.01)
+            configController.settings.music_multiplier = nk.slider(0, configController.settings.music_multiplier, 2, 0.01)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
             nk.label("SFX Volume:") 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight), 1)
-            audioController.sfx_multiplier = nk.slider(0, audioController.sfx_multiplier, 1, 0.01)
+            configController.settings.sfx_multiplier = nk.slider(0, configController.settings.sfx_multiplier, 2, 0.01)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight*0.5), 1)
             if nk.button("Back") then 
                 audioController:updateMusicVolume()
                 audioController:updateSfxVolume()
+                configController:saveUserSettings()
                 nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
                 nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
             end 

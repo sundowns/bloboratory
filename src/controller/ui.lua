@@ -32,7 +32,11 @@ UiController = Class {
                 self.firstRun = false
             end
         nk.frameEnd()
+        
         self.resizeTriggered = false
+        if self.options.markedForRestart then
+            love.event.quit("restart")
+        end
     end;
     draw = function(self)
         Util.l.resetColour()

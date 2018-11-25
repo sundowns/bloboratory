@@ -9,12 +9,14 @@ uiController = {}
 animationController = {}
 roundController = {}
 audioController = {}
+configController = {}
 world = {}
 TOWER_STATS = {}
 
 local paused = false
 
 function love.load()
+    serialize = require("lib.serialize")
     assets = require('lib.cargo').init('asset')
     Class = require("lib.class")
     nk = require("nuklear")
@@ -35,6 +37,7 @@ function love.load()
     require("src.controller.player")
     require("src.controller.ui")
     require("src.controller.audio")
+    require("src.controller.config")
     require("src.class.cell")
     require("src.class.grid")
     require("src.class.structureblueprint")
@@ -67,10 +70,13 @@ function love.load()
     love.graphics.setFont(assets.ui.neuropoliticalRg(12))
     love.graphics.setDefaultFilter('nearest')
     love.keyboard.setKeyRepeat(true) -- For nuklear
+
     nk.init()
     TOWER_STATS = require("src.tower-stats")
+    configController = ConfigController()
+    configController:fetchUserSettings()
     uiController = UiController()
-    audioController = AudioController()
+    audioController = AudioController(settings)
     inputController = InputController()
     playerController = PlayerController()
     animationController = AnimationController()
@@ -121,8 +127,6 @@ function love.keypressed(key, scancode, isrepeat)
         love.event.quit("restart")
     elseif key == "space" then
         paused = not paused
-    elseif key == "return" and love.keyboard.isDown("lalt", "ralt") then
-        love.window.setFullscreen(not love.window.getFullscreen())
     end
 
     inputController:keypressed(key)

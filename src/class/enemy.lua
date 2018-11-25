@@ -31,6 +31,7 @@ Enemy = Class {
     update = function(self, dt, currentCell)
         if not currentCell then
             self.markedForDeath = true
+            return
         end
         if currentCell.isGoal then
             playerController:leak(self.livesToRemove)
