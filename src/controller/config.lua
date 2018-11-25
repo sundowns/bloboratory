@@ -3,8 +3,16 @@ ConfigController = Class {
         self.settings = {}
         self.DEFAULT_SETTINGS = {
             music_multiplier = 1,
-            sfx_multiplier = 1
+            sfx_multiplier = 1,
+            seenMazingTutorial = false,
+            seenMultiSelectTutorial = false,
+            seenUpgradeTutorial = false,
         }
+    end;
+    updateSetting = function(self, key, value)
+        assert(not self.settings[key] or type(value) == type(self.settings[key]))
+        self.settings[key] = value
+        self:saveUserSettings()
     end;
     fetchUserSettings = function(self)
         local contents, size = love.filesystem.read('settings.lua')

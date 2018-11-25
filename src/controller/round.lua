@@ -19,13 +19,13 @@ RoundController = Class {
                 roundIndex = 10,
                 crucibleSlots = {
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
-                    },
-                    {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
                     },
                     {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
                     },
                 }
             },
@@ -33,7 +33,7 @@ RoundController = Class {
                 roundIndex = 15,
                 crucibleSlots = {
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
                     },
                     {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
@@ -45,10 +45,10 @@ RoundController = Class {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
                     }
                 }
             },
@@ -121,6 +121,20 @@ RoundController = Class {
                 end
             end
             audioController:toggleRoundMusic() --TODO: different boss wave music!
+
+            if self.roundIndex == 2 and not configController.settings.seenMultiSelectTutorial then
+                Timer.after(1, function()
+                    helpController:addText('Try holding SHIFT to place multiple structures quickly!', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenMultiSelectTutorial', true)
+                end)
+            end
+
+            if self.roundIndex == 3 and not configController.settings.seenUpgradeTutorial then
+                Timer.after(1, function()
+                    helpController:addText('You can create hybrid towers by spending the currency you gain from defeating elemental blobs!', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenUpgradeTutorial', true)
+                end)
+            end
         end
     end;
     prepareBossRound = function(self, bossRound)
@@ -142,8 +156,7 @@ RoundController = Class {
                 cameraController:shake(0.5, 3)
                 audioController:toggleRoundMusic()
             else 
-                --TODO: tell em to fuckoff
-                print('[ERROR] Add enemies to crucible before starting round')
+                helpController:addText("You must select enemies to send before the round can begin!", nil, {0.8,0.3,0})
                 return
             end
         end

@@ -152,8 +152,12 @@ Picker = Class {
                 end
 
                 if nk.button('') then
-                    if roundController:isBuildPhase() and world.grid.validPath then
-                        roundController.readyToStart = true
+                    if roundController:isBuildPhase()  then
+                        if world.grid.validPath then
+                            roundController.readyToStart = true
+                        else
+                            helpController:addText("Create a valid path for the enemies in order to start the round!", nil, {0.8,0.3,0})
+                        end
                     end
                 end
 

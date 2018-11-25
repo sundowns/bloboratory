@@ -59,8 +59,8 @@ return {
         SAW = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
-            ATTACK_DAMAGE = 1, --damage per tick
-            ATTACK_INTERVAL = 0.3, 
+            ATTACK_DAMAGE = 2, --damage per tick
+            ATTACK_INTERVAL = 0.25, 
             TARGETTING_RADIUS = 1, --additional cell radii
             COST = {
                 SCRAP = 25,
@@ -73,7 +73,7 @@ return {
             BARREL_LENGTH = 32, --used to offset projectiles
             ATTACK_DAMAGE = 6, --damage per HIT 
             TARGETTING_RADIUS = 5, --additional cell radii
-            ATTACK_INTERVAL = 0.5,
+            ATTACK_INTERVAL = 0.6,
             COST = {
                 SCRAP = 30,
             },
@@ -84,10 +84,10 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 5, --damage per HIT 
+            ATTACK_DAMAGE = 6, --damage per HIT 
             LINE_LENGTH = 16, 
             LINE_WIDTH = 0.5,
-            ATTACK_INTERVAL = 1.5,
+            ATTACK_INTERVAL = 1.25,
             COST = {
                 SCRAP = 40,
             },
@@ -172,15 +172,15 @@ return {
             },
         },
         BLOBSKULL = {
-            HEALTH = 50,
-            SPEED = 110,
+            HEALTH = 110,
+            SPEED = 80,
             YIELD = {
                 SCRAP = 10,
             },
         },
         BLOBTEETH = {
             HEALTH = 60,
-            SPEED = 100,
+            SPEED = 120,
             YIELD = {
                 FIRE = 5,
                 ICE = 5,
@@ -261,6 +261,10 @@ return {
             LAYOUTROW_HEIGHT = 0.1,
             NAME = 'Picker'
         },
+        HELPLOG = {
+            X = 0.01,
+            Y = 0.83,
+        }
     },
     DEBUFF = {
         MAX_PARTICLES = 8,
@@ -322,7 +326,7 @@ return {
             0.8,
         },
         LASERGUN_SHOOT = {
-            1,
+            0.5,
         },
         BUTTON_PRESS = {
             0.6,

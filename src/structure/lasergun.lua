@@ -30,7 +30,6 @@ Lasergun = Class {
             elseif self.mutation.id == "ELECTRIC" then
                 return LaserElectricImpact(Vector(x, y), mutationStats, dimensions)
             elseif self.mutation.id == "ICE" then
-                print('?')
                 return LaserIceImpact(Vector(x, y), mutationStats, dimensions)
             end
         else

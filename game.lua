@@ -12,6 +12,7 @@ animationController = {}
 roundController = {}
 audioController = {}
 configController = {}
+helpController = {}
 world = {}
 TOWER_STATS = {}
 
@@ -32,6 +33,11 @@ function game:init()
     playerController = PlayerController()
     animationController = AnimationController()
     roundController = RoundController()
+    helpController = HelpController(Vector(love.graphics.getWidth()*constants.UI.HELPLOG.X, love.graphics.getHeight()*constants.UI.HELPLOG.Y))
+    if not configController.settings.seenMazingTutorial then
+        helpController:addText('Build a maze to keep the blobs at bay!', 10, {0.2,0.8,0})
+        configController:updateSetting('seenMazingTutorial', true)
+    end
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
     cameraController = CameraController(Vector(world.origin.x + constants.GRID.COLUMNS/2*constants.GRID.CELL_SIZE, world.origin.y + constants.GRID.ROWS/1.5*constants.GRID.CELL_SIZE))
 end
@@ -46,6 +52,7 @@ function game:update(dt)
             roundController:update(dt)
             inputController:update(dt)
             cameraController:update(dt)
+            helpController:update(dt)
         end
         playerController:update(dt)
     end
@@ -59,6 +66,7 @@ function game:draw()
     cameraController:detach()
 
     uiController:draw()
+    helpController:draw()
 
     if debug then
         inputController:draw()
