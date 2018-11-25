@@ -40,7 +40,12 @@ Overhead = Class {
                 end
             end
             if nk.button("OPTIONS") then 
-                nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
+                audioController:playAny("BUTTON_PRESS")
+                if not nk.windowIsHidden(constants.UI.OPTIONS_MENU.NAME) then
+                    nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                else
+                    nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
+                end
             end 
             nk.spacing(1)
         end

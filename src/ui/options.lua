@@ -29,11 +29,13 @@ Options = Class {
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
             if nk.button("Resume Game") then 
                 nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
+                audioController:playAny("BUTTON_PRESS")
             end 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
             if nk.button("Sound") then 
                 nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
                 nk.windowShow(constants.UI.OPTIONS_SOUND.NAME)
+                audioController:playAny("BUTTON_PRESS")
             end 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
             if nk.button("Restart Game") then 
@@ -64,6 +66,7 @@ Options = Class {
             configController.settings.sfx_multiplier = nk.slider(0, configController.settings.sfx_multiplier, 2, 0.01)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight*0.5), 1)
             if nk.button("Back") then 
+                audioController:playAny("BUTTON_PRESS")
                 audioController:updateMusicVolume()
                 audioController:updateSfxVolume()
                 configController:saveUserSettings()

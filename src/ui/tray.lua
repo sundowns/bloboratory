@@ -57,7 +57,9 @@ Tray = Class {
                 for i, blueprint in pairs(playerController.blueprints) do
                     self:displayTooltip(blueprint.costToolTip)
                     if nk.button('', blueprint.uiImage) then 
-                        playerController:setCurrentBlueprint(i)
+                        if playerController:setCurrentBlueprint(i) then
+                            audioController:playAny("BUTTON_PRESS")
+                        end
                     end
                 end
                 if nk.windowIsHovered() and not nk.widgetIsHovered() then 
@@ -78,22 +80,29 @@ Tray = Class {
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {0.03, 1/7, 1/7, 1/7, 1/7, 0.055, 1/7, 1/7})
                     nk.spacing(1)
                     if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
-                        self:displayTooltip(" Fire: Applies damage over time debuff. Cost = 30 flint")
+                        self:displayTooltip(" +DAMAGE OVER TIME. Cost: 30")
                         if nk.button('', assets.ui.iconFire) then 
-                            playerController:upgradeCurrentStructure("FIRE")
+                            if playerController:upgradeCurrentStructure("FIRE") then
+                                audioController:playAny("BUTTON_PRESS")
+                            end
                         end
-                        self:displayTooltip(" Ice: Applies movement speed slowing debuff. Cost = 30 icicles")
+                        self:displayTooltip(" +SLOWS ENEMIES. Cost: 30")
                         if nk.button('', assets.ui.iconIce) then 
-                            playerController:upgradeCurrentStructure("ICE")
+                            if playerController:upgradeCurrentStructure("ICE") then
+                                audioController:playAny("BUTTON_PRESS")
+                            end
                         end
-                        self:displayTooltip(" Elec: Applies high variance bonus damage. Cost = 30 charge")      
+                        self:displayTooltip(" +BASE DAMAGE. Cost: 30")      
                         if nk.button('', assets.ui.iconElectric) then 
-                            playerController:upgradeCurrentStructure("ELECTRIC")    
+                            if playerController:upgradeCurrentStructure("ELECTRIC") then
+                                audioController:playAny("BUTTON_PRESS")
+                            end
                         end
                         nk.spacing(2)
                         if playerController.currentSelectedStructure.towerType == "LASERGUN" then 
-                            self:displayTooltip(" Rotate 90 degrees")
+                            self:displayTooltip(" Rotate")
                             if nk.button('', assets.ui.iconScrap) then
+                                audioController:playAny("BUTTON_PRESS")
                                 playerController:rotateCurrentStructure()
                             end
                         else
@@ -102,8 +111,9 @@ Tray = Class {
                     else
                         nk.spacing(6)
                     end
-                    self:displayTooltip(" Refund tower for full cost")
+                    self:displayTooltip(" Refund")
                     if nk.button('', assets.ui.refund) then 
+                        audioController:playAny("BUTTON_PRESS")
                         playerController:refundCurrentStructure()
                     end
 

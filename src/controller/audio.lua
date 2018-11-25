@@ -146,6 +146,12 @@ AudioController = Class {
                     source = assets.audio.structures.lasergunShoot,
                     volume = constants.AUDIO.LASERGUN_SHOOT[1],
                 },
+            }),
+            ["BUTTON_PRESS"] = TrackList({
+                ripple.newSound {
+                    source = assets.audio.misc.buttonPress,
+                    volume = constants.AUDIO.BUTTON_PRESS[1],
+                },
             })
         }
 

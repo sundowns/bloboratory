@@ -43,24 +43,29 @@ PlayerController = Class {
         table.insert(self.blueprints, blueprint)
     end;
     setCurrentBlueprint = function(self, index)
-        if not self.blueprints[index] then return end
+        if not self.blueprints[index] then return false end
         self:toggleStructureSelection()
         
         if inputController.isPlacingTower and self.currentBlueprint then
             if self.currentBlueprint.name == self.blueprints[index].name then
                 inputController:togglePlacingTower() --toggle off the current one
                 self.currentBlueprint = nil
+                return true
             elseif self.wallet:canAfford(self.blueprints[index].cost)  then
                 --theyre switching to a different one, check they can afford it
                 self.currentBlueprint = self.blueprints[index]
+                return true
             else
                 audioController:playAny("INSUFFICIENT_FUNDS")
+                return false
             end
         elseif self.wallet:canAfford(self.blueprints[index].cost) then
             self.currentBlueprint = self.blueprints[index]
             inputController:togglePlacingTower()
+            return true
         else
             audioController:playAny("INSUFFICIENT_FUNDS")
+            return false
         end
     end;
     toggleStructureSelection = function(self, structure)

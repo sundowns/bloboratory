@@ -116,6 +116,7 @@ Picker = Class {
                         end
 
                         if nk.button('') then
+                            audioController:playAny("BUTTON_PRESS")
                             if not roundController.crucible.isLocked then
                                 self.choice = i
                                 nk.windowShow(constants.UI.PICKER.NAME)
@@ -172,6 +173,7 @@ Picker = Class {
                     if not blueprint.isBoss then
                         nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {2/12, 1/12, 5/12, 1/12, 2/12, 1/12, 1/12})
                         if nk.button('', blueprint.image) then
+                            audioController:playAny("ENEMY_HIT")
                             roundController.crucible:setSlot(self.choice, blueprint)
                             nk.windowHide(constants.UI.PICKER.NAME)
                         end
@@ -192,6 +194,7 @@ Picker = Class {
                         ['font'] = assets.ui.planerRegular(18),
                     })
                     if nk.button('REMOVE') then
+                        audioController:playAny("BUTTON_PRESS")
                         roundController.crucible:resetSlot(self.choice)
                         nk.windowHide(constants.UI.PICKER.NAME)
                     end

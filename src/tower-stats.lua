@@ -9,7 +9,7 @@ return {
             DURATION = 3,
             TICK_DURATION = 0.25,
             MINIMUM_DAMAGE = 0.2, -- always applied! see below
-            MAXIMUM_EXTRA_DAMAGE = 6, --total maximum is this + minimum
+            MAXIMUM_EXTRA_DAMAGE = 3, --total maximum is this + minimum
         }, 
         ICE = {
             DURATION = 2,
@@ -37,18 +37,18 @@ return {
     },
     LASERGUN = {
         FIRE = {
-            DURATION = 2,
+            DURATION = 3,
             TICK_DURATION = 0.2,
-            DAMAGE_PER_TICK = 0.4,
+            DAMAGE_PER_TICK = 1,
         },
         ELECTRIC = {
             DURATION = 3,
             TICK_DURATION = 0.25,
-            MINIMUM_DAMAGE = 0.5, -- always applied! see below
+            MINIMUM_DAMAGE = 1, -- always applied! see below
             MAXIMUM_EXTRA_DAMAGE = 5, --total maximum is this + minimum
         },
         ICE = {
-            DURATION = 2,
+            DURATION = 3,
             TICK_DURATION = 0.25,
             SPEED_MODIFIER = 0.5, -- 50% total speed
         },

@@ -54,7 +54,7 @@ return {
             COST = {
                 SCRAP = 1,
             },
-            TOOLTIP = "Obstacle: Cost = 1 scrap",
+            TOOLTIP = "Obstacle - Cost: 1 scrap",
         },
         SAW = {
             WIDTH = 2, --cells
@@ -65,7 +65,7 @@ return {
             COST = {
                 SCRAP = 25,
             },
-            TOOLTIP = "Saw: Cost = 25 scrap",
+            TOOLTIP = "Saw - Cost: 25 scrap",
         },
         CANNON = {
             WIDTH = 2, --cells
@@ -77,21 +77,21 @@ return {
             COST = {
                 SCRAP = 30,
             },
-            TOOLTIP = "Cannon: Cost = 30 scrap",
+            TOOLTIP = "Cannon - Cost: 30 scrap",
             ROTATION_TIME = 0.2
         },
         LASERGUN = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 4, --damage per HIT 
+            ATTACK_DAMAGE = 5, --damage per HIT 
             LINE_LENGTH = 16, 
             LINE_WIDTH = 0.5,
             ATTACK_INTERVAL = 1.5,
             COST = {
                 SCRAP = 40,
             },
-            TOOLTIP = "Laserbeam: Cost = 40 scrap",
+            TOOLTIP = "Laserbeam - Cost: 40 scrap",
         },
     },
     MUTATIONS = {
@@ -112,8 +112,8 @@ return {
         },
     },
     IMPACTS = {
-        BASE_OPACITY = 0.3,
-        FADEOUT_DURATION = 1.5,
+        BASE_OPACITY = 0.2,
+        FADEOUT_DURATION = 1,
         ELECTRIC = {
             WIDTH = 150,
             HEIGHT = 150,
@@ -324,6 +324,9 @@ return {
         LASERGUN_SHOOT = {
             1,
         },
+        BUTTON_PRESS = {
+            0.6,
+        }
     },
     RECIPE = {
         BONEMEAL = {2,3,2,0,1,0,0,1,0}

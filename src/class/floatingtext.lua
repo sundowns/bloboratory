@@ -14,7 +14,8 @@ FloatingText = Class {
         self.origin.y = self.origin.y + self.tickDelta.y*dt*constants.CURRENCY.GAINS.DRIFT_SPEED
     end;
     draw = function(self)
-        love.graphics.draw(self.image, self.origin.x - self.text:getWidth()*2, self.origin.y, 0,  1.4, 1.4)
-        love.graphics.draw(self.text, self.origin.x - self.text:getWidth()/2, self.origin.y)
+        local scale = 1.4
+        love.graphics.draw(self.image, self.origin.x - self.image:getWidth()*scale, self.origin.y, 0, scale, scale)
+        love.graphics.draw(self.text, self.origin.x + self.image:getWidth()*scale - self.text:getWidth()/2, self.origin.y)
     end;
 }
