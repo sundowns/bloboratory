@@ -39,7 +39,7 @@ Crucible = Class {
         return enemies
     end;
     calculateHealthScaling = function(self, roundIndex, totalRounds)
-        local multiplier = 0.62
+        local multiplier = 0.8
         return multiplier * (1 + roundIndex-1/totalRounds)
     end;
     reset = function(self)

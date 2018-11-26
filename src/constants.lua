@@ -72,7 +72,7 @@ return {
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
             ATTACK_DAMAGE = 6, --damage per HIT 
-            TARGETTING_RADIUS = 5, --additional cell radii
+            TARGETTING_RADIUS = 4, --additional cell radii
             ATTACK_INTERVAL = 0.6,
             COST = {
                 SCRAP = 30,
@@ -84,7 +84,7 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 6, --damage per HIT 
+            ATTACK_DAMAGE = 8, --damage per HIT 
             LINE_LENGTH = 16, 
             LINE_WIDTH = 0.5,
             ATTACK_INTERVAL = 1.25,
@@ -97,17 +97,17 @@ return {
     MUTATIONS = {
         FIRE = {
             COST = {
-                FIRE = 30
+                FIRE = 40
             }
         },
         ELECTRIC = {
             COST = {
-                ELECTRIC = 30
+                ELECTRIC = 40
             },
         },
         ICE = {
             COST = {
-                ICE = 30
+                ICE = 40
             }
         },
     },
@@ -115,16 +115,16 @@ return {
         BASE_OPACITY = 0.2,
         FADEOUT_DURATION = 1,
         ELECTRIC = {
-            WIDTH = 150,
-            HEIGHT = 150,
+            WIDTH = 80,
+            HEIGHT = 80,
         },
         ICE = {
-            WIDTH = 150,
-            HEIGHT = 150,
+            WIDTH = 80,
+            HEIGHT = 80,
         },
         FIRE = {
-            WIDTH = 150,
-            HEIGHT = 150,
+            WIDTH = 120,
+            HEIGHT = 120,
         },
     },
     PROJECTILE = {
@@ -147,14 +147,14 @@ return {
             HEALTH = 8,
             SPEED = 150,
             YIELD = {
-                SCRAP = 1
+                SCRAP = 2
             },
         },
         BLOBLARGE = {
             HEALTH = 30,
             SPEED = 150,
             YIELD = {
-                SCRAP = 2
+                SCRAP = 4
             },
         },
         BLOBFIRE = {

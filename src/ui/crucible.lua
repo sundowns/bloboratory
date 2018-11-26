@@ -173,7 +173,7 @@ Picker = Class {
                 uiController:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
 
                 for i, blueprint in pairs(roundController.ENEMY_BLUEPRINTS) do
-                    if not blueprint.isBoss then
+                    if blueprint.isUnlocked then
                         nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/8, 4/8, 1/8, 1/8, 1/8})
                         if nk.button('', blueprint.image) then
                             audioController:playAny("ENEMY_HIT")
