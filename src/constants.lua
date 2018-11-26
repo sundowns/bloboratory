@@ -164,6 +164,13 @@ return {
                 FIRE = 1
             },
         },
+        BLOBFIRELARGE = {
+            HEALTH = 45,
+            SPEED = 150,
+            YIELD = {
+                FIRE = 2
+            },
+        },
         BLOBICE = {
             HEALTH = 12,
             SPEED = 150,
@@ -171,11 +178,25 @@ return {
                 ICE = 1
             },
         },
-        BLOBELECTRIC = {
+        BLOBICELARGE = {
+            HEALTH = 45,
+            SPEED = 150,
+            YIELD = {
+                ICE = 2
+            },
+        },
+        BLOBSPARK = {
             HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1
+            },
+        },
+        BLOBSPARKLARGE = {
+            HEALTH = 45,
+            SPEED = 150,
+            YIELD = {
+                ELECTRIC = 2
             },
         },
         BLOBSKULL = {
