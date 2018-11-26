@@ -1,5 +1,6 @@
 function love.conf(t)
-    t.console = true
+    t.console = false
+    t.version = "11.2" 
     t.window.title = "Grim Gamers"
     t.window.minwidth = 1280
     t.window.minheight = 960
