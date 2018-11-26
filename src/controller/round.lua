@@ -213,6 +213,14 @@ RoundController = Class {
                     end)
                 end
             end
+            if self.roundIndex == 16 then 
+                if not configController.settings.seenHarderTutorial then
+                    Timer.after(1, function()
+                        helpController:addText('Enemies just got tougher. Don\'t get cocky! ', 20, {0.2,0.8,0})
+                        configController:updateSetting('seenHarderTutorial', true)
+                    end)
+                end
+            end
         end
     end;
     prepareBossRound = function(self, bossRound)
