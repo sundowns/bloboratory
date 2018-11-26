@@ -202,7 +202,7 @@ RoundController = Class {
 
             if self.roundIndex == 6 then 
                 for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
-                    if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then 
+                    if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then --TODO: an 'unlockedOnRoundX' variable instead
                         enemy.isUnlocked = true
                     end
                 end
@@ -214,11 +214,9 @@ RoundController = Class {
                 end
             end
             if self.roundIndex == 11 or self.roundIndex == 21 or self.roundIndex == 26 then 
-                if not configController.settings.seenHarderTutorial then
-                    Timer.after(1, function()
-                        helpController:addText('Enemies just got tougher. Don\'t get cocky! ', 20, {0.2,0.8,0})
-                    end)
-                end
+                Timer.after(1, function()
+                    helpController:addText('Enemies just got tougher. Don\'t get cocky! ', 20, {0.2,0.8,0})
+                end)
             end
         end
     end;

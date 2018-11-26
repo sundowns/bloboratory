@@ -97,9 +97,9 @@ Tray = Class {
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {0.03, 1/7, 1/7, 1/7, 1/7, 0.055, 1/7, 1/7})
                     nk.spacing(1)
                     if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
-                        self:renderUpgradeButton("FIRE", " +DAMAGE OVER TIME. Cost: 30 FIRE")
-                        self:renderUpgradeButton("ICE", " +SLOWS ENEMIES. Cost: 30 ICE")
-                        self:renderUpgradeButton("ELECTRIC", " +BASE DAMAGE. Cost: 30 ELEC")
+                        self:renderUpgradeButton("FIRE", " +DAMAGE OVER TIME. Cost: 40 FIRE")
+                        self:renderUpgradeButton("ICE", " +SLOWS ENEMIES. Cost: 40 ICE")
+                        self:renderUpgradeButton("ELECTRIC", " +BASE DAMAGE. Cost: 40 ELEC")
                        
                         nk.spacing(2)
                         if playerController.currentSelectedStructure.towerType == "LASERGUN" then 

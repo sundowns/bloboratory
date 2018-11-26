@@ -84,7 +84,7 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 8, --damage per HIT 
+            ATTACK_DAMAGE = 10, --damage per HIT 
             LINE_LENGTH = 16, 
             LINE_WIDTH = 0.5,
             ATTACK_INTERVAL = 1.25,

@@ -16,8 +16,6 @@ helpController = {}
 world = {}
 TOWER_STATS = {}
 
-local paused = false
-
 function game:init()
     love.graphics.setFont(assets.ui.neuropoliticalRg(12))
     love.graphics.setDefaultFilter('nearest')
@@ -43,19 +41,17 @@ function game:init()
 end
 
 function game:update(dt)
-    if not paused then
-        world:update(dt)
-        Timer.update(dt) --the global version is used mostly for tweening/small use-cases
+    world:update(dt)
+    Timer.update(dt) --the global version is used mostly for tweening/small use-cases
 
-        if not playerController.hasWon and not playerController.hasLost then
-            uiController:update(dt)
-            roundController:update(dt)
-            inputController:update(dt)
-            cameraController:update(dt)
-            helpController:update(dt)
-        end
-        playerController:update(dt)
+    if not playerController.hasWon and not playerController.hasLost then
+        uiController:update(dt)
+        roundController:update(dt)
+        inputController:update(dt)
+        cameraController:update(dt)
+        helpController:update(dt)
     end
+    playerController:update(dt)
 end
 
 function game:draw()
@@ -73,20 +69,14 @@ function game:draw()
         Util.l.resetColour()
         Util.l.renderStats()
     end
-    if paused then
-        love.graphics.setColor(1,0,0)
-        love.graphics.print("PAUSED", 0, 0)
-    end
 end
 
 function game:keypressed(key, scancode, isrepeat)
-    if key == "f1" then
-        debug = not debug
-    elseif key == "f5" then
-        love.event.quit("restart")
-    elseif key == "space" then
-        paused = not paused
-    end
+    -- if key == "f1" then
+    --     debug = not debug
+    -- elseif key == "f5" then
+    --     love.event.quit("restart")
+    -- end
 
     inputController:keypressed(key)
     nk.keypressed(key, scancode, isrepeat)
