@@ -190,8 +190,8 @@ Picker = Class {
                             for i = 1, #roundController.crucible.slots do
                                 audioController:playAny("ENEMY_HIT")
                                 roundController.crucible:setSlot(i, blueprint)
-                                nk.windowHide(constants.UI.PICKER.NAME)
                             end
+                            nk.windowHide(constants.UI.PICKER.NAME)
                         end
                     end
                 end
