@@ -71,6 +71,19 @@ Picker = Class {
     pickerIsOpen = function(self)
 
     end;
+    pairsByKeys = function(self, t, f)
+        local a = {}
+        for n in pairs(t) do table.insert(a, n) end
+            table.sort(a, f)
+            local i = 0      -- iterator variable
+            local iter = function ()   -- iterator function
+                i = i + 1
+                if a[i] == nil then return nil
+                else return a[i], t[a[i]]
+            end
+        end
+        return iter
+    end;
     display = function(self, windowWidth, windowHeight)
             nk.stylePush(self.styles.CRUCIBLE)
             if roundController.crucible.isLocked then
@@ -172,8 +185,8 @@ Picker = Class {
             if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                 uiController:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
 
-                for i, blueprint in pairs(roundController.ENEMY_BLUEPRINTS) do
-                    if not blueprint.isBoss then
+                for i, blueprint in self:pairsByKeys(roundController.ENEMY_BLUEPRINTS) do
+                    if blueprint.isUnlocked then
                         nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/8, 4/8, 1/8, 1/8, 1/8})
                         if nk.button('', blueprint.image) then
                             audioController:playAny("ENEMY_HIT")
@@ -186,10 +199,12 @@ Picker = Class {
                             nk.image(playerController.wallet.currencies[key].image)
                             nk.label(value, 'centered', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
                         end        
-                        if nk.button('FILL ALL') then 
+                        if nk.button('FILL') then 
                             for i = 1, #roundController.crucible.slots do
-                                audioController:playAny("ENEMY_HIT")
-                                roundController.crucible:setSlot(i, blueprint)
+                                if roundController.crucible:slotIsEmpty(i) then 
+                                    audioController:playAny("ENEMY_HIT")
+                                    roundController.crucible:setSlot(i, blueprint)
+                                end
                             end
                             nk.windowHide(constants.UI.PICKER.NAME)
                         end
@@ -197,13 +212,20 @@ Picker = Class {
                 end
 
                 if self.choice > 0 and not roundController.crucible:slotIsEmpty(self.choice) then
-                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/4*windowHeight, 1)
+                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/3*windowHeight, 1)
                     nk.stylePush({
                         ['font'] = assets.ui.planerRegular(18),
                     })
                     if nk.button('REMOVE') then
-                        audioController:playAny("BUTTON_PRESS")
+                        audioController:playAny("ENEMY_LEAK")
                         roundController.crucible:resetSlot(self.choice)
+                        nk.windowHide(constants.UI.PICKER.NAME)
+                    end
+                    if nk.button('REMOVE ALL') then 
+                        for i = 1, #roundController.crucible.slots do
+                            audioController:playAny("ENEMY_LEAK")
+                            roundController.crucible:resetSlot(i, blueprint)
+                        end
                         nk.windowHide(constants.UI.PICKER.NAME)
                     end
                     nk.stylePop()

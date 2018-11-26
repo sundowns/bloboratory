@@ -7,6 +7,7 @@ ConfigController = Class {
             seenMazingTutorial = false,
             seenMultiSelectTutorial = false,
             seenUpgradeTutorial = false,
+            seenLargeTutorial = false,
         }
     end;
     updateSetting = function(self, key, value)

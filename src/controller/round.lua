@@ -3,7 +3,7 @@ RoundController = Class {
         self.roundIndex = 1
         self.readyToStart = false
         self.currentRound = Round(1)
-        self.totalRounds = 20
+        self.totalRounds = 30
         self.crucible = Crucible(3)
         self.ENEMY_BLUEPRINTS = require("src.enemy-blueprints")
         self.bossRounds = {
@@ -84,6 +84,70 @@ RoundController = Class {
                     }
                 }
             },
+            {
+                roundIndex = 25,
+                crucibleSlots = {
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    }
+                }
+            },
+            {
+                roundIndex = 30,
+                crucibleSlots = {
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    }
+                }
+            },
         }
     end;
     update = function(self, dt)
@@ -134,6 +198,20 @@ RoundController = Class {
                     helpController:addText('You can create hybrid towers by spending the currency you gain from defeating elemental blobs!', 20, {0.2,0.8,0})
                     configController:updateSetting('seenUpgradeTutorial', true)
                 end)
+            end
+
+            if self.roundIndex == 6 then 
+                for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
+                    if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then 
+                        enemy.isUnlocked = true
+                    end
+                end
+                if not configController.settings.seenLargeTutorial then
+                    Timer.after(1, function()
+                        helpController:addText('Large blobs are now available. Be careful though, they are much tougher than regular blobs!', 20, {0.2,0.8,0})
+                        configController:updateSetting('seenLargeTutorial', true)
+                    end)
+                end
             end
         end
     end;

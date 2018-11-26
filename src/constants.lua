@@ -72,7 +72,7 @@ return {
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
             ATTACK_DAMAGE = 6, --damage per HIT 
-            TARGETTING_RADIUS = 5, --additional cell radii
+            TARGETTING_RADIUS = 4, --additional cell radii
             ATTACK_INTERVAL = 0.6,
             COST = {
                 SCRAP = 30,
@@ -84,7 +84,7 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 6, --damage per HIT 
+            ATTACK_DAMAGE = 8, --damage per HIT 
             LINE_LENGTH = 16, 
             LINE_WIDTH = 0.5,
             ATTACK_INTERVAL = 1.25,
@@ -97,17 +97,17 @@ return {
     MUTATIONS = {
         FIRE = {
             COST = {
-                FIRE = 30
+                FIRE = 40
             }
         },
         ELECTRIC = {
             COST = {
-                ELECTRIC = 30
+                ELECTRIC = 40
             },
         },
         ICE = {
             COST = {
-                ICE = 30
+                ICE = 40
             }
         },
     },
@@ -115,16 +115,16 @@ return {
         BASE_OPACITY = 0.2,
         FADEOUT_DURATION = 1,
         ELECTRIC = {
-            WIDTH = 150,
-            HEIGHT = 150,
+            WIDTH = 80,
+            HEIGHT = 80,
         },
         ICE = {
-            WIDTH = 150,
-            HEIGHT = 150,
+            WIDTH = 80,
+            HEIGHT = 80,
         },
         FIRE = {
-            WIDTH = 150,
-            HEIGHT = 150,
+            WIDTH = 120,
+            HEIGHT = 120,
         },
     },
     PROJECTILE = {
@@ -144,47 +144,75 @@ return {
             HEIGHT = 3
         },
         BLOB = {
-            HEALTH = 8,
+            HEALTH = 10,
             SPEED = 150,
             YIELD = {
                 SCRAP = 2
             },
         },
+        BLOBLARGE = {
+            HEALTH = 35,
+            SPEED = 150,
+            YIELD = {
+                SCRAP = 4
+            },
+        },
         BLOBFIRE = {
-            HEALTH = 12,
+            HEALTH = 15,
             SPEED = 150,
             YIELD = {
                 FIRE = 1
             },
         },
+        BLOBFIRELARGE = {
+            HEALTH = 50,
+            SPEED = 150,
+            YIELD = {
+                FIRE = 2
+            },
+        },
         BLOBICE = {
-            HEALTH = 12,
+            HEALTH = 15,
             SPEED = 150,
             YIELD = {
                 ICE = 1
             },
         },
-        BLOBELECTRIC = {
-            HEALTH = 12,
+        BLOBICELARGE = {
+            HEALTH = 50,
+            SPEED = 150,
+            YIELD = {
+                ICE = 2
+            },
+        },
+        BLOBSPARK = {
+            HEALTH = 15,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1
             },
         },
+        BLOBSPARKLARGE = {
+            HEALTH = 50,
+            SPEED = 150,
+            YIELD = {
+                ELECTRIC = 2
+            },
+        },
         BLOBSKULL = {
-            HEALTH = 110,
+            HEALTH = 120,
             SPEED = 80,
             YIELD = {
                 SCRAP = 10,
             },
         },
         BLOBTEETH = {
-            HEALTH = 60,
+            HEALTH = 70,
             SPEED = 120,
             YIELD = {
-                FIRE = 5,
-                ICE = 5,
-                ELECTRIC = 5,
+                FIRE = 3,
+                ICE = 3,
+                ELECTRIC = 3,
             },
         },
     },
