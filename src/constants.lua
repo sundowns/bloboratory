@@ -119,12 +119,12 @@ return {
             HEIGHT = 80,
         },
         ICE = {
-            WIDTH = 80,
-            HEIGHT = 80,
+            WIDTH = 100,
+            HEIGHT = 100,
         },
         FIRE = {
-            WIDTH = 125,
-            HEIGHT = 125,
+            WIDTH = 120,
+            HEIGHT = 120,
         },
     },
     PROJECTILE = {
@@ -144,7 +144,7 @@ return {
             HEIGHT = 3
         },
         BLOB = {
-            HEALTH = 10,
+            HEALTH = 8,
             SPEED = 150,
             YIELD = {
                 SCRAP = 2
@@ -158,56 +158,56 @@ return {
             },
         },
         BLOBFIRE = {
-            HEALTH = 15,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 FIRE = 1
             },
         },
         BLOBFIRELARGE = {
-            HEALTH = 50,
+            HEALTH = 45,
             SPEED = 150,
             YIELD = {
                 FIRE = 2
             },
         },
         BLOBICE = {
-            HEALTH = 15,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 ICE = 1
             },
         },
         BLOBICELARGE = {
-            HEALTH = 50,
+            HEALTH = 45,
             SPEED = 150,
             YIELD = {
                 ICE = 2
             },
         },
         BLOBSPARK = {
-            HEALTH = 15,
+            HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1
             },
         },
         BLOBSPARKLARGE = {
-            HEALTH = 50,
+            HEALTH = 45,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 2
             },
         },
         BLOBSKULL = {
-            HEALTH = 120,
+            HEALTH = 110,
             SPEED = 80,
             YIELD = {
                 SCRAP = 10,
             },
         },
         BLOBTEETH = {
-            HEALTH = 70,
+            HEALTH = 60,
             SPEED = 120,
             YIELD = {
                 FIRE = 3,
@@ -218,7 +218,7 @@ return {
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
-        STARTING_FIRE = 40, 
+        STARTING_FIRE = 0, 
         STARTING_ICE = 0,
         STARTING_ELECTRIC = 0,
         GAINS = {
