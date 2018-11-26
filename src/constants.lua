@@ -123,8 +123,8 @@ return {
             HEIGHT = 80,
         },
         FIRE = {
-            WIDTH = 120,
-            HEIGHT = 120,
+            WIDTH = 125,
+            HEIGHT = 125,
         },
     },
     PROJECTILE = {

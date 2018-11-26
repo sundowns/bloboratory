@@ -39,7 +39,7 @@ return {
         FIRE = {
             DURATION = 3,
             TICK_DURATION = 0.2,
-            DAMAGE_PER_TICK = 1,
+            DAMAGE_PER_TICK = 2,
         },
         ELECTRIC = {
             DURATION = 3,
