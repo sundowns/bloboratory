@@ -206,10 +206,10 @@ RoundController = Class {
                         enemy.isUnlocked = true
                     end
                 end
-                if not configController.settings.seenUpgradeTutorial then
+                if not configController.settings.seenLargeTutorial then
                     Timer.after(1, function()
                         helpController:addText('Large blobs are now available. Be careful though, they are much tougher than regular blobs!', 20, {0.2,0.8,0})
-                        configController:updateSetting('seenUpgradeTutorial', true)
+                        configController:updateSetting('seenLargeTutorial', true)
                     end)
                 end
             end

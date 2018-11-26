@@ -71,6 +71,19 @@ Picker = Class {
     pickerIsOpen = function(self)
 
     end;
+    pairsByKeys = function(self, t, f)
+        local a = {}
+        for n in pairs(t) do table.insert(a, n) end
+            table.sort(a, f)
+            local i = 0      -- iterator variable
+            local iter = function ()   -- iterator function
+                i = i + 1
+                if a[i] == nil then return nil
+                else return a[i], t[a[i]]
+            end
+        end
+        return iter
+    end;
     display = function(self, windowWidth, windowHeight)
             nk.stylePush(self.styles.CRUCIBLE)
             if roundController.crucible.isLocked then
@@ -172,7 +185,7 @@ Picker = Class {
             if nk.windowBegin(constants.UI.PICKER.NAME, '', constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight, 'border','scrollbar','closable') then
                 uiController:handleResize(constants.UI.PICKER.X*windowWidth, constants.UI.PICKER.Y*windowHeight, constants.UI.PICKER.WIDTH*windowWidth, constants.UI.PICKER.HEIGHT*windowHeight)
 
-                for i, blueprint in pairs(roundController.ENEMY_BLUEPRINTS) do
+                for i, blueprint in self:pairsByKeys(roundController.ENEMY_BLUEPRINTS) do
                     if blueprint.isUnlocked then
                         nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/8, 4/8, 1/8, 1/8, 1/8})
                         if nk.button('', blueprint.image) then
