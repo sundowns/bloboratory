@@ -147,6 +147,13 @@ return {
             HEALTH = 8,
             SPEED = 150,
             YIELD = {
+                SCRAP = 1
+            },
+        },
+        BLOBLARGE = {
+            HEALTH = 30,
+            SPEED = 150,
+            YIELD = {
                 SCRAP = 2
             },
         },
@@ -182,9 +189,9 @@ return {
             HEALTH = 60,
             SPEED = 120,
             YIELD = {
-                FIRE = 5,
-                ICE = 5,
-                ELECTRIC = 5,
+                FIRE = 3,
+                ICE = 3,
+                ELECTRIC = 3,
             },
         },
     },

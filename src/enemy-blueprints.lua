@@ -2,6 +2,9 @@ return {
     ["BLOB"] = EnemyBlueprint("BLOB", assets.blueprints['blob'], constants.ENEMY.BLOB.YIELD, false, function(params)
         return Blob(params.origin)
     end),
+    ["BLOB-LARGE"] = EnemyBlueprint("LARGE BLOB", assets.blueprints['blob'], constants.ENEMY.BLOBLARGE.YIELD, false, function(params)
+        return BlobLarge(params.origin)
+    end),
     ["BLOB-FIRE"] = EnemyBlueprint("FIRE BLOB", assets.blueprints['blob-fire'], constants.ENEMY.BLOBFIRE.YIELD, false, function(params)
         return BlobFire(params.origin)
     end),

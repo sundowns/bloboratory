@@ -186,10 +186,12 @@ Picker = Class {
                             nk.image(playerController.wallet.currencies[key].image)
                             nk.label(value, 'centered', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
                         end        
-                        if nk.button('FILL ALL') then 
+                        if nk.button('FILL') then 
                             for i = 1, #roundController.crucible.slots do
-                                audioController:playAny("ENEMY_HIT")
-                                roundController.crucible:setSlot(i, blueprint)
+                                if roundController.crucible:slotIsEmpty(i) then 
+                                    audioController:playAny("ENEMY_HIT")
+                                    roundController.crucible:setSlot(i, blueprint)
+                                end
                             end
                             nk.windowHide(constants.UI.PICKER.NAME)
                         end
@@ -197,13 +199,20 @@ Picker = Class {
                 end
 
                 if self.choice > 0 and not roundController.crucible:slotIsEmpty(self.choice) then
-                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/4*windowHeight, 1)
+                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/3*windowHeight, 1)
                     nk.stylePush({
                         ['font'] = assets.ui.planerRegular(18),
                     })
                     if nk.button('REMOVE') then
-                        audioController:playAny("BUTTON_PRESS")
+                        audioController:playAny("ENEMY_LEAK")
                         roundController.crucible:resetSlot(self.choice)
+                        nk.windowHide(constants.UI.PICKER.NAME)
+                    end
+                    if nk.button('REMOVE ALL') then 
+                        for i = 1, #roundController.crucible.slots do
+                            audioController:playAny("ENEMY_LEAK")
+                            roundController.crucible:resetSlot(i, blueprint)
+                        end
                         nk.windowHide(constants.UI.PICKER.NAME)
                     end
                     nk.stylePop()
