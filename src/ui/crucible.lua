@@ -174,20 +174,25 @@ Picker = Class {
 
                 for i, blueprint in pairs(roundController.ENEMY_BLUEPRINTS) do
                     if not blueprint.isBoss then
-                        nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {2/12, 1/12, 5/12, 1/12, 2/12, 1/12, 1/12})
+                        nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/8, 4/8, 1/8, 1/8, 1/8})
                         if nk.button('', blueprint.image) then
                             audioController:playAny("ENEMY_HIT")
                             roundController.crucible:setSlot(self.choice, blueprint)
                             nk.windowHide(constants.UI.PICKER.NAME)
                         end
-                        nk.spacing(1)
-                        nk.label('3x '..blueprint.name, 'left')
-                        nk.spacing(1)
+                        nk.label(' 3x '..blueprint.name, 'left')
     
                         for key, value in pairs(blueprint.yield) do
                             nk.image(playerController.wallet.currencies[key].image)
                             nk.label(value, 'centered', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
-                        end                        
+                        end        
+                        if nk.button('FILL ALL') then 
+                            for i = 1, #roundController.crucible.slots do
+                                audioController:playAny("ENEMY_HIT")
+                                roundController.crucible:setSlot(i, blueprint)
+                                nk.windowHide(constants.UI.PICKER.NAME)
+                            end
+                        end
                     end
                 end
 
