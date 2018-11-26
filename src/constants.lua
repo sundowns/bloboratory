@@ -71,7 +71,7 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 6, --damage per HIT 
+            ATTACK_DAMAGE = 7, --damage per HIT 
             TARGETTING_RADIUS = 4, --additional cell radii
             ATTACK_INTERVAL = 0.6,
             COST = {

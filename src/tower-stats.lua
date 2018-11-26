@@ -9,7 +9,7 @@ return {
             DURATION = 3,
             TICK_DURATION = 0.25,
             MINIMUM_DAMAGE = 0.2, -- always applied! see below
-            MAXIMUM_EXTRA_DAMAGE = 3, --total maximum is this + minimum
+            MAXIMUM_EXTRA_DAMAGE = 5, --total maximum is this + minimum
         }, 
         ICE = {
             DURATION = 2,
