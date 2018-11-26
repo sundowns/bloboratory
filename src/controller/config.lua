@@ -7,6 +7,7 @@ ConfigController = Class {
             seenMazingTutorial = false,
             seenMultiSelectTutorial = false,
             seenUpgradeTutorial = false,
+            seenRefundTutorial = false,
             seenLargeTutorial = false,
             seenHarderTutorial = false,
         }

@@ -59,7 +59,7 @@ return {
         SAW = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
-            ATTACK_DAMAGE = 2, --damage per tick
+            ATTACK_DAMAGE = 3, --damage per tick
             ATTACK_INTERVAL = 0.25, 
             TARGETTING_RADIUS = 1, --additional cell radii
             COST = {
@@ -84,14 +84,14 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 10, --damage per HIT 
+            ATTACK_DAMAGE = 12, --damage per HIT 
             LINE_LENGTH = 16, 
             LINE_WIDTH = 0.5,
-            ATTACK_INTERVAL = 1.25,
+            ATTACK_INTERVAL = 1,
             COST = {
-                SCRAP = 40,
+                SCRAP = 35,
             },
-            TOOLTIP = "Laserbeam - Cost: 40 scrap",
+            TOOLTIP = "Laserbeam - Cost: 35 scrap",
         },
     },
     MUTATIONS = {
@@ -200,14 +200,14 @@ return {
             },
         },
         BLOBSKULL = {
-            HEALTH = 110,
+            HEALTH = 100,
             SPEED = 80,
             YIELD = {
                 SCRAP = 10,
             },
         },
         BLOBTEETH = {
-            HEALTH = 60,
+            HEALTH = 50,
             SPEED = 120,
             YIELD = {
                 FIRE = 3,

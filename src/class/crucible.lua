@@ -39,15 +39,15 @@ Crucible = Class {
         return enemies
     end;
     calculateHealthScaling = function(self, roundIndex, totalRounds)
-        local multiplier = 0.7
+        local multiplier = 0.6
         if roundIndex > 10 then 
-            multiplier = 0.85
+            multiplier = 0.8
         elseif roundIndex > 20 then 
             multiplier = 1.2
         elseif roundIndex > 25 then 
-            multiplier = 1.5
+            multiplier = 1.6
         end
-        return multiplier * (1 + roundIndex-1/totalRounds)
+        return multiplier * (1 + roundIndex-3/totalRounds)
     end;
     reset = function(self)
         for i, slot in pairs(self.slots) do

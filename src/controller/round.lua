@@ -200,7 +200,14 @@ RoundController = Class {
                 end)
             end
 
-            if self.roundIndex == 6 then 
+            if self.roundIndex == 4 and not configController.settings.seenRefundTutorial then
+                Timer.after(1, function()
+                    helpController:addText('You can refund any of existing towers for the full cost (including upgrades)', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenRefundTutorial', true)
+                end)
+            end
+
+            if self.roundIndex == 8 then 
                 for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
                     if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then --TODO: an 'unlockedOnRoundX' variable instead
                         enemy.isUnlocked = true
@@ -208,7 +215,7 @@ RoundController = Class {
                 end
                 if not configController.settings.seenLargeTutorial then
                     Timer.after(1, function()
-                        helpController:addText('Large blobs are now available. Be careful though, they are much tougher than regular blobs!', 20, {0.2,0.8,0})
+                        helpController:addText('Large blobs are now available. Be careful though, they are MUCH tougher than regular blobs!', 20, {0.2,0.8,0})
                         configController:updateSetting('seenLargeTutorial', true)
                     end)
                 end
