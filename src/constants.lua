@@ -144,70 +144,70 @@ return {
             HEIGHT = 3
         },
         BLOB = {
-            HEALTH = 8,
+            HEALTH = 10,
             SPEED = 150,
             YIELD = {
                 SCRAP = 2
             },
         },
         BLOBLARGE = {
-            HEALTH = 30,
+            HEALTH = 35,
             SPEED = 150,
             YIELD = {
                 SCRAP = 4
             },
         },
         BLOBFIRE = {
-            HEALTH = 12,
+            HEALTH = 15,
             SPEED = 150,
             YIELD = {
                 FIRE = 1
             },
         },
         BLOBFIRELARGE = {
-            HEALTH = 45,
+            HEALTH = 50,
             SPEED = 150,
             YIELD = {
                 FIRE = 2
             },
         },
         BLOBICE = {
-            HEALTH = 12,
+            HEALTH = 15,
             SPEED = 150,
             YIELD = {
                 ICE = 1
             },
         },
         BLOBICELARGE = {
-            HEALTH = 45,
+            HEALTH = 50,
             SPEED = 150,
             YIELD = {
                 ICE = 2
             },
         },
         BLOBSPARK = {
-            HEALTH = 12,
+            HEALTH = 15,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1
             },
         },
         BLOBSPARKLARGE = {
-            HEALTH = 45,
+            HEALTH = 50,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 2
             },
         },
         BLOBSKULL = {
-            HEALTH = 110,
+            HEALTH = 120,
             SPEED = 80,
             YIELD = {
                 SCRAP = 10,
             },
         },
         BLOBTEETH = {
-            HEALTH = 60,
+            HEALTH = 70,
             SPEED = 120,
             YIELD = {
                 FIRE = 3,
