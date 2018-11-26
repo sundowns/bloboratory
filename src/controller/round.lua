@@ -213,7 +213,7 @@ RoundController = Class {
                     end)
                 end
             end
-            if self.roundIndex == 11 or self.roundIndex == 21 then 
+            if self.roundIndex == 11 or self.roundIndex == 21 or self.roundIndex == 26 then 
                 if not configController.settings.seenHarderTutorial then
                     Timer.after(1, function()
                         helpController:addText('Enemies just got tougher. Don\'t get cocky! ', 20, {0.2,0.8,0})
