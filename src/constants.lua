@@ -113,7 +113,7 @@ return {
     },
     IMPACTS = {
         BASE_OPACITY = 0.2,
-        FADEOUT_DURATION = 1,
+        FADEOUT_DURATION = 0.15,
         ELECTRIC = {
             WIDTH = 80,
             HEIGHT = 80,
@@ -218,7 +218,7 @@ return {
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
-        STARTING_FIRE = 0, 
+        STARTING_FIRE = 40, 
         STARTING_ICE = 0,
         STARTING_ELECTRIC = 0,
         GAINS = {

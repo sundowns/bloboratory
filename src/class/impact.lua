@@ -6,6 +6,7 @@ Impact = Class {
         self.height = height
         self.markedForDeath = false
         self.active = true
+        self.animation = animationController:createInstance("IMPACT")
         self.opacity = constants.IMPACTS.BASE_OPACITY 
         
         self.deathTimer = Timer.new()
@@ -16,13 +17,19 @@ Impact = Class {
     end;
     update = function(self, dt)
         self.deathTimer:update(dt)
+        if self.animation then 
+            animationController:updateSpriteInstance(self.animation, dt)
+        end
     end;
     calculateHitbox = function(self)
         return self.worldOrigin.x-self.width/2, self.worldOrigin.y-self.height/2, self.width, self.height
     end;
     draw = function(self)
-        love.graphics.setColor(self.colour[1], self.colour[2], self.colour[3], self.opacity)
-        love.graphics.rectangle('fill', self:calculateHitbox())
+        if self.animation then
+            Util.l.resetColour()
+            local x, y, width, height = self:calculateHitbox()
+            animationController:drawImpactSpriteInstance(self.animation, self.worldOrigin, width, height)
+        end
     end;
     attack = function(self)
         print('[WARNING] base impact attack function triggered. Should be overriden by subclass')
