@@ -71,6 +71,20 @@ Picker = Class {
     pickerIsOpen = function(self)
 
     end;
+    displayTooltip = function(self, tooltip)
+        if nk.widgetIsHovered() then 
+            nk.stylePush({
+                ['font'] = assets.ui.planerRegular(20),
+                ['window'] = {
+                ['background'] = constants.COLOURS.UI.BLACK,
+                ['padding'] = {x = 5, y = 0}},
+                ['text'] = {
+                    ['color'] = constants.COLOURS.UI.WHITE}
+            })
+            nk.tooltip(' ' ..tooltip)
+            nk.stylePop()
+        end
+    end;
     calcEnemyHealth = function(self, blueprint)
         local multiplier = roundController.crucible:calculateHealthScaling(roundController.roundIndex, roundController.totalRounds)
         return math.floor((blueprint.baseHealth * multiplier))
@@ -197,6 +211,7 @@ Picker = Class {
                         nk.label('HP: ' ..self:calcEnemyHealth(blueprint), 'left')
 
                         for key, value in pairs(blueprint.yield) do
+                            self:displayTooltip('Enemy grants ' ..value.. ' ' ..key.. ' on defeat')
                             nk.image(playerController.wallet.currencies[key].image)
                             nk.label(value, 'left', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
                         end
