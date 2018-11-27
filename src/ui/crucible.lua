@@ -216,11 +216,13 @@ Picker = Class {
                             nk.label(value, 'left', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
                         end
 
+                        self:displayTooltip('Select ' ..blueprint.name.. ' for this slot')
                         if nk.button('SEND') then
                             audioController:playAny("ENEMY_HIT")
                             roundController.crucible:setSlot(self.choice, blueprint)
                             nk.windowHide(constants.UI.PICKER.NAME)
-                        end        
+                        end     
+                        self:displayTooltip('Fill all slots with ' ..blueprint.name.. '\'s')   
                         if nk.button('FILL') then 
                             for i = 1, #roundController.crucible.slots do
                                 if roundController.crucible:slotIsEmpty(i) then 
