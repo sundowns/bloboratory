@@ -282,12 +282,12 @@ return {
             LAYOUTROW_HEIGHT = 0.0725,
         },
         PICKER = {
-            X = 0.25,
-            Y = 0.18,
-            WIDTH = 0.5,
-            HEIGHT = 0.525,
+            X = 0.15,
+            Y = 0.065,
+            WIDTH = 0.7,
+            HEIGHT = 0.65,
             LAYOUTROW_HEIGHT = 0.075,
-            NAME = 'Picker'
+            NAME = 'Picker',     
         },
         HELPLOG = {
             X = 0.01,

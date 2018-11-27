@@ -37,7 +37,7 @@ Picker = Class {
                 },
             },
             PICKER = {
-                ['font'] = assets.ui.planerRegular(32),
+                ['font'] = assets.ui.planerRegular(28),
                 ['window'] = {
                     ['header'] = {
                         ['normal'] = constants.COLOURS.UI.PANEL,
@@ -187,17 +187,20 @@ Picker = Class {
 
                 for i, blueprint in self:pairsByKeys(roundController.ENEMY_BLUEPRINTS) do
                     if blueprint.isUnlocked then
-                        nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/8, 4/8, 1/8, 1/8, 1/8, 1/8})
-                        if nk.button('', blueprint.image) then
-                            audioController:playAny("ENEMY_HIT")
-                            roundController.crucible:setSlot(self.choice, blueprint)
-                            nk.windowHide(constants.UI.PICKER.NAME)
-                        end
-                        nk.label(' 3x '..blueprint.name, 'left')
+                        nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/12, 4/12, 2/12, 1/12, 1/12, 1/8, 1/8})
+                        nk.image(blueprint.image)
+                        nk.label('3x ' ..blueprint.name, 'left')
+                        nk.label('HP: ' ..blueprint.baseHealth, 'left')
 
                         for key, value in pairs(blueprint.yield) do
                             nk.image(playerController.wallet.currencies[key].image)
-                            nk.label(value, 'centered', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
+                            nk.label(value, 'left', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
+                        end
+
+                        if nk.button('SEND') then
+                            audioController:playAny("ENEMY_HIT")
+                            roundController.crucible:setSlot(self.choice, blueprint)
+                            nk.windowHide(constants.UI.PICKER.NAME)
                         end        
                         if nk.button('FILL') then 
                             for i = 1, #roundController.crucible.slots do
