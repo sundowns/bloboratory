@@ -37,14 +37,14 @@ return {
     },
     LASERGUN = {
         FIRE = {
-            DURATION = 4,
+            DURATION = 3,
             TICK_DURATION = 0.2,
             DAMAGE_PER_TICK = 3,
         },
         ELECTRIC = {
             DURATION = 3,
             TICK_DURATION = 0.25,
-            MINIMUM_DAMAGE = 2, -- always applied! see below
+            MINIMUM_DAMAGE = 1, -- always applied! see below
             MAXIMUM_EXTRA_DAMAGE = 6, --total maximum is this + minimum
         },
         ICE = {
