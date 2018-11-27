@@ -9,7 +9,7 @@ UiController = Class {
             ICE = self:constructHotkeyedImages(assets.ui.iconIce, 'I'),
             ELECTRIC = self:constructHotkeyedImages(assets.ui.iconElectric, 'E'),
             REFUND = self:constructHotkeyedImages(assets.ui.refund, 'X'),
-            ROTATE = self:constructHotkeyedImages(assets.ui.iconScrap, 'R'),
+            ROTATE = self:constructHotkeyedImages(assets.ui.rotate, 'R'),
         })
         self.picker = Picker()
         self.font = assets.ui.neuropoliticalRg(12)

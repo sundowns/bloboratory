@@ -6,7 +6,6 @@ Impact = Class {
         self.height = height
         self.markedForDeath = false
         self.active = true
-        self.animation = animationController:createInstance("IMPACT")
         self.opacity = constants.IMPACTS.BASE_OPACITY 
         
         self.deathTimer = Timer.new()
@@ -45,6 +44,7 @@ IceImpact = Class {
         Impact.init(self, origin, constants.IMPACTS.ICE.WIDTH, constants.IMPACTS.ICE.HEIGHT)
         self.colour = {0,0,1,0.5} 
         self.stats = stats
+        self.animation = animationController:createInstance("IMPACT-ICE")
     end;
     attack = function(self, other)
         other:applyDebuff(Freeze(other, self.stats))
@@ -57,6 +57,7 @@ ElectricImpact = Class {
         Impact.init(self, origin, constants.IMPACTS.ELECTRIC.WIDTH, constants.IMPACTS.ELECTRIC.HEIGHT)
         self.colour = {1,1,0,0.5}
         self.stats = stats
+        self.animation = animationController:createInstance("IMPACT-ELECTRIC")
     end;
     attack = function(self, other)
         other:takeDamage(self.stats.MINIMUM_DAMAGE + Util.m.roundToNthDecimal(love.math.random()*self.stats.MAXIMUM_EXTRA_DAMAGE, 3), false)
@@ -70,6 +71,7 @@ FireImpact = Class {
         Impact.init(self, origin, constants.IMPACTS.FIRE.WIDTH, constants.IMPACTS.FIRE.HEIGHT)
         self.colour = {0.8,0.5,0}
         self.stats = stats
+        self.animation = animationController:createInstance("IMPACT-FIRE")
     end;
     attack = function(self, other)
         other:applyDebuff(Inflame(other, self.stats))

@@ -8,10 +8,10 @@ local CURRENCIES = {
 Wallet = Class {
     init = function(self)
         self.currencies = {
-            ["SCRAP"] = Currency("SCRAP", {0.7,0.7,0.7}, constants.CURRENCY.STARTING_SCRAP, assets.ui.iconScrap),
-            ["FIRE"] = Currency("FIRE", {1,0.6,0}, constants.CURRENCY.STARTING_FIRE, assets.ui.iconFire),
-            ["ICE"] = Currency("ICE", {0,0.8,0.8}, constants.CURRENCY.STARTING_ICE, assets.ui.iconIce),
-            ["ELECTRIC"] = Currency("ELECTRIC", {0.8,0.8,0}, constants.CURRENCY.STARTING_ELECTRIC, assets.ui.iconElectric),
+            ["SCRAP"] = Currency("SCRAP", {0.7,0.7,0.7}, constants.CURRENCY.STARTING_SCRAP+100, assets.ui.iconScrap),
+            ["FIRE"] = Currency("FIRE", {1,0.6,0}, constants.CURRENCY.STARTING_FIRE+100, assets.ui.iconFire),
+            ["ICE"] = Currency("ICE", {0,0.8,0.8}, constants.CURRENCY.STARTING_ICE+100, assets.ui.iconIce),
+            ["ELECTRIC"] = Currency("ELECTRIC", {0.8,0.8,0}, constants.CURRENCY.STARTING_ELECTRIC+100, assets.ui.iconElectric),
         }
         self.totalCurrencies = #CURRENCIES
         self.floatingGains = {}

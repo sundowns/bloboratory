@@ -113,7 +113,7 @@ return {
     },
     IMPACTS = {
         BASE_OPACITY = 0.2,
-        FADEOUT_DURATION = 0.15,
+        FADEOUT_DURATION = 0.36, -- impact frame duration * number of frames
         ELECTRIC = {
             WIDTH = 80,
             HEIGHT = 80,
