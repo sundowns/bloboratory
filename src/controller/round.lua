@@ -1,10 +1,160 @@
 RoundController = Class {
     init = function(self)
         self.roundIndex = 1
+        self.readyToStart = false
         self.currentRound = Round(1)
-        self.totalRounds = 20
+        self.totalRounds = 30
         self.crucible = Crucible(3)
         self.ENEMY_BLUEPRINTS = require("src.enemy-blueprints")
+        self.bossRounds = {
+            {
+                roundIndex = 5,
+                crucibleSlots = {
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                }
+            },
+            {
+                roundIndex = 10,
+                crucibleSlots = {
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                }
+            },
+            {
+                roundIndex = 15,
+                crucibleSlots = {
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    }
+                }
+            },
+            {
+                roundIndex = 20,
+                crucibleSlots = {
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    }
+                }
+            },
+            {
+                roundIndex = 25,
+                crucibleSlots = {
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    }
+                }
+            },
+            {
+                roundIndex = 30,
+                crucibleSlots = {
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                    }
+                }
+            },
+        }
+    end;
+    update = function(self, dt)
+        if self.readyToStart then
+            roundController:startRound()
+            self.readyToStart = false
+        end
     end;
     canSpawn = function(self)
         return self.currentRound.enemiesSpawned < #self.currentRound.enemies
@@ -29,25 +179,87 @@ RoundController = Class {
             animationController:changeSpriteState(world.spawnAnimation, "DEFAULT")
             self.currentRound = Round(self.roundIndex)
             uiController.firstRun = true
-            audioController:toggleRoundMusic()
+            for i, bossRound in pairs(self.bossRounds) do
+                if bossRound.roundIndex == self.roundIndex then
+                    self:prepareBossRound(bossRound)
+                end
+            end
+            audioController:toggleRoundMusic() --TODO: different boss wave music!
+
+            if self.roundIndex == 2 and not configController.settings.seenMultiSelectTutorial then
+                Timer.after(1, function()
+                    helpController:addText('Try holding SHIFT to place multiple structures quickly!', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenMultiSelectTutorial', true)
+                end)
+            end
+
+            if self.roundIndex == 3 and not configController.settings.seenUpgradeTutorial then
+                Timer.after(1, function()
+                    helpController:addText('You can create hybrid towers by spending the currency you gain from defeating elemental blobs!', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenUpgradeTutorial', true)
+                end)
+            end
+
+            if self.roundIndex == 4 and not configController.settings.seenRefundTutorial then
+                Timer.after(1, function()
+                    helpController:addText('You can refund any of existing towers for the full cost (including upgrades)', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenRefundTutorial', true)
+                end)
+            end
+
+            if self.roundIndex == 6 then 
+                for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
+                    if enemy.name == "BIG BLOBBY" then --TODO: an 'unlockedOnRoundX' variable instead
+                        enemy.isUnlocked = true
+                    end
+                end
+                if not configController.settings.seenLargeTutorialOne then
+                    Timer.after(1, function()
+                        helpController:addText('Large blobs are now available. Be careful though, they are MUCH tougher than regular blobs!', 20, {0.2,0.8,0})
+                        configController:updateSetting('seenLargeTutorial', true)
+                    end)
+                end
+            end
+            if self.roundIndex == 11 then 
+                for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
+                    if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then --TODO: an 'unlockedOnRoundX' variable instead
+                        enemy.isUnlocked = true
+                    end
+                end
+                if not configController.settings.seenLargeTutorialTwo then
+                    Timer.after(1, function()
+                        helpController:addText('Large elemental enemies are now available! Be careful though, they are MUCH tougher than regular blobs!', 20, {0.2,0.8,0})
+                        configController:updateSetting('seenLargeTutorial', true)
+                    end)
+                end
+            end
+            if self.roundIndex == 16 or self.roundIndex == 21 or self.roundIndex == 26 then 
+                Timer.after(1, function()
+                    helpController:addText('Enemies just got tougher. Don\'t get cocky! ', 20, {0.2,0.8,0})
+                end)
+            end
         end
+    end;
+    prepareBossRound = function(self, bossRound)
+        for i, slot in ipairs(bossRound.crucibleSlots) do
+            self.crucible:setSlot(i, slot.blueprint)
+        end
+        self.crucible:lock()
     end;
     startRound = function(self)
         if self:isBuildPhase() then
             -- build the crucible enemies
             local roundEnemies = self.crucible:constructEnemies(self.roundIndex, self.totalRounds) 
-            if #roundEnemies > 0 then -- check they make sense
+            if #roundEnemies > 0 then
                 self.currentRound:setEnemies(roundEnemies)
                 world:setupTimers()
                 self.currentRound:start()
-                -- animationController:changeSpriteState(world.spawnAnimation, "SPAWNING")
                 self:updateCauldron()
                 audioController:playAny("START_ROUND")
                 cameraController:shake(0.5, 3)
                 audioController:toggleRoundMusic()
             else 
-                --TODO: tell em to fuckoff
-                print('[ERROR] Add enemies to crucible before starting round')
+                helpController:addText("You must select enemies to send before the round can begin!", nil, {0.8,0.3,0})
                 return
             end
         end
@@ -57,8 +269,6 @@ RoundController = Class {
         if nextEnemy then
             animationController:changeSpriteState(world.spawnAnimation, "SPAWNING_"..nextEnemy.element)
         end
-        --peek next enemy
-        --change cauldron state based on a type
     end;
     isBuildPhase = function(self)
         return not self.currentRound.hasStarted

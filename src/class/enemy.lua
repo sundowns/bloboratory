@@ -6,7 +6,7 @@ local ORIENTATIONS = {
 }
 
 Enemy = Class {
-    init = function(self, enemyType, element, worldOrigin, health, speed, yield, animation, recipeIndex)
+    init = function(self, enemyType, element, worldOrigin, health, speed, yield, animation, recipeIndex, livesToRemove)
         assert(worldOrigin.x and worldOrigin.y)
         self.type = "ENEMY" -- used to check for valid collisions
         self.element = element -- used to decide cauldron colour
@@ -23,7 +23,7 @@ Enemy = Class {
         self.markedForDeath = false
         self.hitGoal = false
         self.orientation = ORIENTATIONS.LEFT --angle in radians
-        self.livesToRemove = 1
+        self.livesToRemove = livesToRemove or 1
         self.recipeIndex = recipeIndex
 
         self.debuffs = {}
@@ -31,6 +31,7 @@ Enemy = Class {
     update = function(self, dt, currentCell)
         if not currentCell then
             self.markedForDeath = true
+            return
         end
         if currentCell.isGoal then
             playerController:leak(self.livesToRemove)

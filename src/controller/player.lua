@@ -4,14 +4,16 @@ require("src.class.wallet")
 PlayerController = Class {
     init = function(self)
         self.STRUCTURE_BLUEPRINTS = {
-            ["OBSTACLE"] = StructureBlueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2, 0),
-            ["SAW"] = StructureBlueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, constants.STRUCTURE.SAW.TARGETTING_RADIUS),
-            ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, constants.STRUCTURE.CANNON.TARGETTING_RADIUS)
+            ["OBSTACLE"] = StructureBlueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2, 0, "NONE"),
+            ["SAW"] = StructureBlueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, {radius = constants.STRUCTURE.SAW.TARGETTING_RADIUS}, "RADIUS"),
+            ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, {radius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS}, "RADIUS"),
+            ["LASERGUN"] = StructureBlueprint("LASERGUN", assets.blueprints.lasergun, 2, 2, 1, 1, {width = constants.STRUCTURE.LASERGUN.LINE_LENGTH, height = constants.STRUCTURE.LASERGUN.LINE_WIDTH}, "LINE")
         }
         self.blueprints = {}
         self:addNewStructureBlueprint("OBSTACLE")
         self:addNewStructureBlueprint("SAW") -- TODO: will be unlocked, not a default valu
         self:addNewStructureBlueprint("CANNON")  -- TODO: will be unlocked, not a default value
+        self:addNewStructureBlueprint("LASERGUN") -- TODO: will be unlocked, not a default value
 
         self.livesRemaining = constants.MISC.STARTING_LIVES
         self.currentBlueprint = nil
@@ -27,38 +29,33 @@ PlayerController = Class {
     addNewStructureBlueprint = function(self, blueprintKey)
         assert(self.STRUCTURE_BLUEPRINTS[blueprintKey], "Tried to add non-existing structure blueprint: "..blueprintKey)
         local blueprint = self.STRUCTURE_BLUEPRINTS[blueprintKey]:clone()
-        local w, h = blueprint.image:getWidth(), blueprint.image:getHeight()
-        local canvas = love.graphics.newCanvas(128,128)
-        love.graphics.setCanvas(canvas)
-            love.graphics.draw(blueprint.image, 0, 0, 0, canvas:getWidth()/w, canvas:getHeight()/h)
-            love.graphics.setColor(0,0,0,0.5)
-            love.graphics.rectangle('fill', 0, 0, canvas:getWidth()/2, canvas:getWidth()/2)
-            Util.l.resetColour()
-            local text = love.graphics.newText(assets.ui.neuropoliticalRg(14), { {0.8,1,0}, #self.blueprints+1})
-            love.graphics.draw(text, canvas:getWidth()/4 - text:getWidth()*2, -14, 0, 4, 4)
-        love.graphics.setCanvas()
-        blueprint:setUIImage(love.graphics.newImage(canvas:newImageData()))
+        blueprint:setUIImages(uiController:constructHotkeyedImages(blueprint.image, #self.blueprints+1))
         table.insert(self.blueprints, blueprint)
     end;
     setCurrentBlueprint = function(self, index)
-        if not self.blueprints[index] then return end
+        if not self.blueprints[index] then return false end
         self:toggleStructureSelection()
         
         if inputController.isPlacingTower and self.currentBlueprint then
             if self.currentBlueprint.name == self.blueprints[index].name then
                 inputController:togglePlacingTower() --toggle off the current one
                 self.currentBlueprint = nil
+                return true
             elseif self.wallet:canAfford(self.blueprints[index].cost)  then
                 --theyre switching to a different one, check they can afford it
                 self.currentBlueprint = self.blueprints[index]
+                return true
             else
                 audioController:playAny("INSUFFICIENT_FUNDS")
+                return false
             end
         elseif self.wallet:canAfford(self.blueprints[index].cost) then
             self.currentBlueprint = self.blueprints[index]
             inputController:togglePlacingTower()
+            return true
         else
             audioController:playAny("INSUFFICIENT_FUNDS")
+            return false
         end
     end;
     toggleStructureSelection = function(self, structure)
@@ -93,11 +90,19 @@ PlayerController = Class {
         self:toggleStructureSelection()
         audioController:playAny("REFUND")
     end;
+    rotateCurrentStructure = function(self)
+        if not self.currentSelectedStructure or not self.currentSelectedStructure.rotatable then
+            return 
+        end
+        self.currentSelectedStructure:rotateClockwise()
+        audioController:playAny("BUTTON_PRESS")
+        world:updateTowerHitbox(self.currentSelectedStructure)
+    end;
     draw = function(self)
         self.wallet:draw()
 
         if inputController.isPlacingTower and self.currentBlueprint then
-            world:displayBlueprint(self.currentBlueprint, inputController.mouse.origin)
+            world:displayBlueprint(self.currentBlueprint, inputController.mouse:centre())
         end
     end;
     upgradeCurrentStructure = function(self, upgradeType)
@@ -121,6 +126,8 @@ PlayerController = Class {
     end;
     leak = function(self, livesLost)
         self.livesRemaining = self.livesRemaining - livesLost
+        audioController:playAny("ENEMY_LEAK")
+        cameraController:shake(0.3, 1.5)
         if self.livesRemaining <= 0 and not self.hasLost and not self.hasWon then
             self:defeat()
         end

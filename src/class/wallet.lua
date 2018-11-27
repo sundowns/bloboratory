@@ -32,7 +32,7 @@ Wallet = Class {
         for type, value in pairs(costs) do
             self:updateCurrency(type, -1*value)
             if position then
-                self:addFloatingGain('-'..value, position, self.currencies[type].colour)
+                self:addFloatingGain('-'..value, position, self.currencies[type].colour, self.currencies[type].image)
                 position.y = position.y - constants.CURRENCY.GAINS.Y_OFFSET
             end
         end
@@ -41,7 +41,7 @@ Wallet = Class {
         for type, value in pairs(gains) do
             self:updateCurrency(type, value)
             if position then
-                self:addFloatingGain('+'..value, position, self.currencies[type].colour)
+                self:addFloatingGain('+'..value, position, self.currencies[type].colour, self.currencies[type].image)
                 position.y = position.y - constants.CURRENCY.GAINS.Y_OFFSET
             end
         end
@@ -50,9 +50,9 @@ Wallet = Class {
         assert(self.currencies[type], "Tried to update invalid currency")
         self.currencies[type]:updateValue(delta)
     end;
-    addFloatingGain = function(self, amount, position, colour)
+    addFloatingGain = function(self, amount, position, colour, image)
         --We deliberately create a new vector here so as to not update the original table
-        table.insert(self.floatingGains, FloatingText(amount, Vector(position.x, position.y), Vector(0,-0.5), colour)) 
+        table.insert(self.floatingGains, FloatingText(amount, Vector(position.x, position.y), Vector(0,-0.5), colour, image)) 
         self.gainTimer:after(constants.CURRENCY.GAINS.TIME_TO_LIVE, function()
             table.remove(self.floatingGains, 1)
         end)

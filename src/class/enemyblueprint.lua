@@ -1,9 +1,10 @@
 EnemyBlueprint = Class {
-    init = function(self, name, image, yield, buildEnemy)
+    init = function(self, name, image, yield, isUnlocked, baseHealth, buildEnemy)
         self.name = name
         self.image = image
         self.imageHovered = love.graphics.newCanvas(self.image:getWidth(), self.image:getHeight())
         self.imageActive = love.graphics.newCanvas(self.image:getWidth(), self.image:getHeight())
+        self.baseHealth = baseHealth -- For displaying in picker
 
         Util.l.resetColour()
         love.graphics.setCanvas(self.imageHovered)
@@ -21,6 +22,7 @@ EnemyBlueprint = Class {
 
         self.yield = yield
         self.buildEnemy = buildEnemy
+        self.isUnlocked = isUnlocked
     end;
     construct = function(self, params, healthMultiplier)
         local enemy = self.buildEnemy(params)

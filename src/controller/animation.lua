@@ -59,6 +59,13 @@ AnimationController = Class {
             layer.animation:update(dt)
         end
     end;
+    updateInstanceRotation = function(self, instance, rotation)
+        for i, layer in pairs(instance.animations) do
+            if not layer.rotateToTarget then
+                layer.rotation = rotation
+            end
+        end
+    end;
     drawStructureSpriteInstance = function(self, instance, position, cellsWidth, cellsHeight, targettingAngle)
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
@@ -73,6 +80,12 @@ AnimationController = Class {
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
             layer.animation:draw(instance.sprite.image, position.x, position.y, targettingAngle, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
+        end
+    end;
+    drawImpactSpriteInstance = function(self, instance, position, cellsWidth, cellsHeight)
+        for i, layer in pairs(instance.animations) do
+            local w, h = layer.animation:getDimensions()
+            layer.animation:draw(instance.sprite.image, position.x, position.y, 0, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
         end
     end;
     drawEnemySpriteInstance = function(self, instance, position, orientation)

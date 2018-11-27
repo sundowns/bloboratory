@@ -1,10 +1,11 @@
 function love.conf(t)
-    t.console = true
+    t.console = false
+    t.version = "11.2" 
     t.window.title = "Grim Gamers"
     t.window.minwidth = 1280
     t.window.minheight = 960
-    t.window.resizable = true
-    t.window.fullscreentype = "desktop" 
+    -- t.window.resizable = true
+    t.window.fullscreen = false     
 
     t.modules.joystick = false           -- Enable the joystick module (boolean)
     t.modules.thread = false             -- Enable the thread module (boolean)
