@@ -71,6 +71,10 @@ Picker = Class {
     pickerIsOpen = function(self)
 
     end;
+    calcEnemyHealth = function(self, blueprint)
+        local multiplier = roundController.crucible:calculateHealthScaling(roundController.roundIndex, roundController.totalRounds)
+        return math.floor((blueprint.baseHealth * multiplier))
+    end;
     pairsByKeys = function(self, t, f)
         local a = {}
         for n in pairs(t) do table.insert(a, n) end
@@ -190,7 +194,7 @@ Picker = Class {
                         nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/12, 4/12, 2/12, 1/12, 1/12, 1/8, 1/8})
                         nk.image(blueprint.image)
                         nk.label('3x ' ..blueprint.name, 'left')
-                        nk.label('HP: ' ..blueprint.baseHealth, 'left')
+                        nk.label('HP: ' ..self:calcEnemyHealth(blueprint), 'left')
 
                         for key, value in pairs(blueprint.yield) do
                             nk.image(playerController.wallet.currencies[key].image)
