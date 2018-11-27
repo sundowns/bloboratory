@@ -1,12 +1,12 @@
 Lasergun = Class {
     __includes=LineTower,
-    init = function(self, gridOrigin, worldOrigin)
+    init = function(self, gridOrigin, worldOrigin, orientation)
         self.towerType = "LASERGUN"
         LineTower.init(self, animationController:createInstance(self.towerType),
             gridOrigin, worldOrigin, constants.STRUCTURE.LASERGUN.WIDTH,
             constants.STRUCTURE.LASERGUN.HEIGHT, constants.STRUCTURE.LASERGUN.COST,
             constants.STRUCTURE.LASERGUN.ATTACK_DAMAGE, constants.STRUCTURE.LASERGUN.ATTACK_INTERVAL,
-            constants.STRUCTURE.LASERGUN.LINE_LENGTH, constants.STRUCTURE.LASERGUN.LINE_WIDTH
+            constants.STRUCTURE.LASERGUN.LINE_LENGTH, constants.STRUCTURE.LASERGUN.LINE_WIDTH, orientation
         )
     end;
     update = function(self, dt)

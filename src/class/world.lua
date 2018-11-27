@@ -23,7 +23,7 @@ World = Class {
 
         self.collisionWorld:add(inputController.mouse, inputController.mouse:calculateHitbox())
     end;
-    placeStructure = function(self, gridOrigin, type)
+    placeStructure = function(self, gridOrigin, type, orientation)
         if not self.grid:isValidGridCoords(gridOrigin) then return end
         if type == "SAW" then
             if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.SAW.WIDTH, constants.STRUCTURE.SAW.HEIGHT) then
@@ -46,7 +46,7 @@ World = Class {
         elseif type == "LASERGUN" then 
             if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.LASERGUN.WIDTH, constants.STRUCTURE.LASERGUN.HEIGHT) then
                 if playerController.wallet:canAfford(constants.STRUCTURE.LASERGUN.COST) then
-                    self:addNewTower(Lasergun(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                    self:addNewTower(Lasergun(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin), orientation))
                 end
             end
         end

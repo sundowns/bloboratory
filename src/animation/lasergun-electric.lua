@@ -17,6 +17,19 @@ return {
                 offset_x = 0,
                 offset_y = 0,
                 rotate_to_target = false,
+                manually_rotatable = false,
+                rotation = 0
+            }
+        },
+        {
+            DEFAULT = {
+                frame_duration = 1000,
+                x = 2,
+                y = 4,
+                offset_x = 0,
+                offset_y = 0,
+                rotate_to_target = false,
+                manually_rotatable = true,
                 rotation = 0
             }
         }

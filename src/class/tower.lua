@@ -1,10 +1,3 @@
-local ORIENTATIONS = {
-    RIGHT = math.rad(0),
-    DOWN = math.rad(90),
-    LEFT = math.rad(180),
-    UP = math.rad(270)
-}
-
 Tower = Class {
     __includes=Structure,
     init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
@@ -15,7 +8,6 @@ Tower = Class {
         self.rotatable = false
         self.attackDamage = attackDamage
         self.attackInterval = attackInterval
-        self.orientation = ORIENTATIONS.LEFT
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
@@ -40,18 +32,6 @@ Tower = Class {
         local width = (self.width + 2*(self.targettingRadius)) *constants.GRID.CELL_SIZE
         local height = (self.height + 2*(self.targettingRadius)) *constants.GRID.CELL_SIZE
         return x, y, width, height
-    end;
-    rotateClockwise = function(self)
-        if self.rotatable then
-            self.orientation = self.orientation + math.rad(90)
-            if self.orientation >= math.rad(360) then
-                self.orientation = self.orientation - math.rad(360)
-            end
-            if self.angleToTarget then
-                self.angleToTarget = self.angleToTarget + math.rad(90)
-            end
-            animationController:updateInstanceRotation(self.animation, self.orientation)
-        end
     end;
 }
 
@@ -103,7 +83,7 @@ MeleeTower = Class {
 
 LineTower = Class {
     __includes = Tower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, lineLength, lineWidth)
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, lineLength, lineWidth, orientation)
         Tower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval)
         self.archetype = "LINE"
         self.armed = true
@@ -111,6 +91,8 @@ LineTower = Class {
         self.lineWidth = lineWidth
         self.rotatable = true
         self.attackTimer = nil
+        self.orientation = orientation
+        animationController:updateInstanceRotation(self.animation, self.orientation)
     end;
     resetTimers = function(self)
         self.attackTimer = Timer.new()
@@ -133,6 +115,7 @@ LineTower = Class {
     end;
     addMutation = function(self, mutation, animation)
         Tower.addMutation(self, mutation, animation)
+        -- animationController:updateInstanceRotation(self.animation, self.orientation)
     end;
     arm = function(self)
         self.armed = true
@@ -143,22 +126,22 @@ LineTower = Class {
     end;
     calculateHitbox = function(self)
         local x, y, width, height
-        if self.orientation == ORIENTATIONS.LEFT then
+        if self.orientation == constants.ORIENTATIONS.LEFT then
             x = self.worldOrigin.x - self.lineLength * constants.GRID.CELL_SIZE
             y = self.worldOrigin.y + self.lineWidth * constants.GRID.CELL_SIZE
             width = self.lineLength * constants.GRID.CELL_SIZE
             height = (self.height - self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
-        elseif self.orientation == ORIENTATIONS.UP then
+        elseif self.orientation == constants.ORIENTATIONS.UP then
             x = self.worldOrigin.x + self.lineWidth * constants.GRID.CELL_SIZE
             y = self.worldOrigin.y - self.lineLength * constants.GRID.CELL_SIZE
             width = (self.height - self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
             height = self.lineLength *constants.GRID.CELL_SIZE
-        elseif self.orientation == ORIENTATIONS.RIGHT then
+        elseif self.orientation == constants.ORIENTATIONS.RIGHT then
             x = self.worldOrigin.x + (self.width*constants.GRID.CELL_SIZE)
             y = self.worldOrigin.y + self.lineWidth * constants.GRID.CELL_SIZE
             width = self.lineLength *constants.GRID.CELL_SIZE
             height = (self.height - self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
-        elseif self.orientation == ORIENTATIONS.DOWN then
+        elseif self.orientation == constants.ORIENTATIONS.DOWN then
             x = self.worldOrigin.x + self.lineWidth * constants.GRID.CELL_SIZE
             y = self.worldOrigin.y + self.height * constants.GRID.CELL_SIZE
             width = (self.height - self.lineWidth) *constants.GRID.CELL_SIZE / 1.5
@@ -172,6 +155,18 @@ LineTower = Class {
             love.graphics.rectangle('fill', self:calculateHitbox())
         end
         Tower.draw(self, blockingPath)
+    end;
+    rotateClockwise = function(self)
+        if self.rotatable then
+            self.orientation = self.orientation + math.rad(90)
+            if self.orientation >= math.rad(360) then
+                self.orientation = self.orientation - math.rad(360)
+            end
+            if self.angleToTarget then
+                self.angleToTarget = self.angleToTarget + math.rad(90)
+            end
+            animationController:updateInstanceRotation(self.animation, self.orientation)
+        end
     end;
 }
 

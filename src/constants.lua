@@ -22,8 +22,8 @@ return {
         DEBUG_HITBOX = {1,0,0},
         BLUEPRINT_VALID = {0,1,0, 0.7},
         BLUEPRINT_INVALID = {1,0,0, 0.7},
-        BLUEPRINT_RANGE = {0.8,0.5,0},
-        STRUCTURE_RANGE = {0.8,0.5,0,0.3},
+        BLUEPRINT_RANGE = {0.8,0.3,0.1, 0.8},
+        STRUCTURE_RANGE = {0.8,0.3,0.1,0.3},
         TOWER = {0.5,0,0.5}, -- debug
         CAMERA_PANZONES = {1,0.5,0}, -- debug,
         PROJECTILE = {0,0.5,1},
@@ -335,7 +335,7 @@ return {
         WINNER = {
             1,
         },
-        YOULOSE = {
+        DEFEAT = {
             1,
         },
         UPGRADE_FIRE = {
@@ -365,5 +365,11 @@ return {
     },
     MISC = {
         STARTING_LIVES = 30,
+    },
+    ORIENTATIONS = {
+        RIGHT = math.rad(0),
+        DOWN = math.rad(90),
+        LEFT = math.rad(180),
+        UP = math.rad(270),
     }
 }

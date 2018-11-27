@@ -104,11 +104,11 @@ AudioController = Class {
                     volume = constants.AUDIO.WINNER[1],
                 },
             }),
-            ["YOULOSE"] = TrackList({
+            ["DEFEAT"] = TrackList({
                 ripple.newSound {
-                    source = assets.audio.misc.youlose,
-                    volume = constants.AUDIO.YOULOSE.VOLUME,
-                    constant = constants.AUDIO.YOULOSE[1]
+                    source = assets.audio.misc.defeat,
+                    volume = constants.AUDIO.DEFEAT.VOLUME,
+                    constant = constants.AUDIO.DEFEAT[1]
                 },
             }),
             ["UPGRADE_FIRE"] = TrackList({

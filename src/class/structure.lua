@@ -45,6 +45,7 @@ Structure = Class {
         if self.animation then
             animationController:changeSpriteState(self.animation, newState)
         end
+        animationController:updateInstanceRotation(self.animation, self.orientation)
     end;
     toggleSelected = function(self)
         self.isSelected = not self.isSelected

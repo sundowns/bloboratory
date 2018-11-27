@@ -7,7 +7,7 @@ PlayerController = Class {
             ["OBSTACLE"] = StructureBlueprint("OBSTACLE", assets.blueprints.obstacle, 1, 1, 2, 2, 0, "NONE"),
             ["SAW"] = StructureBlueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, {radius = constants.STRUCTURE.SAW.TARGETTING_RADIUS}, "RADIUS"),
             ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, {radius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS}, "RADIUS"),
-            ["LASERGUN"] = StructureBlueprint("LASERGUN", assets.blueprints.lasergun, 2, 2, 1, 1, {width = constants.STRUCTURE.LASERGUN.LINE_LENGTH, height = constants.STRUCTURE.LASERGUN.LINE_WIDTH}, "LINE")
+            ["LASERGUN"] = StructureBlueprint("LASERGUN", assets.blueprints.lasergun, 2, 2, 1, 1, {length = constants.STRUCTURE.LASERGUN.LINE_LENGTH, width = constants.STRUCTURE.LASERGUN.LINE_WIDTH}, "LINE")
         }
         self.blueprints = {}
         self:addNewStructureBlueprint("OBSTACLE")
@@ -17,6 +17,7 @@ PlayerController = Class {
 
         self.livesRemaining = constants.MISC.STARTING_LIVES
         self.currentBlueprint = nil
+        self.currentBlueprintOrientation = constants.ORIENTATIONS.UP
         self.currentSelectedStructure = nil
         self.wallet = Wallet()
         self.hasWon = false
@@ -98,6 +99,14 @@ PlayerController = Class {
         audioController:playAny("BUTTON_PRESS")
         world:updateTowerHitbox(self.currentSelectedStructure)
     end;
+    rotateCurrentBlueprint = function(self)
+        if self.currentBlueprint.name ~= "LASERGUN" then return end
+        self.currentBlueprintOrientation = self.currentBlueprintOrientation + math.rad(90)
+        if self.currentBlueprintOrientation >= math.rad(360) then
+            self.currentBlueprintOrientation = self.currentBlueprintOrientation - math.rad(360)
+        end
+        audioController:playAny("BUTTON_PRESS")
+    end;
     draw = function(self)
         self.wallet:draw()
 
@@ -135,7 +144,7 @@ PlayerController = Class {
     defeat = function(self)
         self.hasLost = true
         audioController:stopMusic()
-        audioController:playAny("YOULOSE")
+        audioController:playAny("DEFEAT")
         --TODO: play some bitter defeat music
     end;
     victory = function(self)

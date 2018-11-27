@@ -41,13 +41,15 @@ InputController = Class {
             elseif key == "e" and playerController.currentSelectedStructure and roundController:isBuildPhase() then
                 playerController:upgradeCurrentStructure("ELECTRIC")
             end
+        elseif key == "r" and roundController:isBuildPhase() then
+            playerController:rotateCurrentBlueprint()
         end
     end;  
     mousepressed = function(self, screenOrigin, button)
         if not self:isAboveTray(screenOrigin) or not nk.windowIsHidden(constants.UI.PICKER.NAME) or not nk.windowIsHidden(constants.UI.OPTIONS_MENU.NAME) then return end
         local gridOrigin = world.grid:calculateGridCoordinatesFromScreen(screenOrigin)
         if self.isPlacingTower then
-            world:placeStructure(gridOrigin, playerController.currentBlueprint.name)
+            world:placeStructure(gridOrigin, playerController.currentBlueprint.name, playerController.currentBlueprintOrientation)
             if not love.keyboard.isDown('lshift', 'rshift') or not playerController.wallet:canAfford(playerController.currentBlueprint.cost) then
                 self:togglePlacingTower()
             end

@@ -42,6 +42,7 @@ AnimationController = Class {
                 origin = Vector(anim_data.offset_x, anim_data.offset_y),
                 rotation = anim_data.rotation,
                 rotateToTarget = anim_data.rotate_to_target,
+                manually_rotatable = anim_data.manually_rotatable,
                 scale = Vector(anim_data.scale_x or 1, anim_data.scale_y or 1)
             })
         end;
@@ -61,8 +62,8 @@ AnimationController = Class {
     end;
     updateInstanceRotation = function(self, instance, rotation)
         for i, layer in pairs(instance.animations) do
-            if not layer.rotateToTarget then
-                layer.rotation = rotation
+            if not layer.rotateToTarget and layer.manually_rotatable then
+                layer.rotation = rotation + math.rad(90) --We had 90 because our sprites by default point up (-90 or 270 degrees)
             end
         end
     end;

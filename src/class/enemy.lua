@@ -1,10 +1,3 @@
-local ORIENTATIONS = {
-    RIGHT = math.rad(0),
-    DOWN = math.rad(90),
-    LEFT = math.rad(180),
-    UP = math.rad(270)
-}
-
 Enemy = Class {
     init = function(self, enemyType, element, worldOrigin, health, speed, yield, animation, recipeIndex, livesToRemove)
         assert(worldOrigin.x and worldOrigin.y)
@@ -22,7 +15,7 @@ Enemy = Class {
         self.movingTo = nil
         self.markedForDeath = false
         self.hitGoal = false
-        self.orientation = ORIENTATIONS.LEFT --angle in radians
+        self.orientation = constants.ORIENTATIONS.LEFT --angle in radians
         self.livesToRemove = livesToRemove or 1
         self.recipeIndex = recipeIndex
 
@@ -127,16 +120,16 @@ Enemy = Class {
     calculateDirection = function(self, from)
         if from and self.movingTo then
             if from.gridOrigin.x > self.movingTo.gridOrigin.x then
-                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.LEFT})
+                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = constants.ORIENTATIONS.LEFT})
             end
             if from.gridOrigin.x < self.movingTo.gridOrigin.x then
-                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.RIGHT})
+                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = constants.ORIENTATIONS.RIGHT})
             end
             if from.gridOrigin.y > self.movingTo.gridOrigin.y then
-                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.UP})
+                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = constants.ORIENTATIONS.UP})
             end
             if from.gridOrigin.y < self.movingTo.gridOrigin.y then
-                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = ORIENTATIONS.DOWN})
+                Timer.tween(constants.ENEMY.ORIENTATION_CHANGE_TIME, self, {orientation = constants.ORIENTATIONS.DOWN})
             end
         end
     end;
