@@ -187,14 +187,14 @@ Picker = Class {
 
                 for i, blueprint in self:pairsByKeys(roundController.ENEMY_BLUEPRINTS) do
                     if blueprint.isUnlocked then
-                        nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/8, 4/8, 1/8, 1/8, 1/8})
+                        nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/8, 4/8, 1/8, 1/8, 1/8, 1/8})
                         if nk.button('', blueprint.image) then
                             audioController:playAny("ENEMY_HIT")
                             roundController.crucible:setSlot(self.choice, blueprint)
                             nk.windowHide(constants.UI.PICKER.NAME)
                         end
                         nk.label(' 3x '..blueprint.name, 'left')
-    
+
                         for key, value in pairs(blueprint.yield) do
                             nk.image(playerController.wallet.currencies[key].image)
                             nk.label(value, 'centered', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))

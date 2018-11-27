@@ -8,7 +8,8 @@ ConfigController = Class {
             seenMultiSelectTutorial = false,
             seenUpgradeTutorial = false,
             seenRefundTutorial = false,
-            seenLargeTutorial = false,
+            seenLargeTutorialOne = false,
+            seenLargeTutorialTwo = false,
             seenHarderTutorial = false,
         }
     end;

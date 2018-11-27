@@ -207,20 +207,33 @@ RoundController = Class {
                 end)
             end
 
-            if self.roundIndex == 8 then 
+            if self.roundIndex == 6 then 
                 for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
-                    if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then --TODO: an 'unlockedOnRoundX' variable instead
+                    if enemy.name == "BIG BLOBBY" then --TODO: an 'unlockedOnRoundX' variable instead
                         enemy.isUnlocked = true
                     end
                 end
-                if not configController.settings.seenLargeTutorial then
+                if not configController.settings.seenLargeTutorialOne then
                     Timer.after(1, function()
                         helpController:addText('Large blobs are now available. Be careful though, they are MUCH tougher than regular blobs!', 20, {0.2,0.8,0})
                         configController:updateSetting('seenLargeTutorial', true)
                     end)
                 end
             end
-            if self.roundIndex == 11 or self.roundIndex == 21 or self.roundIndex == 26 then 
+            if self.roundIndex == 11 then 
+                for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
+                    if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then --TODO: an 'unlockedOnRoundX' variable instead
+                        enemy.isUnlocked = true
+                    end
+                end
+            end
+            if not configController.settings.seenLargeTutorialTwo then
+                Timer.after(1, function()
+                    helpController:addText('Large elemental enemies are now available! Be careful though, they are MUCH tougher than regular blobs!', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenLargeTutorial', true)
+                end)
+            end
+            if self.roundIndex == 11 or self.roundIndex == 16 or self.roundIndex == 21 or self.roundIndex == 26 then 
                 Timer.after(1, function()
                     helpController:addText('Enemies just got tougher. Don\'t get cocky! ', 20, {0.2,0.8,0})
                 end)
