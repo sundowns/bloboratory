@@ -15,7 +15,7 @@ HelpController = Class {
         local timeToLive = timeToLive or self.defaultTTL
         local colour = colour or {1,1,1}
         local text = love.graphics.newText(assets.ui.planerRegular(self.fontSize))
-        text:setf(message, constants.UI.CRUCIBLE.X*love.graphics.getWidth(), 'left')
+        text:setf(message, constants.UI.CRUCIBLE.X*love.graphics.getWidth()*0.975, 'left')
         local helpText = HelpText(text, colour)
         self.textTimer:after(timeToLive, function()
             table.remove(self.textLog, 1)

@@ -83,7 +83,7 @@ Inflame = Class {
         Debuff.update(self, dt)
     end;
     tick = function(self)
-        self.owner:takeDamage(self.damagePerTick, false) --TODO: pass in a mutator specific sound (zap, sizzle, freeze?)
+        self.owner:takeDamage(self.damagePerTick, false)
     end;
     apply = function(self)
         Debuff.apply(self)
@@ -135,7 +135,6 @@ Electrify = Class {
         Debuff.update(self, dt)
     end;
     tick = function(self)
-        --TODO: emit some particles?
     end;
     apply = function(self)
         Debuff.apply(self)

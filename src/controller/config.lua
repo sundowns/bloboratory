@@ -11,6 +11,7 @@ ConfigController = Class {
             seenLargeTutorialOne = false,
             seenLargeTutorialTwo = false,
             seenHarderTutorial = false,
+            seenBossTutorial = false,
         }
     end;
     updateSetting = function(self, key, value)

@@ -12,6 +12,16 @@ Crucible = Class {
     lock = function(self)
         self.isLocked = true
     end;
+    allSlotsEmpty = function(self)
+        local empty = true
+        for i, slot in ipairs(self.slots) do
+            if slot.blueprint then
+                empty = false
+                break
+            end
+        end
+        return empty
+    end;
     slotIsEmpty = function(self, index)
         assert(self.slots[index])
         return self.slots[index].blueprint == nil

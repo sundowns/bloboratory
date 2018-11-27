@@ -43,7 +43,7 @@ IceImpact = Class {
     __includes = Impact,
     init = function(self, origin, stats)
         Impact.init(self, origin, constants.IMPACTS.ICE.WIDTH, constants.IMPACTS.ICE.HEIGHT)
-        self.colour = {0,0,1,0.5} -- TODO: remove and replace with proper animation/something pretty
+        self.colour = {0,0,1,0.5} 
         self.stats = stats
     end;
     attack = function(self, other)
@@ -55,7 +55,7 @@ ElectricImpact = Class {
     __includes = Impact,
     init = function(self, origin, stats)
         Impact.init(self, origin, constants.IMPACTS.ELECTRIC.WIDTH, constants.IMPACTS.ELECTRIC.HEIGHT)
-        self.colour = {1,1,0,0.5} -- TODO: remove and replace with proper animation/something pretty
+        self.colour = {1,1,0,0.5}
         self.stats = stats
     end;
     attack = function(self, other)
@@ -68,7 +68,7 @@ FireImpact = Class {
     __includes = Impact,
     init = function(self, origin, stats)
         Impact.init(self, origin, constants.IMPACTS.FIRE.WIDTH, constants.IMPACTS.FIRE.HEIGHT)
-        self.colour = {0.8,0.5,0} -- TODO: remove and replace with proper animation/something pretty
+        self.colour = {0.8,0.5,0}
         self.stats = stats
     end;
     attack = function(self, other)

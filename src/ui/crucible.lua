@@ -235,24 +235,31 @@ Picker = Class {
                     end
                 end
 
-                if self.choice > 0 and not roundController.crucible:slotIsEmpty(self.choice) then
+                if self.choice > 0 then
                     nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/2*windowHeight, 3)
                     nk.stylePush({
                         ['font'] = assets.ui.planerRegular(18),
                     })
                     nk.spacing(1)
-                    if nk.button('CLEAR SLOT') then
-                        audioController:playAny("ENEMY_LEAK")
-                        roundController.crucible:resetSlot(self.choice)
-                        nk.windowHide(constants.UI.PICKER.NAME)
-                    end
-                    nk.spacing(2)
-                    if nk.button('CLEAR ALL SLOTS') then 
-                        for i = 1, #roundController.crucible.slots do
+                    local extraSpacing = 2
+                    if not roundController.crucible:slotIsEmpty(self.choice) then
+                        if nk.button('CLEAR SLOT') then
                             audioController:playAny("ENEMY_LEAK")
-                            roundController.crucible:resetSlot(i, blueprint)
+                            roundController.crucible:resetSlot(self.choice)
+                            nk.windowHide(constants.UI.PICKER.NAME)
                         end
-                        nk.windowHide(constants.UI.PICKER.NAME)
+                    else
+                        extraSpacing = 0
+                    end
+                    nk.spacing(extraSpacing)
+                    if not roundController.crucible:allSlotsEmpty() then
+                        if nk.button('CLEAR ALL SLOTS') then 
+                            for i = 1, #roundController.crucible.slots do
+                                audioController:playAny("ENEMY_LEAK")
+                                roundController.crucible:resetSlot(i, blueprint)
+                            end
+                            nk.windowHide(constants.UI.PICKER.NAME)
+                        end
                     end
                     nk.stylePop()
                 end

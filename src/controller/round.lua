@@ -202,8 +202,15 @@ RoundController = Class {
 
             if self.roundIndex == 4 and not configController.settings.seenRefundTutorial then
                 Timer.after(1, function()
-                    helpController:addText('You can refund any of existing towers for the full cost (including upgrades)', 20, {0.2,0.8,0})
+                    helpController:addText('You can refund any existing towers for the full cost (including upgrades)', 20, {0.2,0.8,0})
                     configController:updateSetting('seenRefundTutorial', true)
+                end)
+            end
+
+            if self.roundIndex == 5 and not configController.settings.seenBossTutorial then
+                Timer.after(1, function()
+                    helpController:addText('Steady now! Every 5th wave your maze will be tested by powerful boss monsters.', 20, {0.8,0.3,0})
+                    configController:updateSetting('seenBossTutorial', true)
                 end)
             end
 

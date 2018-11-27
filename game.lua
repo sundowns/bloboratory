@@ -33,7 +33,7 @@ function game:init()
     roundController = RoundController()
     helpController = HelpController(Vector(love.graphics.getWidth()*constants.UI.HELPLOG.X, love.graphics.getHeight()*constants.UI.HELPLOG.Y))
     if not configController.settings.seenMazingTutorial then
-        helpController:addText('Build a maze to keep the blobs at bay!', 10, {0.2,0.8,0})
+        helpController:addText('Construct a maze of towers to defeat blobs and gain valuable resources to upgrade your towers!', 10, {0.2,0.8,0})
         configController:updateSetting('seenMazingTutorial', true)
     end
     world = World(Vector(0,0), constants.GRID.ROWS, constants.GRID.COLUMNS)
