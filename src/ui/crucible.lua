@@ -217,7 +217,7 @@ Picker = Class {
                         end
 
                         self:displayTooltip('Select ' ..blueprint.name.. ' for this slot')
-                        if nk.button('SEND') then
+                        if nk.button('SLOT') then
                             audioController:playAny("ENEMY_HIT")
                             roundController.crucible:setSlot(self.choice, blueprint)
                             nk.windowHide(constants.UI.PICKER.NAME)
