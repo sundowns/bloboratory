@@ -19,13 +19,6 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 | 1 | place obstacle |
 | 2 | place saw |
 | 3 | place cannon |
-| f | add fire mutation to selected tower |
-| i | add ice mutation to selected tower |
-| e | add electric mutation to selected tower |
-| r | refund selected tower |
-| g | toggle goal      |
-| s | place spawner      |
-| space | toggle spawning |
-| f1 | toggle debug overlay      |
-| f5 | restart game      |
-| esc | exit game      |
+| 4 | place laser |
+| r | rotate selected tower |
+| x | refund selected tower |
