@@ -43,11 +43,11 @@ Crucible = Class {
         if roundIndex > 10 then 
             multiplier = 0.8
         elseif roundIndex > 15 then 
-            multiplier = 0.1
+            multiplier = 1
         elseif roundIndex > 20 then 
-            multiplier = 1.5
+            multiplier = 1.8
         elseif roundIndex > 25 then 
-            multiplier = 2.4
+            multiplier = 2.9
         end
         return multiplier * (1 + roundIndex-3/totalRounds)
     end;
