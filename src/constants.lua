@@ -283,9 +283,9 @@ return {
         },
         PICKER = {
             X = 0.15,
-            Y = 0.065,
+            Y = 0.09,
             WIDTH = 0.7,
-            HEIGHT = 0.65,
+            HEIGHT = 0.55,
             LAYOUTROW_HEIGHT = 0.075,
             NAME = 'Picker',     
         },
