@@ -215,16 +215,18 @@ Picker = Class {
                 end
 
                 if self.choice > 0 and not roundController.crucible:slotIsEmpty(self.choice) then
-                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/3*windowHeight, 1)
+                    nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/2*windowHeight, 3)
                     nk.stylePush({
                         ['font'] = assets.ui.planerRegular(18),
                     })
-                    if nk.button('REMOVE') then
+                    nk.spacing(1)
+                    if nk.button('CLEAR SLOT') then
                         audioController:playAny("ENEMY_LEAK")
                         roundController.crucible:resetSlot(self.choice)
                         nk.windowHide(constants.UI.PICKER.NAME)
                     end
-                    if nk.button('REMOVE ALL') then 
+                    nk.spacing(2)
+                    if nk.button('CLEAR ALL SLOTS') then 
                         for i = 1, #roundController.crucible.slots do
                             audioController:playAny("ENEMY_LEAK")
                             roundController.crucible:resetSlot(i, blueprint)
