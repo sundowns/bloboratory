@@ -217,7 +217,7 @@ return {
         },
     },
     CURRENCY = {
-        STARTING_SCRAP = 175,
+        STARTING_SCRAP = 75,
         STARTING_FIRE = 0, 
         STARTING_ICE = 0,
         STARTING_ELECTRIC = 0,
@@ -282,12 +282,12 @@ return {
             LAYOUTROW_HEIGHT = 0.0725,
         },
         PICKER = {
-            X = 0.25,
-            Y = 0.18,
-            WIDTH = 0.5,
-            HEIGHT = 0.525,
+            X = 0.15,
+            Y = 0.09,
+            WIDTH = 0.7,
+            HEIGHT = 0.55,
             LAYOUTROW_HEIGHT = 0.075,
-            NAME = 'Picker'
+            NAME = 'Picker',     
         },
         HELPLOG = {
             X = 0.01,
