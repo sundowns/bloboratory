@@ -255,15 +255,17 @@ World = Class {
         end
     end;
     processCollisionForAura = function(self, tower)
-        --if tower.armed then 
+        if tower.type == "TOWER" and tower.archetype ~= "AURA" then 
             local actualX, actualY, cols, len = self.collisionWorld:check(tower.auraHitbox, x, y, function() return "cross" end)
             for i = 1, len do 
-                if cols[i].other.type == "AURA" then
-                    cols[i].other:attack(tower)
-                    tower:disarm()
+                if cols[i].other.archetype == "AURA" then
+                    if cols[i].other.armed then 
+                        cols[i].other:attack(tower)
+                        cols[i].other:disarm()
+                    end
                 end
             end
-        --end
+        end
     end;
     processCollisionForProjectile = function(self, projectile, dt)
         local actualX, actualY, cols, len = self.collisionWorld:move(projectile, projectile.worldOrigin.x - projectile.width/2, projectile.worldOrigin.y - projectile.height/2, function() return "cross" end)

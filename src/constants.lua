@@ -102,7 +102,7 @@ return {
             COST = {
                 SCRAP = 25,
             },
-            TOOLTIP = "AURA - Cost: 25 scrap",
+            TOOLTIP = "Beacon - Cost: 25 scrap",
         },
     },
     MUTATION_COSTS = {
@@ -250,7 +250,7 @@ return {
         },
     },
     CURRENCY = {
-        STARTING_SCRAP = 75,
+        STARTING_SCRAP = 175,
         STARTING_FIRE = 0, 
         STARTING_ICE = 0,
         STARTING_ELECTRIC = 0,

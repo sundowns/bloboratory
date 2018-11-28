@@ -24,7 +24,7 @@ Tower = Class {
     update = function(self, dt)
         Structure.update(self, dt)
     end;
-    draw = function(self, blockingPath)        
+    draw = function(self, blockingPath)       
         Structure.draw(self, blockingPath)
     end;
     calculateHitbox = function(self)
@@ -37,10 +37,10 @@ Tower = Class {
     end;
     calculateAuraHitbox = function(self)
         -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
-        local x = self.worldOrigin.x * constants.GRID.CELL_SIZE
-        local y = self.worldOrigin.y * constants.GRID.CELL_SIZE
-        local width = self.width * constants.GRID.CELL_SIZE
-        local height = self.height * constants.GRID.CELL_SIZE
+        local x = self.worldOrigin.x 
+        local y = self.worldOrigin.y 
+        local width = (self.width + 2 * constants.GRID.CELL_SIZE) 
+        local height = (self.height + 2 * constants.GRID.CELL_SIZE) 
         return x, y, width, height
     end;
 }
