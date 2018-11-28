@@ -146,3 +146,34 @@ Electrify = Class {
         Debuff.deactivate(self)
     end;
 }
+
+Speedy = Class {
+    __includes = Debuff,
+    init = function(self, owner, stats)
+        Debuff.init(self, "SPEEDY", owner, stats.DURATION, stats.TICK_DURATION, ELECTRIC_PARTICLE_QUADS)
+        self.speedModifier = stats.SPEED_MODIFIER
+    end;
+    update = function(self, dt)
+        Debuff.update(self, dt)
+    end;
+    tick = function(self)
+    end;
+    apply = function(self)
+        Debuff.apply(self)
+    end;
+    activate = function(self)
+        Debuff.activate(self)
+
+        if self.owner then
+            self.owner.attackInterval = self.owner.attackInterval * self.speedModifier
+            self.owner:resetTimers()
+        end
+    end;
+    deactivate = function(self)
+        Debuff.deactivate(self)
+
+        if self.owner then
+            self.owner.attackInterval = self.owner.attackInterval / self.speedModifier
+        end
+    end;
+}

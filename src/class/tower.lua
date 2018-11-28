@@ -8,8 +8,8 @@ Tower = Class {
         self.rotatable = false
         self.attackDamage = attackDamage
         self.attackInterval = attackInterval
-        --self.rangedHitbox = Hitbox("TOWER", self:calculateHitbox())
         self.auraHitbox = Hitbox("AURA", self:calculateAuraHitbox())
+        self.debuffs = {}
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
@@ -23,6 +23,7 @@ Tower = Class {
     end;
     update = function(self, dt)
         Structure.update(self, dt)
+        self:updateDebuffs(dt)
     end;
     draw = function(self, blockingPath)       
         Structure.draw(self, blockingPath)
@@ -42,6 +43,23 @@ Tower = Class {
         local width = (self.width + 2 * constants.GRID.CELL_SIZE) 
         local height = (self.height + 2 * constants.GRID.CELL_SIZE) 
         return x, y, width, height
+    end;
+    applyDebuff = function(self, debuff)
+        assert(debuff and debuff.type)
+        if not self.debuffs[debuff.type] then
+            self.debuffs[debuff.type] = debuff
+            self.debuffs[debuff.type]:activate(self)
+        end
+    end;
+    updateDebuffs = function(self, dt)
+        for key, debuff in pairs(self.debuffs) do
+            self.debuffs[key]:update(dt)
+
+            if not self.debuffs[key].alive then
+                self.debuffs[key]:deactivate(self)
+                self.debuffs[key] = nil
+            end
+        end
     end;
 }
 
@@ -274,12 +292,7 @@ AuraTower = Class {
         self.archetype = "AURA"
     end;
     attack = function(self, other)
-        print(self.archetype.." attacked "..other.archetype)
-        --other:takeDamage(self.attackDamage, playOnHit, 1)
-
-        --if self.mutation then
-        --    self.mutation:attack(other, 1)
-        --end
+        other:applyDebuff(Speedy(other, {DURATION = 1.4, TICK_DURATION = 0.7, SPEED_MODIFIER = 0.7}))
     end;
 }
 

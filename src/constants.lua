@@ -96,8 +96,8 @@ return {
         BEACON = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
-            ATTACK_DAMAGE = 0.8, --damage per tick
-            ATTACK_INTERVAL = 0.25, 
+            ATTACK_DAMAGE = 0, --damage per tick
+            ATTACK_INTERVAL = 0.5, 
             TARGETTING_RADIUS = 5, --additional cell radii
             COST = {
                 SCRAP = 25,
