@@ -253,7 +253,7 @@ return {
         },
     },
     CURRENCY = {
-        STARTING_SCRAP = 175,
+        STARTING_SCRAP = 75,
         STARTING_FIRE = 0, 
         STARTING_ICE = 0,
         STARTING_ELECTRIC = 0,
