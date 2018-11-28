@@ -281,7 +281,7 @@ Picker = Class {
             nk.stylePop()
 
             nk.stylePush({['window'] = {['fixed background'] = assets.ui.menuCrucibleRight}})
-            if nk.windowBegin('RightEdge', 0.6*windowWidth, 0.7357*windowHeight, 0.006*windowWidth, 0.022*windowHeight) then
+            if nk.windowBegin('RightEdge', 0.5998*windowWidth, 0.7357*windowHeight, 0.006*windowWidth, 0.022*windowHeight) then
             end
             nk.windowEnd()
             nk.stylePop()
