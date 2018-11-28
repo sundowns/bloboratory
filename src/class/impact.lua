@@ -6,6 +6,7 @@ Impact = Class {
         self.height = height
         self.markedForDeath = false
         self.active = true
+        self.collides = true
         self.opacity = constants.IMPACTS.BASE_OPACITY 
         
         self.deathTimer = Timer.new()
@@ -35,6 +36,17 @@ Impact = Class {
     end;
     deactivate = function(self)
         self.active = false
+    end;
+}
+
+DefaultImpact = Class {
+    __includes = Impact,
+    init = function(self, origin)
+        Impact.init(self, origin, constants.IMPACTS.DEFAULT.WIDTH, constants.IMPACTS.DEFAULT.HEIGHT)
+        self.animation = animationController:createInstance("IMPACT")
+        self.collides = false
+    end;
+    attack = function(self, other)
     end;
 }
 

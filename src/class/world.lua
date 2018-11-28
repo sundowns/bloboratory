@@ -111,7 +111,7 @@ World = Class {
 
         for i = #self.impacts, 1, -1 do
             self.impacts[i]:update(dt)
-            if self.impacts[i].active then
+            if self.impacts[i].colldes and self.impacts[i].active then
                 self:processCollisionForImpact(self.impacts[i], dt)
                 self.collisionWorld:remove(self.impacts[i])
                 self.impacts[i]:deactivate()
@@ -282,7 +282,9 @@ World = Class {
         table.insert(self.projectiles, projectile)
     end;
     addImpact = function(self, impact)
-        self.collisionWorld:add(impact, impact:calculateHitbox())
+        if impact.collides then
+            self.collisionWorld:add(impact, impact:calculateHitbox())
+        end
         table.insert(self.impacts, impact)
     end;
     updateTowerHitbox = function(self, structure)

@@ -61,6 +61,7 @@ Cannonball = Class {
                 else
                     self.mutation:attack(self.target, 1)
                 end
+            else return DefaultImpact(self.worldOrigin)
             end
         elseif self.mutation.areaOfEffect then --if our enemy is dead, explode on the spot!
             return self.mutation:createImpact(self.worldOrigin)
