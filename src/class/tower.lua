@@ -293,7 +293,7 @@ AuraTower = Class {
         self.archetype = "AURA"
     end;
     attack = function(self, other)
-        other:applyDebuff(Speedy(other, {DURATION = 1, TICK_DURATION = 0.71, SPEED_MODIFIER = 0.8}))
+        other:applyDebuff(Speedy(other, {DURATION = 1, TICK_DURATION = 0.1, SPEED_MODIFIER = 0.71}))
     end;
 }
 

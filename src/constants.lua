@@ -98,7 +98,7 @@ return {
             HEIGHT = 2, --cells
             ATTACK_DAMAGE = 0, --damage per tick
             ATTACK_INTERVAL = 0.5, 
-            TARGETTING_RADIUS = 5, --additional cell radii
+            TARGETTING_RADIUS = 4, --additional cell radii
             COST = {
                 SCRAP = 25,
             },
@@ -298,7 +298,7 @@ return {
             Y = 0.88,
             WIDTH = 0.4,
             HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.0725,
+            LAYOUTROW_HEIGHT = 0.0625,
         },
         CRUCIBLE = {
             X = 0.4,
