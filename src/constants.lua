@@ -24,6 +24,7 @@ return {
         BLUEPRINT_INVALID = {1,0,0, 0.7},
         BLUEPRINT_RANGE = {0.8,0.3,0.1, 0.8},
         STRUCTURE_RANGE = {0.8,0.3,0.1,0.3},
+        AURA_RANGE = {1,1,0,0.1},
         TOWER = {0.5,0,0.5}, -- debug
         CAMERA_PANZONES = {1,0.5,0}, -- debug,
         PROJECTILE = {0,0.5,1},
@@ -92,6 +93,19 @@ return {
                 SCRAP = 35,
             },
             TOOLTIP = "LASERBEAM - COST: 35 SCRAP",
+        },
+        BEACON = {
+            WIDTH = 2, --cells
+            HEIGHT = 2, --cells
+            ATTACK_DAMAGE = 0, --damage per tick
+            ATTACK_INTERVAL = 0.5, 
+            TARGETTING_RADIUS = 4, --additional cell radii
+            COST = {
+                FIRE = 20,
+                ICE = 20,
+                ELECTRIC = 20,
+            },
+            TOOLTIP = "BEACON - COST: 20 FIRE, 20 ICE, 20 ELEC",
         },
     },
     MUTATION_COSTS = {
@@ -239,7 +253,7 @@ return {
         },
     },
     CURRENCY = {
-        STARTING_SCRAP = 75,
+        STARTING_SCRAP = 175,
         STARTING_FIRE = 0, 
         STARTING_ICE = 0,
         STARTING_ELECTRIC = 0,
@@ -287,7 +301,7 @@ return {
             Y = 0.88,
             WIDTH = 0.4,
             HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.0725,
+            LAYOUTROW_HEIGHT = 0.0625,
         },
         CRUCIBLE = {
             X = 0.4,

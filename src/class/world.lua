@@ -10,14 +10,7 @@ World = Class {
         self.structures = {}
         self.enemies = {}
         self.projectiles = {}
-        self.impacts = {}    init = function(self, origin, stats)
-            Impact.init(self, origin, constants.IMPACTS.FIRE.WIDTH, constants.IMPACTS.FIRE.HEIGHT)
-            self.colour = {0.8,0.5,0} -- TODO: remove and replace with proper animation/something pretty
-            self.stats = stats
-        end;
-        attack = function(self, other)
-            other:applyDebuff(Inflame(other, self.stats))
-        end;
+        self.impacts = {}
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE/4)
         self:setupTimers()
 
@@ -49,6 +42,12 @@ World = Class {
                     self:addNewTower(Lasergun(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin), orientation))
                 end
             end
+        elseif type == "BEACON" then 
+            if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.BEACON.WIDTH, constants.STRUCTURE.BEACON.HEIGHT) then
+                if playerController.wallet:canAfford(constants.STRUCTURE.BEACON.COST) then
+                    self:addNewTower(Beacon(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                end
+            end
         end
     end;
     addNewStructure = function(self, structure)
@@ -65,12 +64,14 @@ World = Class {
     end;
     addNewTower = function(self, newTower)
         self.collisionWorld:add(newTower, newTower:calculateHitbox())
+        self.collisionWorld:add(newTower.auraHitbox, newTower:calculateAuraHitbox())
         cameraController:shake(0.4, 1)
         self:addNewStructure(newTower)
     end;
     removeStructure = function(self, structure)
         assert(structure)
         if structure.type == "TOWER" then 
+            self.collisionWorld:remove(structure.auraHitbox)
             self.collisionWorld:remove(structure)
         end
         self.grid:vacateSpacesForStructure(structure)
@@ -227,12 +228,19 @@ World = Class {
             local createImpact = false
             for i = 1, len do 
                 if cols[i].other.type == "ENEMY" then
-                    if tower.archetype == "MELEE" then
+                    if tower.archetype == "MELEE" and not tower.towerType == "BEACON" then
                         tower:attack(cols[i].other, playOnHit)
                         playOnHit = false
                         tower:disarm()
                     elseif tower.archetype == "LINE" then
                         createImpact = true
+                    end
+                elseif cols[i].other.type == "AURA" then
+                    if tower.towerType == "BEACON" then
+                        if cols[i].other.owner.towerType ~= "BEACON" then
+                            tower:attack(cols[i].other.owner)
+                            tower:disarm()
+                        end
                     end
                 end
             end
@@ -288,7 +296,9 @@ World = Class {
         table.insert(self.impacts, impact)
     end;
     updateTowerHitbox = function(self, structure)
+        assert(self.collisionWorld:hasItem(structure.auraHitbox))
         assert(self.collisionWorld:hasItem(structure))
+        self.collisionWorld:update(structure.auraHitbox, structure:calculateAuraHitbox())
         self.collisionWorld:update(structure, structure:calculateHitbox())
     end;
 }

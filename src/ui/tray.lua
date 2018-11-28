@@ -9,7 +9,7 @@ Tray = Class {
                 ['window'] = {
                     ['background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['fixed background'] = assets.ui.menuLeft,
-                    ['padding'] = {x = 0, y = 24}
+                    ['padding'] = {x = 0, y = 28}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
@@ -19,8 +19,8 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
-                    ['image padding'] = {x = 4, y = 5},
-                    ['padding'] = {x = 1, y = 3}
+                    ['image padding'] = {x = 1, y = 1},
+                    ['padding'] = {x = 1.5, y = 6}
                 },
             },
             DISABLED = {
@@ -67,7 +67,7 @@ Tray = Class {
         if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) 
             if roundController:isBuildPhase() then 
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {4/10, 1/7, 1/7, 1/7, 1/7})
+                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {4.1/10, 1/9, 1/9, 1/9, 1/9, 1/9})
                 nk.spacing(1)
                 for i, blueprint in pairs(playerController.blueprints) do
                     local state = "DEFAULT"
@@ -108,7 +108,7 @@ Tray = Class {
                 if roundController:isBuildPhase() then 
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {0.03, 1/7, 1/7, 1/7, 1/7, 0.055, 1/7, 1/7})
                     nk.spacing(1)
-                    if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
+                    if playerController.currentSelectedStructure.type ~= "OBSTACLE" and playerController.currentSelectedStructure.towerType ~= "BEACON" then 
                         self:renderUpgradeButton("FIRE", " +DAMAGE OVER TIME. COST: ")
                         self:renderUpgradeButton("ICE", " +SLOWS ENEMIES. COST: ")
                         self:renderUpgradeButton("ELECTRIC", " +BASE DAMAGE. COST: ")

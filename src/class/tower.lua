@@ -8,6 +8,8 @@ Tower = Class {
         self.rotatable = false
         self.attackDamage = attackDamage
         self.attackInterval = attackInterval
+        self.auraHitbox = Hitbox(self, "AURA", self:calculateAuraHitbox())
+        self.debuffs = {}
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
@@ -21,9 +23,15 @@ Tower = Class {
     end;
     update = function(self, dt)
         Structure.update(self, dt)
+        self:updateDebuffs(dt)
     end;
-    draw = function(self, blockingPath)        
+    draw = function(self, blockingPath)       
         Structure.draw(self, blockingPath)
+
+        Util.l.resetColour()
+        for i, debuff in pairs(self.debuffs) do
+            debuff:draw(self:centre(), 1.5, 1.5)
+        end
     end;
     calculateHitbox = function(self)
         -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
@@ -32,6 +40,31 @@ Tower = Class {
         local width = (self.width + 2*(self.targettingRadius)) *constants.GRID.CELL_SIZE
         local height = (self.height + 2*(self.targettingRadius)) *constants.GRID.CELL_SIZE
         return x, y, width, height
+    end;
+    calculateAuraHitbox = function(self)
+        -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
+        local x = self.worldOrigin.x 
+        local y = self.worldOrigin.y 
+        local width = (self.width + 2 * constants.GRID.CELL_SIZE) 
+        local height = (self.height + 2 * constants.GRID.CELL_SIZE) 
+        return x, y, width, height
+    end;
+    applyDebuff = function(self, debuff)
+        assert(debuff and debuff.type)
+        if not self.debuffs[debuff.type] then
+            self.debuffs[debuff.type] = debuff
+            self.debuffs[debuff.type]:activate(self)
+        end
+    end;
+    updateDebuffs = function(self, dt)
+        for key, debuff in pairs(self.debuffs) do
+            self.debuffs[key]:update(dt)
+
+            if not self.debuffs[key].alive then
+                self.debuffs[key]:deactivate(self)
+                self.debuffs[key] = nil
+            end
+        end
     end;
 }
 
@@ -46,7 +79,7 @@ MeleeTower = Class {
     end;
     resetTimers = function(self)
         self.attackTimer = Timer.new()
-        self.attackTimer:every(self.attackInterval, function()
+        self.attackTimer:after(self.attackInterval, function()
             self:arm()
         end)
     end;
@@ -71,6 +104,7 @@ MeleeTower = Class {
     end;
     disarm = function(self)
         self.armed = false
+        self:resetTimers()
     end;
     draw = function(self, blockingPath)
         if self.isSelected then
@@ -184,7 +218,7 @@ TargetedTower = Class {
     end;
     resetTimers = function(self)
         self.attackTimer = Timer.new()
-        self.attackTimer:every(self.attackInterval, function()
+        self.attackTimer:after(self.attackInterval, function()
             self.canShoot = true
         end)
     end;
@@ -234,6 +268,7 @@ TargetedTower = Class {
 
         if self.canShoot and self.currentTarget then
             self:shoot()
+            self:resetTimers() -- Allows attack interval to be updated
             self.canShoot = false
         end
     end;
@@ -254,5 +289,16 @@ TargetedTower = Class {
             enemy.worldOrigin.x < x + width and
             enemy.worldOrigin.y > y and
             enemy.worldOrigin.y < y + height
+    end;
+}
+
+Hitbox = Class {
+    init = function(self, owner, type, x, y, width, height)
+        self.owner = owner
+        self.type = type
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
     end;
 }
