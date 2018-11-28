@@ -54,7 +54,7 @@ return {
             COST = {
                 SCRAP = 1,
             },
-            TOOLTIP = "Obstacle - Cost: 1 scrap",
+            TOOLTIP = "OBSTACLE - COST: 1 SCRAP",
         },
         SAW = {
             WIDTH = 2, --cells
@@ -65,7 +65,7 @@ return {
             COST = {
                 SCRAP = 25,
             },
-            TOOLTIP = "Saw - Cost: 25 scrap",
+            TOOLTIP = "SAW - COST: 25 SCRAP",
         },
         CANNON = {
             WIDTH = 2, --cells
@@ -77,7 +77,7 @@ return {
             COST = {
                 SCRAP = 30,
             },
-            TOOLTIP = "Cannon - Cost: 30 scrap",
+            TOOLTIP = "CANNON - COST: 30 SCRAP",
             ROTATION_TIME = 0.2
         },
         LASERGUN = {
@@ -91,24 +91,42 @@ return {
             COST = {
                 SCRAP = 35,
             },
-            TOOLTIP = "Laserbeam - Cost: 35 scrap",
+            TOOLTIP = "LASERBEAM - COST: 35 SCRAP",
         },
     },
-    MUTATIONS = {
+    MUTATION_COSTS = {
         FIRE = {
-            COST = {
+            CANNON = {
                 FIRE = 40
-            }
+            },
+            SAW = {
+                FIRE = 40
+            },
+            LASERGUN = {
+                FIRE = 40
+            },
         },
         ELECTRIC = {
-            COST = {
+            CANNON = {
+                ELECTRIC = 40
+            },
+            SAW = {
+                ELECTRIC = 40
+            },
+            LASERGUN = {
                 ELECTRIC = 40
             },
         },
         ICE = {
-            COST = {
+            CANNON = {
                 ICE = 40
-            }
+            },
+            SAW = {
+                ICE = 40
+            },
+            LASERGUN = {
+                ICE = 40
+            },
         },
     },
     IMPACTS = {

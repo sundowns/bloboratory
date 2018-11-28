@@ -109,9 +109,9 @@ Tray = Class {
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {0.03, 1/7, 1/7, 1/7, 1/7, 0.055, 1/7, 1/7})
                     nk.spacing(1)
                     if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
-                        self:renderUpgradeButton("FIRE", " +DAMAGE OVER TIME. Cost: 40 FIRE")
-                        self:renderUpgradeButton("ICE", " +SLOWS ENEMIES. Cost: 40 ICE")
-                        self:renderUpgradeButton("ELECTRIC", " +BASE DAMAGE. Cost: 40 ELEC")
+                        self:renderUpgradeButton("FIRE", " +DAMAGE OVER TIME. COST: ")
+                        self:renderUpgradeButton("ICE", " +SLOWS ENEMIES. COST: ")
+                        self:renderUpgradeButton("ELECTRIC", " +BASE DAMAGE. COST: ")
                        
                         nk.spacing(2)
                         if playerController.currentSelectedStructure.towerType == "LASERGUN" then 
@@ -154,10 +154,15 @@ Tray = Class {
             nk.stylePop()
         end
     end;
-    renderUpgradeButton = function(self, upgradeType, tooltipText)
-        self:displayTooltip(tooltipText)
+    renderUpgradeButton = function(self, upgradeType, tooltipTextPrefix)
+        local costTable = constants.MUTATION_COSTS[upgradeType][playerController.currentSelectedStructure.towerType]
+        local tooltip = tooltipTextPrefix
+        for key, cost in pairs(costTable) do
+            tooltip = tooltip .. cost .. ' ' .. key
+        end
+        self:displayTooltip(tooltip)
         local state = "DEFAULT"
-        if not playerController.currentSelectedStructure.mutable or not playerController.wallet:canAfford(constants.MUTATIONS[upgradeType].COST) then
+        if not playerController.currentSelectedStructure.mutable or not playerController.wallet:canAfford(constants.MUTATION_COSTS[upgradeType][playerController.currentSelectedStructure.towerType]) then
             state = "DISABLED"
             nk.stylePush(self.styles.DISABLED)
         end

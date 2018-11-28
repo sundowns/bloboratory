@@ -21,8 +21,8 @@ Mutation = Class {
 
 FireMutation = Class {
     __includes = Mutation,
-    init = function(self)
-        Mutation.init(self, "FIRE", constants.MUTATIONS.FIRE.COST)
+    init = function(self, cost)
+        Mutation.init(self, "FIRE", cost)
         self.areaOfEffect = true
     end;
     attack = function(self, other, dt)
@@ -36,8 +36,8 @@ FireMutation = Class {
 
 IceMutation = Class {
     __includes = Mutation,
-    init = function(self)
-        Mutation.init(self, "ICE", constants.MUTATIONS.ICE.COST)
+    init = function(self, cost)
+        Mutation.init(self, "ICE", cost)
         self.areaOfEffect = true
     end;
     attack = function(self, other, dt)
@@ -51,8 +51,8 @@ IceMutation = Class {
 
 ElectricMutation = Class {
     __includes = Mutation,
-    init = function(self, stats)
-        Mutation.init(self, "ELECTRIC", constants.MUTATIONS.ELECTRIC.COST)
+    init = function(self, cost)
+        Mutation.init(self, "ELECTRIC", cost)
         self.areaOfEffect = true
     end;
     attack = function(self, other, dt)
