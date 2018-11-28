@@ -41,6 +41,7 @@ function game:init()
 end
 
 function game:update(dt)
+    dt = math.min(dt, 0.1) -- Prevent weirdness with dragging the window. Might need to be reconsidered
     world:update(dt)
     Timer.update(dt) --the global version is used mostly for tweening/small use-cases
 
