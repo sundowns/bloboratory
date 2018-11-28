@@ -101,9 +101,11 @@ return {
             ATTACK_INTERVAL = 0.5, 
             TARGETTING_RADIUS = 4, --additional cell radii
             COST = {
-                SCRAP = 25,
+                FIRE = 20,
+                ICE = 20,
+                ELECTRIC = 20,
             },
-            TOOLTIP = "Beacon - Cost: 25 scrap",
+            TOOLTIP = "BEACON - COST: 20 FIRE, 20 ICE, 20 ELEC",
         },
     },
     MUTATION_COSTS = {
