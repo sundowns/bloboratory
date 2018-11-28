@@ -8,6 +8,7 @@ PlayerController = Class {
             ["SAW"] = StructureBlueprint("SAW", assets.blueprints.saw, 2, 2, 1, 1, {radius = constants.STRUCTURE.SAW.TARGETTING_RADIUS}, "RADIUS"),
             ["CANNON"] = StructureBlueprint("CANNON", assets.blueprints.cannon, 2, 2, 1, 1, {radius = constants.STRUCTURE.CANNON.TARGETTING_RADIUS}, "RADIUS"),
             ["LASERGUN"] = StructureBlueprint("LASERGUN", assets.blueprints.lasergun, 2, 2, 1, 1, {length = constants.STRUCTURE.LASERGUN.LINE_LENGTH, width = constants.STRUCTURE.LASERGUN.LINE_WIDTH}, "LINE"),
+            ["BOUNCER"] = StructureBlueprint("BOUNCER", assets.blueprints.saw, 2, 2, 1, 1, {radius = constants.STRUCTURE.BEACON.TARGETTING_RADIUS}, "RADIUS"),
             ["BEACON"] = StructureBlueprint("BEACON", assets.blueprints.saw, 2, 2, 1, 1, {radius = constants.STRUCTURE.BEACON.TARGETTING_RADIUS}, "RADIUS"),
         }
         self.blueprints = {}
@@ -15,6 +16,7 @@ PlayerController = Class {
         self:addNewStructureBlueprint("SAW") -- TODO: will be unlocked, not a default value
         self:addNewStructureBlueprint("CANNON")  -- TODO: will be unlocked, not a default value
         self:addNewStructureBlueprint("LASERGUN") -- TODO: will be unlocked, not a default value
+        self:addNewStructureBlueprint("BOUNCER") -- TODO: will be unlocked, not a default value
         self:addNewStructureBlueprint("BEACON") -- TODO: will be unlocked, not a default value
 
         self.livesRemaining = constants.MISC.STARTING_LIVES

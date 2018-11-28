@@ -149,7 +149,6 @@ LineTower = Class {
     end;
     addMutation = function(self, mutation, animation)
         Tower.addMutation(self, mutation, animation)
-        -- animationController:updateInstanceRotation(self.animation, self.orientation)
     end;
     arm = function(self)
         self.armed = true
@@ -289,16 +288,5 @@ TargetedTower = Class {
             enemy.worldOrigin.x < x + width and
             enemy.worldOrigin.y > y and
             enemy.worldOrigin.y < y + height
-    end;
-}
-
-Hitbox = Class {
-    init = function(self, owner, type, x, y, width, height)
-        self.owner = owner
-        self.type = type
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
     end;
 }
