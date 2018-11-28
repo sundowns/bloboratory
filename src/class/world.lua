@@ -10,14 +10,7 @@ World = Class {
         self.structures = {}
         self.enemies = {}
         self.projectiles = {}
-        self.impacts = {}    init = function(self, origin, stats)
-            Impact.init(self, origin, constants.IMPACTS.FIRE.WIDTH, constants.IMPACTS.FIRE.HEIGHT)
-            self.colour = {0.8,0.5,0} -- TODO: remove and replace with proper animation/something pretty
-            self.stats = stats
-        end;
-        attack = function(self, other)
-            other:applyDebuff(Inflame(other, self.stats))
-        end;
+        self.impacts = {}
         self.collisionWorld = bump.newWorld(constants.GRID.CELL_SIZE/4)
         self:setupTimers()
 
@@ -105,7 +98,6 @@ World = Class {
         for i, structure in pairs(self.structures) do
             structure:update(dt)
             self:processCollisionForTower(structure)
-            self:processCollisionForAura(structure)
         end
 
         for i = #self.projectiles, 1, -1 do
@@ -236,12 +228,19 @@ World = Class {
             local createImpact = false
             for i = 1, len do 
                 if cols[i].other.type == "ENEMY" then
-                    if tower.archetype == "MELEE" then
+                    if tower.archetype == "MELEE" and not tower.towerType == "BEACON" then
                         tower:attack(cols[i].other, playOnHit)
                         playOnHit = false
                         tower:disarm()
                     elseif tower.archetype == "LINE" then
                         createImpact = true
+                    end
+                elseif cols[i].other.type == "AURA" then
+                    if tower.towerType == "BEACON" then
+                        if cols[i].other.owner.towerType ~= "BEACON" then
+                            tower:attack(cols[i].other.owner)
+                            tower:disarm()
+                        end
                     end
                 end
             end
@@ -251,19 +250,6 @@ World = Class {
                     self:addImpact(tower:fireLaser())
                 end
                 tower:disarm()
-            end
-        end
-    end;
-    processCollisionForAura = function(self, tower)
-        if tower.type == "TOWER" and tower.archetype ~= "AURA" then 
-            local actualX, actualY, cols, len = self.collisionWorld:check(tower.auraHitbox, x, y, function() return "cross" end)
-            for i = 1, len do 
-                if cols[i].other.archetype == "AURA" then
-                    if cols[i].other.armed then 
-                        cols[i].other:attack(tower)
-                        cols[i].other:disarm()
-                    end
-                end
             end
         end
     end;

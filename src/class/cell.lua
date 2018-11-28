@@ -34,10 +34,6 @@ Cell = Class {
             animationController:drawStructureSpriteInstance(world.spawnAnimation, self.worldOrigin, 1, 1) 
         end
 
-        -- if debug then
-        --     love.graphics.setColor(constants.COLOURS.DEBUG_PRINT)
-        --     love.graphics.print(self.distanceToGoal, self.gridOrigin.x*constants.GRID.CELL_SIZE, self.gridOrigin.y*constants.GRID.CELL_SIZE)
-        -- end
     end;
     occupy = function(self, occupant)
         if not self.isGoal and not self.isSpawn then

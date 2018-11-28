@@ -108,7 +108,7 @@ Tray = Class {
                 if roundController:isBuildPhase() then 
                     nk.layoutRow('dynamic', (constants.UI.SELECTED.LAYOUTROW_HEIGHT*windowHeight), {0.03, 1/7, 1/7, 1/7, 1/7, 0.055, 1/7, 1/7})
                     nk.spacing(1)
-                    if playerController.currentSelectedStructure.type ~= "OBSTACLE" then 
+                    if playerController.currentSelectedStructure.type ~= "OBSTACLE" and playerController.currentSelectedStructure.towerType ~= "BEACON" then 
                         self:renderUpgradeButton("FIRE", " +DAMAGE OVER TIME. COST: ")
                         self:renderUpgradeButton("ICE", " +SLOWS ENEMIES. COST: ")
                         self:renderUpgradeButton("ELECTRIC", " +BASE DAMAGE. COST: ")

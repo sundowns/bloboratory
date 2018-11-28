@@ -19,30 +19,15 @@ local FIRE_PARTICLE_QUADS = {
 }
 
 Debuff = Class {
-    init = function(self, type, owner, debuffDuration, tickDuration, particleQuads)
+    init = function(self, type, owner, debuffDuration, tickDuration)
         self.type = type
         self.duration = debuffDuration
         self.tickDuration = tickDuration
         self.timer = Timer.new()
         self.alive = true
         self.owner = owner
-        if particleQuads then
-            self:initialiseParticleSystem(assets.particles.mutators, constants.DEBUFF.MAX_PARTICLES, particleQuads)
-        end
+        self.particleOpacity = 1
         self:apply()
-    end;
-    initialiseParticleSystem = function(self, particle, maxParticles, quads)
-        self.particleSystem = love.graphics.newParticleSystem(particle, maxParticles)
-        if quads then
-            self.particleSystem:setQuads(quads)
-        end
-        self.particleSystem:setEmissionRate(6)
-        self.particleSystem:setEmissionArea('normal', 5, 3)
-        self.particleSystem:setLinearAcceleration(-4, -4, 4, 2)
-        self.particleSystem:setSizes(0.5, 1, 0.3)
-        self.particleSystem:setRotation(0, math.pi/2)
-        self.particleSystem:setParticleLifetime(0.5, 2)
-        self.particleSystem:emit(3)
     end;
     update = function(self, dt)
         self.timer:update(dt) 
@@ -62,9 +47,10 @@ Debuff = Class {
             self.alive = false
         end)
     end;
-    draw = function(self, position)
+    draw = function(self, position, scale_x, scale_y)
         if self.particleSystem then
-            love.graphics.draw(self.particleSystem, position.x, position.y)
+            love.graphics.setColor(1,1,1, self.particleOpacity)
+            love.graphics.draw(self.particleSystem, position.x, position.y, 0, scale_x, scale_y)
         end
     end;
     activate = function(self)
@@ -76,8 +62,22 @@ Debuff = Class {
 Inflame = Class {
     __includes = Debuff,
     init = function(self, owner, stats)
-        Debuff.init(self, "INFLAME", owner, stats.DURATION, stats.TICK_DURATION, FIRE_PARTICLE_QUADS)
+        Debuff.init(self, "INFLAME", owner, stats.DURATION, stats.TICK_DURATION)
         self.damagePerTick = stats.DAMAGE_PER_TICK
+        self:initialiseParticleSystem(assets.particles.mutators, constants.DEBUFF.MAX_PARTICLES, FIRE_PARTICLE_QUADS)
+    end;
+    initialiseParticleSystem = function(self, particle, maxParticles, quads)
+        self.particleSystem = love.graphics.newParticleSystem(particle, maxParticles)
+        if quads then
+            self.particleSystem:setQuads(quads)
+        end
+        self.particleSystem:setEmissionRate(6)
+        self.particleSystem:setEmissionArea('normal', 5, 3)
+        self.particleSystem:setLinearAcceleration(-4, -4, 4, 2)
+        self.particleSystem:setSizes(0.5, 1, 0.3)
+        self.particleSystem:setRotation(0, math.pi/2)
+        self.particleSystem:setParticleLifetime(0.5, 2)
+        self.particleSystem:emit(3)
     end;
     update = function(self, dt)
         Debuff.update(self, dt)
@@ -99,8 +99,22 @@ Inflame = Class {
 Freeze = Class {
     __includes = Debuff,
     init = function(self, owner, stats)
-        Debuff.init(self, "FREEZE", owner, stats.DURATION, stats.TICK_DURATION, ICE_PARTICLE_QUADS)
+        Debuff.init(self, "FREEZE", owner, stats.DURATION, stats.TICK_DURATION)
         self.speedModifier = stats.SPEED_MODIFIER
+        self:initialiseParticleSystem(assets.particles.mutators, constants.DEBUFF.MAX_PARTICLES, ICE_PARTICLE_QUADS)
+    end;
+    initialiseParticleSystem = function(self, particle, maxParticles, quads)
+        self.particleSystem = love.graphics.newParticleSystem(particle, maxParticles)
+        if quads then
+            self.particleSystem:setQuads(quads)
+        end
+        self.particleSystem:setEmissionRate(6)
+        self.particleSystem:setEmissionArea('normal', 5, 3)
+        self.particleSystem:setLinearAcceleration(-4, -4, 4, 2)
+        self.particleSystem:setSizes(0.5, 1, 0.3)
+        self.particleSystem:setRotation(0, math.pi/2)
+        self.particleSystem:setParticleLifetime(0.5, 2)
+        self.particleSystem:emit(3)
     end;
     update = function(self, dt)
         Debuff.update(self, dt)
@@ -129,7 +143,21 @@ Freeze = Class {
 Electrify = Class {
     __includes = Debuff,
     init = function(self, owner, stats)
-        Debuff.init(self, "ELECTRIFY", owner, stats.DURATION, stats.TICK_DURATION, ELECTRIC_PARTICLE_QUADS)
+        Debuff.init(self, "ELECTRIFY", owner, stats.DURATION, stats.TICK_DURATION)
+        self:initialiseParticleSystem(assets.particles.mutators, constants.DEBUFF.MAX_PARTICLES, ELECTRIC_PARTICLE_QUADS)
+    end;
+    initialiseParticleSystem = function(self, particle, maxParticles, quads)
+        self.particleSystem = love.graphics.newParticleSystem(particle, maxParticles)
+        if quads then
+            self.particleSystem:setQuads(quads)
+        end
+        self.particleSystem:setEmissionRate(6)
+        self.particleSystem:setEmissionArea('normal', 5, 3)
+        self.particleSystem:setLinearAcceleration(-4, -4, 4, 2)
+        self.particleSystem:setSizes(0.5, 1, 0.3)
+        self.particleSystem:setRotation(0, math.pi/2)
+        self.particleSystem:setParticleLifetime(0.5, 2)
+        self.particleSystem:emit(3)
     end;
     update = function(self, dt)
         Debuff.update(self, dt)
@@ -150,8 +178,23 @@ Electrify = Class {
 Speedy = Class {
     __includes = Debuff,
     init = function(self, owner, stats)
-        Debuff.init(self, "SPEEDY", owner, stats.DURATION, stats.TICK_DURATION, ELECTRIC_PARTICLE_QUADS)
+        Debuff.init(self, "SPEEDY", owner, stats.DURATION, stats.TICK_DURATION)
         self.speedModifier = stats.SPEED_MODIFIER
+        self:initialiseParticleSystem(assets.particles.mutators, constants.DEBUFF.MAX_PARTICLES, ELECTRIC_PARTICLE_QUADS)
+        self.particleOpacity = 0.4
+    end;
+    initialiseParticleSystem = function(self, particle, maxParticles, quads)
+        self.particleSystem = love.graphics.newParticleSystem(particle, maxParticles)
+        if quads then
+            self.particleSystem:setQuads(quads)
+        end
+        self.particleSystem:setEmissionArea('uniform', 12, 12, 0, true)
+        self.particleSystem:setLinearAcceleration(-4, -4, 4, 4)
+        self.particleSystem:setSizes(0.5, 1, 0.3)
+        self.particleSystem:setParticleLifetime(0.5, 2)
+        self.particleSystem:setEmissionRate(10)
+        self.particleSystem:emit(3)
+        self.particleSystem:setSpread(math.rad(360))
     end;
     update = function(self, dt)
         Debuff.update(self, dt)

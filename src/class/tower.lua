@@ -8,7 +8,7 @@ Tower = Class {
         self.rotatable = false
         self.attackDamage = attackDamage
         self.attackInterval = attackInterval
-        self.auraHitbox = Hitbox("AURA", self:calculateAuraHitbox())
+        self.auraHitbox = Hitbox(self, "AURA", self:calculateAuraHitbox())
         self.debuffs = {}
     end;
     addMutation = function(self, mutation, animation)
@@ -27,6 +27,11 @@ Tower = Class {
     end;
     draw = function(self, blockingPath)       
         Structure.draw(self, blockingPath)
+
+        Util.l.resetColour()
+        for i, debuff in pairs(self.debuffs) do
+            debuff:draw(self:centre(), 1.5, 1.5)
+        end
     end;
     calculateHitbox = function(self)
         -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
@@ -74,7 +79,7 @@ MeleeTower = Class {
     end;
     resetTimers = function(self)
         self.attackTimer = Timer.new()
-        self.attackTimer:every(self.attackInterval, function()
+        self.attackTimer:after(self.attackInterval, function()
             self:arm()
         end)
     end;
@@ -99,6 +104,7 @@ MeleeTower = Class {
     end;
     disarm = function(self)
         self.armed = false
+        self:resetTimers()
     end;
     draw = function(self, blockingPath)
         if self.isSelected then
@@ -286,19 +292,9 @@ TargetedTower = Class {
     end;
 }
 
-AuraTower = Class {
-    __includes = MeleeTower,
-    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, attackRange)
-        MeleeTower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, attackRange)
-        self.archetype = "AURA"
-    end;
-    attack = function(self, other)
-        other:applyDebuff(Speedy(other, {DURATION = 1, TICK_DURATION = 0.1, SPEED_MODIFIER = 0.71}))
-    end;
-}
-
 Hitbox = Class {
-    init = function(self, type, x, y, width, height)
+    init = function(self, owner, type, x, y, width, height)
+        self.owner = owner
         self.type = type
         self.x = x
         self.y = y
