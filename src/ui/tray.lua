@@ -67,7 +67,7 @@ Tray = Class {
         if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) 
             if roundController:isBuildPhase() then 
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {4/10, 1/7, 1/7, 1/7, 1/7})
+                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {4/10, 1/9, 1/9, 1/9, 1/9, 1/9})
                 nk.spacing(1)
                 for i, blueprint in pairs(playerController.blueprints) do
                     local state = "DEFAULT"

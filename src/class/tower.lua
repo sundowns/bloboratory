@@ -267,6 +267,22 @@ TargetedTower = Class {
     end;
 }
 
+AuraTower = Class {
+    __includes = MeleeTower,
+    init = function(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, attackRange)
+        MeleeTower.init(self, animation, gridOrigin, worldOrigin, width, height, cost, attackDamage, attackInterval, attackRange)
+        self.archetype = "AURA"
+    end;
+    attack = function(self, other)
+        print(self.archetype.." attacked "..other.archetype)
+        --other:takeDamage(self.attackDamage, playOnHit, 1)
+
+        --if self.mutation then
+        --    self.mutation:attack(other, 1)
+        --end
+    end;
+}
+
 Hitbox = Class {
     init = function(self, type, x, y, width, height)
         self.type = type

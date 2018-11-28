@@ -49,6 +49,12 @@ World = Class {
                     self:addNewTower(Lasergun(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin), orientation))
                 end
             end
+        elseif type == "BEACON" then 
+            if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.BEACON.WIDTH, constants.STRUCTURE.BEACON.HEIGHT) then
+                if playerController.wallet:canAfford(constants.STRUCTURE.BEACON.COST) then
+                    self:addNewTower(Beacon(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                end
+            end
         end
     end;
     addNewStructure = function(self, structure)
@@ -99,6 +105,7 @@ World = Class {
         for i, structure in pairs(self.structures) do
             structure:update(dt)
             self:processCollisionForTower(structure)
+            self:processCollisionForAura(structure)
         end
 
         for i = #self.projectiles, 1, -1 do
@@ -246,6 +253,17 @@ World = Class {
                 tower:disarm()
             end
         end
+    end;
+    processCollisionForAura = function(self, tower)
+        --if tower.armed then 
+            local actualX, actualY, cols, len = self.collisionWorld:check(tower.auraHitbox, x, y, function() return "cross" end)
+            for i = 1, len do 
+                if cols[i].other.type == "AURA" then
+                    cols[i].other:attack(tower)
+                    tower:disarm()
+                end
+            end
+        --end
     end;
     processCollisionForProjectile = function(self, projectile, dt)
         local actualX, actualY, cols, len = self.collisionWorld:move(projectile, projectile.worldOrigin.x - projectile.width/2, projectile.worldOrigin.y - projectile.height/2, function() return "cross" end)

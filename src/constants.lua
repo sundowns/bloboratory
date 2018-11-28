@@ -93,6 +93,17 @@ return {
             },
             TOOLTIP = "LASERBEAM - COST: 35 SCRAP",
         },
+        BEACON = {
+            WIDTH = 2, --cells
+            HEIGHT = 2, --cells
+            ATTACK_DAMAGE = 0.8, --damage per tick
+            ATTACK_INTERVAL = 0.25, 
+            TARGETTING_RADIUS = 5, --additional cell radii
+            COST = {
+                SCRAP = 25,
+            },
+            TOOLTIP = "AURA - Cost: 25 scrap",
+        },
     },
     MUTATION_COSTS = {
         FIRE = {
