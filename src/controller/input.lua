@@ -52,6 +52,7 @@ InputController = Class {
             world:placeStructure(gridOrigin, playerController.currentBlueprint.name, playerController.currentBlueprintOrientation)
             if not love.keyboard.isDown('lshift', 'rshift') or not playerController.wallet:canAfford(playerController.currentBlueprint.cost) then
                 self:togglePlacingTower()
+                playerController.currentBlueprint = nil
             end
         else
             playerController:toggleStructureSelection(world:getStructureAt(gridOrigin)) 

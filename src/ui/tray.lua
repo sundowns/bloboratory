@@ -30,6 +30,13 @@ Tray = Class {
                     ['active'] = assets.ui.buttonDisabled,
                 }
             },
+            ACTIVE = {
+                ['button'] = {
+                    ['normal'] = assets.ui.buttonHovered,
+                    ['hover'] = assets.ui.buttonHovered,
+                    ['active'] = assets.ui.buttonHovered,
+                }
+            },
             SELECT_MENU = {
                 ['text'] = {
                     ['color'] = constants.COLOURS.UI.BLACK, 
@@ -63,11 +70,16 @@ Tray = Class {
                 nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {4/10, 1/7, 1/7, 1/7, 1/7})
                 nk.spacing(1)
                 for i, blueprint in pairs(playerController.blueprints) do
-                    local state = "ACTIVE"
-                    if not playerController.wallet:canAfford(blueprint.cost) then
+                    local state = "DEFAULT"
+
+                    if playerController.currentBlueprint and playerController.currentBlueprint.name == blueprint.name then
+                        state = "ACTIVE"
+                        nk.stylePush(self.styles.ACTIVE)
+                    elseif not playerController.wallet:canAfford(blueprint.cost) then
                         state = "DISABLED"
                         nk.stylePush(self.styles.DISABLED)
                     end
+                    
                     self:displayTooltip(blueprint.costToolTip)
                     if nk.button('', blueprint.uiImages[state]) then 
                         if playerController:setCurrentBlueprint(i) then
@@ -75,7 +87,7 @@ Tray = Class {
                         end
                     end
 
-                    if not playerController.wallet:canAfford(blueprint.cost) then
+                    if not playerController.wallet:canAfford(blueprint.cost) or playerController.currentBlueprint and playerController.currentBlueprint.name == blueprint.name then
                         nk.stylePop()
                     end
                 end
@@ -104,7 +116,7 @@ Tray = Class {
                         nk.spacing(2)
                         if playerController.currentSelectedStructure.towerType == "LASERGUN" then 
                             self:displayTooltip(" Rotate")
-                            if nk.button('', self.hotkeyedImages.ROTATE.ACTIVE) then
+                            if nk.button('', self.hotkeyedImages.ROTATE.DEFAULT) then
                                 playerController:rotateCurrentStructure()
                             end
                         else
@@ -114,7 +126,7 @@ Tray = Class {
                         nk.spacing(6)
                     end
                     self:displayTooltip(" Refund")
-                    if nk.button('', self.hotkeyedImages.REFUND.ACTIVE) then 
+                    if nk.button('', self.hotkeyedImages.REFUND.DEFAULT) then 
                         audioController:playAny("BUTTON_PRESS")
                         playerController:refundCurrentStructure()
                     end

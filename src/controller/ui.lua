@@ -26,16 +26,16 @@ UiController = Class {
     end;
     constructHotkeyedImages = function(self, image, key)
         local w, h = image:getWidth(), image:getHeight()
-        local activeCanvas = love.graphics.newCanvas(512,512)
-        activeCanvas:renderTo(function()
-            love.graphics.draw(image, 0, 0, 0, activeCanvas:getWidth()/w, activeCanvas:getHeight()/h)
+        local defaultCanvas = love.graphics.newCanvas(512,512)
+        defaultCanvas:renderTo(function()
+            love.graphics.draw(image, 0, 0, 0, defaultCanvas:getWidth()/w, defaultCanvas:getHeight()/h)
             love.graphics.setColor(0,0,0,0.75)
-            love.graphics.rectangle('fill', activeCanvas:getWidth()/2, activeCanvas:getHeight()/2, activeCanvas:getWidth()/2, activeCanvas:getHeight()/2)
+            love.graphics.rectangle('fill', defaultCanvas:getWidth()/2, defaultCanvas:getHeight()/2, defaultCanvas:getWidth()/2, defaultCanvas:getHeight()/2)
             Util.l.resetColour()
             local text = love.graphics.newText(assets.ui.planerRegular(56), { {0.2,1,0}, key})
-            love.graphics.draw(text, activeCanvas:getWidth()*3/4 - text:getWidth()*2, activeCanvas:getHeight()/2 - 10, 0, 4, 4)
+            love.graphics.draw(text, defaultCanvas:getWidth()*3/4 - text:getWidth()*2, defaultCanvas:getHeight()/2 - 10, 0, 4, 4)
         end)
-        local activeImage = love.graphics.newImage(activeCanvas:newImageData())
+        local defaultImage = love.graphics.newImage(defaultCanvas:newImageData())
 
         local disabledCanvas = love.graphics.newCanvas(512,512)
         disabledCanvas:renderTo(function() 
@@ -43,10 +43,17 @@ UiController = Class {
             love.graphics.draw(image, 0, 0, 0, disabledCanvas:getWidth()/w, disabledCanvas:getHeight()/h)
             Util.l.resetColour()
         end)
-
-        Util.l.resetColour()
         local disabledImage = love.graphics.newImage(disabledCanvas:newImageData())
-        return {ACTIVE = activeImage, DISABLED = disabledImage}
+
+
+        local activeCanvas = love.graphics.newCanvas(512,512)
+        activeCanvas:renderTo(function() 
+            love.graphics.setColor(constants.COLOURS.BLUEPRINT_VALID)
+            love.graphics.draw(image, 0, 0, 0, activeCanvas:getWidth()/w, activeCanvas:getHeight()/h)
+            Util.l.resetColour()
+        end)
+        local activeImage = love.graphics.newImage(activeCanvas:newImageData())
+        return {DEFAULT = defaultImage, DISABLED = disabledImage, ACTIVE = activeImage}
     end;
     update = function(self, dt)
         local windowWidth = love.graphics.getWidth()
