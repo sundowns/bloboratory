@@ -16,8 +16,8 @@ return {
                 y = 1,
                 offset_x = 0,
                 offset_y = 0,
-                scale_x = 0.025,
-                scale_y = 0.025,
+                scale_x = 1,
+                scale_y = 1,
                 rotation = 0
             }
         }

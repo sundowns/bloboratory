@@ -83,10 +83,10 @@ AnimationController = Class {
             layer.animation:draw(instance.sprite.image, position.x, position.y, targettingAngle, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
         end
     end;
-    drawImpactSpriteInstance = function(self, instance, position, cellsWidth, cellsHeight)
+    drawImpactSpriteInstance = function(self, instance, position, pixelWidth, pixelHeight)
         for i, layer in pairs(instance.animations) do
             local w, h = layer.animation:getDimensions()
-            layer.animation:draw(instance.sprite.image, position.x, position.y, 0, cellsWidth*layer.scale.x, cellsHeight*layer.scale.y, w/2, h/2)
+            layer.animation:draw(instance.sprite.image, position.x, position.y, 0, pixelWidth/w*layer.scale.x, pixelHeight/h*layer.scale.y, w/2, h/2)
         end
     end;
     drawEnemySpriteInstance = function(self, instance, position, orientation)

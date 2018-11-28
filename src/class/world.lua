@@ -111,7 +111,7 @@ World = Class {
 
         for i = #self.impacts, 1, -1 do
             self.impacts[i]:update(dt)
-            if self.impacts[i].colldes and self.impacts[i].active then
+            if self.impacts[i].collides and self.impacts[i].active then
                 self:processCollisionForImpact(self.impacts[i], dt)
                 self.collisionWorld:remove(self.impacts[i])
                 self.impacts[i]:deactivate()
