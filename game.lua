@@ -41,7 +41,7 @@ function game:init()
 end
 
 function game:update(dt)
-    dt = math.min(dt, 0.1) -- Prevent weirdness with dragging the window. Might need to be reconsidered
+    dt = math.min(dt, 0.125) -- Prevent weirdness with dragging the window. Might need to be reconsidered
     world:update(dt)
     Timer.update(dt) --the global version is used mostly for tweening/small use-cases
 
@@ -66,18 +66,19 @@ function game:draw()
     helpController:draw()
 
     if debug then
+        love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, love.graphics.getHeight()*0.3)
         inputController:draw()
         Util.l.resetColour()
-        Util.l.renderStats()
+        Util.l.renderStats(10, 80)
     end
 end
 
 function game:keypressed(key, scancode, isrepeat)
-    -- if key == "f1" then
-    --     debug = not debug
-    -- elseif key == "f5" then
-    --     love.event.quit("restart")
-    -- end
+    if key == "f1" then
+        debug = not debug
+    elseif key == "f5" then
+        love.event.quit("restart")
+    end
 
     inputController:keypressed(key)
     nk.keypressed(key, scancode, isrepeat)
