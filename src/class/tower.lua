@@ -212,7 +212,7 @@ TargetedTower = Class {
     end;
     resetTimers = function(self)
         self.attackTimer = Timer.new()
-        self.attackTimer:every(self.attackInterval, function()
+        self.attackTimer:after(self.attackInterval, function()
             self.canShoot = true
         end)
     end;
@@ -262,6 +262,7 @@ TargetedTower = Class {
 
         if self.canShoot and self.currentTarget then
             self:shoot()
+            self:resetTimers() -- Allows attack interval to be updated
             self.canShoot = false
         end
     end;
@@ -292,7 +293,7 @@ AuraTower = Class {
         self.archetype = "AURA"
     end;
     attack = function(self, other)
-        other:applyDebuff(Speedy(other, {DURATION = 1.4, TICK_DURATION = 0.7, SPEED_MODIFIER = 0.7}))
+        other:applyDebuff(Speedy(other, {DURATION = 1, TICK_DURATION = 0.71, SPEED_MODIFIER = 0.8}))
     end;
 }
 

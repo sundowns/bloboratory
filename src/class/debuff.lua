@@ -166,7 +166,6 @@ Speedy = Class {
 
         if self.owner then
             self.owner.attackInterval = self.owner.attackInterval * self.speedModifier
-            self.owner:resetTimers()
         end
     end;
     deactivate = function(self)
