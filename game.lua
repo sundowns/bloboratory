@@ -41,7 +41,7 @@ function game:init()
 end
 
 function game:update(dt)
-    dt = math.min(dt, 0.125) -- Prevent weirdness with dragging the window. Might need to be reconsidered
+    dt = math.min(dt, 0.1) -- Prevent weirdness with dragging the window. Might need to be reconsidered
     if roundController:isEnemyPhase() then
         dt = dt * playerController.timeDilation
     end

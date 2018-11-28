@@ -26,7 +26,6 @@ PlayerController = Class {
         self.SPEED_MULTIPLIERS = {
             NORMAL = 1,
             FAST = 2,
-            FASTER = 3
         }
         self.timeDilation = self.SPEED_MULTIPLIERS.NORMAL
     end;
@@ -42,7 +41,6 @@ PlayerController = Class {
         if not self:currentDilationIs(speedKey) then
             self.timeDilation = self.SPEED_MULTIPLIERS[speedKey]
             audioController:playAny("BUTTON_PRESS")
-            print(self.timeDilation)
         end
     end;
     addNewStructureBlueprint = function(self, blueprintKey)

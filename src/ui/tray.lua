@@ -156,7 +156,7 @@ Tray = Class {
     end;
     renderUpgradeButton = function(self, upgradeType, tooltipText)
         self:displayTooltip(tooltipText)
-        local state = "ACTIVE"
+        local state = "DEFAULT"
         if not playerController.currentSelectedStructure.mutable or not playerController.wallet:canAfford(constants.MUTATIONS[upgradeType].COST) then
             state = "DISABLED"
             nk.stylePush(self.styles.DISABLED)
