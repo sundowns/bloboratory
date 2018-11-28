@@ -12,6 +12,7 @@ ConfigController = Class {
             seenLargeTutorialTwo = false,
             seenHarderTutorial = false,
             seenBossTutorial = false,
+            seenBeaconTutorial = false,
         }
     end;
     updateSetting = function(self, key, value)

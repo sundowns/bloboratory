@@ -227,6 +227,14 @@ RoundController = Class {
                     end)
                 end
             end
+
+            if self.roundIndex == 7 and not configController.settings.seenBeaconTutorial then
+                Timer.after(1, function()
+                    helpController:addText('Beacons can speed up the damage output of any nearby towers.', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenBeaconTutorial', true)
+                end)
+            end
+
             if self.roundIndex == 11 then 
                 for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
                     if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then --TODO: an 'unlockedOnRoundX' variable instead
