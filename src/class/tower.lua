@@ -8,6 +8,8 @@ Tower = Class {
         self.rotatable = false
         self.attackDamage = attackDamage
         self.attackInterval = attackInterval
+        --self.rangedHitbox = Hitbox("TOWER", self:calculateHitbox())
+        self.auraHitbox = Hitbox("AURA", self:calculateAuraHitbox())
     end;
     addMutation = function(self, mutation, animation)
         if not self.mutation then
@@ -31,6 +33,14 @@ Tower = Class {
         local y = self.worldOrigin.y - self.targettingRadius * constants.GRID.CELL_SIZE
         local width = (self.width + 2*(self.targettingRadius)) *constants.GRID.CELL_SIZE
         local height = (self.height + 2*(self.targettingRadius)) *constants.GRID.CELL_SIZE
+        return x, y, width, height
+    end;
+    calculateAuraHitbox = function(self)
+        -- calculate a rectangle for the hitbox, where x, y are the origin (top-left).
+        local x = self.worldOrigin.x * constants.GRID.CELL_SIZE
+        local y = self.worldOrigin.y * constants.GRID.CELL_SIZE
+        local width = self.width * constants.GRID.CELL_SIZE
+        local height = self.height * constants.GRID.CELL_SIZE
         return x, y, width, height
     end;
 }
@@ -254,5 +264,15 @@ TargetedTower = Class {
             enemy.worldOrigin.x < x + width and
             enemy.worldOrigin.y > y and
             enemy.worldOrigin.y < y + height
+    end;
+}
+
+Hitbox = Class {
+    init = function(self, type, x, y, width, height)
+        self.type = type
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
     end;
 }

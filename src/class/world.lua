@@ -65,12 +65,14 @@ World = Class {
     end;
     addNewTower = function(self, newTower)
         self.collisionWorld:add(newTower, newTower:calculateHitbox())
+        self.collisionWorld:add(newTower.auraHitbox, newTower:calculateAuraHitbox())
         cameraController:shake(0.4, 1)
         self:addNewStructure(newTower)
     end;
     removeStructure = function(self, structure)
         assert(structure)
         if structure.type == "TOWER" then 
+            self.collisionWorld:remove(structure.auraHitbox)
             self.collisionWorld:remove(structure)
         end
         self.grid:vacateSpacesForStructure(structure)
@@ -288,7 +290,9 @@ World = Class {
         table.insert(self.impacts, impact)
     end;
     updateTowerHitbox = function(self, structure)
+        assert(self.collisionWorld:hasItem(structure.auraHitbox))
         assert(self.collisionWorld:hasItem(structure))
+        self.collisionWorld:update(structure.auraHitbox, structure:calculateAuraHitbox())
         self.collisionWorld:update(structure, structure:calculateHitbox())
     end;
 }
