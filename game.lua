@@ -42,6 +42,9 @@ end
 
 function game:update(dt)
     dt = math.min(dt, 0.125) -- Prevent weirdness with dragging the window. Might need to be reconsidered
+    if roundController:isEnemyPhase() then
+        dt = dt * playerController.timeDilation
+    end
     world:update(dt)
     Timer.update(dt) --the global version is used mostly for tweening/small use-cases
 
@@ -76,8 +79,6 @@ end
 function game:keypressed(key, scancode, isrepeat)
     if key == "f1" then
         debug = not debug
-    elseif key == "f5" then
-        love.event.quit("restart")
     end
 
     inputController:keypressed(key)

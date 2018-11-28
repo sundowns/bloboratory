@@ -23,9 +23,27 @@ PlayerController = Class {
         self.hasWon = false
         self.hasLost = false
         self.lastPlacedStructure = nil
+        self.SPEED_MULTIPLIERS = {
+            NORMAL = 1,
+            FAST = 2,
+            FASTER = 3
+        }
+        self.timeDilation = self.SPEED_MULTIPLIERS.NORMAL
     end;
     update = function(self, dt)
         self.wallet:update(dt)
+    end;
+    currentDilationIs = function(self, speedKey)
+        assert(self.SPEED_MULTIPLIERS[speedKey])
+        return self.timeDilation == self.SPEED_MULTIPLIERS[speedKey]
+    end;
+    setTimeDilation = function(self, speedKey)
+        assert(self.SPEED_MULTIPLIERS[speedKey])
+        if not self:currentDilationIs(speedKey) then
+            self.timeDilation = self.SPEED_MULTIPLIERS[speedKey]
+            audioController:playAny("BUTTON_PRESS")
+            print(self.timeDilation)
+        end
     end;
     addNewStructureBlueprint = function(self, blueprintKey)
         assert(self.STRUCTURE_BLUEPRINTS[blueprintKey], "Tried to add non-existing structure blueprint: "..blueprintKey)

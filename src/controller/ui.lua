@@ -13,8 +13,8 @@ UiController = Class {
         })
         self.picker = Picker()
         self.font = assets.ui.neuropoliticalRg(12)
-        self.victoryText = love.graphics.newText(assets.ui.neuropoliticalRg(48), {{0,1,0}, "V I C T O R Y"})
-        self.defeatText = love.graphics.newText(assets.ui.neuropoliticalRg(48), {{1,0,0}, "D E F E A T"})
+        self.victoryText = love.graphics.newText(assets.ui.neuropoliticalRg(60), {{0,1,0}, "V I C T O R Y"})
+        self.defeatText = love.graphics.newText(assets.ui.neuropoliticalRg(60), {{1,0,0}, "D E F E A T"})
     end;
     triggerResize = function(self)
         self.resizeTriggered = true
@@ -80,7 +80,6 @@ UiController = Class {
         nk.draw()
         Util.l.resetColour()
         self.overhead:draw()
-
 
         if playerController.hasWon then
             love.graphics.draw(self.victoryText, love.graphics.getWidth()/2 - self.victoryText:getWidth()/2, love.graphics.getHeight()/2)
