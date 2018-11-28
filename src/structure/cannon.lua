@@ -26,7 +26,7 @@ Cannon = Class {
     end;
     addMutation = function(self, mutation)
         assert(mutation and mutation.id)
-        MeleeTower.addMutation(self, mutation, animationController:createInstance(self.towerType..'-'..mutation.id))
+        TargetedTower.addMutation(self, mutation, animationController:createInstance(self.towerType..'-'..mutation.id))
     end;
 }
 
@@ -52,6 +52,7 @@ Cannonball = Class {
     --hitTarget can optionally return an 'Impact', to inflict some AoE effect/damage
     hitTarget = function(self)
         HomingProjectile.hitTarget(self)
+        self.markedForDeath = true
         if self.target then
             self.target:takeDamage(self.damage, true)
 

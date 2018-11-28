@@ -1,6 +1,7 @@
 Enemy = Class {
     init = function(self, enemyType, element, worldOrigin, health, speed, yield, animation, recipeIndex, livesToRemove)
         assert(worldOrigin.x and worldOrigin.y)
+        self.id = Util.s.randomString(12)
         self.type = "ENEMY" -- used to check for valid collisions
         self.element = element -- used to decide cauldron colour
         self.enemyType = enemyType
@@ -146,5 +147,5 @@ Enemy = Class {
 
         local delta = Vector(moveToX - self.worldOrigin.x, moveToY - self.worldOrigin.y):normalizeInplace()
         return Vector(delta.x*elapsedTime*self.speed, delta.y*elapsedTime*self.speed) 
-    end
+    end;
 }

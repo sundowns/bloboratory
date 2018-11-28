@@ -27,7 +27,9 @@ Projectile = Class {
         return self.worldOrigin.x-self.width/2, self.worldOrigin.y-self.height/2, self.width, self.height
     end;
     hitTarget = function(self)
-        self.markedForDeath = true
+    end;
+    centre = function(self)
+        return Vector(self.worldOrigin.x + self.width/2, self.worldOrigin.y + self.height/2)
     end;
 }
 
@@ -45,6 +47,9 @@ HomingProjectile = Class {
         local dx = self.target.worldOrigin.x - self.worldOrigin.x
         return math.atan2(dx, dy)
     end;
+    setTarget = function(self, target)
+        self.target = target
+    end;
     update = function(self, dt)
         Projectile.update(self, dt)
         self.angle = self:calculateAngleToTarget()
@@ -53,7 +58,7 @@ HomingProjectile = Class {
         local delta = Vector(dx, dy):normalizeInplace()
         self:moveBy(delta.x*dt*self.speed, delta.y*dt*self.speed)
 
-        if self.target.markedForDeath or self.target.hitGoal then
+        if self.target.markedForDeath or self.target.hitGoal then -- TODO: might need to change to handle bouncer as well
             self:hitTarget()
         end
     end;

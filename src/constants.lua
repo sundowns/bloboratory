@@ -94,6 +94,19 @@ return {
             },
             TOOLTIP = "LASERBEAM - COST: 35 SCRAP",
         },
+        BOUNCER = {
+            WIDTH = 2, --cells
+            HEIGHT = 2, --cells
+            BARREL_LENGTH = 32, --used to offset projectiles
+            ATTACK_DAMAGE = 5, --damage per HIT 
+            TARGETTING_RADIUS = 5, --additional cell radii
+            ATTACK_INTERVAL = 0.8,
+            COST = {
+                SCRAP = 30,
+            },
+            TOOLTIP = "BOUNCER - COST: 30 SCRAP",
+            ROTATION_TIME = 0.2
+        },
         BEACON = {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
@@ -119,6 +132,9 @@ return {
             LASERGUN = {
                 FIRE = 40
             },
+            BOUNCER = {
+                FIRE = 40
+            }
         },
         ELECTRIC = {
             CANNON = {
@@ -130,6 +146,9 @@ return {
             LASERGUN = {
                 ELECTRIC = 40
             },
+            BOUNCER = {
+                ELECTRIC = 40
+            }
         },
         ICE = {
             CANNON = {
@@ -141,6 +160,9 @@ return {
             LASERGUN = {
                 ICE = 40
             },
+            BOUNCER = {
+                ICE = 40
+            }
         },
     },
     IMPACTS = {
@@ -169,6 +191,13 @@ return {
             SPEED = 250,
             WIDTH = 12,
             HEIGHT = 12,
+        },
+        BOUNCERPROJECTILE = {
+            SPEED = 200,
+            WIDTH = 12,
+            HEIGHT = 12,
+            BOUNCES = 5,
+            TARGETTING_RADIUS = 10,
         },
     },
     ENEMY = {

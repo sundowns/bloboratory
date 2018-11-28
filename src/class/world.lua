@@ -48,6 +48,12 @@ World = Class {
                     self:addNewTower(Beacon(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
                 end
             end
+        elseif type == "BOUNCER" then 
+            if not self.grid:isOccupied(gridOrigin, constants.STRUCTURE.BOUNCER.WIDTH, constants.STRUCTURE.BOUNCER.HEIGHT) then
+                if playerController.wallet:canAfford(constants.STRUCTURE.BOUNCER.COST) then
+                    self:addNewTower(Bouncer(gridOrigin, self.grid:calculateWorldCoordinatesFromGrid(gridOrigin)))
+                end
+            end
         end
     end;
     addNewStructure = function(self, structure)
@@ -104,8 +110,15 @@ World = Class {
             self.projectiles[i]:update(dt)
             self:processCollisionForProjectile(self.projectiles[i], dt)
 
+            if not self.projectiles[i].markedForDeath and (self.projectiles[i].archetype == "HOMING" and not self.projectiles[i].target) then
+                self:findNewTargetForProjectile(self.projectiles[i])
+            end
+
             if self.projectiles[i].markedForDeath then
                 self.collisionWorld:remove(self.projectiles[i])
+                if self.projectiles[i].targettingHitbox then
+                    self.collisionWorld:remove(self.projectiles[i].targettingHitbox)
+                end
                 table.remove(self.projectiles, i)
             end
         end
@@ -228,7 +241,7 @@ World = Class {
             local createImpact = false
             for i = 1, len do 
                 if cols[i].other.type == "ENEMY" then
-                    if tower.archetype == "MELEE" and not tower.towerType == "BEACON" then
+                    if tower.archetype == "MELEE" and tower.towerType ~= "BEACON" then
                         tower:attack(cols[i].other, playOnHit)
                         playOnHit = false
                         tower:disarm()
@@ -258,11 +271,11 @@ World = Class {
         for i = len, 1, -1 do 
             local collision = cols[i]
       
-            if collision.other.type == "ENEMY" then
+            if collision.other.type == "ENEMY" and collision.other == projectile.target then
                 local impact = projectile:hitTarget()
                 if impact then 
                     self:addImpact(impact)
-                end  
+                end
             end
         end
     end;
@@ -273,6 +286,29 @@ World = Class {
             if collision.other.type == "ENEMY" then
                 impact:attack(collision.other, dt)
             end
+        end
+    end;
+    findNewTargetForProjectile = function(self, projectile)
+        assert(projectile.targettingHitbox)
+
+        local actualX, actualY, cols, len = self.collisionWorld:move(projectile.targettingHitbox, projectile.worldOrigin.x-projectile.targettingRadius*constants.GRID.CELL_SIZE/2, projectile.worldOrigin.y-projectile.targettingRadius*constants.GRID.CELL_SIZE/2, function() return "cross" end)
+        local centre = projectile:centre()
+        local best = nil
+        for i = len, 1, -1 do 
+            local collision = cols[i]
+            -- consider lowest distance enemy to target
+            if collision.other.type == "ENEMY" and not projectile.hasHit[collision.other.id] then
+                -- calculate distance from projectile centre to enemy. if lower than the best, become the best.
+                local dist = Util.m.distanceBetween(centre.x, centre.y, collision.other.worldOrigin.x, collision.other.worldOrigin.y)
+                if not best or (best and dist < best.dist) then
+                    best = {dist = dist, enemy = collision.other}
+                end
+            end
+        end
+        if best then
+            projectile:setTarget(best.enemy)
+        else
+            projectile.markedForDeath = true
         end
     end;
     getStructureAt = function(self, gridOrigin)
@@ -287,6 +323,9 @@ World = Class {
     end;
     addProjectile = function(self, projectile)
         self.collisionWorld:add(projectile, projectile:calculateHitbox())
+        if projectile.targettingHitbox then
+            self.collisionWorld:add(projectile.targettingHitbox, projectile:calculateTargettingHitbox())
+        end
         table.insert(self.projectiles, projectile)
     end;
     addImpact = function(self, impact)
