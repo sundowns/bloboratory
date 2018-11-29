@@ -101,7 +101,7 @@ return {
             WIDTH = 2, --cells
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
-            ATTACK_DAMAGE = 5, --damage per HIT 
+            ATTACK_DAMAGE = 4, --damage per HIT 
             TARGETTING_RADIUS = 5, --additional cell radii
             ATTACK_INTERVAL = 0.8,
             COST = {
@@ -117,11 +117,11 @@ return {
             ATTACK_INTERVAL = 0.5, 
             TARGETTING_RADIUS = 4, --additional cell radii
             COST = {
-                FIRE = 20,
-                ICE = 20,
-                ELECTRIC = 20,
+                FIRE = 15,
+                ICE = 15,
+                ELECTRIC = 15,
             },
-            TOOLTIP = "BEACON - COST: 20 FIRE, 20 ICE, 20 ELEC",
+            TOOLTIP = "BEACON - COST: 15 FIRE, 15 ICE, 15 ELEC",
         },
     },
     MUTATION_COSTS = {
@@ -130,10 +130,10 @@ return {
                 FIRE = 40
             },
             SAW = {
-                FIRE = 40
+                FIRE = 30
             },
             LASERGUN = {
-                FIRE = 40
+                FIRE = 50
             },
             BOUNCER = {
                 FIRE = 40
@@ -144,10 +144,10 @@ return {
                 ELECTRIC = 40
             },
             SAW = {
-                ELECTRIC = 40
+                ELECTRIC = 30
             },
             LASERGUN = {
-                ELECTRIC = 40
+                ELECTRIC = 50
             },
             BOUNCER = {
                 ELECTRIC = 40
@@ -158,10 +158,10 @@ return {
                 ICE = 40
             },
             SAW = {
-                ICE = 40
+                ICE = 30
             },
             LASERGUN = {
-                ICE = 40
+                ICE = 50
             },
             BOUNCER = {
                 ICE = 40

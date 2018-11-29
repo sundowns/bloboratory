@@ -6,7 +6,7 @@ AudioController = Class {
                 volume = constants.MUSIC[ROUND],
             },
             ripple.newSound {
-                source = assets.audio.music.music3,
+                source = assets.audio.music.doom3,
                 volume = constants.MUSIC[BUILD],
             },
         }
@@ -183,14 +183,14 @@ AudioController = Class {
         end
     end;
     toggleRoundMusic = function(self)
-        self:stopMusic()
-        if roundController:isBuildPhase() then 
-            self.music = self.musicList[2]
-            self.music:play()
-        else 
-            self.music = self.musicList[1]
-            self.music:play()
-        end
+        --self:stopMusic()
+        --if roundController:isBuildPhase() then 
+        --    self.music = self.musicList[2]
+        --    self.music:play()
+        --else 
+        --    self.music = self.musicList[1]
+        --    self.music:play()
+        --end
     end;
 }
 
