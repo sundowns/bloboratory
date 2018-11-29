@@ -21,32 +21,23 @@ Options = Class {
                 },
             },
             SOUND = {
-                --['font'] = assets.ui.planerRegular(28),
+                ['font'] = assets.ui.planerRegular(22),
                 ['window'] = {
-                    ['header'] = {
-                        ['normal'] = constants.COLOURS.UI.PANEL,
-                        ['hover'] = constants.COLOURS.UI.PANEL,
-                        ['active'] = constants.COLOURS.UI.PANEL,
-                        ['close button'] = {
-                            ['normal'] = constants.COLOURS.UI.PANEL,
-                            ['hover'] = constants.COLOURS.UI.PANEL,
-                            ['active'] = constants.COLOURS.UI.PANEL,
-                        }
-                    },
-                    ['fixed background'] = constants.COLOURS.UI.PANEL_DARK,
-                    ['background'] = constants.COLOURS.UI.PANEL_DARK,
-                    ['border color'] = constants.COLOURS.UI.PANEL,
+                    ['fixed background'] = assets.ui.button,
+                    ['background'] = constants.COLOURS.UI.NONE,
+                    ['border color'] = constants.COLOURS.UI.NONE,
+                    ['padding'] = {x = 10, y = 7}
                 },
                 ['button'] = {
-                    ['normal'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['normal'] = constants.COLOURS.UI.NONE,
                     ['hover'] = constants.COLOURS.UI.PANEL_LIGHT,
                     ['active'] = constants.COLOURS.UI.PANEL_DARK,
-                    ['border color'] = constants.COLOURS.UI.PANEL
+                    ['border color'] = constants.COLOURS.UI.NONE
                 },
                 ['slider'] = {
-                    ['normal'] = constants.COLOURS.UI.PANEL_DARK,
-                    ['hover'] = constants.COLOURS.UI.PANEL_DARK,
-                    ['active'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['normal'] = constants.COLOURS.UI.NONE,
+                    ['hover'] = constants.COLOURS.UI.NONE,
+                    ['active'] = constants.COLOURS.UI.NONE,
                     ['bar normal'] = constants.COLOURS.UI.SLIDER_DARK,
                     ['bar active'] = constants.COLOURS.UI.SLIDER_DARK,
                     ['bar filled'] = constants.COLOURS.UI.SLIDER_DARKEST,
