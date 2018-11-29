@@ -11,8 +11,8 @@ return {
     layers = {
         {
             DEFAULT = {
-                frame_duration = 10000,
-                x = 1,
+                frame_duration = 60/160,
+                x = '1-3',
                 y = 1,
                 offset_x = 0,
                 offset_y = 0,
