@@ -1,9 +1,9 @@
-BlobTeethDark = Class {
+BlobEye = Class {
     __includes = Enemy,
     init = function(self, worldOrigin)
-        Enemy.init(self, "BLOB-TEETH-DARK", "NONE", worldOrigin, constants.ENEMY.BLOBTEETH_DARK.HEALTH,
-            constants.ENEMY.BLOBTEETH_DARK.SPEED, constants.ENEMY.BLOBTEETH_DARK.YIELD,
-            animationController:createInstance("BLOB-TEETH-DARK"), 6, 3)
+        Enemy.init(self, "BLOB-EYE", "NONE", worldOrigin, constants.ENEMY.BLOBEYE.HEALTH,
+            constants.ENEMY.BLOBEYE.SPEED, constants.ENEMY.BLOBEYE.YIELD,
+            animationController:createInstance("BLOB-EYE"), 6, 3)
     end;
     update = function(self, dt, currentCell)
         local destroy = Enemy.update(self, dt, currentCell)

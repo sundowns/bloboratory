@@ -237,7 +237,7 @@ RoundController = Class {
 
             if self.roundIndex == 11 then 
                 for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
-                    if enemy.name ~= "NUMBSKULL" and enemy.name ~= "DARK NUMBSKULL" and enemy.name ~= "CHOMPY" and enemy.name ~= "DARK CHOMPY" then --TODO: an 'unlockedOnRoundX' variable instead
+                    if enemy.name ~= "NUMBSKULL" and enemy.name ~= "DARK NUMBSKULL" and enemy.name ~= "CHOMPY" and enemy.name ~= "DARK CHOMPY" and enemy.name ~= "BLOB SEER" then --TODO: an 'unlockedOnRoundX' variable instead
                         enemy.isUnlocked = true
                     end
                 end

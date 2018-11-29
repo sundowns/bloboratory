@@ -299,6 +299,15 @@ return {
                 ELECTRIC = 3,
             },
         },
+        BLOBEYE = {
+            HEALTH = 300,
+            SPEED = 140,
+            YIELD = {
+                FIRE = 5,
+                ICE = 5,
+                ELECTRIC = 5,
+            },
+        },
     },
     CURRENCY = {
         STARTING_SCRAP = 75,
