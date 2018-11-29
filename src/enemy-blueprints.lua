@@ -26,7 +26,10 @@ return {
     ["BLOB-SKULL"] = EnemyBlueprint("BLOB (SKULL)", assets.blueprints['blob-skull'], constants.ENEMY.BLOBSKULL.YIELD, false, constants.ENEMY.BLOBSKULL.HEALTH, function(params)
         return BlobSkull(params.origin)
     end),
-    ["BLOB-TEETH"] = EnemyBlueprint("BLOB (TEETH)", assets.blueprints['blob-teeth'], constants.ENEMY.BLOBTEETH.YIELD, false, constants.ENEMY.BLOBTEETH.HEALTH, function(params)
+    ["BLOB-TEETH"] = EnemyBlueprint("CHOMPY", assets.blueprints['blob-teeth'], constants.ENEMY.BLOBTEETH.YIELD, false, constants.ENEMY.BLOBTEETH.HEALTH, function(params)
         return BlobTeeth(params.origin)
+    end),
+    ["BLOB-TEETH-DARK"] = EnemyBlueprint("DARK CHOMPY", assets.blueprints['blob-teeth-dark'], constants.ENEMY.BLOBTEETH_DARK.YIELD, false, constants.ENEMY.BLOBTEETH_DARK.HEALTH, function(params)
+        return BlobTeethDark(params.origin)
     end),
 }

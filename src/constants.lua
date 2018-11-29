@@ -271,12 +271,21 @@ return {
             HEALTH = 100,
             SPEED = 80,
             YIELD = {
-                SCRAP = 10,
+                SCRAP = 6,
             },
         },
         BLOBTEETH = {
             HEALTH = 50,
             SPEED = 120,
+            YIELD = {
+                FIRE = 2,
+                ICE = 2,
+                ELECTRIC = 2,
+            },
+        },
+        BLOBTEETH_DARK = {
+            HEALTH = 130,
+            SPEED = 130,
             YIELD = {
                 FIRE = 3,
                 ICE = 3,
