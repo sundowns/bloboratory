@@ -8,17 +8,15 @@ Options = Class {
                     ['color'] = constants.COLOURS.UI.WHITE, 
                 },
                 ['window'] = {
-                    ['fixed background'] = constants.COLOURS.UI.NONE,
+                    ['fixed background'] = assets.ui.button,
+                    ['padding'] = {x = 10, y = 37}
                 },
                 ['button'] = {
-                    ['normal'] = assets.ui.button,
-                    ['hover'] = assets.ui.buttonHovered,
-                    ['active'] = assets.ui.button,
-                    ['active'] = constants.COLOURS.UI.NONE,
-                    ['text background'] = constants.COLOURS.UI.NONE,
+                    ['normal'] = constants.COLOURS.UI.NONE,
+                    ['hover'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['active'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['border color'] = constants.COLOURS.UI.SLIDER_DARKEST,
                     ['text normal'] = constants.COLOURS.UI.WHITE,
-                    ['text hovered'] = constants.COLOURS.UI.BLACK,
-                    ['text active'] = constants.COLOURS.UI.WHITE,
                 },
             },
             SOUND = {
