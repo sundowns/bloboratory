@@ -23,6 +23,7 @@ Overhead = Class {
                 }
             }
         }
+        self.overheadFont = assets.ui.neuropoliticalRg(12)
     end; 
     draw = function(self)
         local count = 1
@@ -33,7 +34,7 @@ Overhead = Class {
             love.graphics.print(currency.value, love.graphics.getWidth() - (2 * playerController.wallet.totalCurrencies) - (count * 90) - 25, love.graphics.getHeight()/50)
             count = count + 1
         end
-        love.graphics.setFont(assets.ui.neuropoliticalRg(12))
+        love.graphics.setFont(self.overheadFont)
         love.graphics.print('Round: '.. roundController.roundIndex .. ' / ' .. roundController.totalRounds, love.graphics.getWidth()*0.35, love.graphics.getHeight()*0.02)
         love.graphics.print('Lives: '.. playerController.livesRemaining .. ' / ' .. constants.MISC.STARTING_LIVES, love.graphics.getWidth()*0.48, love.graphics.getHeight()*0.02)
     end;
