@@ -55,6 +55,7 @@ Overhead = Class {
                     nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
                 else
                     nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
+                    nk.windowSetFocus(constants.UI.OPTIONS_MENU.NAME)
                 end
             end
             nk.spacing(1)
