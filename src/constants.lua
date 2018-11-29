@@ -299,10 +299,10 @@ return {
     UI = {
         OPTIONS_MENU = {
             X = 0.4,
-            Y = 0.33,
+            Y = 0.225,
             WIDTH = 0.2,
-            HEIGHT = 0.4,
-            LAYOUTROW_HEIGHT = 0.055,
+            HEIGHT = 0.45,
+            LAYOUTROW_HEIGHT = 0.065,
             NAME = 'OptionsMenu'
         },
         OPTIONS_BUTTON = {

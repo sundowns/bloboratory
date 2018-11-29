@@ -3,6 +3,7 @@ Options = Class {
     init = function(self)      
         self.style = {
             MENU = {
+                ['font'] = assets.ui.neuropoliticalRg(20),
                 ['text'] = {
                     ['color'] = constants.COLOURS.UI.WHITE, 
                 },
@@ -21,7 +22,10 @@ Options = Class {
                 },
             },
             SOUND = {
-                ['font'] = assets.ui.planerRegular(22),
+                ['font'] = assets.ui.neuropoliticalRg(16),
+                ['text'] = {
+                    ['color'] = constants.COLOURS.UI.WHITE, 
+                },
                 ['window'] = {
                     ['fixed background'] = assets.ui.button,
                     ['background'] = constants.COLOURS.UI.NONE,
@@ -32,7 +36,8 @@ Options = Class {
                     ['normal'] = constants.COLOURS.UI.NONE,
                     ['hover'] = constants.COLOURS.UI.PANEL_LIGHT,
                     ['active'] = constants.COLOURS.UI.PANEL_DARK,
-                    ['border color'] = constants.COLOURS.UI.NONE
+                    ['border color'] = constants.COLOURS.UI.SLIDER_DARKEST,
+                    ['text normal'] = constants.COLOURS.UI.WHITE,
                 },
                 ['slider'] = {
                     ['normal'] = constants.COLOURS.UI.NONE,
