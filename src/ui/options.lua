@@ -58,6 +58,7 @@ Options = Class {
         if nk.windowBegin(constants.UI.OPTIONS_MENU.NAME, constants.UI.OPTIONS_MENU.X*windowWidth, constants.UI.OPTIONS_MENU.Y*windowHeight, constants.UI.OPTIONS_MENU.WIDTH*windowWidth, constants.UI.OPTIONS_MENU.HEIGHT*windowHeight) then 
             uiController:handleResize(constants.UI.OPTIONS_MENU.X*windowWidth, constants.UI.OPTIONS_MENU.Y*windowHeight, constants.UI.OPTIONS_MENU.WIDTH*windowWidth, constants.UI.OPTIONS_MENU.HEIGHT*windowHeight)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
+
             if nk.button("Resume Game") then 
                 nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
                 audioController:playAny("BUTTON_PRESS")
@@ -66,6 +67,7 @@ Options = Class {
             if nk.button("Sound") then 
                 nk.windowHide(constants.UI.OPTIONS_MENU.NAME)
                 nk.windowShow(constants.UI.OPTIONS_SOUND.NAME)
+                nk.windowSetFocus(constants.UI.OPTIONS_SOUND.NAME)
                 audioController:playAny("BUTTON_PRESS")
             end 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
@@ -88,6 +90,7 @@ Options = Class {
         nk.stylePush(self.style.SOUND)
         if nk.windowBegin(constants.UI.OPTIONS_SOUND.NAME, constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight) then 
             uiController:handleResize(constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight)
+
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
             nk.label("Music Volume:") 
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_SOUND.LAYOUTROW_HEIGHT*windowHeight), 1)
@@ -104,6 +107,7 @@ Options = Class {
                 configController:saveUserSettings()
                 nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
                 nk.windowShow(constants.UI.OPTIONS_MENU.NAME)
+                nk.windowSetFocus(constants.UI.OPTIONS_MENU.NAME)
             end 
             if uiController.firstRun then
                 nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
