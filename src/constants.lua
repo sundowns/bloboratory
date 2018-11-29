@@ -234,7 +234,7 @@ return {
         },
         BLOBFIRELARGE = {
             HEALTH = 45,
-            SPEED = 150,
+            SPEED = 130,
             YIELD = {
                 FIRE = 2
             },
@@ -248,7 +248,7 @@ return {
         },
         BLOBICELARGE = {
             HEALTH = 45,
-            SPEED = 150,
+            SPEED = 130,
             YIELD = {
                 ICE = 2
             },
@@ -262,7 +262,7 @@ return {
         },
         BLOBSPARKLARGE = {
             HEALTH = 45,
-            SPEED = 150,
+            SPEED = 130,
             YIELD = {
                 ELECTRIC = 2
             },
@@ -282,21 +282,21 @@ return {
             },
         },
         BLOBTEETH = {
-            HEALTH = 50,
-            SPEED = 120,
+            HEALTH = 60,
+            SPEED = 140,
             YIELD = {
-                FIRE = 2,
-                ICE = 2,
-                ELECTRIC = 2,
+                FIRE = 1,
+                ICE = 1,
+                ELECTRIC = 1,
             },
         },
         BLOBTEETH_DARK = {
             HEALTH = 90,
-            SPEED = 120,
+            SPEED = 140,
             YIELD = {
-                FIRE = 3,
-                ICE = 3,
-                ELECTRIC = 3,
+                FIRE = 2,
+                ICE = 2,
+                ELECTRIC = 2,
             },
         },
         BLOBEYE = {

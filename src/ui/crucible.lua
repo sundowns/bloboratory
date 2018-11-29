@@ -205,15 +205,26 @@ Picker = Class {
 
                 for i, blueprint in self:pairsByKeys(roundController.ENEMY_BLUEPRINTS) do
                     if blueprint.isUnlocked then
+
                         nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT*windowHeight, {1/12, 4/12, 2/12, 1/12, 1/12, 1/8, 1/8})
                         nk.image(blueprint.image)
                         nk.label('3x ' ..blueprint.name, 'left')
                         nk.label('HP: ' ..self:calcEnemyHealth(blueprint), 'left')
 
-                        for key, value in pairs(blueprint.yield) do
-                            self:displayTooltip('Enemy grants ' ..value.. ' ' ..key.. ' on defeat')
-                            nk.image(playerController.wallet.currencies[key].image)
-                            nk.label(value, 'left', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
+                        local yieldCount = 0
+                        for i in pairs(blueprint.yield) do 
+                            yieldCount = yieldCount +1
+                        end
+                        if yieldCount == 1 then 
+                            for key, value in pairs(blueprint.yield) do
+                                self:displayTooltip('Enemy grants ' ..value.. ' ' ..key.. ' on defeat')
+                                nk.image(playerController.wallet.currencies[key].image)
+                                nk.label(value, 'left', nk.colorRGBA(playerController.wallet.currencies[key]:colourRGB()))
+                            end
+                        else
+                            self:displayTooltip('Enemy grants ' ..blueprint.yield.FIRE.. ' of each element on defeat')
+                            nk.image(assets.ui.iconMulti)
+                            nk.label(''..blueprint.yield.FIRE, 'left', nk.colorRGBA(playerController.wallet.currencies.SCRAP:colourRGB()))
                         end
 
                         self:displayTooltip('Select ' ..blueprint.name.. ' for this slot')

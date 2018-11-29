@@ -185,7 +185,8 @@ RoundController = Class {
                 end
             end
             audioController:toggleRoundMusic() --TODO: different boss wave music!
-
+            self:unlockEnemies()
+            self:lockEnemies()
             if self.roundIndex == 2 and not configController.settings.seenMultiSelectTutorial then
                 Timer.after(1, function()
                     helpController:addText('Try holding SHIFT to place multiple structures quickly!', 20, {0.2,0.8,0})
@@ -215,11 +216,6 @@ RoundController = Class {
             end
 
             if self.roundIndex == 6 then 
-                for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
-                    if enemy.name == "BIG BLOBBY" then --TODO: an 'unlockedOnRoundX' variable instead
-                        enemy.isUnlocked = true
-                    end
-                end
                 if not configController.settings.seenLargeTutorialOne then
                     Timer.after(1, function()
                         helpController:addText('Large blobs are now available. Be careful though, they are MUCH tougher than regular blobs!', 20, {0.2,0.8,0})
@@ -236,11 +232,6 @@ RoundController = Class {
             end
 
             if self.roundIndex == 11 then 
-                for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
-                    if enemy.name ~= "NUMBSKULL" and enemy.name ~= "DARK NUMBSKULL" and enemy.name ~= "CHOMPY" and enemy.name ~= "DARK CHOMPY" and enemy.name ~= "BLOB SEER" then --TODO: an 'unlockedOnRoundX' variable instead
-                        enemy.isUnlocked = true
-                    end
-                end
                 if not configController.settings.seenLargeTutorialTwo then
                     Timer.after(1, function()
                         helpController:addText('Large elemental enemies are now available! Be careful though, they are MUCH tougher than regular blobs!', 20, {0.2,0.8,0})
@@ -290,5 +281,19 @@ RoundController = Class {
     end;
     isEnemyPhase = function(self)
         return self.currentRound.hasStarted
+    end;
+    unlockEnemies = function(self)
+        for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
+            if self.roundIndex == enemy.roundLocks[1] then 
+                enemy.isUnlocked = true
+            end
+        end
+    end;
+    lockEnemies = function(self)
+        for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
+            if self.roundIndex == enemy.roundLocks[2] then 
+                enemy.isUnlocked = false
+            end
+        end
     end;
 }
