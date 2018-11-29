@@ -235,12 +235,13 @@ World = Class {
             end)
             local playOnHit = true
             local createImpact = false
+            local disarmTower = false
             for i = 1, len do 
                 if cols[i].other.type == "ENEMY" then
                     if tower.archetype == "MELEE" and tower.towerType ~= "BEACON" then
                         tower:attack(cols[i].other, playOnHit)
                         playOnHit = false
-                        tower:disarm()
+                        disarmTower = true
                     elseif tower.archetype == "LINE" then
                         createImpact = true
                     end
@@ -248,11 +249,13 @@ World = Class {
                     if tower.towerType == "BEACON" then
                         if cols[i].other.owner.towerType ~= "BEACON" then
                             tower:attack(cols[i].other.owner)
-                            tower:disarm()
-                            break
+                            disarmTower = true
                         end
                     end
                 end
+            end
+            if disarmTower then
+                tower:disarm()
             end
             if createImpact then
                 --create an impact
