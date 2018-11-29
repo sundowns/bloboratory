@@ -241,7 +241,6 @@ World = Class {
                         tower:attack(cols[i].other, playOnHit)
                         playOnHit = false
                         tower:disarm()
-                        break
                     elseif tower.archetype == "LINE" then
                         createImpact = true
                     end
