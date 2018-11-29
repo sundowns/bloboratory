@@ -1,5 +1,5 @@
 EnemyBlueprint = Class {
-    init = function(self, name, image, yield, isUnlocked, baseHealth, buildEnemy)
+    init = function(self, name, image, yield, isUnlocked, roundLocks, baseHealth, buildEnemy)
         self.name = name
         self.image = image
         self.imageHovered = love.graphics.newCanvas(self.image:getWidth(), self.image:getHeight())
@@ -22,6 +22,7 @@ EnemyBlueprint = Class {
 
         self.yield = yield
         self.buildEnemy = buildEnemy
+        self.roundLocks = roundLocks
         self.isUnlocked = isUnlocked
     end;
     construct = function(self, params, healthMultiplier)

@@ -282,21 +282,21 @@ return {
             },
         },
         BLOBTEETH = {
-            HEALTH = 50,
+            HEALTH = 60,
             SPEED = 120,
             YIELD = {
-                FIRE = 2,
-                ICE = 2,
-                ELECTRIC = 2,
+                FIRE = 1,
+                ICE = 1,
+                ELECTRIC = 1,
             },
         },
         BLOBTEETH_DARK = {
             HEALTH = 90,
             SPEED = 120,
             YIELD = {
-                FIRE = 3,
-                ICE = 3,
-                ELECTRIC = 3,
+                FIRE = 2,
+                ICE = 2,
+                ELECTRIC = 2,
             },
         },
         BLOBEYE = {
