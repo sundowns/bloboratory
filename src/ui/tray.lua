@@ -9,7 +9,7 @@ Tray = Class {
                 ['window'] = {
                     ['background'] = constants.COLOURS.UI.PANEL_TRANSPARENT_LIGHT,
                     ['fixed background'] = assets.ui.menuLeft,
-                    ['padding'] = {x = 0, y = 28}
+                    ['padding'] = {x = 0, y = 25}
                 },
                 ['button'] = {
                     ['normal'] = assets.ui.button,
@@ -19,8 +19,8 @@ Tray = Class {
                     ['text normal'] = constants.COLOURS.UI.BLACK,
                     ['text hovered'] = constants.COLOURS.UI.WHITE,
                     ['text active'] = constants.COLOURS.UI.BLACK,
-                    ['image padding'] = {x = 1, y = 1},
-                    ['padding'] = {x = 1.5, y = 6}
+                    ['image padding'] = {x = 6, y = 6},
+                    ['padding'] = {x = 0, y = 0}
                 },
             },
             DISABLED = {
@@ -67,9 +67,12 @@ Tray = Class {
         if nk.windowBegin('Menu', constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) then
             uiController:handleResize(constants.UI.MENU.X*windowWidth, constants.UI.MENU.Y*windowHeight, constants.UI.MENU.WIDTH*windowWidth, constants.UI.MENU.HEIGHT*windowHeight) 
             if roundController:isBuildPhase() then 
-                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {4.1/10, 1/10, 1/10, 1/10, 1/10, 1/10, 1/10})
+                nk.layoutRow('dynamic', (constants.UI.MENU.LAYOUTROW_HEIGHT*windowHeight), {1/18, 1/7, 1/7, 1/20, 1/7, 1/7, 1/7, 1/7})
                 nk.spacing(1)
                 for i, blueprint in pairs(playerController.blueprints) do
+                    if i == 3 then 
+                        nk.spacing(1)
+                    end
                     local state = "DEFAULT"
 
                     if playerController.currentBlueprint and playerController.currentBlueprint.name == blueprint.name then

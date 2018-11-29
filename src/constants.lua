@@ -330,7 +330,7 @@ return {
             Y = 0.88,
             WIDTH = 0.4,
             HEIGHT = 0.125,
-            LAYOUTROW_HEIGHT = 0.0625,
+            LAYOUTROW_HEIGHT = 0.0725,
         },
         CRUCIBLE = {
             X = 0.4,

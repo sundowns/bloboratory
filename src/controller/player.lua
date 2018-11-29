@@ -13,11 +13,11 @@ PlayerController = Class {
         }
         self.blueprints = {}
         self:addNewStructureBlueprint("OBSTACLE")
+        self:addNewStructureBlueprint("BEACON") -- TODO: will be unlocked, not a default value
         self:addNewStructureBlueprint("SAW") -- TODO: will be unlocked, not a default value
         self:addNewStructureBlueprint("CANNON")  -- TODO: will be unlocked, not a default value
         self:addNewStructureBlueprint("LASERGUN") -- TODO: will be unlocked, not a default value
         self:addNewStructureBlueprint("BOUNCER") -- TODO: will be unlocked, not a default value
-        self:addNewStructureBlueprint("BEACON") -- TODO: will be unlocked, not a default value
 
         self.livesRemaining = constants.MISC.STARTING_LIVES
         self.currentBlueprint = nil
