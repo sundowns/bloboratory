@@ -342,7 +342,7 @@ return {
             X = 0.4,
             Y = 0.3,
             WIDTH = 0.2,
-            HEIGHT = 0.3,
+            HEIGHT = 0.33,
             LAYOUTROW_HEIGHT = 0.06,
             NAME = 'OptionsSound'
         },
