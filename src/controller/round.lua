@@ -36,9 +36,6 @@ RoundController = Class {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
-                    },
-                    {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
                     },
                     {
@@ -49,7 +46,10 @@ RoundController = Class {
                     },
                     {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
-                    }
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
                 }
             },
             {
