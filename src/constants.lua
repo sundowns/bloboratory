@@ -41,6 +41,9 @@ return {
             PANEL_TRANSPARENT = nk.colorRGBA(48, 31, 17, 128),
             PANEL_TRANSPARENT_LIGHT = nk.colorRGBA(147,96,51,128),
             PANEL_TRANSPARENT_DARK = nk.colorRGBA(108,70,37,128),
+            SLIDER_LIGHT = nk.colorRGBA(78,50,27,255),
+            SLIDER_DARK = nk.colorRGBA(58,30,17,255),
+            SLIDER_DARKEST = nk.colorRGBA(38,15,7,255),
         },
     },
     GRID = {

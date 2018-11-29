@@ -2,6 +2,7 @@
 Options = Class {
     init = function(self)      
         self.style = {
+            MENU = {
                 ['text'] = {
                     ['color'] = constants.COLOURS.UI.WHITE, 
                 },
@@ -18,12 +19,48 @@ Options = Class {
                     ['text hovered'] = constants.COLOURS.UI.BLACK,
                     ['text active'] = constants.COLOURS.UI.WHITE,
                 },
+            },
+            SOUND = {
+                --['font'] = assets.ui.planerRegular(28),
+                ['window'] = {
+                    ['header'] = {
+                        ['normal'] = constants.COLOURS.UI.PANEL,
+                        ['hover'] = constants.COLOURS.UI.PANEL,
+                        ['active'] = constants.COLOURS.UI.PANEL,
+                        ['close button'] = {
+                            ['normal'] = constants.COLOURS.UI.PANEL,
+                            ['hover'] = constants.COLOURS.UI.PANEL,
+                            ['active'] = constants.COLOURS.UI.PANEL,
+                        }
+                    },
+                    ['fixed background'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['background'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['border color'] = constants.COLOURS.UI.PANEL,
+                },
+                ['button'] = {
+                    ['normal'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['hover'] = constants.COLOURS.UI.PANEL_LIGHT,
+                    ['active'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['border color'] = constants.COLOURS.UI.PANEL
+                },
+                ['slider'] = {
+                    ['normal'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['hover'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['active'] = constants.COLOURS.UI.PANEL_DARK,
+                    ['bar normal'] = constants.COLOURS.UI.SLIDER_DARK,
+                    ['bar active'] = constants.COLOURS.UI.SLIDER_DARK,
+                    ['bar filled'] = constants.COLOURS.UI.SLIDER_DARKEST,
+                    ['cursor normal'] = constants.COLOURS.UI.SLIDER_DARKEST,
+                    ['cursor hover'] = constants.COLOURS.UI.SLIDER_DARKEST,
+                    ['cursor active'] = constants.COLOURS.UI.SLIDER_DARKEST,
+                }
             }
+        }        
         self.markedForRestart = false
     end; 
 
     display = function(self, windowWidth, windowHeight)
-        nk.stylePush(self.style)
+        nk.stylePush(self.style.MENU)
         if nk.windowBegin(constants.UI.OPTIONS_MENU.NAME, constants.UI.OPTIONS_MENU.X*windowWidth, constants.UI.OPTIONS_MENU.Y*windowHeight, constants.UI.OPTIONS_MENU.WIDTH*windowWidth, constants.UI.OPTIONS_MENU.HEIGHT*windowHeight) then 
             uiController:handleResize(constants.UI.OPTIONS_MENU.X*windowWidth, constants.UI.OPTIONS_MENU.Y*windowHeight, constants.UI.OPTIONS_MENU.WIDTH*windowWidth, constants.UI.OPTIONS_MENU.HEIGHT*windowHeight)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), {(1)})
@@ -54,6 +91,7 @@ Options = Class {
         nk.windowEnd()
         nk.stylePop()
 
+        nk.stylePush(self.style.SOUND)
         if nk.windowBegin(constants.UI.OPTIONS_SOUND.NAME, constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight) then 
             uiController:handleResize(constants.UI.OPTIONS_SOUND.X*windowWidth, constants.UI.OPTIONS_SOUND.Y*windowHeight, constants.UI.OPTIONS_SOUND.WIDTH*windowWidth, constants.UI.OPTIONS_SOUND.HEIGHT*windowHeight)
             nk.layoutRow('dynamic', (constants.UI.OPTIONS_MENU.LAYOUTROW_HEIGHT*windowHeight), 1)
@@ -80,6 +118,7 @@ Options = Class {
             nk.windowHide(constants.UI.OPTIONS_SOUND.NAME)
         end
         nk.windowEnd()
+        nk.stylePop()
     end;
 }
 
