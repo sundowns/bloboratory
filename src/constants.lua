@@ -102,8 +102,8 @@ return {
             HEIGHT = 2, --cells
             BARREL_LENGTH = 32, --used to offset projectiles
             ATTACK_DAMAGE = 4, --damage per HIT 
-            TARGETTING_RADIUS = 5, --additional cell radii
-            ATTACK_INTERVAL = 0.8,
+            TARGETTING_RADIUS = 4, --additional cell radii
+            ATTACK_INTERVAL = 1,
             COST = {
                 SCRAP = 30,
             },
@@ -199,8 +199,8 @@ return {
             SPEED = 220,
             WIDTH = 12,
             HEIGHT = 12,
-            BOUNCES = 5,
-            TARGETTING_RADIUS = 10,
+            BOUNCES = 4,
+            TARGETTING_RADIUS = 5,
         },
     },
     ENEMY = {

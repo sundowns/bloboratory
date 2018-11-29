@@ -139,6 +139,7 @@ World = Class {
         for i = #self.enemies, 1, -1 do
             if not self.enemies[i].markedForDeath then
                 self.enemies[i]:update(dt, self.grid:getCell(self.grid:calculateGridCoordinatesFromWorld(self.enemies[i].worldOrigin)))
+                self.collisionWorld:update(self.enemies[i], self.enemies[i].worldOrigin.x - constants.GRID.CELL_SIZE/4, self.enemies[i].worldOrigin.y - constants.GRID.CELL_SIZE/4)
             end
             
             if self.enemies[i].markedForDeath then
@@ -152,19 +153,19 @@ World = Class {
             end
         end
 
-        -- Loop over the alive enemies FORWARDS detecting collisions. Doing it forwards ensures targetted towers pick the next enemy, rather than the last
-        for i, enemy in pairs(self.enemies) do
-            self:processCollisionForEnemy(enemy, dt)
-        end
 
         local camX, camY = cameraController:mousePosition()
-        local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, camX - inputController.mouse.width/2, camY - inputController.mouse.height/2, function() return "cross" end)
+        local actualX, actualY, cols, len = self.collisionWorld:move(inputController.mouse, camX - inputController.mouse.width/2, camY - inputController.mouse.height/2,
+        function(item, other)
+            if other.type == "ENEMY" then
+                return "cross"
+            else
+                return false 
+            end
+         end)
 
         for i = 1, len do
-            local entity = cols[i].other
-            if entity.type == "ENEMY" then
-                entity:triggerHealthBar()
-            end
+            cols[i].other:triggerHealthBar()
         end
 
         if roundController:isEnemyPhase() then
@@ -221,25 +222,6 @@ World = Class {
             end
         end
     end;
-    processCollisionForEnemy = function(self, enemy, dt)
-        local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/4, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/4,
-        function(item, other)
-            if other.type == "TOWER" then
-                return "cross"
-            else 
-                return false
-            end
-        end)
-        for i = len, 1, -1 do 
-            local collision = cols[i]
-            
-            if collision.other.type == "TOWER" then
-                if collision.other.archetype == "TARGETTED" then
-                    collision.other:spottedEnemy(enemy)
-                end
-            end
-        end
-    end;
     processCollisionForTower = function(self, tower)
         if tower.armed then
             local x, y, width, height = tower:calculateHitbox()
@@ -259,16 +241,16 @@ World = Class {
                         tower:attack(cols[i].other, playOnHit)
                         playOnHit = false
                         tower:disarm()
+                        break
                     elseif tower.archetype == "LINE" then
                         createImpact = true
-                    elseif tower.archetype == "TARGETTED" then
-                        print('yeet')
                     end
                 elseif cols[i].other.type == "AURA" then
                     if tower.towerType == "BEACON" then
                         if cols[i].other.owner.towerType ~= "BEACON" then
                             tower:attack(cols[i].other.owner)
                             tower:disarm()
+                            break
                         end
                     end
                 end
@@ -280,7 +262,7 @@ World = Class {
                 end
                 tower:disarm()
             end
-        elseif tower.archetype == "TARGETTED" then
+        elseif roundController:isEnemyPhase() and tower.archetype == "TARGETTED" and not tower.target then
             self:findNewTargetForTower(tower)
         end
     end;
@@ -294,14 +276,11 @@ World = Class {
             end
         end)
         for i = len, 1, -1 do 
-            local collision = cols[i]
-      
-            if collision.other.type == "ENEMY" and collision.other == projectile.target then
-                local impact = projectile:hitTarget()
-                if impact then 
-                    self:addImpact(impact)
-                end
+            local impact = projectile:hitTarget()
+            if impact then 
+                self:addImpact(impact)
             end
+            break;
         end
     end;
     processCollisionForImpact = function(self, impact, dt)
@@ -321,9 +300,10 @@ World = Class {
     end;
     findNewTargetForProjectile = function(self, projectile)
         assert(projectile.targettingHitbox)
+        -- print('find proj')
         local actualX, actualY, cols, len = self.collisionWorld:move(projectile.targettingHitbox, projectile.worldOrigin.x-projectile.targettingRadius*constants.GRID.CELL_SIZE/2, projectile.worldOrigin.y-projectile.targettingRadius*constants.GRID.CELL_SIZE/2,
         function(item, other)
-            if other.type == "ENEMY" then
+            if other.type == "ENEMY" and not projectile.hasHit[other.id] then
                 return "cross"
             else
                 return false
@@ -333,13 +313,10 @@ World = Class {
         local best = nil
         for i = len, 1, -1 do 
             local collision = cols[i]
-            -- consider lowest distance enemy to target
-            if collision.other.type == "ENEMY" and not projectile.hasHit[collision.other.id] then
-                -- calculate distance from projectile centre to enemy. if lower than the best, become the best.
-                local dist = Util.m.distanceBetween(centre.x, centre.y, collision.other.worldOrigin.x, collision.other.worldOrigin.y)
-                if not best or (best and dist < best.dist) then
-                    best = {dist = dist, enemy = collision.other}
-                end
+            -- calculate distance from projectile centre to enemy. if lower than the best, become the best.
+            local dist = Util.m.distanceBetween(centre.x, centre.y, collision.other.worldOrigin.x, collision.other.worldOrigin.y)
+            if not best or (best and dist < best.dist) then
+                best = {dist = dist, enemy = collision.other}
             end
         end
         if best then
@@ -349,7 +326,29 @@ World = Class {
         end
     end;
     findNewTargetForTower = function(self, tower)
-        -- print('yeet')
+        local actualX, actualY, cols, len = self.collisionWorld:check(tower, x, y,
+        function(item, other)
+            if item.archetype ~= "TARGETTED" then
+                return false
+            elseif other.type == "ENEMY" then
+                return "cross"
+            else
+                return false
+            end
+        end)
+        local centre = tower:centre()
+        local best = nil
+
+        for i = len, 1, -1 do 
+            local collision = cols[i]
+            local dist = Util.m.distanceBetween(centre.x, centre.y, collision.other.worldOrigin.x, collision.other.worldOrigin.y)
+            if not best or (best and dist < best.dist) then
+                best = {dist = dist, enemy = collision.other}
+            end
+        end
+        if best then
+            tower:spottedEnemy(best.enemy)
+        end
     end;
     getStructureAt = function(self, gridOrigin)
         local cell = self.grid:getCell(gridOrigin)
