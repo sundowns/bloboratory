@@ -274,6 +274,13 @@ return {
                 SCRAP = 6,
             },
         },
+        BLOBSKULL_DARK = {
+            HEALTH = 220,
+            SPEED = 80,
+            YIELD = {
+                SCRAP = 8,
+            },
+        },
         BLOBTEETH = {
             HEALTH = 50,
             SPEED = 120,
