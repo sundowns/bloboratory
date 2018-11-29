@@ -137,6 +137,7 @@ PlayerController = Class {
     upgradeCurrentStructure = function(self, upgradeType)
         if not self.currentSelectedStructure or not self.currentSelectedStructure.mutable then return false end
         local cost = constants.MUTATION_COSTS[upgradeType][self.currentSelectedStructure.towerType]
+    
         if self.wallet:canAfford(cost) then
             local mutation = nil
             if upgradeType == "FIRE" then

@@ -12,7 +12,7 @@ Bouncer = Class {
         )
 
         self.targettingRadius = constants.STRUCTURE.BOUNCER.TARGETTING_RADIUS
-        self.mutable = false -- TODO: add back when we have animations, ceebs mocking them until then
+        -- self.mutable = false -- TODO: add back when we have animations, ceebs mocking them until then
     end;
     update = function(self, dt)
         TargetedTower.update(self, dt)
