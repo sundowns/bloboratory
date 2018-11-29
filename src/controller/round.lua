@@ -36,9 +36,6 @@ RoundController = Class {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
-                    },
-                    {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
                     },
                     {
@@ -49,7 +46,10 @@ RoundController = Class {
                     },
                     {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
-                    }
+                    },
+                    {
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                    },
                 }
             },
             {
@@ -68,7 +68,7 @@ RoundController = Class {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH-DARK"]
                     },
                     {
                         blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
@@ -88,31 +88,31 @@ RoundController = Class {
                 roundIndex = 25,
                 crucibleSlots = {
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-EYE"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL-DARK"]
                     }
                 }
             },
@@ -120,31 +120,31 @@ RoundController = Class {
                 roundIndex = 30,
                 crucibleSlots = {
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-EYE"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-EYE"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-EYE"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-EYE"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-TEETH-DARK"]
                     },
                     {
-                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-SKULL"]
+                        blueprint = self.ENEMY_BLUEPRINTS["BLOB-EYE"]
                     }
                 }
             },
@@ -237,7 +237,7 @@ RoundController = Class {
 
             if self.roundIndex == 11 then 
                 for i, enemy in pairs(self.ENEMY_BLUEPRINTS) do 
-                    if enemy.name ~= "BLOB (SKULL)" and enemy.name ~= "BLOB (TEETH)" then --TODO: an 'unlockedOnRoundX' variable instead
+                    if enemy.name ~= "NUMBSKULL" and enemy.name ~= "DARK NUMBSKULL" and enemy.name ~= "CHOMPY" and enemy.name ~= "DARK CHOMPY" and enemy.name ~= "BLOB SEER" then --TODO: an 'unlockedOnRoundX' variable instead
                         enemy.isUnlocked = true
                     end
                 end

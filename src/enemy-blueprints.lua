@@ -23,10 +23,19 @@ return {
     ["BLOB-SPARK-LARGE"] = EnemyBlueprint("BIG SPARKY", assets.blueprints['blob-electric-large'], constants.ENEMY.BLOBSPARKLARGE.YIELD, false, constants.ENEMY.BLOBSPARKLARGE.HEALTH, function(params)
         return BlobSparkLarge(params.origin)
     end),
-    ["BLOB-SKULL"] = EnemyBlueprint("BLOB (SKULL)", assets.blueprints['blob-skull'], constants.ENEMY.BLOBSKULL.YIELD, false, constants.ENEMY.BLOBSKULL.HEALTH, function(params)
+    ["BLOB-SKULL"] = EnemyBlueprint("NUMBSKULL", assets.blueprints['blob-skull'], constants.ENEMY.BLOBSKULL.YIELD, false, constants.ENEMY.BLOBSKULL.HEALTH, function(params)
         return BlobSkull(params.origin)
     end),
-    ["BLOB-TEETH"] = EnemyBlueprint("BLOB (TEETH)", assets.blueprints['blob-teeth'], constants.ENEMY.BLOBTEETH.YIELD, false, constants.ENEMY.BLOBTEETH.HEALTH, function(params)
+    ["BLOB-SKULL-DARK"] = EnemyBlueprint("DARK NUMBSKULL", assets.blueprints['blob-skull-dark'], constants.ENEMY.BLOBSKULL_DARK.YIELD, false, constants.ENEMY.BLOBSKULL_DARK.HEALTH, function(params)
+        return BlobSkullDark(params.origin)
+    end),
+    ["BLOB-TEETH"] = EnemyBlueprint("CHOMPY", assets.blueprints['blob-teeth'], constants.ENEMY.BLOBTEETH.YIELD, false, constants.ENEMY.BLOBTEETH.HEALTH, function(params)
         return BlobTeeth(params.origin)
+    end),
+    ["BLOB-TEETH-DARK"] = EnemyBlueprint("DARK CHOMPY", assets.blueprints['blob-teeth-dark'], constants.ENEMY.BLOBTEETH_DARK.YIELD, false, constants.ENEMY.BLOBTEETH_DARK.HEALTH, function(params)
+        return BlobTeethDark(params.origin)
+    end),
+    ["BLOB-EYE"] = EnemyBlueprint("BLOB SEER", assets.blueprints['blob-eye'], constants.ENEMY.BLOBEYE.YIELD, false, constants.ENEMY.BLOBEYE.HEALTH, function(params)
+        return BlobEye(params.origin)
     end),
 }

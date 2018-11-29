@@ -271,16 +271,41 @@ return {
             HEALTH = 100,
             SPEED = 80,
             YIELD = {
-                SCRAP = 10,
+                SCRAP = 6,
+            },
+        },
+        BLOBSKULL_DARK = {
+            HEALTH = 175,
+            SPEED = 80,
+            YIELD = {
+                SCRAP = 8,
             },
         },
         BLOBTEETH = {
             HEALTH = 50,
             SPEED = 120,
             YIELD = {
+                FIRE = 2,
+                ICE = 2,
+                ELECTRIC = 2,
+            },
+        },
+        BLOBTEETH_DARK = {
+            HEALTH = 90,
+            SPEED = 120,
+            YIELD = {
                 FIRE = 3,
                 ICE = 3,
                 ELECTRIC = 3,
+            },
+        },
+        BLOBEYE = {
+            HEALTH = 190,
+            SPEED = 100,
+            YIELD = {
+                FIRE = 5,
+                ICE = 5,
+                ELECTRIC = 5,
             },
         },
     },
