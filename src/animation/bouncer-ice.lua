@@ -2,7 +2,7 @@ assert(assets.structures.bouncer)
 assert(anim8)
 
 return {
-    id = "BOUNCER",
+    id = "BOUNCER-ICE",
     image = assets.structures.bouncer,
     grid = anim8.newGrid(32, 32, assets.structures.bouncer:getWidth(), assets.structures.bouncer:getHeight()),
     animation_names = {

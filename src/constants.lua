@@ -196,7 +196,7 @@ return {
             HEIGHT = 12,
         },
         BOUNCERPROJECTILE = {
-            SPEED = 200,
+            SPEED = 220,
             WIDTH = 12,
             HEIGHT = 12,
             BOUNCES = 5,
