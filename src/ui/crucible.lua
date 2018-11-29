@@ -59,8 +59,20 @@ Picker = Class {
                     ['active'] = constants.COLOURS.UI.PANEL_DARK,
                     ['border color'] = constants.COLOURS.UI.PANEL
                 }
-            }
+            },
+            START_ACTIVE = {
+                ['button'] = {   
+                    ['active'] = assets.ui.startActive,
+                    ['normal'] = assets.ui.startActive,
+                    ['hovered'] = assets.ui.startActive,
+                },
+            },
+            MENU_CRUCIBLE_LEFT = {['window'] = {['fixed background'] = assets.ui.menuCrucibleLeft}},
+            MENU_CRUCIBLE_RIGHT = {['window'] = {['fixed background'] = assets.ui.menuCrucibleRight}}
         }
+        self.iconMulti = assets.ui.iconMulti
+        self.tooltipFont = assets.ui.planerRegular(20)
+        self.pickerFont = assets.ui.planerRegular(18)
     end; 
     tooltipSlotClear = function(self)
         self.tooltip_slot_current = self.tooltip_slot_default
@@ -74,7 +86,7 @@ Picker = Class {
     displayTooltip = function(self, tooltip)
         if nk.widgetIsHovered() then 
             nk.stylePush({
-                ['font'] = assets.ui.planerRegular(20),
+                ['font'] = self.tooltipFont,
                 ['window'] = {
                 ['background'] = constants.COLOURS.UI.BLACK,
                 ['padding'] = {x = 5, y = 0}},
@@ -173,13 +185,7 @@ Picker = Class {
                 nk.layoutRow('dynamic', constants.UI.CRUCIBLE.LAYOUTROW_HEIGHT * windowWidth - 42, 1)
 
                 if roundController:isBuildPhase() then
-                    nk.stylePush({['button'] = 
-                        {   
-                            ['active'] = assets.ui.startActive,
-                            ['normal'] = assets.ui.startActive,
-                            ['hovered'] = assets.ui.startActive,
-                        },
-                    })
+                    nk.stylePush(self.styles.START_ACTIVE)
                 end
 
                 if nk.button('') then
@@ -223,7 +229,7 @@ Picker = Class {
                             end
                         else
                             self:displayTooltip('Enemy grants ' ..blueprint.yield.FIRE.. ' of each element on defeat')
-                            nk.image(assets.ui.iconMulti)
+                            nk.image(self.iconMulti)
                             nk.label(''..blueprint.yield.FIRE, 'left', nk.colorRGBA(playerController.wallet.currencies.SCRAP:colourRGB()))
                         end
 
@@ -249,7 +255,7 @@ Picker = Class {
                 if self.choice > 0 then
                     nk.layoutRow('dynamic', constants.UI.PICKER.LAYOUTROW_HEIGHT/2*windowHeight, 3)
                     nk.stylePush({
-                        ['font'] = assets.ui.planerRegular(18),
+                        ['font'] = self.pickerFont,
                     })
                     nk.spacing(1)
                     local extraSpacing = 2
@@ -285,13 +291,13 @@ Picker = Class {
             nk.windowEnd()
             nk.stylePop()
 
-            nk.stylePush({['window'] = {['fixed background'] = assets.ui.menuCrucibleLeft}})
+            nk.stylePush(self.styles.MENU_CRUCIBLE_LEFT)
             if nk.windowBegin('LeftEdge', 0.3957*windowWidth, 0.7357*windowHeight, 0.006*windowWidth, 0.022*windowHeight) then
             end
             nk.windowEnd()
             nk.stylePop()
 
-            nk.stylePush({['window'] = {['fixed background'] = assets.ui.menuCrucibleRight}})
+            nk.stylePush(self.styles.MENU_CRUCIBLE_RIGHT)
             if nk.windowBegin('RightEdge', 0.5998*windowWidth, 0.7357*windowHeight, 0.006*windowWidth, 0.022*windowHeight) then
             end
             nk.windowEnd()

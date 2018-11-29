@@ -222,7 +222,14 @@ World = Class {
         end
     end;
     processCollisionForEnemy = function(self, enemy, dt)
-        local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/4, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/4, function() return "cross" end)
+        local actualX, actualY, cols, len = self.collisionWorld:move(enemy, enemy.worldOrigin.x - constants.GRID.CELL_SIZE/4, enemy.worldOrigin.y - constants.GRID.CELL_SIZE/4,
+        function(item, other)
+            if other.type == "TOWER" then
+                return "cross"
+            else 
+                return false
+            end
+        end)
         for i = len, 1, -1 do 
             local collision = cols[i]
             
@@ -236,7 +243,14 @@ World = Class {
     processCollisionForTower = function(self, tower)
         if tower.armed then
             local x, y, width, height = tower:calculateHitbox()
-            local actualX, actualY, cols, len = self.collisionWorld:check(tower, x, y, function() return "cross" end)
+            local actualX, actualY, cols, len = self.collisionWorld:check(tower, x, y,
+            function(item, other)
+                if other.type == "ENEMY" or other.type == "AURA" then
+                    return "cross"
+                else
+                    return false
+                end
+            end)
             local playOnHit = true
             local createImpact = false
             for i = 1, len do 
@@ -247,6 +261,8 @@ World = Class {
                         tower:disarm()
                     elseif tower.archetype == "LINE" then
                         createImpact = true
+                    elseif tower.archetype == "TARGETTED" then
+                        print('yeet')
                     end
                 elseif cols[i].other.type == "AURA" then
                     if tower.towerType == "BEACON" then
@@ -264,10 +280,19 @@ World = Class {
                 end
                 tower:disarm()
             end
+        elseif tower.archetype == "TARGETTED" then
+            self:findNewTargetForTower(tower)
         end
     end;
     processCollisionForProjectile = function(self, projectile, dt)
-        local actualX, actualY, cols, len = self.collisionWorld:move(projectile, projectile.worldOrigin.x - projectile.width/2, projectile.worldOrigin.y - projectile.height/2, function() return "cross" end)
+        local actualX, actualY, cols, len = self.collisionWorld:move(projectile, projectile.worldOrigin.x - projectile.width/2, projectile.worldOrigin.y - projectile.height/2,
+        function(item, other)
+            if other.type == "ENEMY" and other == projectile.target then
+                return "cross"
+            else 
+                return false
+            end
+        end)
         for i = len, 1, -1 do 
             local collision = cols[i]
       
@@ -280,7 +305,13 @@ World = Class {
         end
     end;
     processCollisionForImpact = function(self, impact, dt)
-        local actualX, actualY, cols, len = self.collisionWorld:check(impact, impact.worldOrigin.x, impact.worldOrigin.y, function() return "cross" end)
+        local actualX, actualY, cols, len = self.collisionWorld:check(impact, impact.worldOrigin.x, impact.worldOrigin.y,
+        function(item, other)
+            if other.type == "ENEMY" then
+                return "cross"
+            else return false
+            end
+        end)
         for i = 1, len do 
             local collision = cols[i]
             if collision.other.type == "ENEMY" then
@@ -290,8 +321,14 @@ World = Class {
     end;
     findNewTargetForProjectile = function(self, projectile)
         assert(projectile.targettingHitbox)
-
-        local actualX, actualY, cols, len = self.collisionWorld:move(projectile.targettingHitbox, projectile.worldOrigin.x-projectile.targettingRadius*constants.GRID.CELL_SIZE/2, projectile.worldOrigin.y-projectile.targettingRadius*constants.GRID.CELL_SIZE/2, function() return "cross" end)
+        local actualX, actualY, cols, len = self.collisionWorld:move(projectile.targettingHitbox, projectile.worldOrigin.x-projectile.targettingRadius*constants.GRID.CELL_SIZE/2, projectile.worldOrigin.y-projectile.targettingRadius*constants.GRID.CELL_SIZE/2,
+        function(item, other)
+            if other.type == "ENEMY" then
+                return "cross"
+            else
+                return false
+            end
+        end)
         local centre = projectile:centre()
         local best = nil
         for i = len, 1, -1 do 
@@ -310,6 +347,9 @@ World = Class {
         else
             projectile.markedForDeath = true
         end
+    end;
+    findNewTargetForTower = function(self, tower)
+        -- print('yeet')
     end;
     getStructureAt = function(self, gridOrigin)
         local cell = self.grid:getCell(gridOrigin)
