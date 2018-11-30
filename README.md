@@ -6,6 +6,8 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 
 A tower defense game where YOU pick the enemies that will put your maze of towers to the test. Combine resources from slain foes to upgrade your towers and prepare for fearsome bosses!
 
+![Bloboratory](./screenshots/bloboratory.gif)
+
 ## Team
 
 * [Tom Smallridge](https://github.com/sundowns) - Developer
