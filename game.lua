@@ -77,12 +77,15 @@ function game:draw()
 end
 
 function game:keypressed(key, scancode, isrepeat)
-    --if key == "f1" then
-    --    debug = not debug
-    --end
+    if key == "f1" then
+       debug = not debug
+    end
 
     inputController:keypressed(key)
     nk.keypressed(key, scancode, isrepeat)
+end
+
+function game:focus(f)
 end
 
 function game:resize(w, h)

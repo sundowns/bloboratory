@@ -1,7 +1,7 @@
 function love.conf(t)
     t.console = false
     t.version = "11.2" 
-    t.window.title = "Blobaratory"
+    t.window.title = "Bloboratory"
     t.window.minwidth = 1280
     t.window.minheight = 960
     t.window.fullscreen = false     

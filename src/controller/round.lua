@@ -186,7 +186,6 @@ RoundController = Class {
                     self:prepareBossRound(bossRound)
                 end
             end
-            audioController:toggleRoundMusic() --TODO: different boss wave music!
             self:unlockEnemies()
             self:lockEnemies()
             if self.roundIndex == 2 and not configController.settings.seenMultiSelectTutorial then
@@ -265,7 +264,6 @@ RoundController = Class {
                 self:updateCauldron()
                 audioController:playAny("START_ROUND")
                 cameraController:shake(0.5, 3)
-                audioController:toggleRoundMusic()
             else 
                 helpController:addText("You must select enemies to send before the round can begin!", nil, {0.8,0.3,0})
                 return

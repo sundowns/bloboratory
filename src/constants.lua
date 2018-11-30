@@ -391,7 +391,7 @@ return {
         MAX_PARTICLES = 8,
     },
     MUSIC = { -- index must match musicList index
-        0.7,
+        -- 0.7,
         0.475,
     },
     AUDIO = { -- constant index must match tracklist index

@@ -1,0 +1,1 @@
+love . 2>&1>> log.txt

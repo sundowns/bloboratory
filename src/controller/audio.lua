@@ -1,18 +1,10 @@
 AudioController = Class {
     init = function(self)
-        self.musicList = {
-            ripple.newSound {
-                source = assets.audio.music.doom2,
-                volume = constants.MUSIC[ROUND],
-            },
-            ripple.newSound {
-                source = assets.audio.music.doom3,
-                volume = constants.MUSIC[BUILD],
-            },
+        self.music = ripple.newSound {
+            source = love.audio.newSource('asset/audio/music/doom3.mp3', 'static'),
+            volume = constants.MUSIC[1],
         }
-        self.musicList[1]:setLooping(true)
-        self.musicList[2]:setLooping(true)
-        self.music = self.musicList[2]
+        self.music:setLooping(true)
         self.tracklists = { 
             ["PLACE_STRUCTURE"] = TrackList({
                 ripple.newSound {
@@ -171,9 +163,10 @@ AudioController = Class {
         self.tracklists[tracklistId]:playAny()
     end;
     updateMusicVolume = function(self)
-        for i, track in pairs(self.musicList) do 
-            track.volume = (constants.MUSIC[i] * configController.settings.music_multiplier)
-        end
+        self.music.volume = (constants.MUSIC[1] * configController.settings.music_multiplier)
+        -- for i, track in pairs(self.musicList) do 
+        --     track.volume = (constants.MUSIC[i] * configController.settings.music_multiplier)
+        -- end
     end;
     updateSfxVolume = function(self)
         for i, tracklist in pairs(self.tracklists) do 
@@ -181,16 +174,6 @@ AudioController = Class {
                 item.volume = (constants.AUDIO[i][j] *  configController.settings.sfx_multiplier)
             end
         end
-    end;
-    toggleRoundMusic = function(self)
-        --self:stopMusic()
-        --if roundController:isBuildPhase() then 
-        --    self.music = self.musicList[2]
-        --    self.music:play()
-        --else 
-        --    self.music = self.musicList[1]
-        --    self.music:play()
-        --end
     end;
 }
 
