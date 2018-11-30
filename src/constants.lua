@@ -24,7 +24,7 @@ return {
         BLUEPRINT_INVALID = {1,0,0, 0.7},
         BLUEPRINT_RANGE = {0.8,0.3,0.1, 0.8},
         STRUCTURE_RANGE = {0.8,0.3,0.1,0.3},
-        AURA_RANGE = {1,1,0,0.1},
+        AURA_RANGE = {1,1,0,0.05},
         TOWER = {0.5,0,0.5}, -- debug
         CAMERA_PANZONES = {1,0.5,0}, -- debug,
         PROJECTILE = {0,0.5,1},

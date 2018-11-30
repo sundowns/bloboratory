@@ -31,6 +31,9 @@ CameraController = Class {
         self.cameraTimer:during(duration, function()
             self.camera:lookAt(orig_x + math.random(-jitter,jitter), orig_y + math.random(-jitter,jitter))
         end)
+        self.cameraTimer:after(duration, function()
+            self.camera:lookAt(orig_x, orig_y)
+        end)
     end;
 }
 
