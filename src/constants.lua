@@ -253,14 +253,14 @@ return {
                 ICE = 2
             },
         },
-        BLOBSPARK = {
+        BLOBELECTRIC = {
             HEALTH = 12,
             SPEED = 150,
             YIELD = {
                 ELECTRIC = 1
             },
         },
-        BLOBSPARKLARGE = {
+        BLOBELECTRICLARGE = {
             HEALTH = 45,
             SPEED = 130,
             YIELD = {

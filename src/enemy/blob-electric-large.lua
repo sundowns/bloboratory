@@ -1,9 +1,9 @@
-BlobSparkLarge = Class {
+BlobElectricLarge = Class {
     __includes = Enemy,
     init = function(self, worldOrigin)
-        Enemy.init(self, "BLOB-SPARK-LARGE", "ELECTRIC", worldOrigin, constants.ENEMY.BLOBSPARKLARGE.HEALTH,
-            constants.ENEMY.BLOBSPARKLARGE.SPEED, constants.ENEMY.BLOBSPARKLARGE.YIELD,
-            animationController:createInstance("BLOB-SPARK-LARGE"), 2, 1)
+        Enemy.init(self, "BLOB-ELECTRIC-LARGE", "ELECTRIC", worldOrigin, constants.ENEMY.BLOBELECTRICLARGE.HEALTH,
+            constants.ENEMY.BLOBELECTRICLARGE.SPEED, constants.ENEMY.BLOBELECTRICLARGE.YIELD,
+            animationController:createInstance("BLOB-ELECTRIC-LARGE"), 2, 1)
     end;
     update = function(self, dt, currentCell)
         local destroy = Enemy.update(self, dt, currentCell)

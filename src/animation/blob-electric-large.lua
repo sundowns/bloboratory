@@ -2,7 +2,7 @@ assert(assets.enemies.blob)
 assert(anim8)
 
 return {
-    id = "BLOB-SPARK-LARGE",
+    id = "BLOB-ELECTRIC-LARGE",
     image = assets.enemies.blob,
     grid = anim8.newGrid(16, 16, assets.enemies.blob:getWidth(), assets.enemies.blob:getHeight()),
     animation_names = {
