@@ -85,9 +85,6 @@ function game:keypressed(key, scancode, isrepeat)
     nk.keypressed(key, scancode, isrepeat)
 end
 
-function game:focus(f)
-end
-
 function game:resize(w, h)
     uiController:triggerResize()
 end
