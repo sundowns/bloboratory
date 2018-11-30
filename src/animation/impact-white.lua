@@ -2,7 +2,7 @@ assert(assets.particles.impact)
 assert(anim8)
 
 return {
-    id = "IMPACT-FIRE",
+    id = "IMPACT-WHITE",
     image = assets.particles.impact,
     grid = anim8.newGrid(32, 32, assets.particles.impact:getWidth(), assets.particles.impact:getHeight()),
     animation_names = {
@@ -13,7 +13,7 @@ return {
             DEFAULT = {
                 frame_duration = 0.12,
                 x = '1-3',
-                y = 3,
+                y = 1,
                 offset_x = 0,
                 offset_y = 0,
                 scale_x = 1,

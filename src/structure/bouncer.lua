@@ -78,7 +78,7 @@ BouncerProjectile = Class {
                 end
             else
                 self.target = nil 
-                return DefaultImpact(self.worldOrigin)
+                return DefaultWhiteImpact(self.worldOrigin)
             end
         elseif self.mutation.areaOfEffect then --if our enemy is dead, explode on the spot!
             self.target = nil

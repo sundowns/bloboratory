@@ -50,6 +50,17 @@ DefaultImpact = Class {
     end;
 }
 
+DefaultWhiteImpact = Class {
+    __includes = Impact,
+    init = function(self, origin)
+        Impact.init(self, origin, constants.IMPACTS.DEFAULT.WIDTH, constants.IMPACTS.DEFAULT.HEIGHT)
+        self.animation = animationController:createInstance("IMPACT-WHITE")
+        self.collides = false
+    end;
+    attack = function(self, other)
+    end;
+}
+
 IceImpact = Class {
     __includes = Impact,
     init = function(self, origin, stats)

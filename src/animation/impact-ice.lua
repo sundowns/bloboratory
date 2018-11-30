@@ -13,7 +13,7 @@ return {
             DEFAULT = {
                 frame_duration = 0.12,
                 x = '1-3',
-                y = 3,
+                y = 4,
                 offset_x = 0,
                 offset_y = 0,
                 scale_x = 1,
