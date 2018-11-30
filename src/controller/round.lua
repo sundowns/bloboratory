@@ -232,6 +232,13 @@ RoundController = Class {
                 end)
             end
 
+            if self.roundIndex == 2 and not configController.settings.seenMassResellTutorial then
+                Timer.after(1, function()
+                    helpController:addText('Try holding X to quickly sell lots of towers!', 20, {0.2,0.8,0})
+                    configController:updateSetting('seenMassResellTutorial', true)
+                end)
+            end
+
             if self.roundIndex == 11 then 
                 if not configController.settings.seenLargeTutorialTwo then
                     Timer.after(1, function()

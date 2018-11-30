@@ -13,6 +13,7 @@ ConfigController = Class {
             seenHarderTutorial = false,
             seenBossTutorial = false,
             seenBeaconTutorial = false,
+            seenMassResellTutorial = false,
         }
     end;
     updateSetting = function(self, key, value)
