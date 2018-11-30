@@ -67,6 +67,14 @@ Picker = Class {
                     ['hovered'] = assets.ui.startActive,
                 },
             },
+            TOOLTIP = {
+                ['font'] = self.tooltipFont,
+                ['window'] = {
+                ['background'] = constants.COLOURS.UI.BLACK,
+                ['padding'] = {x = 5, y = 0}},
+                ['text'] = {
+                    ['color'] = constants.COLOURS.UI.WHITE}
+            },
             MENU_CRUCIBLE_LEFT = {['window'] = {['fixed background'] = assets.ui.menuCrucibleLeft}},
             MENU_CRUCIBLE_RIGHT = {['window'] = {['fixed background'] = assets.ui.menuCrucibleRight}}
         }
@@ -85,14 +93,7 @@ Picker = Class {
     end;
     displayTooltip = function(self, tooltip)
         if nk.widgetIsHovered() then 
-            nk.stylePush({
-                ['font'] = self.tooltipFont,
-                ['window'] = {
-                ['background'] = constants.COLOURS.UI.BLACK,
-                ['padding'] = {x = 5, y = 0}},
-                ['text'] = {
-                    ['color'] = constants.COLOURS.UI.WHITE}
-            })
+            nk.stylePush(self.styles.TOOLTIP)
             nk.tooltip(' ' ..tooltip)
             nk.stylePop()
         end
