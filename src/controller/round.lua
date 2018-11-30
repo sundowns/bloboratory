@@ -172,7 +172,9 @@ RoundController = Class {
     end;
     nextRound = function(self)
         if self.roundIndex + 1 > self.totalRounds then
-            playerController:victory()
+            if not playerController.hasLost then 
+                playerController:victory()
+            end
         else
             self.crucible:reset()
             self.roundIndex = self.roundIndex + 1
