@@ -40,9 +40,9 @@ BouncerProjectile = Class {
         self.hasHit = {}
         local anim = nil
         if mutation then
-            anim = animationController:createInstance("CANNONBALL"..'-'..mutation.id) --TODO: make this use bouncer image
+            anim = animationController:createInstance(self.projectileType..'-'..mutation.id) 
         else
-            anim = animationController:createInstance("CANNONBALL") --TODO: make this use bouncer image
+            anim = animationController:createInstance(self.projectileType)
         end
         HomingProjectile.init(self, worldOrigin, anim, target, constants.PROJECTILE.BOUNCERPROJECTILE.SPEED, constants.PROJECTILE.BOUNCERPROJECTILE.WIDTH, constants.PROJECTILE.BOUNCERPROJECTILE.HEIGHT, mutation)
         self.targettingHitbox = Hitbox(self, "BOUNCERTARGETTING", self:calculateTargettingHitbox())
