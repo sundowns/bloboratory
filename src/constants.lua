@@ -121,7 +121,7 @@ return {
                 ICE = 15,
                 ELECTRIC = 15,
             },
-            TOOLTIP = "BEACON - COST: 15 FIRE, 15 ICE, 15 ELEC",
+            TOOLTIP = "BEACON (BOOSTS TOWER SPEED) - COST: 15 FIRE, 15 ICE, 15 ELEC",
         },
     },
     MUTATION_COSTS = {
