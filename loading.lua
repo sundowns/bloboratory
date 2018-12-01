@@ -1,7 +1,7 @@
 loading = {}
 local splashDisplaying = false
 local splashScreen = nil
-local MINIMUM_LOAD_TIME = 0.1
+local MINIMUM_LOAD_TIME = 1.5
 local loadTimer = 0
 
 function loading:init()

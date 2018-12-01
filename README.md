@@ -6,7 +6,7 @@ Collaborative entry for [GitHub Game Off 2018](https://itch.io/jam/game-off-2018
 
 A tower defense game where YOU pick the enemies that will put your maze of towers to the test. Combine resources from slain foes to upgrade your towers and prepare for fearsome bosses!
 
-![Bloboratory](./screenshots/bloboratory.gif)
+![Bloboratory](./media/bloboratory.gif)
 
 ## Team
 
@@ -28,16 +28,16 @@ A tower defense game where YOU pick the enemies that will put your maze of tower
 
 ### Place structures in a maze to determine the enemy path
 
-![Build Maze](./screenshots/path.PNG)
+![Build Maze](./media/path.PNG)
 
 ### Fill up the crucible with the enemies you will face each round
 
-![Picking](./screenshots/chooseenemies.PNG)
+![Picking](./media/chooseenemies.PNG)
 
 ### Use gathered resources to upgrade your towers
 
-![Upgrade](./screenshots/upgrade1.PNG)
+![Upgrade](./media/upgrade1.PNG)
 
 ### Strategise to defeat the tough bosses every fifth round
 
-![Endgame](./screenshots/endgame2.PNG)
+![Endgame](./media/endgame2.PNG)
